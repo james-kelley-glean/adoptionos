@@ -1597,7 +1597,7 @@
           session: 'Planning reset / issue triage',
           sessionBody: 'Align on blockers, owners, dates, and customer communication before broader enablement.',
           dueWindow: 'This week',
-          ownerHint: 'Owner: AIOM with admin / implementation support.'
+          ownerHint: 'AIOM with admin / implementation support.'
         },
         doc: { title: 'Success Planning Deck', body: 'Presentation · success planning', url: 'https://docs.google.com/presentation/d/1VqVluTgCPrnSNveUxoUOoFzBmzKFifqooCJn4oCrhpc/edit' },
         tool: 'Client Adoption Strategy Chatbot',
@@ -1660,7 +1660,7 @@
           session: 'Planning reset / issue triage',
           sessionBody: 'Clarify blockers, owners, and sequencing before more launch activation happens.',
           dueWindow: 'Within 3 business days',
-          ownerHint: 'Owner: AIOM with implementation / IT support.'
+          ownerHint: 'AIOM with implementation / IT support.'
         },
         doc: { title: 'Enablement Resource Package', body: 'Resource pack · comms and intranet copy', url: 'https://docs.google.com/document/d/1m-_cm_cTaBqZBwqRegrDJ485DLbzPl8SvzLO6dkFLzo/edit?usp=sharing' },
         tool: 'Meeting Summarizer + Follow Up',
@@ -1722,7 +1722,7 @@
           session: 'QBR / value review',
           sessionBody: 'Re-ground the account in outcomes, risks, and the next strategic expansion motion.',
           dueWindow: 'Within 2 weeks',
-          ownerHint: 'Owner: AIOM with executive and champion support.'
+          ownerHint: 'AIOM with executive and champion support.'
         },
         doc: { title: 'Next Steps in Maxing Out Adoption Deck', body: 'Presentation · next steps strategy', url: 'https://docs.google.com/presentation/d/1jNnlvXUFNoyjuxOpLt8kjsq2cJf2eekg4UXK0nUsJVc/edit?usp=sharing' },
         tool: 'EBR Generator',
@@ -1783,7 +1783,7 @@
           session: 'Next-steps strategy session',
           sessionBody: 'Reset the value narrative and define the next use-case or champion motion.',
           dueWindow: 'Now',
-          ownerHint: 'Owner: AIOM with champion support.'
+          ownerHint: 'AIOM with champion support.'
         },
         doc: { title: 'Next Steps in Maxing Out Adoption Deck', body: 'Presentation · next steps strategy', url: 'https://docs.google.com/presentation/d/1jNnlvXUFNoyjuxOpLt8kjsq2cJf2eekg4UXK0nUsJVc/edit?usp=sharing' },
         tool: 'Optimal Agent Use Case Recommender',
@@ -1833,7 +1833,7 @@
           session: 'Admin release briefing',
           sessionBody: 'Use a short admin session or office hours to explain what is changing and how to communicate it.',
           dueWindow: 'Before the release ships',
-          ownerHint: 'Owner: AIOM with admin support.'
+          ownerHint: 'AIOM with admin support.'
         },
         doc: { title: 'End-User Support Strategy for COE', body: 'Guide · platform governance', url: 'https://docs.google.com/document/d/1I7O4ATeC75naQipxFGnnSJpgHYH9gsI2jWKOl4wvviI/edit?usp=sharing' },
         tool: 'Glean Change Briefing Agent',
@@ -1885,7 +1885,7 @@
           session: 'Account baseline brief',
           sessionBody: 'Fill context gaps before making high-confidence recommendations.',
           dueWindow: 'This week',
-          ownerHint: 'Owner: AIOM with internal account support.'
+          ownerHint: 'AIOM with internal account support.'
         },
         doc: { title: 'Success Planning Deck', body: 'Presentation · success planning baseline', url: 'https://docs.google.com/presentation/d/1VqVluTgCPrnSNveUxoUOoFzBmzKFifqooCJn4oCrhpc/edit' },
         tool: 'AIOM Account Ramp Companion',
@@ -1934,7 +1934,7 @@
           session: 'Next-steps strategy session',
           sessionBody: 'Reset the value narrative and define the next use-case, workshop, or champion motion.',
           dueWindow: 'Within 7 days',
-          ownerHint: 'Owner: AIOM with champion support.'
+          ownerHint: 'AIOM with champion support.'
         },
         doc: { title: 'Next Steps in Maxing Out Adoption Deck', body: 'Presentation · next steps strategy', url: 'https://docs.google.com/presentation/d/1jNnlvXUFNoyjuxOpLt8kjsq2cJf2eekg4UXK0nUsJVc/edit?usp=sharing' },
         tool: 'AIOM Account Ramp Companion',
@@ -1954,7 +1954,7 @@
     };
 
     const seededRosterData = {
-      aiomOwner: 'James Kelley',
+      aiomOwner: 'Current AIOM',
       sourceSummary: 'Seeded Staffing Sheet + Salesforce-style account ownership',
       clients: [
         { name: 'Amplify Education', suggestedBy: 'Staffing Sheet', aggregationStatus: 'Ready' },
@@ -1981,12 +1981,9 @@
       };
     }
 
-    function loadCompletedAttentionState() {
+    function createInMemoryCompletedAttentionState() {
+      // Session-only by design for the Glean Canvas sandbox.
       return {};
-    }
-
-    function persistCompletedAttentionState() {
-      // Canvas interactive content does not provide persistent client-side storage.
     }
 
     function getAttentionKey(accountName, signal) {
@@ -2001,13 +1998,12 @@
       const key = getAttentionKey(accountName, signal);
       if (localState.completedAttention[key]) delete localState.completedAttention[key];
       else localState.completedAttention[key] = true;
-      persistCompletedAttentionState();
     }
 
     const localState = {
       currentAccount: 'Amplify Education',
       activePhaseFilter: 'prep',
-      completedAttention: loadCompletedAttentionState(),
+      completedAttention: createInMemoryCompletedAttentionState(),
       rosterVerification: createRosterVerificationState(),
       prismCapture: {}
     };
@@ -2185,7 +2181,7 @@
           session: 'Roster reconciliation',
           sessionBody: 'Confirm source ownership, active phase, package reality, and current blockers.',
           dueWindow: 'Today',
-          ownerHint: 'Owner: AIOM with ops support.'
+          ownerHint: 'AIOM with ops support.'
         },
         doc: { title: 'Success Planning Deck', body: 'Presentation · success planning', url: 'https://docs.google.com/presentation/d/1VqVluTgCPrnSNveUxoUOoFzBmzKFifqooCJn4oCrhpc/edit' },
         tool: 'AIOM Account Ramp Companion',
@@ -2260,12 +2256,17 @@
       showToast(`${name} added · aggregation queued`);
     }
 
-    function escapeHtmlAttr(value) {
+    function escapeHtml(value) {
       return String(value)
         .replace(/&/g, '&amp;')
-        .replace(/"/g, '&quot;')
         .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;');
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function escapeHtmlAttr(value) {
+      return escapeHtml(value);
     }
 
     function findToolByTitle(title) {
@@ -2273,7 +2274,7 @@
     }
 
     function getDecisionOwner(account) {
-      return account.nextMove.ownerHint.replace(/^Owner:\s*/, '');
+      return account.nextMove.ownerHint;
     }
 
     function getTargetFunction(account) {
@@ -2340,12 +2341,12 @@
     function makeLaunchMarkup(tool, account, className = 'buttonlike') {
       const launch = buildToolLaunchConfig(tool, account);
       if (launch.type === 'link-copy') {
-        return `<a class="${className}" href="${escapeHtmlAttr(launch.url)}" target="_blank" rel="noopener" data-copy="${escapeHtmlAttr(launch.value)}">${launch.label}</a>`;
+        return `<a class="${escapeHtmlAttr(className)}" href="${escapeHtmlAttr(launch.url)}" target="_blank" rel="noopener" data-copy="${escapeHtmlAttr(launch.value)}">${escapeHtml(launch.label)}</a>`;
       }
       if (launch.type === 'open-copy') {
-        return `<a class="${className}" href="${escapeHtmlAttr(launch.url)}" target="_blank" rel="noopener" data-copy="${escapeHtmlAttr(launch.value)}">${launch.label}</a>`;
+        return `<a class="${escapeHtmlAttr(className)}" href="${escapeHtmlAttr(launch.url)}" target="_blank" rel="noopener" data-copy="${escapeHtmlAttr(launch.value)}">${escapeHtml(launch.label)}</a>`;
       }
-      return `<button class="${className} secondary" data-copy="${escapeHtmlAttr(launch.value)}">${launch.label}</button>`;
+      return `<button class="${escapeHtmlAttr(className)} secondary" data-copy="${escapeHtmlAttr(launch.value)}">${escapeHtml(launch.label)}</button>`;
     }
 
     function copyWithPromptFallback(text) {
@@ -2366,7 +2367,7 @@
       ui.heroTitle.textContent = account.name;
       ui.heroSubtitle.textContent = account.business;
       ui.heroBadges.innerHTML = `
-        <span class="tag">Phase: ${phases[account.phase]}</span>
+        <span class="tag">Phase: ${escapeHtml(phases[account.phase])}</span>
         <span class="tag">Mode: signal triage</span>
       `;
     }
@@ -2381,13 +2382,13 @@
       ui.phaseMilestoneDetail.textContent = `${backbone.currentMilestone} · ${openActivities.length} open · ${overdueActivities.length} overdue`;
       ui.openActivitiesList.innerHTML = openActivities.map(activity => `
         <div class="meta-row">
-          <span>${activity}</span>
+          <span>${escapeHtml(activity)}</span>
           <span class="pill medium">Open</span>
         </div>
       `).join('');
       ui.overdueActivitiesList.innerHTML = overdueActivities.length ? overdueActivities.map(activity => `
         <div class="meta-row">
-          <span>${activity}</span>
+          <span>${escapeHtml(activity)}</span>
           <span class="pill high">Overdue</span>
         </div>
       `).join('') : `
@@ -2398,14 +2399,14 @@
       `;
       ui.phaseAssetsList.innerHTML = backbone.phaseAssets.map(asset => `
         <div class="meta-row">
-          <span>${asset}</span>
+          <span>${escapeHtml(asset)}</span>
           <span class="pill low">Phase asset</span>
         </div>
       `).join('');
       ui.functionPhaseStatusList.innerHTML = backbone.functionPhaseStatus.map(item => `
         <div class="meta-row">
-          <span><strong>${item.function}</strong><br><span class="muted">${item.status}</span></span>
-          <span class="pill medium">${item.phase}</span>
+          <span><strong>${escapeHtml(item.function)}</strong><br><span class="muted">${escapeHtml(item.status)}</span></span>
+          <span class="pill medium">${escapeHtml(item.phase)}</span>
         </div>
       `).join('');
     }
@@ -2425,10 +2426,10 @@
         card.className = 'metric-card';
         card.innerHTML = `
           <div>
-            <div class="metric-value">${metric.value}</div>
-            <div class="metric-label">${metric.label}</div>
+            <div class="metric-value">${escapeHtml(metric.value)}</div>
+            <div class="metric-label">${escapeHtml(metric.label)}</div>
           </div>
-          <div class="metric-sub">${metric.sub}</div>
+          <div class="metric-sub">${escapeHtml(metric.sub)}</div>
         `;
         ui.metricsGrid.appendChild(card);
       });
@@ -2447,18 +2448,18 @@
         item.className = `list-item attention-item ${signal.severity} ${completed ? 'completed' : ''}`;
         item.innerHTML = `
           <div class="split" style="margin-bottom: 8px;">
-            <span class="eyebrow">${signal.type.replace(/_/g, ' ')}</span>
+            <span class="eyebrow">${escapeHtml(signal.type.replace(/_/g, ' '))}</span>
             <div class="inline-actions">
-              <button class="task-toggle ${completed ? 'completed' : ''}" data-attention-toggle="true" data-attention-type="${signal.type}" data-attention-title="${escapeHtmlAttr(signal.title)}" aria-pressed="${completed}">
+              <button class="task-toggle ${completed ? 'completed' : ''}" data-attention-toggle="true" data-attention-type="${escapeHtmlAttr(signal.type)}" data-attention-title="${escapeHtmlAttr(signal.title)}" aria-pressed="${completed}">
                 <span class="task-check">${completed ? '✓' : ''}</span>
                 <span>${completed ? 'Done' : 'Mark done'}</span>
               </button>
-              <span class="pill ${signal.severity}">${signal.severity}</span>
+              <span class="pill ${escapeHtmlAttr(signal.severity)}">${escapeHtml(signal.severity)}</span>
             </div>
           </div>
-          <h4>${signal.title}</h4>
-          <p>${signal.body}</p>
-          <div class="meta-row"><span>Due</span><span>${signal.due}</span></div>
+          <h4>${escapeHtml(signal.title)}</h4>
+          <p>${escapeHtml(signal.body)}</p>
+          <div class="meta-row"><span>Due</span><span>${escapeHtml(signal.due)}</span></div>
         `;
         ui.attentionList.appendChild(item);
       });
@@ -2478,7 +2479,7 @@
       ui.sessionBody.textContent = nextMove.sessionBody;
       ui.recommendedResourceTitle.textContent = tool.title;
       ui.recommendedResourceBody.textContent = `${recommendedResource.when} ${launchMeta.detail}`;
-      ui.recommendedResourceButtonRow.innerHTML = `${makeLaunchMarkup(tool, account)}<span class="tool-tag">${launchMeta.short}</span>`;
+      ui.recommendedResourceButtonRow.innerHTML = `${makeLaunchMarkup(tool, account)}<span class="tool-tag">${escapeHtml(launchMeta.short)}</span>`;
       ui.decisionOwner.textContent = `${getDecisionOwner(account)} · ${nextMove.dueWindow}`;
       ui.targetFunction.textContent = getTargetFunction(account);
       ui.primaryFrictionType.textContent = getPrimaryFrictionType(account);
@@ -2490,11 +2491,11 @@
 
       ui.recommendedToolTitle.textContent = tool.title;
       ui.recommendedToolBody.textContent = `${tool.value} ${launchMeta.detail}`;
-      ui.recommendedToolButtonRow.innerHTML = `${makeLaunchMarkup(tool, account)}<span class="tool-tag">${launchMeta.short}</span>`;
+      ui.recommendedToolButtonRow.innerHTML = `${makeLaunchMarkup(tool, account)}<span class="tool-tag">${escapeHtml(launchMeta.short)}</span>`;
 
       ui.recommendedAssetTitle.textContent = recommendedResource.asset;
       ui.recommendedAssetBody.textContent = account.asset.body;
-      ui.assetTags.innerHTML = account.asset.tags.map(tag => `<span class="tool-tag">${tag}</span>`).join('');
+      ui.assetTags.innerHTML = account.asset.tags.map(tag => `<span class="tool-tag">${escapeHtml(tag)}</span>`).join('');
     }
 
     function renderPlatformHealth(account) {
@@ -2538,10 +2539,10 @@
         const card = document.createElement('div');
         card.className = 'risk-card';
         card.innerHTML = `
-          <span class="eyebrow">${item.title}</span>
-          <h4>${item.value}</h4>
-          <p>${item.body}</p>
-          <div class="meta-row"><span>${item.note}</span><span class="pill ${item.severity}">${item.severity}</span></div>
+          <span class="eyebrow">${escapeHtml(item.title)}</span>
+          <h4>${escapeHtml(item.value)}</h4>
+          <p>${escapeHtml(item.body)}</p>
+          <div class="meta-row"><span>${escapeHtml(item.note)}</span><span class="pill ${escapeHtmlAttr(item.severity)}">${escapeHtml(item.severity)}</span></div>
         `;
         ui.platformHealthGrid.appendChild(card);
       });
@@ -2570,12 +2571,12 @@
           <div class="split">
             <div>
               <span class="eyebrow">Release signal</span>
-              <h4>${release.title}</h4>
+              <h4>${escapeHtml(release.title)}</h4>
             </div>
-            <span class="pill medium">${release.date}</span>
+            <span class="pill medium">${escapeHtml(release.date)}</span>
           </div>
-          <p>${release.body}</p>
-          <p class="footer-note"><strong>Recommended asset:</strong> ${release.asset}</p>
+          <p>${escapeHtml(release.body)}</p>
+          <p class="footer-note"><strong>Recommended asset:</strong> ${escapeHtml(release.asset)}</p>
           <div class="button-row">${makeLaunchMarkup(tool, account)}</div>
         `;
         ui.releaseSignalsList.appendChild(row);
@@ -2594,10 +2595,10 @@
         const card = document.createElement('div');
         card.className = 'risk-card';
         card.innerHTML = `
-          <span class="eyebrow">${item.title}</span>
-          <h4>${item.value}</h4>
-          <p>${item.body}</p>
-          <div class="meta-row"><span>Severity</span><span class="pill ${item.severity}">${item.severity}</span></div>
+          <span class="eyebrow">${escapeHtml(item.title)}</span>
+          <h4>${escapeHtml(item.value)}</h4>
+          <p>${escapeHtml(item.body)}</p>
+          <div class="meta-row"><span>Severity</span><span class="pill ${escapeHtmlAttr(item.severity)}">${escapeHtml(item.severity)}</span></div>
         `;
         ui.riskGrid.appendChild(card);
       });
@@ -2615,10 +2616,10 @@
         card.className = 'source-card';
         const supportingSources = source.sources.length ? source.sources.join(', ') : 'No seeded source';
         card.innerHTML = `
-          <span class="eyebrow">${source.category}</span>
-          <h4><span class="pill ${getCoverageStatusClass(source.status)}">${source.status}</span></h4>
-          <p>${source.reason}</p>
-          <div class="meta-row"><span>Supporting sources</span><span>${supportingSources}</span></div>
+          <span class="eyebrow">${escapeHtml(source.category)}</span>
+          <h4><span class="pill ${escapeHtmlAttr(getCoverageStatusClass(source.status))}">${escapeHtml(source.status)}</span></h4>
+          <p>${escapeHtml(source.reason)}</p>
+          <div class="meta-row"><span>Supporting sources</span><span>${escapeHtml(supportingSources)}</span></div>
         `;
         ui.sourceGrid.appendChild(card);
       });
@@ -2636,11 +2637,11 @@
         card.className = 'template-card';
         card.innerHTML = `
           ${recommended ? '<span class="recommend-badge">Recommended</span>' : ''}
-          <span class="eyebrow">${template.activity}</span>
-          <h4>${template.title}</h4>
-          <p>${template.type}</p>
-          <div class="meta-row"><span>${phases[template.phase]}</span><span>${template.type}</span></div>
-          <div class="button-row"><a class="buttonlike" href="${template.url}" target="_blank" rel="noopener">Open resource</a></div>
+          <span class="eyebrow">${escapeHtml(template.activity)}</span>
+          <h4>${escapeHtml(template.title)}</h4>
+          <p>${escapeHtml(template.type)}</p>
+          <div class="meta-row"><span>${escapeHtml(phases[template.phase])}</span><span>${escapeHtml(template.type)}</span></div>
+          <div class="button-row"><a class="buttonlike" href="${escapeHtmlAttr(template.url)}" target="_blank" rel="noopener">Open resource</a></div>
         `;
         ui.templatesGrid.appendChild(card);
       });
@@ -2658,13 +2659,13 @@
         card.className = 'tool-card';
         card.innerHTML = `
           ${recommended ? '<span class="recommend-badge">Recommended</span>' : ''}
-          <span class="eyebrow">${tool.category}</span>
-          <h4>${tool.title}</h4>
-          <p>${tool.value}</p>
-          <div class="meta-row"><span>${tool.owner}</span><span>${tool.status}</span></div>
-          <p class="footer-note"><strong>Best for:</strong> ${tool.bestFor}</p>
-          <p class="footer-note"><strong>Launch mode:</strong> ${launchMeta.short}</p>
-          <p class="footer-note">${launchMeta.detail}</p>
+          <span class="eyebrow">${escapeHtml(tool.category)}</span>
+          <h4>${escapeHtml(tool.title)}</h4>
+          <p>${escapeHtml(tool.value)}</p>
+          <div class="meta-row"><span>${escapeHtml(tool.owner)}</span><span>${escapeHtml(tool.status)}</span></div>
+          <p class="footer-note"><strong>Best for:</strong> ${escapeHtml(tool.bestFor)}</p>
+          <p class="footer-note"><strong>Launch mode:</strong> ${escapeHtml(launchMeta.short)}</p>
+          <p class="footer-note">${escapeHtml(launchMeta.detail)}</p>
           <div class="button-row">${makeLaunchMarkup(tool, account)}</div>
         `;
         ui.toolsGrid.appendChild(card);
@@ -2677,13 +2678,13 @@
         const row = document.createElement('div');
         row.className = 'timeline-item';
         row.innerHTML = `
-          <div class="timeline-date">${signal.due}</div>
+          <div class="timeline-date">${escapeHtml(signal.due)}</div>
           <div>
             <div class="split" style="margin-bottom:8px;">
-              <h4>${signal.title}</h4>
-              <span class="pill ${signal.severity}">${signal.severity}</span>
+              <h4>${escapeHtml(signal.title)}</h4>
+              <span class="pill ${escapeHtmlAttr(signal.severity)}">${escapeHtml(signal.severity)}</span>
             </div>
-            <p class="muted">${signal.body}</p>
+            <p class="muted">${escapeHtml(signal.body)}</p>
           </div>
         `;
         ui.timeline.appendChild(row);
@@ -2695,8 +2696,8 @@
         card.className = 'signal-card';
         card.innerHTML = `
           <span class="eyebrow">Decision rule</span>
-          <h4>${rule.title}</h4>
-          <p>${rule.body}</p>
+          <h4>${escapeHtml(rule.title)}</h4>
+          <p>${escapeHtml(rule.body)}</p>
         `;
         ui.signalsList.appendChild(card);
       });
@@ -2717,10 +2718,10 @@
         row.innerHTML = `
           <input type="checkbox" data-roster-client="${escapeHtmlAttr(client.name)}" ${client.selected ? 'checked' : ''} />
           <span>
-            <strong>${client.name}</strong><br>
-            <span class="muted">Suggested by ${client.suggestedBy}</span>
+            <strong>${escapeHtml(client.name)}</strong><br>
+            <span class="muted">Suggested by ${escapeHtml(client.suggestedBy)}</span>
           </span>
-          <span class="pill ${client.aggregationStatus === 'Ready' ? 'low' : 'medium'}">${client.aggregationStatus}</span>
+          <span class="pill ${client.aggregationStatus === 'Ready' ? 'low' : 'medium'}">${escapeHtml(client.aggregationStatus)}</span>
         `;
         ui.rosterClientList.appendChild(row);
       });
@@ -2738,16 +2739,17 @@
       ranking.forEach((account, index) => {
         const tr = document.createElement('tr');
         tr.style.cursor = 'pointer';
+        const aggregationStatus = getRosterAggregationStatus(account.name);
         tr.innerHTML = `
           <td>${index + 1}</td>
-          <td><strong>${account.name}</strong><br><span class="muted">${account.arrLabel}</span></td>
-          <td><span class="score-badge">${account.attentionScore}</span></td>
-          <td>${phases[account.phase]}</td>
-          <td>${account.engagement}</td>
-          <td>${account.compRisk}</td>
-          <td>${account.hoursRemainingLabel}</td>
-          <td><span class="pill ${getRosterAggregationStatus(account.name) === 'Ready' ? 'low' : 'medium'}">${getRosterAggregationStatus(account.name)}</span></td>
-          <td>${account.nextMove.title}</td>
+          <td><strong>${escapeHtml(account.name)}</strong><br><span class="muted">${escapeHtml(account.arrLabel)}</span></td>
+          <td><span class="score-badge">${escapeHtml(account.attentionScore)}</span></td>
+          <td>${escapeHtml(phases[account.phase])}</td>
+          <td>${escapeHtml(account.engagement)}</td>
+          <td>${escapeHtml(account.compRisk)}</td>
+          <td>${escapeHtml(account.hoursRemainingLabel)}</td>
+          <td><span class="pill ${aggregationStatus === 'Ready' ? 'low' : 'medium'}">${escapeHtml(aggregationStatus)}</span></td>
+          <td>${escapeHtml(account.nextMove.title)}</td>
         `;
         tr.addEventListener('click', () => {
           localState.currentAccount = account.name;
@@ -2767,9 +2769,9 @@
         const card = document.createElement('div');
         card.className = 'audit-card';
         card.innerHTML = `
-          <span class="eyebrow">${item.title}</span>
-          <h4><span class="pill ${item.status}">${item.status}</span></h4>
-          <p>${item.body}</p>
+          <span class="eyebrow">${escapeHtml(item.title)}</span>
+          <h4><span class="pill ${escapeHtmlAttr(item.status)}">${escapeHtml(item.status)}</span></h4>
+          <p>${escapeHtml(item.body)}</p>
         `;
         ui.widgetAuditGrid.appendChild(card);
       });
@@ -2977,32 +2979,32 @@
       const prismHealth = getPrismHealthContext(account);
       const sources = account.sources.slice(0, 3).map(source => `
         <div class="source-card">
-          <span class="eyebrow">${source.role}</span>
-          <h4>${source.name}</h4>
-          <p>${source.purpose}</p>
-          <div class="meta-row"><span>${source.type}</span><span>${source.role}</span></div>
+          <span class="eyebrow">${escapeHtml(source.role)}</span>
+          <h4>${escapeHtml(source.name)}</h4>
+          <p>${escapeHtml(source.purpose)}</p>
+          <div class="meta-row"><span>${escapeHtml(source.type)}</span><span>${escapeHtml(source.role)}</span></div>
         </div>
       `).join('');
 
       ui.prismInlineContext.innerHTML = `
-        <p><strong>${account.name}</strong> · ${account.business}</p>
+        <p><strong>${escapeHtml(account.name)}</strong> · ${escapeHtml(account.business)}</p>
         <div class="pill-row" style="margin-top:12px;">
-          <span class="tool-tag">Phase: ${phases[account.phase]}</span>
-          <span class="tool-tag">Attention: ${account.attentionScore}</span>
-          <span class="tool-tag">Engagement: ${account.engagement}</span>
-          <span class="tool-tag">Prism: ${account.prism.coverage}</span>
+          <span class="tool-tag">Phase: ${escapeHtml(phases[account.phase])}</span>
+          <span class="tool-tag">Attention: ${escapeHtml(account.attentionScore)}</span>
+          <span class="tool-tag">Engagement: ${escapeHtml(account.engagement)}</span>
+          <span class="tool-tag">Prism: ${escapeHtml(account.prism.coverage)}</span>
         </div>
         <div class="callout" style="margin-top:14px;">
-          <strong>Recommended next move:</strong> ${account.nextMove.title}<br>
-          <span>${account.nextMove.body}</span>
+          <strong>Recommended next move:</strong> ${escapeHtml(account.nextMove.title)}<br>
+          <span>${escapeHtml(account.nextMove.body)}</span>
         </div>
         <div class="callout" style="margin-top:14px;">
-          <strong>Health input from Prism:</strong> ${prismHealth.prismHealthSignal}<br>
-          <span>${prismHealth.prismRiskPattern} · ${prismHealth.healthImpact}</span>
+          <strong>Health input from Prism:</strong> ${escapeHtml(prismHealth.prismHealthSignal)}<br>
+          <span>${escapeHtml(prismHealth.prismRiskPattern)} · ${escapeHtml(prismHealth.healthImpact)}</span>
         </div>
         <div class="callout" style="margin-top:14px;">
-          <strong>Recommended asset:</strong> ${account.asset.title}<br>
-          <span>${account.asset.body}</span>
+          <strong>Recommended asset:</strong> ${escapeHtml(account.asset.title)}<br>
+          <span>${escapeHtml(account.asset.body)}</span>
         </div>
         <div class="source-grid" style="margin-top:14px;">${sources}</div>
       `;
@@ -3029,11 +3031,11 @@
         row.className = `signal-card ${signal.severity}`;
         row.innerHTML = `
           <div class="split" style="margin-bottom:8px;">
-            <h4>${signal.title}</h4>
-            <span class="pill ${signal.severity}">${signal.severity}</span>
+            <h4>${escapeHtml(signal.title)}</h4>
+            <span class="pill ${escapeHtmlAttr(signal.severity)}">${escapeHtml(signal.severity)}</span>
           </div>
-          <p>${signal.body}</p>
-          <div class="meta-row"><span>Due</span><span>${signal.due}</span></div>
+          <p>${escapeHtml(signal.body)}</p>
+          <div class="meta-row"><span>Due</span><span>${escapeHtml(signal.due)}</span></div>
         `;
         ui.prismInlineSignalList.appendChild(row);
       });
@@ -3072,9 +3074,9 @@
         const row = document.createElement('div');
         row.className = 'list-item';
         row.innerHTML = `
-          <span class="eyebrow">${signal.type.replace(/_/g, ' ')}</span>
-          <h4>${signal.title}</h4>
-          <p>${signal.body}</p>
+          <span class="eyebrow">${escapeHtml(signal.type.replace(/_/g, ' '))}</span>
+          <h4>${escapeHtml(signal.title)}</h4>
+          <p>${escapeHtml(signal.body)}</p>
         `;
         ui.prismSignalList.appendChild(row);
       });

@@ -8,17 +8,21 @@
     "build": "node scripts/build-artifact.js",
     "validate": "node scripts/validate-artifact.js",
     "validate:agents": "node --check integrations/openai-agents/adoption-os-dev-agent.mjs && node --check integrations/openai-agents/run-dev-agent.mjs && node --check integrations/openai-agents/run-slice-orchestrator.mjs",
+    "smoke:iframe": "node scripts/smoke-iframe.js",
     "orchestrator:plan": "node scripts/orchestrate-slices.js plan",
     "orchestrator:validate": "node scripts/orchestrate-slices.js validate",
     "orchestrator:prompt": "node scripts/orchestrate-slices.js prompt",
     "check": "npm run build && npm run validate && npm run validate:agents && npm run orchestrator:validate",
     "check:dist": "git diff --exit-code -- dist/glean_adoption_os.html",
-    "ci": "npm run check && npm run check:dist",
+    "ci": "npm run check && npm run smoke:iframe && npm run check:dist",
     "agent:dev": "node integrations/openai-agents/run-dev-agent.mjs",
     "agent:slice": "node integrations/openai-agents/run-slice-orchestrator.mjs"
   },
   "dependencies": {
     "@openai/agents": "^0.8.5",
     "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "playwright": "^1.59.1"
   }
 }

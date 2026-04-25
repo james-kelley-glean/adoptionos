@@ -51,15 +51,28 @@ GitHub Actions runs on pushes and pull requests to `main`:
 
 - `npm ci`
 - `npm run check`
+- `npm run smoke:iframe`
 - `npm run check:dist`
 
 This means a commit should fail CI if:
 
 - The artifact does not build.
 - Runtime validation fails.
+- The artifact fails to render inside a local `sandbox="allow-scripts"` iframe.
 - agent integration files have syntax errors.
 - orchestration config is invalid.
 - `dist/glean_adoption_os.html` is stale after building.
+
+## Source Architecture Follow-Up
+
+The Glean runtime requires one final HTML file, but the source does not need to stay monolithic. Once V1 is stable, split the source into bounded agent write scopes:
+
+- `src/data/accounts.js` for seeded account and source-coverage data.
+- `src/app.js` for state, renderers, and event handlers.
+- `src/styles.css` for visual styling.
+- `src/index.html` for the shell and mount points.
+
+The build step should inline those files into `dist/glean_adoption_os.html`. Until that split lands, agents should keep changes narrow and run the full CI gate before pushing.
 
 ## Optional OpenAI Agent Workflow
 

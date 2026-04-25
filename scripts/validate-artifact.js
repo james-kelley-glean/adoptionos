@@ -3,6 +3,7 @@ const path = require('path');
 const vm = require('vm');
 
 const root = path.resolve(__dirname, '..');
+const sourcePath = path.join(root, 'src', 'glean_adoption_os.html');
 const artifactPath = path.join(root, 'dist', 'glean_adoption_os.html');
 const dataLayerDocPath = path.join(root, 'docs', 'v1-data-layer.md');
 const orchestrationConfigPath = path.join(root, 'orchestration', 'slices.json');
@@ -26,10 +27,30 @@ if (!fs.existsSync(artifactPath)) {
 }
 
 const html = fs.readFileSync(artifactPath, 'utf8');
+const sourceHtml = fs.existsSync(sourcePath) ? fs.readFileSync(sourcePath, 'utf8') : '';
 const dataLayerDoc = fs.existsSync(dataLayerDocPath) ? fs.readFileSync(dataLayerDocPath, 'utf8') : '';
 const orchestrationConfig = fs.existsSync(orchestrationConfigPath) ? fs.readFileSync(orchestrationConfigPath, 'utf8') : '';
 const orchestrationReadme = fs.existsSync(orchestrationReadmePath) ? fs.readFileSync(orchestrationReadmePath, 'utf8') : '';
 const packageJson = fs.existsSync(packageJsonPath) ? fs.readFileSync(packageJsonPath, 'utf8') : '';
+const unsafeInnerHtmlPatterns = [
+  /\binnerHTML\b[\s\S]{0,800}\$\{signal\.title\}/,
+  /\binnerHTML\b[\s\S]{0,800}\$\{signal\.body\}/,
+  /\binnerHTML\b[\s\S]{0,800}\$\{client\.name\}/,
+  /\binnerHTML\b[\s\S]{0,800}\$\{client\.suggestedBy\}/,
+  /\binnerHTML\b[\s\S]{0,800}\$\{client\.aggregationStatus\}/,
+  /\binnerHTML\b[\s\S]{0,800}\$\{activity\}/,
+  /\binnerHTML\b[\s\S]{0,800}\$\{asset\}/,
+  /\binnerHTML\b[\s\S]{0,800}\$\{item\.function\}/,
+  /\binnerHTML\b[\s\S]{0,800}\$\{item\.status\}/,
+  /\binnerHTML\b[\s\S]{0,800}\$\{item\.phase\}/,
+  /\binnerHTML\b[\s\S]{0,800}\$\{tool\.title\}/,
+  /\binnerHTML\b[\s\S]{0,800}\$\{tool\.bestFor\}/,
+  /\binnerHTML\b[\s\S]{0,800}\$\{account\.business\}/,
+  /\binnerHTML\b[\s\S]{0,800}\$\{release\.title\}/,
+  /\binnerHTML\b[\s\S]{0,800}\$\{template\.title\}/,
+  /\binnerHTML\b[\s\S]{0,800}\$\{rule\.title\}/
+];
+const unsafeRawInterpolations = unsafeInnerHtmlPatterns.filter(pattern => pattern.test(sourceHtml));
 
 const checks = [
   ['starts with doctype', html.startsWith('<!DOCTYPE html>')],
@@ -37,6 +58,13 @@ const checks = [
   ['no CDATA wrapper', !html.includes('<![CDATA[') && !html.includes(']]>')],
   ['no artifact wrapper residue', !html.includes('</artifact>') && !html.includes('artifact_edit')],
   ['GleanBridge is runtime guarded', html.includes('if (window.GleanBridge && typeof window.GleanBridge.postMessage') && html.includes("typeof window.GleanBridge.onMessage === 'function'")],
+  ['text-context escaping helper exists', sourceHtml.includes('function escapeHtml(value)')],
+  ['known data-bearing innerHTML interpolations are escaped', unsafeRawInterpolations.length === 0],
+  ['manual roster client name is escaped in roster UI', sourceHtml.includes('<strong>${escapeHtml(client.name)}</strong>')],
+  ['manual roster client name is escaped in portfolio UI', sourceHtml.includes('<td><strong>${escapeHtml(account.name)}</strong>')],
+  ['seeded AIOM owner is generic', !sourceHtml.includes("aiomOwner: 'James Kelley'")],
+  ['attention completion state is explicit session memory', sourceHtml.includes('function createInMemoryCompletedAttentionState()') && !sourceHtml.includes('loadCompletedAttentionState') && !sourceHtml.includes('persistCompletedAttentionState')],
+  ['decision owner is clean data not parsed display copy', !sourceHtml.includes("replace(/^Owner:\\s*/, '')") && !sourceHtml.includes("ownerHint: 'Owner:")],
   ['Prism inline workspace is rendered', html.includes('renderPrismWorkspace(account);')],
   ['AI Fluency future placeholder is present', html.includes('AI Fluency layer') && html.includes('Q2/Q3') && html.includes('not required for V1')],
   ['V1 data layer doc exists', fs.existsSync(dataLayerDocPath)],
