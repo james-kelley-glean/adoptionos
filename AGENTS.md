@@ -24,10 +24,23 @@ Use `/Users/jameskelley/Documents/Adoption OS`.
 
 - Edit `src/glean_adoption_os.html`; build to `dist/glean_adoption_os.html`.
 - Run `npm run check` before calling work complete.
+- Run `npm run check:dist` before committing or pushing changes that affect the artifact.
 - Use `npm run agent:dev -- "<task>"` for optional OpenAI Agents SDK-assisted review or planning.
+- Use `npm run orchestrator:prompt -- <slice-id> <role>` when assigning or executing bounded agent work.
+- Keep changes inside the slice `writeScope` from `orchestration/slices.json` unless the controller explicitly expands scope.
 - Do not put generated artifact wrapper text, CDATA wrappers, or tool-call residue into source or dist files.
 - Keep visible copy practical and Glean-native. Avoid over-clinical language.
 - Preserve a clear path to live Glean integration, but do not invent backend dependencies without a source contract.
+- Do not commit secrets. `.env.example` may contain empty placeholders only.
+
+## Agent Workflow
+
+1. Read this file first.
+2. Check `orchestration/slices.json` for the relevant slice and write scope.
+3. Generate the role prompt with `npm run orchestrator:prompt -- <slice-id> <implementer|spec-reviewer|runtime-reviewer>`.
+4. Make the smallest change that satisfies the slice acceptance criteria.
+5. Run `npm run check`.
+6. If source changed the generated artifact, confirm `npm run check:dist` passes before commit/push.
 
 ## Current Product Shape
 
@@ -48,6 +61,7 @@ The artifact includes:
 
 - The artifact builds into `dist/`.
 - Validation passes.
+- Generated `dist/glean_adoption_os.html` is up to date with source.
 - The Glean-ready file remains single-file HTML.
 - Runtime-specific APIs are guarded.
 - The user can tell what changed and how to place the artifact back inside Glean.

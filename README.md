@@ -40,3 +40,19 @@ npm run agent:dev -- "Review the artifact and recommend the next smallest useful
 ## Optional OpenAI Agents SDK Workflow
 
 The core repo is model-agnostic, but this repo also includes an optional OpenAI Agents SDK development assistant. See [docs/openai-agents-integration.md](docs/openai-agents-integration.md).
+
+## Agentic Development
+
+For agent-safe implementation flow, source-of-truth hierarchy, and CI expectations, see [docs/agentic-development.md](docs/agentic-development.md).
+
+## CI
+
+GitHub Actions runs on all pushes and pull requests:
+
+```bash
+npm ci
+npm run check
+npm run check:dist
+```
+
+`check:dist` catches cases where `src/glean_adoption_os.html` changed but the generated Glean-ready artifact in `dist/` was not committed.

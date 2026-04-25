@@ -12,6 +12,8 @@
     "orchestrator:validate": "node scripts/orchestrate-slices.js validate",
     "orchestrator:prompt": "node scripts/orchestrate-slices.js prompt",
     "check": "npm run build && npm run validate && npm run validate:agents && npm run orchestrator:validate",
+    "check:dist": "git diff --exit-code -- dist/glean_adoption_os.html",
+    "ci": "npm run check && npm run check:dist",
     "agent:dev": "node integrations/openai-agents/run-dev-agent.mjs",
     "agent:slice": "node integrations/openai-agents/run-slice-orchestrator.mjs"
   },
