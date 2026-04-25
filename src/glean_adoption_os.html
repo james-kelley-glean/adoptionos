@@ -1,0 +1,3276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Glean Adoption-OS</title>
+  <style>
+    :root {
+      --glean-blue: #343CED;
+      --glean-green: #D8FD49;
+      --glean-green-dark: #00B207;
+      --glean-oatmeal: #F6F3EB;
+      --glean-white: #FFFFFF;
+      --glean-black: #121212;
+      --glean-orange-dark: #FF7E4C;
+      --glean-orange-light: #FFF1EA;
+      --glean-lightblue: #B2E5EF;
+      --glean-magenta-light: #F1B7FF;
+      --glean-cement: #C7C7AB;
+      --surface: rgba(255,255,255,0.88);
+      --surface-strong: rgba(255,255,255,0.95);
+      --border: rgba(199,199,171,0.45);
+      --text: #1d1d1f;
+      --muted: #6e6e73;
+      --danger: #b42318;
+      --danger-bg: #fef3f2;
+      --warning: #b54708;
+      --warning-bg: #fffaeb;
+      --success-bg: #ecfdf3;
+      --info-bg: #eef4ff;
+      --shadow-1: 0 1px 3px rgba(0,0,0,0.06), 0 16px 40px rgba(16,23,177,0.06);
+      --shadow-2: 0 8px 24px rgba(0,0,0,0.08);
+      --radius-card: 24px;
+      --radius-pill: 999px;
+      --space-1: 8px;
+      --space-2: 12px;
+      --space-3: 16px;
+      --space-4: 24px;
+      --space-5: 32px;
+      --space-6: 48px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(178,229,239,0.45), transparent 28%),
+        radial-gradient(circle at top left, rgba(216,253,73,0.14), transparent 20%),
+        radial-gradient(circle at 50% 0%, rgba(241,183,255,0.10), transparent 28%),
+        var(--glean-oatmeal);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.5;
+    }
+
+    a { color: var(--glean-blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .page {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: var(--space-5);
+    }
+
+    .shell {
+      display: grid;
+      gap: var(--space-4);
+      animation: fadeIn 0.35s ease;
+    }
+
+    .hero {
+      background: var(--glean-blue);
+      color: var(--glean-white);
+      border-radius: 28px;
+      padding: 34px;
+      box-shadow: var(--shadow-1);
+      position: relative;
+      overflow: hidden;
+      background-image:
+        linear-gradient(135deg, transparent 42%, rgba(255,255,255,0.10) 42%, rgba(255,255,255,0.10) 44%, transparent 44%),
+        linear-gradient(160deg, transparent 58%, rgba(178,229,239,0.18) 58%, rgba(178,229,239,0.18) 72%, transparent 72%);
+    }
+
+    .hero-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: var(--space-4);
+      margin-bottom: var(--space-4);
+    }
+
+    .hero-copy {
+      min-width: 0;
+      max-width: 860px;
+    }
+
+    .hero h1 {
+      color: var(--glean-green);
+      font-size: 44px;
+      line-height: 1.02;
+      letter-spacing: -0.03em;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      max-width: 860px;
+      color: rgba(255,255,255,0.82);
+      font-size: 17px;
+    }
+
+    .hero-badges, .toolbar, .inline-actions, .meta-row, .button-row, .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .toolbar {
+      min-width: auto;
+      justify-content: flex-end;
+      z-index: 3;
+    }
+
+    .hero-company-picker {
+      position: relative;
+      z-index: 4;
+    }
+
+    .hero-controls {
+      display: grid;
+      gap: 10px;
+      justify-items: end;
+      flex: 0 0 300px;
+      max-width: 300px;
+      z-index: 3;
+    }
+
+    .hero-refresh-row {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+      align-items: center;
+      width: 100%;
+    }
+
+    .tag, .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: var(--radius-pill);
+      background: rgba(255,255,255,0.12);
+      color: var(--glean-white);
+      border: 1px solid rgba(255,255,255,0.12);
+      backdrop-filter: blur(10px);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .tag.green {
+      background: var(--glean-green);
+      color: var(--glean-black);
+      border-color: transparent;
+    }
+
+    .chip {
+      text-transform: none;
+      letter-spacing: 0;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    button, select {
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 12px;
+      transition: background-color 0.2s ease, transform 0.12s ease, box-shadow 0.2s ease;
+    }
+
+    button {
+      border: none;
+      cursor: pointer;
+      padding: 12px 14px;
+    }
+
+    button:hover, .buttonlike:hover { transform: translateY(-1px); }
+    button:active, .buttonlike:active { transform: scale(0.98); }
+
+    .primary {
+      background: var(--glean-green);
+      color: var(--glean-black);
+      box-shadow: var(--shadow-2);
+    }
+
+    .secondary {
+      background: rgba(255,255,255,0.12);
+      color: var(--glean-white);
+      border: 1px solid rgba(255,255,255,0.16);
+    }
+
+    .client-select {
+      width: 100%;
+      min-width: 0;
+      padding: 12px 14px;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.12);
+      color: var(--glean-white);
+      outline: none;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+    }
+
+    .client-select option { color: var(--glean-black); background: var(--glean-white); }
+
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      background: rgba(255,255,255,0.58);
+      border: 1px solid rgba(199,199,171,0.45);
+      padding: 8px;
+      border-radius: 18px;
+      backdrop-filter: blur(14px);
+      position: sticky;
+      top: 18px;
+      z-index: 20;
+    }
+
+    .tab {
+      padding: 10px 14px;
+      background: transparent;
+      color: var(--muted);
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .tab.active {
+      background: var(--glean-blue);
+      color: var(--glean-white);
+      box-shadow: var(--shadow-2);
+    }
+
+    .phase-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      padding: 10px 12px;
+      margin-top: -8px;
+      background: rgba(255,255,255,0.42);
+      border: 1px solid rgba(199,199,171,0.35);
+      border-radius: 16px;
+      backdrop-filter: blur(10px);
+    }
+
+    .phase-toolbar-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--muted);
+      margin-right: 4px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .phase-chip {
+      padding: 8px 12px;
+      background: rgba(255,255,255,0.72);
+      color: var(--muted);
+      border: 1px solid rgba(199,199,171,0.4);
+      border-radius: 10px;
+      box-shadow: none;
+      font-size: 13px;
+    }
+
+    .phase-chip.active {
+      background: rgba(52,60,237,0.12);
+      color: var(--glean-blue);
+      border-color: rgba(52,60,237,0.18);
+    }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    .grid { display: grid; gap: var(--space-4); }
+    .grid.two { grid-template-columns: 1.15fr 0.85fr; }
+    .grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid.metrics { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 14px; }
+
+    .surface {
+      background: var(--surface);
+      border: 1px solid rgba(199,199,171,0.35);
+      border-radius: var(--radius-card);
+      padding: 22px;
+      box-shadow: var(--shadow-1);
+      backdrop-filter: blur(16px);
+    }
+
+    .surface h2 {
+      color: var(--glean-blue);
+      font-size: 28px;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+
+    .section-kicker, .eyebrow {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+      display: inline-block;
+    }
+
+    .muted { color: var(--muted); }
+
+    .metric-card, .list-item, .source-card, .template-card, .tool-card, .signal-card, .risk-card, .recommendation-card, .audit-card {
+      background: rgba(255,255,255,0.78);
+      border: 1px solid rgba(199,199,171,0.35);
+      border-radius: 20px;
+      padding: 18px;
+      box-shadow: var(--shadow-1);
+    }
+
+    .metric-card {
+      min-height: 136px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .prism-workspace {
+      margin-top: 18px;
+      display: grid;
+      gap: 18px;
+    }
+
+    .capture-grid {
+      display: grid;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .field-label {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .capture-field {
+      width: 100%;
+      min-height: 88px;
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--glean-white);
+      color: var(--text);
+      font: inherit;
+      resize: vertical;
+    }
+
+    .metric-value {
+      font-size: 34px;
+      line-height: 1;
+      font-weight: 700;
+      color: var(--glean-blue);
+      letter-spacing: -0.03em;
+      margin-bottom: 10px;
+    }
+
+    .metric-label {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .metric-sub {
+      margin-top: 12px;
+      font-size: 13px;
+    }
+
+    .split {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .status i {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .status.green i { background: var(--glean-green-dark); }
+    .status.orange i { background: var(--glean-orange-dark); }
+    .status.blue i { background: var(--glean-blue); }
+
+    .callout {
+      border-left: 4px solid var(--glean-blue);
+      background: rgba(255,255,255,0.72);
+      padding: 16px 18px;
+      border-radius: 0 14px 14px 0;
+      margin-top: 18px;
+      font-size: 15px;
+    }
+
+    .callout strong { color: var(--glean-blue); }
+
+    .list, .timeline, .signal-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .list-item h4, .source-card h4, .template-card h4, .tool-card h4, .signal-card h4, .risk-card h4, .recommendation-card h4, .audit-card h4 {
+      font-size: 17px;
+      margin-bottom: 6px;
+    }
+
+    .source-grid, .templates-grid, .tools-grid, .risk-grid, .audit-grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .source-grid, .templates-grid, .tools-grid, .risk-grid, .audit-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+    .meta-row {
+      justify-content: space-between;
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+
+    .buttonlike {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(52,60,237,0.08);
+      color: var(--glean-blue);
+      padding: 9px 12px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background-color 0.2s ease, transform 0.12s ease;
+    }
+
+    .buttonlike.secondary {
+      background: rgba(216,253,73,0.35);
+      color: var(--glean-black);
+    }
+
+    .pill {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: var(--radius-pill);
+      background: rgba(216,253,73,0.32);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--glean-black);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .pill.high { background: var(--danger-bg); color: var(--danger); }
+    .pill.medium { background: var(--warning-bg); color: var(--warning); }
+    .pill.low { background: var(--success-bg); color: var(--glean-green-dark); }
+    .pill.available { background: rgba(178,229,239,0.55); color: var(--glean-blue); }
+    .pill.partial { background: #f3f0ff; color: #5c43d7; }
+    .pill.static { background: #fff1ea; color: #c2410c; }
+
+    .tool-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: rgba(216,253,73,0.35);
+      color: var(--glean-black);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .recommend-badge {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      display: inline-flex;
+      align-items: center;
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: rgba(0,178,7,0.14);
+      color: var(--glean-green-dark);
+      border: 1px solid rgba(0,178,7,0.18);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .template-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: rgba(52,60,237,0.08);
+      color: var(--glean-blue);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .tool-card, .template-card {
+      position: relative;
+      min-height: 240px;
+    }
+
+    .attention-item {
+      position: relative;
+      overflow: hidden;
+      border-left: 4px solid transparent;
+      padding-left: 14px;
+    }
+
+    .attention-item.high { border-left-color: var(--danger); }
+    .attention-item.medium { border-left-color: var(--warning); }
+    .attention-item.low { border-left-color: var(--glean-green-dark); }
+
+    .attention-item.completed {
+      background: linear-gradient(180deg, rgba(216,253,73,0.16), rgba(255,255,255,0.78));
+    }
+
+    .attention-item.completed h4,
+    .attention-item.completed p {
+      text-decoration: line-through;
+      text-decoration-thickness: 2px;
+      text-decoration-color: rgba(0,178,7,0.55);
+    }
+
+    .attention-item.celebrate::after {
+      content: '';
+      position: absolute;
+      inset: -20%;
+      background: radial-gradient(circle, rgba(216,253,73,0.35) 0%, rgba(216,253,73,0) 62%);
+      pointer-events: none;
+      animation: celebrateBurst 0.6s ease-out;
+    }
+
+    .task-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(52,60,237,0.10);
+      background: rgba(52,60,237,0.06);
+      color: var(--glean-blue);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .task-toggle.completed {
+      background: rgba(0,178,7,0.12);
+      color: var(--glean-green-dark);
+      border-color: rgba(0,178,7,0.18);
+    }
+
+    .task-toggle.just-completed {
+      animation: taskBounce 0.55s cubic-bezier(.2,.9,.25,1.2);
+    }
+
+    .task-check {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 2px solid currentColor;
+      display: grid;
+      place-items: center;
+      font-size: 11px;
+    }
+
+    .task-toggle.completed .task-check {
+      background: var(--glean-green);
+      border-color: var(--glean-green);
+      color: var(--glean-black);
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 112px 1fr;
+      gap: 16px;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(199,199,171,0.35);
+    }
+
+    .timeline-item:last-child { border-bottom: none; }
+
+    .timeline-date {
+      color: var(--glean-blue);
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .portfolio-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    .portfolio-table th,
+    .portfolio-table td {
+      padding: 12px 10px;
+      border-bottom: 1px solid rgba(199,199,171,0.35);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .portfolio-table th {
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .score-badge {
+      display: inline-flex;
+      min-width: 44px;
+      justify-content: center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 12px;
+      background: rgba(52,60,237,0.08);
+      color: var(--glean-blue);
+    }
+
+    .roster-panel {
+      display: grid;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .roster-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .roster-item {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 12px;
+      align-items: center;
+      padding: 12px;
+      border: 1px solid rgba(199,199,171,0.38);
+      border-radius: 16px;
+      background: rgba(255,255,255,0.62);
+    }
+
+    .roster-item input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--glean-blue);
+    }
+
+    .roster-add-row {
+      display: grid;
+      grid-template-columns: minmax(180px, 1fr) auto;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .roster-input {
+      width: 100%;
+      border: 1px solid rgba(199,199,171,0.55);
+      border-radius: 14px;
+      padding: 11px 12px;
+      background: var(--glean-white);
+      color: var(--text);
+      font-size: 14px;
+    }
+
+    .json-shell {
+      background: #11131a;
+      color: #dbe2ff;
+      border-radius: 18px;
+      padding: 18px;
+      overflow: auto;
+      font-size: 13px;
+      line-height: 1.55;
+      min-height: 320px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04);
+      white-space: pre-wrap;
+    }
+
+    .footer-link-row {
+      text-align: center;
+      margin-top: 4px;
+    }
+
+    .footer-note {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--glean-black);
+      color: var(--glean-white);
+      padding: 12px 14px;
+      border-radius: 14px;
+      box-shadow: var(--shadow-2);
+      opacity: 0;
+      transform: translateY(10px);
+      pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      z-index: 60;
+      max-width: 320px;
+      font-size: 14px;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(18,18,18,0.42);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 50;
+      padding: 24px;
+    }
+
+    .overlay.open { display: flex; }
+
+    .modal {
+      width: min(820px, 100%);
+      max-height: 85vh;
+      overflow: auto;
+      background: rgba(255,255,255,0.96);
+      border: 1px solid rgba(199,199,171,0.35);
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: var(--shadow-2);
+    }
+
+    .hidden { display: none !important; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes taskBounce {
+      0% { transform: scale(0.92); }
+      50% { transform: scale(1.08); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes celebrateBurst {
+      0% { transform: scale(0.4); opacity: 0; }
+      30% { opacity: 1; }
+      100% { transform: scale(1.1); opacity: 0; }
+    }
+
+    @media screen and (max-width: 1180px) {
+      .grid.metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .grid.two, .grid.three, .source-grid, .templates-grid, .tools-grid, .risk-grid, .audit-grid { grid-template-columns: 1fr; }
+      .hero-top { flex-direction: column; }
+      .hero-controls { width: 100%; max-width: 100%; justify-items: stretch; }
+      .hero-refresh-row { justify-content: flex-start; flex-wrap: wrap; }
+      .toolbar { justify-content: flex-start; min-width: 100%; }
+    }
+
+    @media screen and (max-width: 760px) {
+      .page { padding: 16px; }
+      .grid.metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hero { padding: 24px; border-radius: 22px; }
+      .hero h1 { font-size: 34px; }
+      .timeline-item { grid-template-columns: 1fr; gap: 6px; }
+      .client-select { min-width: 100%; }
+      .hero-refresh-row { display: grid; grid-template-columns: 1fr; }
+      .roster-item, .roster-add-row { grid-template-columns: 1fr; }
+      .portfolio-table, .portfolio-table thead, .portfolio-table tbody, .portfolio-table tr, .portfolio-table th, .portfolio-table td { display: block; width: 100%; }
+      .portfolio-table thead { display: none; }
+      .portfolio-table tr { padding: 14px 0; border-bottom: 1px solid rgba(199,199,171,0.35); }
+      .portfolio-table td { border-bottom: none; padding: 4px 0; }
+    }
+
+    @media print {
+      body {
+        margin: 0;
+        padding: 0.4in 0.6in;
+        background: #fff;
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+      }
+
+      .page, .shell, main { max-width: 100% !important; width: 100% !important; }
+      .tabs, button, .buttonlike, .toast, .toolbar, .overlay { display: none !important; }
+      .surface, .metric-card, .tool-card, .template-card, .signal-card, .list-item, .source-card, .risk-card, .recommendation-card, .audit-card {
+        break-inside: avoid;
+        box-shadow: none !important;
+        border: 1px solid rgba(0,0,0,0.08);
+      }
+      .tab-panel { display: block !important; }
+      * { animation: none !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="shell">
+      <header class="hero">
+        <div class="hero-top">
+          <div class="hero-copy">
+            <div class="tag">Glean Adoption-OS</div>
+            <h1 id="heroTitle">Amplify Education</h1>
+            <p id="heroSubtitle">A proactive AIOM workspace for messy real-world account management: unified signals, next-best-action guidance, recommended sessions/docs/tools, release-intelligence watchpoints, and engagement + comp-risk alerts.</p>
+            <div class="hero-badges" id="heroBadges"></div>
+          </div>
+          <div class="hero-controls">
+            <div class="hero-company-picker">
+              <select id="clientSelect" class="client-select" aria-label="Select client"></select>
+            </div>
+            <div class="hero-refresh-row">
+              <div class="chip" id="refreshChip">Last refreshed · Ready</div>
+              <button class="primary" id="refreshBtn">Refresh</button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <nav class="tabs">
+        <button class="tab active" data-tab="overview">Overview</button>
+        <button class="tab" data-tab="templates">Templates</button>
+        <button class="tab" data-tab="tools">Tools</button>
+        <button class="tab" data-tab="signals">Signals</button>
+        <button class="tab" data-tab="portfolio">Portfolio</button>
+        <button class="tab" data-tab="prism">Prism</button>
+      </nav>
+
+      <div class="phase-toolbar" aria-label="Adoption phase filter">
+        <span class="phase-toolbar-label">Adoption phase:</span>
+        <button class="phase-chip" data-phase="all">All phases</button>
+        <button class="phase-chip" data-phase="prep">Preparation</button>
+        <button class="phase-chip" data-phase="readiness">Readiness</button>
+        <button class="phase-chip" data-phase="stickiness">Stickiness</button>
+        <button class="phase-chip" data-phase="scale">Scale</button>
+      </div>
+
+      <section class="tab-panel active" id="overview">
+        <section class="surface recommendation-card" id="strategicActionPanel">
+          <div class="section-kicker">Strategic action</div>
+          <h2 id="strategicAction">Run the next strategic motion</h2>
+          <p id="strategicRationale" class="muted"></p>
+          <div class="callout">
+            <strong>Why this matters:</strong> <span id="nextMoveWhy"></span>
+          </div>
+          <p class="footer-note" id="confidenceReason"></p>
+          <div class="grid two" style="margin-top:16px;">
+            <div class="metric-card" style="min-height:auto;">
+              <div class="eyebrow">Best next step</div>
+              <div class="metric-value" style="font-size:22px;" id="bestNextStep"></div>
+              <div class="metric-sub" id="sessionBody"></div>
+            </div>
+            <div class="metric-card" style="min-height:auto;">
+              <div class="eyebrow">Recommended Glean resource</div>
+              <div class="metric-value" style="font-size:22px;" id="recommendedResourceTitle"></div>
+              <div class="metric-sub" id="recommendedResourceBody"></div>
+              <div class="button-row" id="recommendedResourceButtonRow" style="margin-top:10px;"></div>
+            </div>
+          </div>
+          <div class="grid three" style="margin-top:16px;">
+            <div class="metric-card" style="min-height:auto;">
+              <div class="eyebrow">Decision owner</div>
+              <div class="metric-sub" id="decisionOwner"></div>
+            </div>
+            <div class="metric-card" style="min-height:auto;">
+              <div class="eyebrow">Target audience</div>
+              <div class="metric-sub" id="targetFunction"></div>
+            </div>
+            <div class="metric-card" style="min-height:auto;">
+              <div class="eyebrow">Friction</div>
+              <div class="metric-sub" id="primaryFrictionType"></div>
+            </div>
+          </div>
+          <div class="callout" style="margin-top:16px;">
+            <strong>What to capture in Prism:</strong> <span id="capturePrompt"></span>
+          </div>
+        </section>
+
+        <section class="surface" id="phaseBackbonePanel">
+          <div class="split">
+            <div>
+              <div class="section-kicker">Adoption OS phase backbone</div>
+              <h2 id="currentPhaseTitle"></h2>
+            </div>
+            <div class="status blue"><i></i><span id="currentMilestone"></span></div>
+          </div>
+          <div class="grid two" style="margin-top:16px;">
+            <div class="metric-card" style="min-height:auto;">
+              <div class="eyebrow">Phase objective</div>
+              <div class="metric-sub" id="phaseObjective"></div>
+            </div>
+            <div class="metric-card" style="min-height:auto;">
+              <div class="eyebrow">Current milestone</div>
+              <div class="metric-sub" id="phaseMilestoneDetail"></div>
+            </div>
+          </div>
+          <div class="grid three" style="margin-top:16px;">
+            <div class="list-item">
+              <h4>Open adoption activities</h4>
+              <div class="list" id="openActivitiesList"></div>
+            </div>
+            <div class="list-item">
+              <h4>Overdue adoption activities</h4>
+              <div class="list" id="overdueActivitiesList"></div>
+            </div>
+            <div class="list-item">
+              <h4>Phase-relevant assets</h4>
+              <div class="list" id="phaseAssetsList"></div>
+            </div>
+            <div class="list-item">
+              <h4>Function phase status</h4>
+              <div class="list" id="functionPhaseStatusList"></div>
+            </div>
+          </div>
+          <p class="footer-note">Weekly priority is a summary layer. The operating model is the Adoption OS phase, and different client functions may be moving through different phases at the same time.</p>
+        </section>
+
+        <div class="grid metrics" id="metricsGrid"></div>
+
+        <div class="grid two" style="margin-top:18px;">
+          <section class="surface">
+            <div class="split">
+              <div>
+                <div class="section-kicker">Needs attention now</div>
+                <h2>What changed and what matters</h2>
+              </div>
+              <div class="status orange"><i></i><span id="attentionSummary"></span></div>
+            </div>
+            <div class="list" id="attentionList"></div>
+          </section>
+        </div>
+
+        <div class="grid three" style="margin-top:18px;">
+          <section class="surface recommendation-card">
+            <div class="section-kicker">Recommended doc</div>
+            <h2 id="recommendedDocTitle"></h2>
+            <p id="recommendedDocBody" class="muted"></p>
+            <div class="button-row">
+              <a class="buttonlike" id="recommendedDocButton" href="#" target="_blank" rel="noopener">Open resource</a>
+            </div>
+          </section>
+
+          <section class="surface recommendation-card">
+            <div class="section-kicker">Recommended Glean resource</div>
+            <h2 id="recommendedToolTitle"></h2>
+            <p id="recommendedToolBody" class="muted"></p>
+            <div class="button-row" id="recommendedToolButtonRow"></div>
+          </section>
+
+          <section class="surface recommendation-card">
+            <div class="section-kicker">Recommended asset</div>
+            <h2 id="recommendedAssetTitle"></h2>
+            <p id="recommendedAssetBody" class="muted"></p>
+            <div class="pill-row" id="assetTags"></div>
+          </section>
+        </div>
+
+        <div class="grid two" style="margin-top:18px;">
+          <section class="surface">
+            <div class="split">
+              <div>
+                <div class="section-kicker">Upcoming release signals</div>
+                <h2>Communicate before customers get surprised</h2>
+              </div>
+              <div class="status blue"><i></i><span id="releaseCountLabel"></span></div>
+            </div>
+            <div class="list" id="releaseSignalsList"></div>
+          </section>
+
+          <section class="surface">
+            <div class="split">
+              <div>
+                <div class="section-kicker">Engagement + comp risk</div>
+                <h2>Commercial guardrails</h2>
+              </div>
+              <div class="status green"><i></i><span id="riskSummary"></span></div>
+            </div>
+            <div class="risk-grid" id="riskGrid"></div>
+            <p class="footer-note">These are the AIOM-friendly guardrails. Under the hood, Assistant + Agents health and Prism-derived knowledge now feed the same recommendation system rather than sitting in a separate technical dashboard.</p>
+          </section>
+        </div>
+
+        <div class="grid two" style="margin-top:18px;">
+          <section class="surface">
+            <div class="split">
+              <div>
+                <div class="section-kicker">Signal intake coverage</div>
+                <h2 id="sourceTitle">Source registry</h2>
+              </div>
+              <div class="status blue"><i></i><span id="sourceCountLabel"></span></div>
+            </div>
+            <div class="source-grid" id="sourceGrid"></div>
+            <p class="footer-note" id="sourceNote"></p>
+          </section>
+
+          <section class="surface">
+            <div class="split">
+              <div>
+                <div class="section-kicker">AI health + knowledge</div>
+                <h2>Assistant, Agents, and Prism</h2>
+              </div>
+              <div class="status blue"><i></i><span id="platformHealthSummary"></span></div>
+            </div>
+            <div class="risk-grid" id="platformHealthGrid"></div>
+            <div class="callout" id="prismHealthInputPanel" style="margin-top:14px;">
+              <strong>What Prism already tells us about client health:</strong>
+              <div class="grid two" style="margin-top:12px;">
+                <div>
+                  <span class="eyebrow">Health signal</span>
+                  <p id="prismHealthSignal"></p>
+                </div>
+                <div>
+                  <span class="eyebrow">Risk pattern</span>
+                  <p id="prismRiskPattern"></p>
+                </div>
+                <div>
+                  <span class="eyebrow">Prior action outcome</span>
+                  <p id="priorActionOutcome"></p>
+                </div>
+                <div>
+                  <span class="eyebrow">Repeated blocker</span>
+                  <p id="repeatedBlocker"></p>
+                </div>
+                <div>
+                  <span class="eyebrow">Momentum since last touch</span>
+                  <p id="momentumSinceLastTouch"></p>
+                </div>
+                <div>
+                  <span class="eyebrow">Play from history</span>
+                  <p id="recommendedPlayFromHistory"></p>
+                </div>
+              </div>
+              <p class="footer-note" id="healthImpact"></p>
+            </div>
+            <div class="button-row" style="margin-top:14px;">
+              <button class="buttonlike" id="openPrismBtn">Open Prism snapshot</button>
+            </div>
+            <p class="footer-note">This keeps the AIOM operating surface focused while Prism-derived health and account memory inform the recommendation.</p>
+          </section>
+        </div>
+
+        <section class="surface" style="margin-top:18px;">
+          <div class="split">
+            <div>
+              <div class="section-kicker">Future intelligence layer</div>
+              <h2>AI Fluency layer</h2>
+            </div>
+            <div class="status blue"><i></i><span>Q2/Q3 placeholder</span></div>
+          </div>
+          <p class="muted">AI Fluency is planned as a Q2/Q3 enrichment layer and is not required for V1. Today, the artifact uses Adoption OS phase, client signals, existing tools, and Prism context to recommend the strategic action and best next step.</p>
+          <div class="grid three" style="margin-top:16px;">
+            <div class="risk-card">
+              <span class="eyebrow">What it will add</span>
+              <h4>Capability context</h4>
+              <p>Function-level fluency signals can explain why a team is ready, stalled, or likely to regress.</p>
+            </div>
+            <div class="risk-card">
+              <span class="eyebrow">How it will fit</span>
+              <h4>Strategy refinement</h4>
+              <p>Fluency data should tune the recommended motion without replacing the Adoption OS backbone.</p>
+            </div>
+            <div class="risk-card">
+              <span class="eyebrow">V1 boundary</span>
+              <h4>Do not block launch</h4>
+              <p>Missing AI Fluency data should be treated as future enrichment, not a reason to delay the Glean artifact.</p>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <section class="tab-panel" id="templates">
+        <section class="surface">
+          <div class="split">
+            <div>
+              <div class="section-kicker">Ready-to-go resources</div>
+              <h2>Document library by adoption stage</h2>
+            </div>
+            <div class="status blue"><i></i><span id="templateCountLabel"></span></div>
+          </div>
+          <div class="templates-grid" id="templatesGrid"></div>
+          <p class="footer-note">Templates stay phase-aware, but the recommendation engine picks the one doc you should open first.</p>
+        </section>
+      </section>
+
+      <section class="tab-panel" id="tools">
+        <section class="surface">
+          <div class="split">
+            <div>
+              <div class="section-kicker">Agents, skills, and launchers</div>
+              <h2>AIOM tool library</h2>
+            </div>
+            <div class="status green"><i></i><span id="toolCountLabel"></span></div>
+          </div>
+          <div class="tools-grid" id="toolsGrid"></div>
+          <p class="footer-note">Launch behavior is explicit, but the tools stay inside the familiar AIOM workflow rather than becoming a separate technical experience.</p>
+        </section>
+      </section>
+
+      <section class="tab-panel" id="signals">
+        <div class="grid two">
+          <section class="surface">
+            <div class="section-kicker">Signal inbox</div>
+            <h2>All signals for this account</h2>
+            <div class="timeline" id="timeline"></div>
+          </section>
+
+          <section class="surface">
+            <div class="section-kicker">Signal-to-action framework</div>
+            <h2>How the workspace decides</h2>
+            <div class="signal-list" id="signalsList"></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="tab-panel" id="portfolio">
+        <div class="grid two">
+          <section class="surface">
+            <div class="section-kicker">Who needs me this week</div>
+            <h2>Portfolio ranking</h2>
+            <div class="roster-panel" id="rosterVerificationPanel">
+              <div class="split">
+                <div>
+                  <p class="muted">Confirm the suggested client roster before portfolio intelligence loads.</p>
+                  <p class="footer-note" id="rosterSourceStatus"></p>
+                </div>
+                <div class="button-row">
+                  <button class="secondary" id="selectAllRosterBtn">Verify all suggested</button>
+                  <button class="primary" id="confirmRosterBtn">Confirm selected roster</button>
+                </div>
+              </div>
+              <div class="roster-list" id="rosterClientList"></div>
+              <div class="roster-add-row">
+                <input class="roster-input" id="missingClientInput" type="text" placeholder="Add missing client" aria-label="Add missing client" />
+                <button class="buttonlike" id="addMissingClientBtn">Add client</button>
+              </div>
+              <p class="footer-note" id="rosterStatus"></p>
+            </div>
+            <table class="portfolio-table">
+              <thead>
+                <tr>
+                  <th>Rank</th>
+                  <th>Account</th>
+                  <th>Attention</th>
+                  <th>Phase</th>
+                  <th>Engagement</th>
+                  <th>Comp risk</th>
+                  <th>Hours left</th>
+                  <th>Aggregation</th>
+                  <th>Next move</th>
+                </tr>
+              </thead>
+              <tbody id="portfolioTableBody"></tbody>
+            </table>
+          </section>
+
+          <section class="surface">
+            <div class="section-kicker">Operating model</div>
+            <h2>What this version now does</h2>
+            <div class="list">
+              <div class="list-item">
+                <span class="eyebrow">1</span>
+                <h4>Keeps the AIOM-friendly dashboard</h4>
+                <p>The primary workflow stays human-readable and action-oriented: what changed, what matters, what to do next, and what asset or tool to use.</p>
+              </div>
+              <div class="list-item">
+                <span class="eyebrow">2</span>
+                <h4>Updates the data pipeline underneath</h4>
+                <p>Assistant health, Agent health, Prism-derived knowledge, and widget maturity are now part of the underlying model instead of requiring a separate dashboard experience.</p>
+              </div>
+              <div class="list-item">
+                <span class="eyebrow">3</span>
+                <h4>Keeps model + QA secondary</h4>
+                <p>The raw model and widget audit are still available for PM, Eng, and QA, but they no longer sit in the main AIOM workflow.</p>
+              </div>
+              <div class="list-item">
+                <span class="eyebrow">4</span>
+                <h4>Expands the portfolio again</h4>
+                <p>The toolbar and portfolio now use the fuller client set so the dashboard feels like a true operating surface rather than a narrowed demo.</p>
+              </div>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section class="tab-panel" id="prism">
+        <section class="surface">
+          <div class="split">
+            <div>
+              <div class="section-kicker">Prism workspace</div>
+              <h2>Capture the most relevant information for this account</h2>
+            </div>
+            <div class="status blue"><i></i><span>Canvas-safe inline view</span></div>
+          </div>
+          <p class="muted">This is a dedicated Prism memory and health loop for the selected account. It shows what Prism already tells us about client health, then captures whether the recommended action worked so the next recommendation can improve.</p>
+          <div class="prism-workspace">
+            <div class="grid two">
+              <section class="metric-card" style="min-height:auto;">
+                <div class="section-kicker">Most relevant context</div>
+                <div id="prismInlineContext"></div>
+              </section>
+              <section class="metric-card" style="min-height:auto;">
+                <div class="section-kicker">AIOM capture</div>
+                <div class="capture-grid">
+                  <div>
+                    <label class="field-label" for="prismSummaryInput">Executive summary</label>
+                    <textarea class="capture-field" id="prismSummaryInput" placeholder="What is the clearest summary of the account right now?"></textarea>
+                  </div>
+                  <div>
+                    <label class="field-label" for="prismRisksInput">Key risks and blockers</label>
+                    <textarea class="capture-field" id="prismRisksInput" placeholder="Capture the main risks, blockers, and unresolved issues."></textarea>
+                  </div>
+                  <div>
+                    <label class="field-label" for="prismOpportunitiesInput">Expansion and adoption opportunities</label>
+                    <textarea class="capture-field" id="prismOpportunitiesInput" placeholder="What is the highest-value upside or opening for this account?"></textarea>
+                  </div>
+                  <div>
+                    <label class="field-label" for="prismFollowupsInput">Next follow-up actions</label>
+                    <textarea class="capture-field" id="prismFollowupsInput" placeholder="What should the AIOM actually do next?"></textarea>
+                  </div>
+                  <div>
+                    <label class="field-label" for="prismActionTakenInput">Action taken</label>
+                    <textarea class="capture-field" id="prismActionTakenInput" placeholder="Which recommended action did you take?"></textarea>
+                  </div>
+                  <div>
+                    <label class="field-label" for="prismActionOutcomeInput">Action outcome</label>
+                    <textarea class="capture-field" id="prismActionOutcomeInput" placeholder="Worked, partially worked, stalled, or needs follow-up. What happened?"></textarea>
+                  </div>
+                  <div>
+                    <label class="field-label" for="prismRemainingBlockerInput">Remaining blocker</label>
+                    <textarea class="capture-field" id="prismRemainingBlockerInput" placeholder="What blocker still remains after the action?"></textarea>
+                  </div>
+                  <div>
+                    <label class="field-label" for="prismCommitmentsInput">Owner/date commitments</label>
+                    <textarea class="capture-field" id="prismCommitmentsInput" placeholder="Who committed to what, by when?"></textarea>
+                  </div>
+                  <div>
+                    <label class="field-label" for="prismWorkedInput">What worked</label>
+                    <textarea class="capture-field" id="prismWorkedInput" placeholder="What part of the play or asset helped?"></textarea>
+                  </div>
+                  <div>
+                    <label class="field-label" for="prismDidNotWorkInput">What did not work</label>
+                    <textarea class="capture-field" id="prismDidNotWorkInput" placeholder="What did not land or should not be repeated?"></textarea>
+                  </div>
+                  <div>
+                    <label class="field-label" for="prismRecommendedFollowupInput">Recommended follow-up</label>
+                    <textarea class="capture-field" id="prismRecommendedFollowupInput" placeholder="What should the next AIOM or Glean action be?"></textarea>
+                  </div>
+                  <div class="button-row">
+                    <button class="buttonlike" id="savePrismCaptureBtn">Keep notes for this session</button>
+                    <span class="footer-note" id="prismCaptureStatus">Notes are held in memory while this artifact is open.</span>
+                  </div>
+                </div>
+              </section>
+            </div>
+            <section class="metric-card" style="min-height:auto;">
+              <div class="section-kicker">Top signals informing this capture</div>
+              <div class="list" id="prismInlineSignalList"></div>
+            </section>
+            <section class="metric-card" style="min-height:auto;">
+              <div class="section-kicker">Copy into Prism</div>
+              <p class="muted">Save this summary into Prism after the customer touch so the account memory includes the recommended action, actual outcome, remaining blocker, commitments, and follow-up loop.</p>
+              <textarea class="capture-field" id="prismCopySummary" readonly></textarea>
+            </section>
+          </div>
+          <p class="footer-note">Canvas interactive content does not provide persistent browser storage, so capture notes are session-only in this artifact. Durable notes should be copied into the account workspace or captured through a Glean Agent flow.</p>
+        </section>
+      </section>
+
+      <div class="footer-link-row">
+        <p class="footer-note"><a href="#" id="dataModelLink">View data model and widget status</a></p>
+      </div>
+
+      <section class="tab-panel" id="model">
+        <div class="grid two">
+          <section class="surface">
+            <div class="section-kicker">Starter schema</div>
+            <h2>Data model</h2>
+            <p class="muted" style="margin-bottom:16px;">This is the underlying contract that powers the Adoption OS intelligence surface.</p>
+            <div class="json-shell" id="jsonView"></div>
+          </section>
+          <section class="surface">
+            <div class="section-kicker">Static widget audit</div>
+            <h2>What is live vs. what is still demo-driven</h2>
+            <div class="audit-grid" id="widgetAuditGrid"></div>
+            <p class="footer-note">This stays secondary so AIOMs can trust the interface without being forced into a model-first workflow.</p>
+          </section>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <div class="overlay" id="prismOverlay" aria-hidden="true">
+    <div class="modal">
+      <div class="split">
+        <div>
+          <div class="section-kicker">Embedded Prism experience</div>
+          <h2 id="prismTitle">Prism snapshot</h2>
+        </div>
+        <button class="secondary" id="closePrismBtn">Close</button>
+      </div>
+      <div class="grid two">
+        <div class="metric-card" style="min-height:auto;">
+          <div class="eyebrow">Knowledge coverage</div>
+          <div class="metric-value" style="font-size:26px;" id="prismCoverage"></div>
+          <div class="metric-sub" id="prismDetail"></div>
+        </div>
+        <div class="metric-card" style="min-height:auto;">
+          <div class="eyebrow">Refresh + signals</div>
+          <div class="metric-value" style="font-size:26px;" id="prismRefresh"></div>
+          <div class="metric-sub" id="prismSignals"></div>
+        </div>
+      </div>
+      <section class="surface" style="margin-top:18px;">
+        <div class="section-kicker">Why this matters</div>
+        <h2>Derived account knowledge</h2>
+        <p class="muted" id="prismNarrative"></p>
+      </section>
+      <section class="surface" style="margin-top:18px;">
+        <div class="section-kicker">Signals contributing to Prism</div>
+        <div class="list" id="prismSignalList"></div>
+      </section>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const phases = {
+      prep: 'Preparation, Strategy & Planning',
+      readiness: 'Build Awareness & Readiness',
+      stickiness: 'Expand & Create Stickiness',
+      scale: 'Scale & Sustain Long-Term'
+    };
+
+    const phaseBackboneDefaults = {
+      prep: {
+        phaseObjective: 'Define outcomes, owners, scope, success criteria, and the first credible path to launch.',
+        currentMilestone: 'Operating plan locked',
+        openAdoptionActivities: ['Confirm stakeholder map and decision owner', 'Lock launch scope and blocker path', 'Package the planning asset for the next customer touch'],
+        overdueAdoptionActivities: [],
+        phaseAssets: ['Success Planning Deck', 'Kickoff questions guide', 'Client Adoption Strategy Chatbot'],
+        functionPhaseStatus: [
+          { function: 'Admins / IT', phase: 'Preparation', status: 'Defining scope and governance path' },
+          { function: 'End users', phase: 'Preparation', status: 'Audience and launch path still being shaped' }
+        ]
+      },
+      readiness: {
+        phaseObjective: 'Build customer readiness through launch comms, enablement, training, and blocker resolution.',
+        currentMilestone: 'Readiness path activated',
+        openAdoptionActivities: ['Resolve launch blockers with named owners', 'Prepare enablement package and comms', 'Schedule training or office-hours motion'],
+        overdueAdoptionActivities: [],
+        phaseAssets: ['Enablement Resource Package', 'Training Calendar Invites', 'Glean Change Briefing Agent'],
+        functionPhaseStatus: [
+          { function: 'Admins / IT', phase: 'Readiness', status: 'Unblocking launch path and support readiness' },
+          { function: 'End users', phase: 'Preparation', status: 'Waiting on comms and training sequence' }
+        ]
+      },
+      stickiness: {
+        phaseObjective: 'Turn launch activity into repeatable workflow behavior, champions, and business-relevant habits.',
+        currentMilestone: 'Workflow adoption motion active',
+        openAdoptionActivities: ['Run next-steps strategy or business workshop', 'Identify priority use cases and champions', 'Capture value narrative and follow-up commitments'],
+        overdueAdoptionActivities: [],
+        phaseAssets: ['Next Steps in Maxing Out Adoption Deck', 'Business-Level Workshop Facilitation Guide', 'Prompt Crafter'],
+        functionPhaseStatus: [
+          { function: 'Champions / power users', phase: 'Stickiness', status: 'Ready for deeper workflow adoption' },
+          { function: 'Broader users', phase: 'Readiness', status: 'Needs refreshed examples and habit support' }
+        ]
+      },
+      scale: {
+        phaseObjective: 'Sustain adoption through governance, platform ownership, COE rhythms, and repeatable value proof.',
+        currentMilestone: 'Sustainability motion active',
+        openAdoptionActivities: ['Define governance calendar and COE owner', 'Package end-user support model', 'Prepare executive value proof'],
+        overdueAdoptionActivities: [],
+        phaseAssets: ['Platform / COE Governance Calendar Invite', 'End-User Support Strategy for COE', 'EBR Generator'],
+        functionPhaseStatus: [
+          { function: 'Admins / COE', phase: 'Scale', status: 'Building governance and support rhythm' },
+          { function: 'Business functions', phase: 'Stickiness', status: 'Scaling proven use cases unevenly' }
+        ]
+      }
+    };
+
+    const templatesLibrary = [
+      { phase: 'prep', title: 'Success Planning Deck', type: 'Presentation', activity: 'Success planning', url: 'https://docs.google.com/presentation/d/1VqVluTgCPrnSNveUxoUOoFzBmzKFifqooCJn4oCrhpc/edit' },
+      { phase: 'prep', title: 'Kickoff questions guide', type: 'Guide', activity: 'Internal preparation', url: 'https://docs.google.com/document/d/1ENpn22mAktHHDjw5MSq1I3BJKbGGbJIvVypIDxxbTGk/edit?usp=sharing' },
+      { phase: 'readiness', title: 'Enablement Resource Package', type: 'Resource pack', activity: 'Support comms and intranet copy', url: 'https://docs.google.com/document/d/1m-_cm_cTaBqZBwqRegrDJ485DLbzPl8SvzLO6dkFLzo/edit?usp=sharing' },
+      { phase: 'readiness', title: 'Training Calendar Invites', type: 'Template', activity: 'Training scheduling', url: 'https://docs.google.com/document/d/1wNUUaoCyAP-FdhNyaDRT62Bgm5uyOYjfx8sBcz-EuxA/edit?tab=t.0' },
+      { phase: 'stickiness', title: 'Next Steps in Maxing Out Adoption Deck', type: 'Presentation', activity: 'Next steps strategy', url: 'https://docs.google.com/presentation/d/1jNnlvXUFNoyjuxOpLt8kjsq2cJf2eekg4UXK0nUsJVc/edit?usp=sharing' },
+      { phase: 'stickiness', title: 'Business-Level Workshop Facilitation Guide', type: 'Guide', activity: 'Business workshops', url: 'https://docs.google.com/document/d/1MblgO5Ws7JMAKb9tNE6BpzWn8LgcoDSEfY8Rh8BAO48/edit?usp=sharing' },
+      { phase: 'stickiness', title: 'Power User Program Outline & Resources', type: 'Program guide', activity: 'Power users', url: 'https://docs.google.com/document/d/1bWfu9roTnLD5bQtTc41RrEwwvUdAUzXiKtocraYvcCE/edit?tab=t.0' },
+      { phase: 'scale', title: 'Platform / COE Governance Calendar Invite', type: 'Template', activity: 'Platform governance', url: 'https://docs.google.com/document/d/1qFziqv2Ek0PL8GfG73t6pkrSLBf8aj6zKPGJ4_MMIAA/edit?tab=t.0' },
+      { phase: 'scale', title: 'End-User Support Strategy for COE', type: 'Guide', activity: 'Platform governance', url: 'https://docs.google.com/document/d/1I7O4ATeC75naQipxFGnnSJpgHYH9gsI2jWKOl4wvviI/edit?usp=sharing' }
+    ];
+
+    const toolsLibrary = [
+      { title: 'AIOM Account Transition Agent', category: 'Account productivity', owner: 'Karan Gupta', status: 'Completed', value: 'Creates a comprehensive briefing when an AIOM takes over an account.', url: 'https://app.glean.com/chat/agents/17b2d958cb814a7690e514e07e39e188', bestFor: 'Transitions, onboarding, inherited books of business', phases: ['prep', 'stickiness'] },
+      { title: 'Client Adoption Strategy Chatbot', category: 'Customer insights & strategy', owner: 'Carrie Arndt', status: 'Completed', value: 'Answers general or client-specific adoption strategy questions for AIOMs.', url: 'https://app.glean.com/chat/agents/ef9c3c4e22474e08bd5286a32d81607b', bestFor: 'Adoption strategy, workshops, planning', phases: ['prep', 'readiness', 'stickiness'] },
+      { title: 'Glean Change Briefing Agent', category: 'Customer communication & content', owner: 'Mark Christianson', status: 'Completed', value: 'Turns release-note noise into an admin briefing and end-user digest tuned to the customer environment.', url: 'https://app.glean.com/chat/agents/333c00cb6d2d4638acf9b332077dca36', bestFor: 'Admin comms, release change management', phases: ['readiness', 'stickiness', 'scale'] },
+      { title: 'Prompt Crafter', category: 'Prompting & agent design', owner: 'Mark Christianson', status: 'Completed', value: 'Turns plain-language input into a structured prompt or agent-ready system prompt.', url: 'https://app.glean.com/chat/agents/77304e39f3bf4535971235b298aac8c9', bestFor: 'Prompting workshops, business workshops', phases: ['readiness', 'stickiness'] },
+      { title: 'Create an Enablement Plan', category: 'Account productivity', owner: 'Harshit Kohli', status: 'Completed', value: 'Generates a comprehensive enablement plan for a new customer.', url: '', bestFor: 'New accounts, enablement planning', phases: ['prep', 'readiness'] },
+      { title: 'AIOM Account Ramp Companion', category: 'Account productivity', owner: 'AIOM team', status: 'Prompt fallback', value: 'Creates a fast account ramp brief when source coverage is thin or ownership just changed.', url: '', prompt: 'Act as the AIOM Account Ramp Companion for [Customer]. Build a concise ramp brief with known context, missing sources, decision owner, target audience, current friction, recommended next step, and what I should capture in Prism.', bestFor: 'Account ramp, sparse context, ownership changes', phases: ['prep', 'stickiness'] },
+      { title: 'Meeting Summarizer + Follow Up', category: 'Customer communication & content', owner: 'AIOM team', status: 'Prompt fallback', value: 'Turns a customer or internal meeting into decisions, blockers, owner/date commitments, and follow-up copy.', url: '', prompt: 'Use Meeting Summarizer + Follow Up behavior for [Customer]. Summarize decisions, blockers, commitments, owners, dates, follow-up message, and Prism capture notes from the latest meeting context.', bestFor: 'Planning resets, blocker triage, customer follow-up', phases: ['prep', 'readiness', 'stickiness'] },
+      { title: 'Optimal Agent Use Case Recommender', category: 'Prompting & agent design', owner: 'AIOM team', status: 'Prompt fallback', value: 'Recommends the most realistic agent or skill use case based on user workflows, adoption friction, and available champions.', url: '', prompt: 'Act as the Optimal Agent Use Case Recommender for [Customer]. Identify the highest-fit agent or skill use case, target function, enabling prompt, adoption friction, rollout path, and Prism capture note.', bestFor: 'Agent use cases, workflow transformation, champion motions', phases: ['stickiness', 'scale'] },
+      { title: 'EBR Generator', category: 'Executive reviews', owner: 'Leigh Whittaker Coleman', status: 'Skill', value: 'Builds an EBR deck end-to-end so AIOMs can generate polished reviews much faster.', url: 'https://app.glean.com/library/1d5124153e8c4312a011138257888aec', prompt: 'Use my glean-ebr-generator skill. The customer is [Customer].', bestFor: 'EBRs, executive readouts, showcasing value', phases: ['stickiness', 'scale', 'readiness'] }
+    ];
+
+    const resourceCatalog = [
+      { motion: 'planning_reset', title: 'Client Adoption Strategy Chatbot', asset: 'Success Planning Deck', frictionTypes: ['support_blocker', 'strategic_plan_due', 'scope'], phases: ['prep', 'readiness'], when: 'Use when the account needs a tighter operating plan, owner path, and launch sequence.' },
+      { motion: 'meeting_follow_up', title: 'Meeting Summarizer + Follow Up', asset: 'Customer-facing blocker summary', frictionTypes: ['support_blocker', 'qbr_due'], phases: ['prep', 'readiness'], when: 'Use when decisions, blockers, and owner/date commitments need to become clean follow-up and Prism memory.' },
+      { motion: 'change_briefing', title: 'Glean Change Briefing Agent', asset: 'Short release video + admin digest', frictionTypes: ['release_enablement'], phases: ['readiness', 'stickiness', 'scale'], when: 'Use when release or governance changes need customer-ready admin communication.' },
+      { motion: 'account_ramp', title: 'AIOM Account Ramp Companion', asset: 'Account ramp brief', frictionTypes: ['coverage_gap', 'roster_gap'], phases: ['prep', 'stickiness'], when: 'Use when context is thin, ownership is unclear, or the AIOM needs a fast baseline before acting.' },
+      { motion: 'use_case_selection', title: 'Optimal Agent Use Case Recommender', asset: 'Agent use-case recommendation', frictionTypes: ['low_engagement', 'power_user_due'], phases: ['stickiness', 'scale'], when: 'Use when the next adoption move should become a concrete agent, skill, or workflow habit.' },
+      { motion: 'value_review', title: 'EBR Generator', asset: 'Executive review pack', frictionTypes: ['qbr_due', 'low_engagement'], phases: ['readiness', 'stickiness', 'scale'], when: 'Use when the account needs executive value proof and a sharper commercial narrative.' },
+      { motion: 'prompt_workshop', title: 'Prompt Crafter', asset: 'Business-relevance one-pager', frictionTypes: ['low_engagement'], phases: ['stickiness'], when: 'Use when the next move is practical workflow prompting or business-user habit support.' }
+    ];
+
+    const signalDecisionGuide = [
+      { title: 'Support noise + unresolved blockers', body: 'Prioritize planning reset, issue triage, customer communication, and a clear owner/date path before doing broader enablement.' },
+      { title: 'Release landing soon + affected workflows', body: 'Trigger admin comms, short enablement refreshers, optional office hours, and a lightweight video before confusion shows up.' },
+      { title: 'Post-launch + low engagement', body: 'Move into next-steps strategy, business workshops, and champion/use-case motions rather than generic follow-up meetings.' },
+      { title: 'Large account + stale executive touch', body: 'Escalate toward a QBR / EBR or planning session before value narratives decay and commercial risk compounds.' },
+      { title: 'High-value account + weak governance', body: 'Push governance and ownership before long-term quality and reinforcement drift.' }
+    ];
+
+    const widgetAudit = [
+      { title: 'Top metrics cards', status: 'partial', body: 'Dynamic by account, but still driven by seeded data rather than a live metrics source.' },
+      { title: 'What changed and what matters', status: 'partial', body: 'Interactive and persisted locally, but signal bodies are still seeded demo content.' },
+      { title: 'Next best move', status: 'partial', body: 'Logic is account-aware, but recommendations are still heuristically seeded instead of computed from live sources.' },
+      { title: 'Assistant + Agents health', status: 'static', body: 'Wired into the underlying model, but still mocked until live metrics land.' },
+      { title: 'Prism knowledge coverage', status: 'static', body: 'Embedded in the old dashboard, but refresh and coverage are still mocked.' },
+      { title: 'Launch mode labels', status: 'live', body: 'These reflect the actual CTA behavior in the artifact today.' },
+      { title: 'Portfolio ranking', status: 'partial', body: 'Dynamic within the artifact, but attention scores are still demo-grade and not live-backed.' },
+      { title: 'Source registry', status: 'partial', body: 'Per-account source rows change correctly, but some coverage levels are still authored values.' }
+    ];
+
+    const sourceCoverageCategories = [
+      'Salesforce',
+      'AIOM Staffing Sheet',
+      'Rocketlane',
+      'Sigma',
+      'Slack',
+      'Gong/meetings',
+      'Docs/Drive',
+      'Prism'
+    ];
+
+    function coverage(status, reason, sources = []) {
+      return { status, reason, sources };
+    }
+
+    function buildSourceCoverageStatus(overrides = {}) {
+      return sourceCoverageCategories.reduce((result, category) => {
+        result[category] = overrides[category] || coverage('missing', 'No seeded source evidence is available yet.', []);
+        return result;
+      }, {});
+    }
+
+    function getCoverageStatusClass(status) {
+      if (status === 'available') return 'available';
+      if (status === 'needs verification') return 'medium';
+      if (status === 'provisional') return 'partial';
+      return 'high';
+    }
+
+    function getSourceCoverageEntries(account) {
+      return sourceCoverageCategories.map(category => ({
+        category,
+        ...(account.sourceCoverageStatus[category] || coverage('missing', 'No source evidence is available yet.', []))
+      }));
+    }
+
+    function getMissingSources(account) {
+      return account.missingSources && account.missingSources.length
+        ? account.missingSources
+        : getSourceCoverageEntries(account).filter(item => item.status === 'missing').map(item => item.category);
+    }
+
+    function getConfidenceReason(account) {
+      const entries = getSourceCoverageEntries(account);
+      const availableCount = entries.filter(item => item.status === 'available').length;
+      const verifyCount = entries.filter(item => item.status === 'needs verification' || item.status === 'provisional').length;
+      const missingSources = getMissingSources(account);
+      const gapText = missingSources.length ? ` Missing or unverified: ${missingSources.join(', ')}.` : ' No required source categories are marked missing.';
+      return `${account.prism.coverage} Prism coverage, ${account.sourceCoverage} seeded source coverage, ${availableCount}/${entries.length} categories available, and ${verifyCount} needing verification.${gapText}`;
+    }
+
+    function getPrismHealthContext(account) {
+      const primarySignal = account.signals[0] || {};
+      const prism = account.prism || {};
+      return {
+        prismHealthSignal: prism.prismHealthSignal || `${prism.health} health input from ${prism.signals} Prism signals refreshed ${prism.refresh}.`,
+        prismRiskPattern: prism.prismRiskPattern || primarySignal.title || 'No repeated risk pattern captured yet.',
+        priorActionOutcome: prism.priorActionOutcome || 'Prior recommendation outcome has not been captured in this artifact session.',
+        repeatedBlocker: prism.repeatedBlocker || getMissingSources(account)[0] || 'No repeated blocker captured yet.',
+        momentumSinceLastTouch: prism.momentumSinceLastTouch || account.assistant.trend || 'Momentum not yet available.',
+        recommendedPlayFromHistory: prism.recommendedPlayFromHistory || account.asset.title,
+        healthImpact: prism.healthImpact || `${account.prism.detail} Treat this as seeded health context, not live Prism truth.`
+      };
+    }
+
+    function getPhaseBackbone(account) {
+      const defaults = phaseBackboneDefaults[account.phase] || phaseBackboneDefaults.prep;
+      return {
+        phaseObjective: account.phaseObjective || defaults.phaseObjective,
+        currentMilestone: account.currentMilestone || defaults.currentMilestone,
+        openAdoptionActivities: account.openAdoptionActivities || defaults.openAdoptionActivities,
+        overdueAdoptionActivities: account.overdueAdoptionActivities || defaults.overdueAdoptionActivities,
+        phaseAssets: account.phaseAssets || defaults.phaseAssets,
+        functionPhaseStatus: account.functionPhaseStatus || defaults.functionPhaseStatus
+      };
+    }
+
+    const accounts = {
+      'Amplify Education': {
+        name: 'Amplify Education',
+        business: 'K-12 curriculum, assessment, and education technology provider.',
+        phase: 'prep',
+        phaseObjective: 'Convert loose implementation motion into a named operating plan with owners, blocker paths, and launch criteria.',
+        currentMilestone: 'Planning reset before launch sequence',
+        openAdoptionActivities: ['Confirm UAT exit criteria with admin owner', 'Map support blockers to owner/date commitments', 'Package customer-facing blocker summary'],
+        overdueAdoptionActivities: ['Training audience decision still open'],
+        phaseAssets: ['Success Planning Deck', 'Kickoff questions guide', 'Customer-facing blocker summary'],
+        functionPhaseStatus: [
+          { function: 'Admins / IT', phase: 'Readiness', status: 'Already handling implementation and governance blockers' },
+          { function: 'Instructional / curriculum users', phase: 'Preparation', status: 'Still needs audience-specific launch path' },
+          { function: 'Executive sponsor', phase: 'Preparation', status: 'Needs clearer outcome and decision cadence' }
+        ],
+        arrLabel: '$859.8K',
+        hoursRemainingLabel: '38',
+        openIssues: 4,
+        criticalIssues: 1,
+        engagement: 'Medium',
+        compRisk: 'Low',
+        attentionScore: 83,
+        sourceCoverage: 'high',
+        sourceCoverageStatus: buildSourceCoverageStatus({
+          Salesforce: coverage('available', 'Seeded Salesforce-style account ownership, ARR, package, and segment context are present.', ['Salesforce-style account row']),
+          'AIOM Staffing Sheet': coverage('available', 'Seeded Staffing Sheet ownership places this account in the AIOM roster.', ['Seeded Staffing Sheet']),
+          Rocketlane: coverage('needs verification', 'Project capacity and milestone timing are represented in seeded form and should be verified before customer-facing commitments.', ['Seeded package and hours fields']),
+          Sigma: coverage('available', 'Assistant, Agents, and usage trend signals are seeded for operating health.', ['Seeded usage metrics']),
+          Slack: coverage('available', 'Rollout and internal account channels are represented as primary coordination sources.', ['#amplify-glean-rollout', '#internal-amplify']),
+          'Gong/meetings': coverage('needs verification', 'Planning-session themes exist in the account narrative, but meeting evidence is not live-backed.', ['Planning reset notes']),
+          'Docs/Drive': coverage('available', 'Recommended planning assets and customer-facing blocker summary are linked in seeded data.', ['Success Planning Deck', 'Customer-facing blocker summary']),
+          Prism: coverage('available', 'Prism has high seeded coverage with recent refresh timing and 11 account signals.', ['Amplify Prism view'])
+        }),
+        missingSources: ['Rocketlane verification', 'Gong/meetings verification'],
+        assistant: { wau: 61, trend: '+8%', health: 'Healthy', detail: 'Assistant usage is broad enough to show meaningful adoption.' },
+        agents: { wau: 18, runs: 74, health: 'Building', detail: 'Agents are emerging but not yet part of the default operating rhythm.' },
+        prism: { coverage: 'High', refresh: '3h ago', signals: 11, health: 'Ready', detail: 'Derived account knowledge is being refreshed and is usable for next-step recommendations.', prismHealthSignal: 'Recent Prism memory shows implementation motion is active, but launch readiness depends on blocker ownership.', prismRiskPattern: 'Support noise and training decisions keep reappearing before launch planning locks.', priorActionOutcome: 'Prior planning motion clarified UAT scope, but did not close owner/date commitments.', repeatedBlocker: 'Open service tickets and unresolved training audience decision.', momentumSinceLastTouch: 'Positive usage momentum, but launch plan is still shapeable and fragile.', recommendedPlayFromHistory: 'Customer-facing blocker summary', healthImpact: 'Prism raises readiness risk until blockers, owners, and launch sequencing are captured.' },
+        nextMove: {
+          title: 'Lock the operating plan while the motion is still shapeable',
+          body: 'Run a planning reset and use the Success Planning Deck plus the Client Adoption Strategy Chatbot to tighten scope, owners, and the launch path.',
+          why: 'UAT timing, support noise, and launch sequencing still need a clearer operating path.',
+          session: 'Planning reset / issue triage',
+          sessionBody: 'Align on blockers, owners, dates, and customer communication before broader enablement.',
+          dueWindow: 'This week',
+          ownerHint: 'Owner: AIOM with admin / implementation support.'
+        },
+        doc: { title: 'Success Planning Deck', body: 'Presentation · success planning', url: 'https://docs.google.com/presentation/d/1VqVluTgCPrnSNveUxoUOoFzBmzKFifqooCJn4oCrhpc/edit' },
+        tool: 'Client Adoption Strategy Chatbot',
+        asset: { title: 'Customer-facing blocker summary', body: 'Summarize issue status, owners, dates, and the recovery plan in one place.', tags: ['status update', 'recovery plan'] },
+        signals: [
+          { type: 'support_blocker', severity: 'high', title: '4 open service tickets', body: 'There is active product friction that should trigger a reset plan and explicit owner/date tracking.', due: 'This week' },
+          { type: 'strategic_plan_due', severity: 'high', title: 'Planning session should be locked now', body: 'You are still early enough to shape the motion, but not early enough to stay vague on sequence and owners.', due: 'This week' },
+          { type: 'release_enablement', severity: 'medium', title: 'Governance release approaching', body: 'Admin-facing release changes create a good reason to send proactive comms and offer a short admin walkthrough.', due: 'May 6' },
+          { type: 'coverage_gap', severity: 'low', title: 'Training decisions still open', body: 'Audience-specific training choices should be sequenced before launch week.', due: 'This month' }
+        ],
+        releases: [
+          { title: 'Admin digest for agent governance updates', date: '2026-05-06', body: 'Updated admin controls and governance language may require a concise briefing for customer admins.', asset: 'Admin briefing + short walkthrough video', tool: 'Glean Change Briefing Agent' }
+        ],
+        sources: [
+          { role: 'Operational', name: '#amplify-glean-rollout', type: 'Slack', purpose: 'Primary scan target for rollout, enablement, UAT, and customer-facing implementation motion.' },
+          { role: 'Internal-only', name: '#internal-amplify', type: 'Slack', purpose: 'Decision context for trade-offs, scope, sandbox enablement, and internal coordination.' },
+          { role: 'Derived knowledge', name: 'Amplify Prism view', type: 'Prism', purpose: 'Stores refreshed account signals, recommended next steps, and durable launch knowledge.' }
+        ]
+      },
+      'Coalition': {
+        name: 'Coalition',
+        business: 'Cyber insurance and digital risk management company.',
+        phase: 'readiness',
+        phaseObjective: 'Stabilize launch readiness by clearing approvals, tightening comms, and sequencing enablement around support reality.',
+        currentMilestone: 'Approvals and support blockers sequenced',
+        openAdoptionActivities: ['Confirm approval owner and date', 'Prepare admin digest for launch communication', 'Hold blocker triage before broad enablement'],
+        overdueAdoptionActivities: ['Approval path needs executive visibility'],
+        phaseAssets: ['Enablement Resource Package', 'Training Calendar Invites', 'Short release video + admin digest'],
+        functionPhaseStatus: [
+          { function: 'Security / IT admins', phase: 'Readiness', status: 'Primary launch blockers and approval path' },
+          { function: 'Claims operations', phase: 'Preparation', status: 'Needs workflow examples before training' },
+          { function: 'Executive sponsor', phase: 'Stickiness', status: 'Ready for value framing once blockers clear' }
+        ],
+        arrLabel: '$680.0K',
+        hoursRemainingLabel: '24',
+        openIssues: 6,
+        criticalIssues: 2,
+        engagement: 'High',
+        compRisk: 'Medium',
+        attentionScore: 88,
+        sourceCoverage: 'medium',
+        sourceCoverageStatus: buildSourceCoverageStatus({
+          Salesforce: coverage('available', 'Seeded account ownership, commercial risk, and package context are present.', ['Salesforce-style account row']),
+          'AIOM Staffing Sheet': coverage('available', 'Roster source includes this account as assigned to the AIOM.', ['Seeded Staffing Sheet']),
+          Rocketlane: coverage('needs verification', 'Rollout blockers and hours context are inferred from seeded account fields, not a live project plan.', ['Seeded rollout status']),
+          Sigma: coverage('available', 'Assistant and Agents usage are seeded strongly enough for directional health.', ['Seeded usage metrics']),
+          Slack: coverage('needs verification', 'Coordination context is implied by rollout blockers, but no named Slack channel is represented.', ['Seeded rollout blocker notes']),
+          'Gong/meetings': coverage('available', 'Training and rollout sessions are represented as supporting workstream context.', ['Training and rollout sessions']),
+          'Docs/Drive': coverage('available', 'Enablement Resource Package is attached to the recommended motion.', ['Enablement Resource Package']),
+          Prism: coverage('available', 'Prism has medium seeded coverage with readiness and support patterns.', ['Coalition Prism view'])
+        }),
+        missingSources: ['Rocketlane verification', 'Slack channel verification'],
+        assistant: { wau: 74, trend: '+11%', health: 'Healthy', detail: 'Assistant is seeing strong weekly usage across the account.' },
+        agents: { wau: 29, runs: 126, health: 'Healthy', detail: 'Agent usage is meaningful enough to count as workflow behavior, not just experimentation.' },
+        prism: { coverage: 'Medium', refresh: '8h ago', signals: 8, health: 'Partial', detail: 'Prism has enough signal for prioritization, but not full coverage for every workstream.', prismHealthSignal: 'Prism shows healthy usage with unresolved readiness friction, so prioritization is possible but not complete.', prismRiskPattern: 'Approvals and support blockers keep gating broader enablement.', priorActionOutcome: 'Prior enablement motion created activity, but approvals still need executive visibility.', repeatedBlocker: 'Approval owner and support triage path remain unresolved.', momentumSinceLastTouch: 'Usage is strengthening while launch readiness remains gated.', recommendedPlayFromHistory: 'Short release video + admin digest', healthImpact: 'Prism keeps the account in partial-health watch until approval and blocker commitments are captured.' },
+        nextMove: {
+          title: 'Stabilize the account before broadening the motion',
+          body: 'Use a planning reset, the Enablement Plan flow, and the Change Briefing Agent to reduce rollout friction and improve customer clarity.',
+          why: 'Approvals and support issues are still gating broader readiness.',
+          session: 'Planning reset / issue triage',
+          sessionBody: 'Clarify blockers, owners, and sequencing before more launch activation happens.',
+          dueWindow: 'Within 3 business days',
+          ownerHint: 'Owner: AIOM with implementation / IT support.'
+        },
+        doc: { title: 'Enablement Resource Package', body: 'Resource pack · comms and intranet copy', url: 'https://docs.google.com/document/d/1m-_cm_cTaBqZBwqRegrDJ485DLbzPl8SvzLO6dkFLzo/edit?usp=sharing' },
+        tool: 'Meeting Summarizer + Follow Up',
+        asset: { title: 'Short release video + admin digest', body: 'Package change into a quick watch plus a crisp admin note.', tags: ['video', 'admin digest'] },
+        signals: [
+          { type: 'support_blocker', severity: 'high', title: 'Approvals still gating rollout', body: 'A readiness account with high motion but real blockers that still need active sequencing.', due: 'Current' },
+          { type: 'qbr_due', severity: 'medium', title: 'QBR window now open', body: 'There is enough motion and value narrative to justify an executive review.', due: 'This month' },
+          { type: 'release_enablement', severity: 'medium', title: 'Launch communication starter pack relevant', body: 'The account has end-user and admin audiences that may benefit from proactive change comms.', due: 'May 20' }
+        ],
+        releases: [
+          { title: 'Launch communication starter pack', date: '2026-05-20', body: 'A comms-friendly release can be used to re-engage quieter deployments with fresh examples and prompts.', asset: 'Slack/email comms + tip drop campaign', tool: 'Glean Change Briefing Agent' }
+        ],
+        sources: [
+          { role: 'Support', name: 'Service tickets', type: 'Ticketing', purpose: 'Surfaces unresolved product errors, connector pain, and escalations.' },
+          { role: 'Meetings', name: 'Training and rollout sessions', type: 'Meetings', purpose: 'Tracks what was promised, who is engaged, and which follow-ups are still open.' },
+          { role: 'Derived knowledge', name: 'Coalition Prism view', type: 'Prism', purpose: 'Blends readiness, support, and launch patterns into a durable account-health view.' }
+        ]
+      },
+      'Roblox': {
+        name: 'Roblox',
+        business: 'Gaming platform and user-generated virtual world company.',
+        phase: 'readiness',
+        phaseObjective: 'Rebuild readiness and value clarity before engagement softens into a post-launch stall.',
+        currentMilestone: 'Executive value review prepared',
+        openAdoptionActivities: ['Refresh executive value narrative', 'Verify champion and power-user evidence', 'Select next workshop or QBR motion'],
+        overdueAdoptionActivities: ['Executive review overdue'],
+        phaseAssets: ['Next Steps in Maxing Out Adoption Deck', 'Executive review pack', 'EBR Generator'],
+        functionPhaseStatus: [
+          { function: 'Builder / creator teams', phase: 'Stickiness', status: 'Power-user motion is available' },
+          { function: 'Broader business users', phase: 'Readiness', status: 'Needs refreshed examples and clear relevance' },
+          { function: 'Executive sponsor', phase: 'Readiness', status: 'Needs value narrative reset' }
+        ],
+        arrLabel: '$800.4K',
+        hoursRemainingLabel: '18',
+        openIssues: 2,
+        criticalIssues: 0,
+        engagement: 'Low',
+        compRisk: 'Medium',
+        attentionScore: 81,
+        sourceCoverage: 'medium',
+        sourceCoverageStatus: buildSourceCoverageStatus({
+          Salesforce: coverage('available', 'Seeded Salesforce ownership identifies commercial context and account size.', ['Salesforce ownership']),
+          'AIOM Staffing Sheet': coverage('needs verification', 'Roster is inferred from Salesforce ownership rather than a Staffing Sheet assignment.', ['Salesforce ownership']),
+          Rocketlane: coverage('missing', 'No seeded project-state or hours source is represented for this account.', []),
+          Sigma: coverage('available', 'Assistant, Agents, and engagement trends are seeded for operating health.', ['Seeded usage metrics']),
+          Slack: coverage('needs verification', 'Champion activity is present as a qualitative signal, but Slack source coverage is not named.', ['Champion / power-user activity']),
+          'Gong/meetings': coverage('available', 'Champion and power-user notes support the value-review recommendation.', ['Champion / power-user activity']),
+          'Docs/Drive': coverage('available', 'Next Steps deck and executive review pack are attached to the recommendation.', ['Next Steps deck', 'Executive review pack']),
+          Prism: coverage('available', 'Prism has medium seeded coverage for value and risk narrative.', ['Roblox Prism view'])
+        }),
+        missingSources: ['Rocketlane', 'AIOM Staffing Sheet verification', 'Slack channel verification'],
+        assistant: { wau: 47, trend: '-4%', health: 'Watch', detail: 'Assistant usage is present but softening, especially among broader teams.' },
+        agents: { wau: 15, runs: 52, health: 'Building', detail: 'Agent usage exists, but it is concentrated in a smaller power-user segment.' },
+        prism: { coverage: 'Medium', refresh: '6h ago', signals: 7, health: 'Partial', detail: 'Prism is useful for prioritization, but the account still needs sharper strategic context.', prismHealthSignal: 'Prism shows value narrative risk despite meaningful usage pockets.', prismRiskPattern: 'Executive review keeps slipping while broader team engagement softens.', priorActionOutcome: 'Prior champion motion surfaced power-user evidence, but did not reset executive value clarity.', repeatedBlocker: 'Missing executive value narrative and next strategic expansion motion.', momentumSinceLastTouch: 'Assistant usage softened while power-user signals remain available.', recommendedPlayFromHistory: 'Executive review pack', healthImpact: 'Prism indicates a strategic-health risk unless the next touch creates executive pull.' },
+        nextMove: {
+          title: 'Refresh the executive value narrative now',
+          body: 'Use the Next Steps deck and EBR-style framing to reconnect the account to business value and create a sharper next-step motion.',
+          why: 'Engagement has gone quiet, but there is still meaningful upside if the story gets reset now.',
+          session: 'QBR / value review',
+          sessionBody: 'Re-ground the account in outcomes, risks, and the next strategic expansion motion.',
+          dueWindow: 'Within 2 weeks',
+          ownerHint: 'Owner: AIOM with executive and champion support.'
+        },
+        doc: { title: 'Next Steps in Maxing Out Adoption Deck', body: 'Presentation · next steps strategy', url: 'https://docs.google.com/presentation/d/1jNnlvXUFNoyjuxOpLt8kjsq2cJf2eekg4UXK0nUsJVc/edit?usp=sharing' },
+        tool: 'EBR Generator',
+        asset: { title: 'Executive review pack', body: 'Use a concise value story to reconnect the client to outcomes, risks, and next bets.', tags: ['exec deck', 'value story'] },
+        signals: [
+          { type: 'low_engagement', severity: 'high', title: 'Low engagement despite large upside', body: 'Quietness should trigger strategic attention rather than invisibility.', due: 'Current' },
+          { type: 'qbr_due', severity: 'medium', title: 'Executive review overdue', body: 'The account likely needs a formal strategic review motion and clearer value framing.', due: 'Current quarter' },
+          { type: 'power_user_due', severity: 'low', title: 'Power-user enablement opportunity', body: 'Builder-facing updates create a good window for structured power-user development.', due: 'This month' }
+        ],
+        releases: [
+          { title: 'Improved prompting and builder guidance', date: '2026-05-13', body: 'New builder help and prompting improvements create a good moment for power-user refreshers.', asset: 'Power-user training refresh or 5-minute video', tool: 'Prompt Crafter' }
+        ],
+        sources: [
+          { role: 'Usage', name: 'Engagement indicators', type: 'Operational metrics', purpose: 'Shows that usage exists but broader momentum is flattening.' },
+          { role: 'Champions', name: 'Champion / power-user activity', type: 'Meeting notes', purpose: 'Highlights where stronger use-case or builder motions could create relevance.' },
+          { role: 'Derived knowledge', name: 'Roblox Prism view', type: 'Prism', purpose: 'Aggregates signals into a clearer value and risk narrative for strategic follow-up.' }
+        ]
+      },
+      'ScalePad': {
+        name: 'ScalePad',
+        business: 'Software platform for managed service providers and IT teams.',
+        phase: 'stickiness',
+        phaseObjective: 'Use the remaining capacity to create one credible workflow habit or champion motion instead of generic follow-up.',
+        currentMilestone: 'Next-steps strategy session now',
+        openAdoptionActivities: ['Prioritize the highest-value use case', 'Prepare business-relevance one-pager', 'Capture champion follow-up commitments'],
+        overdueAdoptionActivities: ['Post-launch value reset is overdue'],
+        phaseAssets: ['Next Steps in Maxing Out Adoption Deck', 'Business-relevance one-pager', 'Prompt Crafter'],
+        functionPhaseStatus: [
+          { function: 'Champions', phase: 'Stickiness', status: 'Ready for focused workflow habit support' },
+          { function: 'Broader users', phase: 'Readiness', status: 'Needs renewed examples before scale' }
+        ],
+        arrLabel: '$60.3K',
+        hoursRemainingLabel: '~6',
+        openIssues: 1,
+        criticalIssues: 0,
+        engagement: 'Low',
+        compRisk: 'Medium',
+        attentionScore: 79,
+        sourceCoverage: 'low',
+        sourceCoverageStatus: buildSourceCoverageStatus({
+          Salesforce: coverage('available', 'Seeded Salesforce ownership provides ARR and account identity.', ['Salesforce ownership']),
+          'AIOM Staffing Sheet': coverage('needs verification', 'Roster assignment is not fully confirmed by Staffing Sheet evidence.', ['Salesforce ownership']),
+          Rocketlane: coverage('available', 'Remaining engagement capacity is represented with a low-hours signal.', ['Seeded hours remaining']),
+          Sigma: coverage('available', 'Usage and engagement decline are seeded as current account signals.', ['Seeded usage metrics']),
+          Slack: coverage('missing', 'No Slack channel or rollout-thread evidence is represented.', []),
+          'Gong/meetings': coverage('needs verification', 'Champion activity is qualitative and should be verified against meetings or notes.', ['Champion activity']),
+          'Docs/Drive': coverage('available', 'Next Steps deck and one-pager are attached to the recommendation.', ['Next Steps deck', 'Business-relevance one-pager']),
+          Prism: coverage('available', 'Prism has low but present seeded coverage for sparse persistent knowledge.', ['ScalePad Prism view'])
+        }),
+        missingSources: ['Slack', 'AIOM Staffing Sheet verification', 'Gong/meetings verification'],
+        assistant: { wau: 22, trend: '-9%', health: 'Watch', detail: 'Assistant usage is slipping and likely needs a re-engagement motion.' },
+        agents: { wau: 4, runs: 11, health: 'Low', detail: 'Agent usage is too low to count as embedded workflow behavior.' },
+        prism: { coverage: 'Low', refresh: '2d ago', signals: 3, health: 'Thin', detail: 'Knowledge capture exists but is too sparse for strong automated recommendations.', prismHealthSignal: 'Prism shows sparse memory and declining usage, so recommendation confidence is constrained.', prismRiskPattern: 'Post-launch value reset keeps getting deferred as hours run down.', priorActionOutcome: 'Prior follow-up preserved some champion context, but did not create a durable workflow habit.', repeatedBlocker: 'Low remaining hours and thin champion evidence.', momentumSinceLastTouch: 'Momentum is slipping since the last touch.', recommendedPlayFromHistory: 'Business-relevance one-pager', healthImpact: 'Prism lowers confidence and makes capture quality part of the health intervention.' },
+        nextMove: {
+          title: 'Prioritize the highest-value proactive move immediately',
+          body: 'Run a next-steps strategy session and use Prompt Crafter or a light comms motion to protect the remaining engagement capacity.',
+          why: 'Hours are low and post-launch engagement is flattening.',
+          session: 'Next-steps strategy session',
+          sessionBody: 'Reset the value narrative and define the next use-case or champion motion.',
+          dueWindow: 'Now',
+          ownerHint: 'Owner: AIOM with champion support.'
+        },
+        doc: { title: 'Next Steps in Maxing Out Adoption Deck', body: 'Presentation · next steps strategy', url: 'https://docs.google.com/presentation/d/1jNnlvXUFNoyjuxOpLt8kjsq2cJf2eekg4UXK0nUsJVc/edit?usp=sharing' },
+        tool: 'Optimal Agent Use Case Recommender',
+        asset: { title: 'Business-relevance one-pager', body: 'Reconnect the account to concrete value with a short, focused narrative.', tags: ['pre-read', 'business relevance'] },
+        signals: [
+          { type: 'low_engagement', severity: 'high', title: 'Post-launch stall risk', body: 'Adoption may plateau without a next-steps or champion motion.', due: 'Current' },
+          { type: 'hours_risk', severity: 'high', title: '~6 hours left', body: 'Remaining time is limited, so every proactive touch needs to be commercially useful.', due: 'Now' },
+          { type: 'coverage_gap', severity: 'medium', title: 'Source coverage is still thin', body: 'You should enrich the account baseline before trusting weak recommendations.', due: 'This week' }
+        ],
+        releases: [],
+        sources: [
+          { role: 'Usage', name: 'Engagement indicators', type: 'Operational metrics', purpose: 'Spots stall risk and declining momentum.' },
+          { role: 'Champions', name: 'Champion activity', type: 'Qualitative notes', purpose: 'Identifies where to run workshops or next-step planning.' },
+          { role: 'Derived knowledge', name: 'ScalePad Prism view', type: 'Prism', purpose: 'Captures sparse but persistent knowledge so the account does not reset to zero every week.' }
+        ]
+      },
+      'Axon Security': {
+        name: 'Axon Security',
+        business: 'Public safety technology and security solutions company.',
+        phase: 'stickiness',
+        arrLabel: '$100.0K',
+        hoursRemainingLabel: '16',
+        openIssues: 3,
+        criticalIssues: 0,
+        engagement: 'Medium',
+        compRisk: 'Medium',
+        attentionScore: 72,
+        sourceCoverage: 'low',
+        sourceCoverageStatus: buildSourceCoverageStatus({
+          Salesforce: coverage('needs verification', 'Commercial and ownership context are seeded but should be checked before escalation.', ['Seeded account row']),
+          'AIOM Staffing Sheet': coverage('available', 'Roster source includes this account as assigned to the AIOM.', ['Seeded Staffing Sheet']),
+          Rocketlane: coverage('missing', 'No seeded project-state or capacity source is represented.', []),
+          Sigma: coverage('available', 'Assistant and Agents usage are seeded as directional engagement indicators.', ['Seeded usage metrics']),
+          Slack: coverage('missing', 'No Slack channel coverage is represented for account coordination.', []),
+          'Gong/meetings': coverage('available', 'Account notes and meeting follow-ups support the release briefing motion.', ['Account notes and meeting follow-ups']),
+          'Docs/Drive': coverage('available', 'Governance and support strategy docs are attached to the recommendation.', ['End-User Support Strategy for COE']),
+          Prism: coverage('available', 'Prism has low seeded coverage for gaps, release exposure, and next motion.', ['Axon Prism view'])
+        }),
+        missingSources: ['Rocketlane', 'Slack', 'Salesforce verification'],
+        assistant: { wau: 31, trend: '+3%', health: 'Building', detail: 'Assistant usage is improving but not yet broad enough to feel durable.' },
+        agents: { wau: 9, runs: 28, health: 'Building', detail: 'A few teams are using agents, but behavior is still emerging.' },
+        prism: { coverage: 'Low', refresh: '1d ago', signals: 5, health: 'Thin', detail: 'Prism has enough signal to flag gaps, but not enough to support high-confidence recommendations.', prismHealthSignal: 'Prism shows enough account memory to flag release exposure, but source gaps limit confidence.', prismRiskPattern: 'Sparse context and admin-facing release exposure keep recurring together.', priorActionOutcome: 'Prior release follow-up identified the need for admin comms, but outcome was not captured.', repeatedBlocker: 'Missing Rocketlane and Slack context.', momentumSinceLastTouch: 'Usage is improving slightly, but context quality is still thin.', recommendedPlayFromHistory: 'Short release video + admin digest', healthImpact: 'Prism keeps this in watch mode until the release briefing outcome is captured.' },
+        nextMove: {
+          title: 'Get ahead of the release with customer comms and enablement',
+          body: 'Use a concise admin briefing and a short enablement motion so upcoming changes feel proactive instead of reactive.',
+          why: 'This account has admin-relevant release exposure and still needs clearer context.',
+          session: 'Admin release briefing',
+          sessionBody: 'Use a short admin session or office hours to explain what is changing and how to communicate it.',
+          dueWindow: 'Before the release ships',
+          ownerHint: 'Owner: AIOM with admin support.'
+        },
+        doc: { title: 'End-User Support Strategy for COE', body: 'Guide · platform governance', url: 'https://docs.google.com/document/d/1I7O4ATeC75naQipxFGnnSJpgHYH9gsI2jWKOl4wvviI/edit?usp=sharing' },
+        tool: 'Glean Change Briefing Agent',
+        asset: { title: 'Short release video + admin digest', body: 'Package the change into a quick watch, a crisp summary, and a ready-to-send admin note.', tags: ['video', 'admin digest', 'customer comms'] },
+        signals: [
+          { type: 'coverage_gap', severity: 'medium', title: 'Context gaps remain open', body: 'Missing coverage should trigger source expansion before high-confidence judgment calls.', due: 'Current' },
+          { type: 'release_enablement', severity: 'medium', title: 'Admin release likely relevant', body: 'A concise admin note or walkthrough can make upcoming changes feel proactive instead of reactive.', due: 'May 6' },
+          { type: 'low_engagement', severity: 'medium', title: 'Strategic touch is getting stale', body: 'The account still has upside, but clearer value framing is needed before momentum slips.', due: 'This month' }
+        ],
+        releases: [
+          { title: 'Admin digest for agent governance updates', date: '2026-05-06', body: 'Updated admin controls and governance language may require a concise briefing for customer admins.', asset: 'Admin briefing + short walkthrough video', tool: 'Glean Change Briefing Agent' }
+        ],
+        sources: [
+          { role: 'Operational', name: 'Account notes and meeting follow-ups', type: 'Docs + meetings', purpose: 'Captures sparse but useful strategic context.' },
+          { role: 'Usage', name: 'Engagement indicators', type: 'Operational metrics', purpose: 'Shows moderate activity but not yet consistent momentum.' },
+          { role: 'Derived knowledge', name: 'Axon Prism view', type: 'Prism', purpose: 'Surfaces account gaps, release exposure, and the next likely strategic motion.' }
+        ]
+      },
+      'Horizon3.ai': {
+        name: 'Horizon3.ai',
+        business: 'Cybersecurity company focused on autonomous security testing.',
+        phase: 'stickiness',
+        arrLabel: '$148.8K',
+        hoursRemainingLabel: '12',
+        openIssues: 0,
+        criticalIssues: 0,
+        engagement: 'Low',
+        compRisk: 'Medium',
+        attentionScore: 67,
+        sourceCoverage: 'low',
+        sourceCoverageStatus: buildSourceCoverageStatus({
+          Salesforce: coverage('missing', 'No Salesforce-style commercial row is represented beyond the roster-added shell.', []),
+          'AIOM Staffing Sheet': coverage('needs verification', 'Assignment context is present but thin and should be reconciled.', ['Account transition notes']),
+          Rocketlane: coverage('missing', 'No project-state, milestone, or capacity source is represented.', []),
+          Sigma: coverage('available', 'Usage is seeded as low and directional rather than live.', ['Seeded usage metrics']),
+          Slack: coverage('missing', 'No Slack channel or rollout-thread evidence is represented.', []),
+          'Gong/meetings': coverage('available', 'Customer and internal syncs are represented for rapid enrichment.', ['Customer and internal syncs']),
+          'Docs/Drive': coverage('available', 'Account transition notes provide baseline context.', ['Account transition notes']),
+          Prism: coverage('available', 'Prism has low seeded coverage and primarily exposes missing context.', ['Horizon3.ai Prism view'])
+        }),
+        missingSources: ['Salesforce', 'Rocketlane', 'Slack', 'AIOM Staffing Sheet verification'],
+        assistant: { wau: 12, trend: 'flat', health: 'Low', detail: 'Assistant usage is too light to trust as a broad adoption signal yet.' },
+        agents: { wau: 2, runs: 6, health: 'Low', detail: 'Agent behavior is minimal and not yet operationalized.' },
+        prism: { coverage: 'Low', refresh: '2d ago', signals: 2, health: 'Thin', detail: 'Prism mainly helps expose how much context is still missing.', prismHealthSignal: 'Prism shows the health problem is missing context more than a proven adoption pattern.', prismRiskPattern: 'Sparse source coverage blocks confident account guidance.', priorActionOutcome: 'No prior recommendation outcome is captured for this thin-context account.', repeatedBlocker: 'Salesforce, Rocketlane, and Slack context are missing.', momentumSinceLastTouch: 'Momentum is flat and not yet trustworthy.', recommendedPlayFromHistory: 'Targeted enablement artifact', healthImpact: 'Prism marks the account as enrichment-first before any strong strategic recommendation.' },
+        nextMove: {
+          title: 'Fill context gaps before making high-confidence recommendations',
+          body: 'Use a baseline account brief to gather stakeholders, launch details, and known risks before trying to drive a bigger motion.',
+          why: 'The biggest problem on this account is sparse context, not a proven engagement pattern.',
+          session: 'Account baseline brief',
+          sessionBody: 'Fill context gaps before making high-confidence recommendations.',
+          dueWindow: 'This week',
+          ownerHint: 'Owner: AIOM with internal account support.'
+        },
+        doc: { title: 'Success Planning Deck', body: 'Presentation · success planning baseline', url: 'https://docs.google.com/presentation/d/1VqVluTgCPrnSNveUxoUOoFzBmzKFifqooCJn4oCrhpc/edit' },
+        tool: 'AIOM Account Ramp Companion',
+        asset: { title: 'Targeted enablement artifact', body: 'Use a baseline brief and a light plan instead of overconfident launch materials.', tags: ['enablement', 'artifact'] },
+        signals: [
+          { type: 'coverage_gap', severity: 'high', title: 'Source enrichment needed', body: 'Unknown fields are themselves a signal that a baseline brief is needed.', due: 'Current' },
+          { type: 'hours_risk', severity: 'medium', title: '12 hours left', body: 'Limited capacity makes prioritization more important on a thin-context account.', due: 'This month' }
+        ],
+        releases: [],
+        sources: [
+          { role: 'Internal', name: 'Account transition notes', type: 'Docs', purpose: 'Provides the baseline context needed to avoid starting from zero.' },
+          { role: 'Meetings', name: 'Customer and internal syncs', type: 'Meetings', purpose: 'Useful for rapidly enriching sparse account context.' },
+          { role: 'Derived knowledge', name: 'Horizon3.ai Prism view', type: 'Prism', purpose: 'Tracks what is known, what is missing, and what should be researched next.' }
+        ]
+      },
+      'ConstructConnect': {
+        name: 'ConstructConnect',
+        business: 'Construction software and project intelligence platform.',
+        phase: 'stickiness',
+        arrLabel: '$380.1K',
+        hoursRemainingLabel: '14',
+        openIssues: 2,
+        criticalIssues: 0,
+        engagement: 'Medium',
+        compRisk: 'Medium',
+        attentionScore: 69,
+        sourceCoverage: 'low',
+        sourceCoverageStatus: buildSourceCoverageStatus({
+          Salesforce: coverage('missing', 'No explicit Salesforce-style commercial source is represented for this seeded account.', []),
+          'AIOM Staffing Sheet': coverage('missing', 'This account is visible in seeded data but not suggested in the AIOM roster list.', []),
+          Rocketlane: coverage('needs verification', 'Hours and delivery capacity exist as seeded values and should be checked against project data.', ['Seeded hours remaining']),
+          Sigma: coverage('available', 'Assistant and Agents usage are seeded as directional health indicators.', ['Seeded usage metrics']),
+          Slack: coverage('missing', 'No Slack channel or rollout-thread evidence is represented.', []),
+          'Gong/meetings': coverage('available', 'Customer syncs are represented as workstream context for next-step planning.', ['Customer syncs']),
+          'Docs/Drive': coverage('available', 'Account notes and docs support the partial-context recommendation.', ['Account notes and docs']),
+          Prism: coverage('available', 'Prism has low seeded coverage for scattered account context.', ['ConstructConnect Prism view'])
+        }),
+        missingSources: ['Salesforce', 'AIOM Staffing Sheet', 'Slack', 'Rocketlane verification'],
+        assistant: { wau: 27, trend: '+2%', health: 'Building', detail: 'Assistant usage is present but still narrow enough that broader adoption work could matter.' },
+        agents: { wau: 7, runs: 19, health: 'Building', detail: 'Some repeatable workflow behavior exists, but it is not yet widespread.' },
+        prism: { coverage: 'Low', refresh: '1d ago', signals: 4, health: 'Thin', detail: 'Prism helps organize the account, but more source coverage is still needed.', prismHealthSignal: 'Prism shows scattered context with enough signal to organize the next touch.', prismRiskPattern: 'Workflow behavior exists in pockets, but broader operating habit is not visible.', priorActionOutcome: 'Prior adoption follow-up created a next-step thread, but impact was not captured.', repeatedBlocker: 'Narrow workflow adoption and missing Slack context.', momentumSinceLastTouch: 'Slightly positive, but still narrow.', recommendedPlayFromHistory: 'Business-relevance one-pager', healthImpact: 'Prism suggests a targeted follow-up can improve health if the outcome is captured.' },
+        nextMove: {
+          title: 'Create a next-steps motion before the account flattens',
+          body: 'Use a focused next-step strategy deck and a baseline brief to turn partial context into a clearer growth path.',
+          why: 'The account is partially known, so it needs evidence gathering and a sharper motion at the same time.',
+          session: 'Next-steps strategy session',
+          sessionBody: 'Reset the value narrative and define the next use-case, workshop, or champion motion.',
+          dueWindow: 'Within 7 days',
+          ownerHint: 'Owner: AIOM with champion support.'
+        },
+        doc: { title: 'Next Steps in Maxing Out Adoption Deck', body: 'Presentation · next steps strategy', url: 'https://docs.google.com/presentation/d/1jNnlvXUFNoyjuxOpLt8kjsq2cJf2eekg4UXK0nUsJVc/edit?usp=sharing' },
+        tool: 'AIOM Account Ramp Companion',
+        asset: { title: 'Targeted enablement artifact', body: 'Use a short narrative and clear next-step options to make the account easier to move forward.', tags: ['enablement', 'artifact'] },
+        signals: [
+          { type: 'coverage_gap', severity: 'medium', title: 'Partially known account', body: 'The workspace should push evidence gathering before polished strategy recommendations.', due: 'Current' },
+          { type: 'low_engagement', severity: 'medium', title: 'Strategic motion needs sharpening', body: 'There is upside here, but the account needs more relevance and clarity.', due: 'This month' },
+          { type: 'qbr_due', severity: 'low', title: 'Executive narrative not yet strong enough', body: 'Value framing could be improved before the next major customer review.', due: 'This quarter' }
+        ],
+        releases: [],
+        sources: [
+          { role: 'Operational', name: 'Account notes and docs', type: 'Drive / Docs', purpose: 'Stores the partial but useful context already gathered.' },
+          { role: 'Meetings', name: 'Customer syncs', type: 'Meetings', purpose: 'Good source for clarifying what matters most next.' },
+          { role: 'Derived knowledge', name: 'ConstructConnect Prism view', type: 'Prism', purpose: 'Turns scattered account context into a reusable operational view.' }
+        ]
+      }
+    };
+
+    const seededRosterData = {
+      aiomOwner: 'James Kelley',
+      sourceSummary: 'Seeded Staffing Sheet + Salesforce-style account ownership',
+      clients: [
+        { name: 'Amplify Education', suggestedBy: 'Staffing Sheet', aggregationStatus: 'Ready' },
+        { name: 'Coalition', suggestedBy: 'Staffing Sheet', aggregationStatus: 'Ready' },
+        { name: 'Roblox', suggestedBy: 'Salesforce ownership', aggregationStatus: 'Ready' },
+        { name: 'ScalePad', suggestedBy: 'Salesforce ownership', aggregationStatus: 'Ready' },
+        { name: 'Axon Security', suggestedBy: 'Staffing Sheet + Salesforce', aggregationStatus: 'Ready' }
+      ]
+    };
+
+    function createRosterVerificationState() {
+      return {
+        sourceSummary: seededRosterData.sourceSummary,
+        confirmed: false,
+        lastConfirmedAt: null,
+        suggestedClients: seededRosterData.clients.map(client => ({
+          name: client.name,
+          suggestedBy: client.suggestedBy,
+          aggregationStatus: client.aggregationStatus,
+          selected: true,
+          verified: false
+        })),
+        verifiedRoster: []
+      };
+    }
+
+    function loadCompletedAttentionState() {
+      return {};
+    }
+
+    function persistCompletedAttentionState() {
+      // Canvas interactive content does not provide persistent client-side storage.
+    }
+
+    function getAttentionKey(accountName, signal) {
+      return `${accountName}::${signal.type}::${signal.title}`;
+    }
+
+    function isAttentionCompleted(accountName, signal) {
+      return !!localState.completedAttention[getAttentionKey(accountName, signal)];
+    }
+
+    function toggleAttentionCompleted(accountName, signal) {
+      const key = getAttentionKey(accountName, signal);
+      if (localState.completedAttention[key]) delete localState.completedAttention[key];
+      else localState.completedAttention[key] = true;
+      persistCompletedAttentionState();
+    }
+
+    const localState = {
+      currentAccount: 'Amplify Education',
+      activePhaseFilter: 'prep',
+      completedAttention: loadCompletedAttentionState(),
+      rosterVerification: createRosterVerificationState(),
+      prismCapture: {}
+    };
+
+    const ui = {
+      clientSelect: document.getElementById('clientSelect'),
+      heroTitle: document.getElementById('heroTitle'),
+      heroBadges: document.getElementById('heroBadges'),
+      heroSubtitle: document.getElementById('heroSubtitle'),
+      currentPhaseTitle: document.getElementById('currentPhaseTitle'),
+      currentMilestone: document.getElementById('currentMilestone'),
+      phaseObjective: document.getElementById('phaseObjective'),
+      phaseMilestoneDetail: document.getElementById('phaseMilestoneDetail'),
+      openActivitiesList: document.getElementById('openActivitiesList'),
+      overdueActivitiesList: document.getElementById('overdueActivitiesList'),
+      phaseAssetsList: document.getElementById('phaseAssetsList'),
+      functionPhaseStatusList: document.getElementById('functionPhaseStatusList'),
+      metricsGrid: document.getElementById('metricsGrid'),
+      attentionSummary: document.getElementById('attentionSummary'),
+      attentionList: document.getElementById('attentionList'),
+      strategicAction: document.getElementById('strategicAction'),
+      strategicRationale: document.getElementById('strategicRationale'),
+      nextMoveWhy: document.getElementById('nextMoveWhy'),
+      confidenceReason: document.getElementById('confidenceReason'),
+      bestNextStep: document.getElementById('bestNextStep'),
+      sessionBody: document.getElementById('sessionBody'),
+      recommendedResourceTitle: document.getElementById('recommendedResourceTitle'),
+      recommendedResourceBody: document.getElementById('recommendedResourceBody'),
+      recommendedResourceButtonRow: document.getElementById('recommendedResourceButtonRow'),
+      decisionOwner: document.getElementById('decisionOwner'),
+      targetFunction: document.getElementById('targetFunction'),
+      primaryFrictionType: document.getElementById('primaryFrictionType'),
+      capturePrompt: document.getElementById('capturePrompt'),
+      recommendedDocTitle: document.getElementById('recommendedDocTitle'),
+      recommendedDocBody: document.getElementById('recommendedDocBody'),
+      recommendedDocButton: document.getElementById('recommendedDocButton'),
+      recommendedToolTitle: document.getElementById('recommendedToolTitle'),
+      recommendedToolBody: document.getElementById('recommendedToolBody'),
+      recommendedToolButtonRow: document.getElementById('recommendedToolButtonRow'),
+      recommendedAssetTitle: document.getElementById('recommendedAssetTitle'),
+      recommendedAssetBody: document.getElementById('recommendedAssetBody'),
+      assetTags: document.getElementById('assetTags'),
+      releaseCountLabel: document.getElementById('releaseCountLabel'),
+      releaseSignalsList: document.getElementById('releaseSignalsList'),
+      riskSummary: document.getElementById('riskSummary'),
+      riskGrid: document.getElementById('riskGrid'),
+      sourceTitle: document.getElementById('sourceTitle'),
+      sourceCountLabel: document.getElementById('sourceCountLabel'),
+      sourceGrid: document.getElementById('sourceGrid'),
+      sourceNote: document.getElementById('sourceNote'),
+      templatesGrid: document.getElementById('templatesGrid'),
+      templateCountLabel: document.getElementById('templateCountLabel'),
+      toolsGrid: document.getElementById('toolsGrid'),
+      toolCountLabel: document.getElementById('toolCountLabel'),
+      timeline: document.getElementById('timeline'),
+      signalsList: document.getElementById('signalsList'),
+      rosterSourceStatus: document.getElementById('rosterSourceStatus'),
+      rosterClientList: document.getElementById('rosterClientList'),
+      rosterStatus: document.getElementById('rosterStatus'),
+      missingClientInput: document.getElementById('missingClientInput'),
+      portfolioTableBody: document.getElementById('portfolioTableBody'),
+      platformHealthGrid: document.getElementById('platformHealthGrid'),
+      platformHealthSummary: document.getElementById('platformHealthSummary'),
+      prismHealthSignal: document.getElementById('prismHealthSignal'),
+      prismRiskPattern: document.getElementById('prismRiskPattern'),
+      priorActionOutcome: document.getElementById('priorActionOutcome'),
+      repeatedBlocker: document.getElementById('repeatedBlocker'),
+      momentumSinceLastTouch: document.getElementById('momentumSinceLastTouch'),
+      recommendedPlayFromHistory: document.getElementById('recommendedPlayFromHistory'),
+      healthImpact: document.getElementById('healthImpact'),
+      widgetAuditGrid: document.getElementById('widgetAuditGrid'),
+      jsonView: document.getElementById('jsonView'),
+      refreshChip: document.getElementById('refreshChip'),
+      toast: document.getElementById('toast'),
+      prismOverlay: document.getElementById('prismOverlay'),
+      prismTitle: document.getElementById('prismTitle'),
+      prismCoverage: document.getElementById('prismCoverage'),
+      prismDetail: document.getElementById('prismDetail'),
+      prismRefresh: document.getElementById('prismRefresh'),
+      prismSignals: document.getElementById('prismSignals'),
+      prismNarrative: document.getElementById('prismNarrative'),
+      prismSignalList: document.getElementById('prismSignalList'),
+      prismInlineContext: document.getElementById('prismInlineContext'),
+      prismInlineSignalList: document.getElementById('prismInlineSignalList'),
+      prismSummaryInput: document.getElementById('prismSummaryInput'),
+      prismRisksInput: document.getElementById('prismRisksInput'),
+      prismOpportunitiesInput: document.getElementById('prismOpportunitiesInput'),
+      prismFollowupsInput: document.getElementById('prismFollowupsInput'),
+      prismActionTakenInput: document.getElementById('prismActionTakenInput'),
+      prismActionOutcomeInput: document.getElementById('prismActionOutcomeInput'),
+      prismRemainingBlockerInput: document.getElementById('prismRemainingBlockerInput'),
+      prismCommitmentsInput: document.getElementById('prismCommitmentsInput'),
+      prismWorkedInput: document.getElementById('prismWorkedInput'),
+      prismDidNotWorkInput: document.getElementById('prismDidNotWorkInput'),
+      prismRecommendedFollowupInput: document.getElementById('prismRecommendedFollowupInput'),
+      prismCopySummary: document.getElementById('prismCopySummary'),
+      prismCaptureStatus: document.getElementById('prismCaptureStatus')
+    };
+
+    function showToast(text) {
+      ui.toast.textContent = text;
+      ui.toast.classList.add('show');
+      setTimeout(() => ui.toast.classList.remove('show'), 1900);
+    }
+
+    function getAccount() {
+      return accounts[localState.currentAccount];
+    }
+
+    function getRosterClient(name) {
+      return localState.rosterVerification.suggestedClients.find(client => client.name === name);
+    }
+
+    function getRosterAggregationStatus(name) {
+      const rosterClient = getRosterClient(name);
+      return rosterClient ? rosterClient.aggregationStatus : 'Ready';
+    }
+
+    function getSelectedRosterNames() {
+      return localState.rosterVerification.suggestedClients
+        .filter(client => client.selected)
+        .map(client => client.name);
+    }
+
+    function getVerifiedRosterNames() {
+      return localState.rosterVerification.confirmed ? localState.rosterVerification.verifiedRoster : [];
+    }
+
+    function getVerifiedPortfolioAccounts() {
+      return getVerifiedRosterNames()
+        .map(name => accounts[name])
+        .filter(Boolean)
+        .sort((a, b) => b.attentionScore - a.attentionScore);
+    }
+
+    function createPendingAccount(name) {
+      return {
+        name,
+        business: 'Roster-added client. Portfolio intelligence is aggregating from the seeded Staffing Sheet and Salesforce-style account data.',
+        phase: 'prep',
+        phaseObjective: 'Confirm ownership, active phase, and source coverage before treating recommendations as reliable.',
+        currentMilestone: 'Roster reconciliation',
+        openAdoptionActivities: ['Confirm assigned AIOM and account owner', 'Verify current Adoption OS phase', 'Aggregate source context before customer-facing action'],
+        overdueAdoptionActivities: [],
+        phaseAssets: ['Success Planning Deck', 'AIOM Account Transition Agent', 'Roster reconciliation note'],
+        functionPhaseStatus: [
+          { function: 'Unknown functions', phase: 'Preparation', status: 'Pending source aggregation' }
+        ],
+        arrLabel: 'Pending',
+        hoursRemainingLabel: 'Pending',
+        openIssues: 0,
+        criticalIssues: 0,
+        engagement: 'Pending',
+        compRisk: 'Pending',
+        attentionScore: 40,
+        sourceCoverage: 'pending',
+        sourceCoverageStatus: buildSourceCoverageStatus({
+          Salesforce: coverage('provisional', 'Ownership and commercial metadata are queued for reconciliation.', ['Salesforce ownership']),
+          'AIOM Staffing Sheet': coverage('provisional', 'The AIOM manually added this client, so Staffing Sheet ownership needs confirmation.', ['Manual roster correction']),
+          Rocketlane: coverage('missing', 'No project-state, milestone, or capacity source has been aggregated yet.', []),
+          Sigma: coverage('missing', 'No usage dashboard signal has been aggregated yet.', []),
+          Slack: coverage('missing', 'No Slack source has been aggregated yet.', []),
+          'Gong/meetings': coverage('missing', 'No meeting or Gong source has been aggregated yet.', []),
+          'Docs/Drive': coverage('missing', 'No Drive or Docs source has been aggregated yet.', []),
+          Prism: coverage('provisional', 'Prism context is queued after the account is reconciled.', ['Queued Prism context'])
+        }),
+        missingSources: ['Rocketlane', 'Sigma', 'Slack', 'Gong/meetings', 'Docs/Drive'],
+        assistant: { wau: 0, trend: 'Pending', health: 'Pending', detail: 'Assistant usage is waiting on account aggregation.' },
+        agents: { wau: 0, runs: 0, health: 'Pending', detail: 'Agent usage is waiting on account aggregation.' },
+        prism: { coverage: 'Pending', refresh: 'Queued', signals: 0, health: 'Aggregating', detail: 'Prism context will populate after the missing client is reconciled.', prismHealthSignal: 'Prism health input is queued until the account is reconciled.', prismRiskPattern: 'Unknown risk pattern until source aggregation completes.', priorActionOutcome: 'No prior action outcome is captured for this roster-added account.', repeatedBlocker: 'Missing reconciled account context.', momentumSinceLastTouch: 'Pending source aggregation.', recommendedPlayFromHistory: 'Roster reconciliation note', healthImpact: 'Do not treat the recommendation as high confidence until Prism has durable account memory.' },
+        nextMove: {
+          title: 'Confirm ownership and aggregate source context',
+          body: 'Use the roster correction to reconcile Staffing Sheet and Salesforce ownership before recommending a strategic motion.',
+          why: 'The account was manually added, so the artifact should not overstate intelligence coverage yet.',
+          session: 'Roster reconciliation',
+          sessionBody: 'Confirm source ownership, active phase, package reality, and current blockers.',
+          dueWindow: 'Today',
+          ownerHint: 'Owner: AIOM with ops support.'
+        },
+        doc: { title: 'Success Planning Deck', body: 'Presentation · success planning', url: 'https://docs.google.com/presentation/d/1VqVluTgCPrnSNveUxoUOoFzBmzKFifqooCJn4oCrhpc/edit' },
+        tool: 'AIOM Account Ramp Companion',
+        asset: { title: 'Roster reconciliation note', body: 'Capture why the client was added and which source needs to be corrected.', tags: ['roster', 'source correction'] },
+        signals: [
+          { type: 'roster_gap', severity: 'medium', title: 'Missing client added by AIOM', body: 'The account needs source aggregation before recommendations should be treated as complete.', due: 'Current' }
+        ],
+        releases: [],
+        sources: [
+          { role: 'System of record', name: 'Staffing Sheet', type: 'Sheet', purpose: 'Suggested ownership source that needs reconciliation for this manually added client.' },
+          { role: 'System of record', name: 'Salesforce ownership', type: 'Salesforce', purpose: 'Account ownership and commercial metadata source waiting on aggregation.' }
+        ]
+      };
+    }
+
+    function populateClientSelect() {
+      const accountNames = localState.rosterVerification.confirmed ? getVerifiedRosterNames() : Object.keys(accounts);
+      ui.clientSelect.innerHTML = '';
+      accountNames.forEach(name => {
+        const option = document.createElement('option');
+        option.value = name;
+        option.textContent = name;
+        ui.clientSelect.appendChild(option);
+      });
+      if (!accountNames.includes(localState.currentAccount) && accountNames.length) {
+        localState.currentAccount = accountNames[0];
+      }
+      ui.clientSelect.value = localState.currentAccount;
+    }
+
+    function confirmRoster(names) {
+      const verifiedNames = names.filter(name => accounts[name]);
+      localState.rosterVerification.verifiedRoster = verifiedNames;
+      localState.rosterVerification.confirmed = true;
+      localState.rosterVerification.lastConfirmedAt = new Date().toISOString();
+      localState.rosterVerification.suggestedClients.forEach(client => {
+        client.verified = verifiedNames.includes(client.name);
+      });
+      if (!verifiedNames.includes(localState.currentAccount) && verifiedNames.length) {
+        localState.currentAccount = verifiedNames[0];
+        syncPhaseFilterToAccount(getAccount());
+      }
+      populateClientSelect();
+    }
+
+    function addMissingClient() {
+      const name = ui.missingClientInput.value.trim().replace(/\s+/g, ' ');
+      if (!name) {
+        showToast('Add a client name first');
+        return;
+      }
+      let rosterClient = getRosterClient(name);
+      if (!accounts[name]) accounts[name] = createPendingAccount(name);
+      if (!rosterClient) {
+        rosterClient = {
+          name,
+          suggestedBy: 'AIOM manual add',
+          aggregationStatus: 'Aggregating from Staffing Sheet / Salesforce',
+          selected: true,
+          verified: false
+        };
+        localState.rosterVerification.suggestedClients.push(rosterClient);
+      }
+      rosterClient.selected = true;
+      if (localState.rosterVerification.confirmed && !localState.rosterVerification.verifiedRoster.includes(name)) {
+        localState.rosterVerification.verifiedRoster.push(name);
+        rosterClient.verified = true;
+      }
+      ui.missingClientInput.value = '';
+      populateClientSelect();
+      renderAll();
+      showToast(`${name} added · aggregation queued`);
+    }
+
+    function escapeHtmlAttr(value) {
+      return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/"/g, '&quot;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+    }
+
+    function findToolByTitle(title) {
+      return toolsLibrary.find(tool => tool.title === title);
+    }
+
+    function getDecisionOwner(account) {
+      return account.nextMove.ownerHint.replace(/^Owner:\s*/, '');
+    }
+
+    function getTargetFunction(account) {
+      if (account.targetFunction) return account.targetFunction;
+      if (account.phase === 'scale') return 'Admins, executive sponsors, and COE owners';
+      if (account.phase === 'stickiness') return 'Champions, power users, and priority business functions';
+      return 'Enablement stakeholders, admins, and launch owners';
+    }
+
+    function getPrimaryFrictionType(account) {
+      const primarySignal = account.signals[0] || {};
+      return primarySignal.type ? primarySignal.type.replace(/_/g, ' ') : 'No primary friction identified';
+    }
+
+    function getCapturePrompt(account) {
+      return `Capture the ${account.nextMove.session.toLowerCase()} outcome, what changed, remaining blockers, owner/date commitments, recommended resource used, and the next follow-up needed.`;
+    }
+
+    function getRecommendedResource(account) {
+      const primarySignalType = account.signals[0] && account.signals[0].type;
+      const byTool = resourceCatalog.find(resource => resource.title === account.tool);
+      const bySignal = resourceCatalog.find(resource =>
+        resource.phases.includes(account.phase) &&
+        resource.frictionTypes.includes(primarySignalType)
+      );
+      const resource = byTool || bySignal || resourceCatalog.find(item => item.phases.includes(account.phase)) || resourceCatalog[0];
+      const tool = findToolByTitle(resource.title) || findToolByTitle(account.tool);
+      return {
+        ...resource,
+        tool,
+        asset: resource.asset || account.asset.title
+      };
+    }
+
+    function buildSeededPrompt(tool, account) {
+      if (!tool) return `The customer is ${account.name}. Help me choose the next Adoption OS action and capture the outcome in Prism.`;
+      if (tool.prompt) return tool.prompt.replace(/\[Customer\]/g, account.name).replace(/\[Client\]/g, account.name);
+      return `The customer is ${account.name}. Help me with ${tool.bestFor.toLowerCase()}.`;
+    }
+
+    function buildToolLaunchConfig(tool, account) {
+      const seededPrompt = buildSeededPrompt(tool, account);
+      if (!tool || !tool.url) return { type: 'copy', label: 'Copy resource prompt', value: seededPrompt };
+      try {
+        const parsed = new URL(tool.url);
+        const isAgentPage = /\/chat\/agents\/[^/]+$/.test(parsed.pathname);
+        if (isAgentPage) {
+          parsed.searchParams.set('message', seededPrompt);
+          return { type: 'link-copy', label: 'Launch + copy prompt', url: parsed.toString(), value: seededPrompt };
+        }
+        return { type: 'open-copy', label: 'Open + copy prompt', url: tool.url, value: seededPrompt };
+      } catch {
+        return { type: 'copy', label: 'Copy resource prompt', value: seededPrompt };
+      }
+    }
+
+    function getLaunchModeMeta(tool, account) {
+      const launch = buildToolLaunchConfig(tool, account);
+      if (launch.type === 'link-copy') return { short: 'Launches + copies prompt', detail: 'Opens the tool with account context and also keeps a copyable prompt fallback.' };
+      if (launch.type === 'open-copy') return { short: 'Opens + copies prompt', detail: 'Opens the tool and also copies a seeded prompt for the user.' };
+      return { short: 'Copies prompt only', detail: 'No direct launch is available, so the seeded prompt is copied for manual use.' };
+    }
+
+    function makeLaunchMarkup(tool, account, className = 'buttonlike') {
+      const launch = buildToolLaunchConfig(tool, account);
+      if (launch.type === 'link-copy') {
+        return `<a class="${className}" href="${escapeHtmlAttr(launch.url)}" target="_blank" rel="noopener" data-copy="${escapeHtmlAttr(launch.value)}">${launch.label}</a>`;
+      }
+      if (launch.type === 'open-copy') {
+        return `<a class="${className}" href="${escapeHtmlAttr(launch.url)}" target="_blank" rel="noopener" data-copy="${escapeHtmlAttr(launch.value)}">${launch.label}</a>`;
+      }
+      return `<button class="${className} secondary" data-copy="${escapeHtmlAttr(launch.value)}">${launch.label}</button>`;
+    }
+
+    function copyWithPromptFallback(text) {
+      if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+        return navigator.clipboard.writeText(text).then(() => {
+          showToast('Copied seeded prompt');
+        }).catch(() => {
+          window.prompt('Copy this prompt:', text);
+          showToast('Copy prompt opened');
+        });
+      }
+      window.prompt('Copy this prompt:', text);
+      showToast('Copy prompt opened');
+      return Promise.resolve();
+    }
+
+    function renderHero(account) {
+      ui.heroTitle.textContent = account.name;
+      ui.heroSubtitle.textContent = account.business;
+      ui.heroBadges.innerHTML = `
+        <span class="tag">Phase: ${phases[account.phase]}</span>
+        <span class="tag">Mode: signal triage</span>
+      `;
+    }
+
+    function renderPhaseBackbone(account) {
+      const backbone = getPhaseBackbone(account);
+      const openActivities = backbone.openAdoptionActivities || [];
+      const overdueActivities = backbone.overdueAdoptionActivities || [];
+      ui.currentPhaseTitle.textContent = phases[account.phase];
+      ui.currentMilestone.textContent = backbone.currentMilestone;
+      ui.phaseObjective.textContent = backbone.phaseObjective;
+      ui.phaseMilestoneDetail.textContent = `${backbone.currentMilestone} · ${openActivities.length} open · ${overdueActivities.length} overdue`;
+      ui.openActivitiesList.innerHTML = openActivities.map(activity => `
+        <div class="meta-row">
+          <span>${activity}</span>
+          <span class="pill medium">Open</span>
+        </div>
+      `).join('');
+      ui.overdueActivitiesList.innerHTML = overdueActivities.length ? overdueActivities.map(activity => `
+        <div class="meta-row">
+          <span>${activity}</span>
+          <span class="pill high">Overdue</span>
+        </div>
+      `).join('') : `
+        <div class="meta-row">
+          <span>No overdue Adoption OS activities</span>
+          <span class="pill low">Clear</span>
+        </div>
+      `;
+      ui.phaseAssetsList.innerHTML = backbone.phaseAssets.map(asset => `
+        <div class="meta-row">
+          <span>${asset}</span>
+          <span class="pill low">Phase asset</span>
+        </div>
+      `).join('');
+      ui.functionPhaseStatusList.innerHTML = backbone.functionPhaseStatus.map(item => `
+        <div class="meta-row">
+          <span><strong>${item.function}</strong><br><span class="muted">${item.status}</span></span>
+          <span class="pill medium">${item.phase}</span>
+        </div>
+      `).join('');
+    }
+
+    function renderMetrics(account) {
+      ui.metricsGrid.innerHTML = '';
+      const metrics = [
+        { label: 'Phase', value: phases[account.phase].split(',')[0], sub: 'current operating phase' },
+        { label: 'Attention', value: account.attentionScore, sub: 'priority score across signals' },
+        { label: 'Engagement', value: account.engagement, sub: 'current account health signal' },
+        { label: 'Comp risk', value: account.compRisk, sub: 'commercial pressure read' },
+        { label: 'Open issues', value: account.openIssues, sub: `${account.criticalIssues} critical` },
+        { label: account.phase === 'stickiness' || account.phase === 'scale' ? 'Hours left' : 'ARR', value: account.phase === 'stickiness' || account.phase === 'scale' ? account.hoursRemainingLabel : account.arrLabel, sub: account.phase === 'stickiness' || account.phase === 'scale' ? 'remaining engagement capacity' : 'annual recurring revenue' }
+      ];
+      metrics.forEach(metric => {
+        const card = document.createElement('div');
+        card.className = 'metric-card';
+        card.innerHTML = `
+          <div>
+            <div class="metric-value">${metric.value}</div>
+            <div class="metric-label">${metric.label}</div>
+          </div>
+          <div class="metric-sub">${metric.sub}</div>
+        `;
+        ui.metricsGrid.appendChild(card);
+      });
+    }
+
+    function renderAttention(account) {
+      const visibleSignals = account.signals.slice(0, 5);
+      const completedCount = visibleSignals.filter(signal => isAttentionCompleted(account.name, signal)).length;
+      const activeCount = visibleSignals.length - completedCount;
+      ui.attentionSummary.textContent = `${activeCount} active · ${completedCount} completed`;
+      ui.attentionList.innerHTML = '';
+
+      visibleSignals.forEach(signal => {
+        const completed = isAttentionCompleted(account.name, signal);
+        const item = document.createElement('div');
+        item.className = `list-item attention-item ${signal.severity} ${completed ? 'completed' : ''}`;
+        item.innerHTML = `
+          <div class="split" style="margin-bottom: 8px;">
+            <span class="eyebrow">${signal.type.replace(/_/g, ' ')}</span>
+            <div class="inline-actions">
+              <button class="task-toggle ${completed ? 'completed' : ''}" data-attention-toggle="true" data-attention-type="${signal.type}" data-attention-title="${escapeHtmlAttr(signal.title)}" aria-pressed="${completed}">
+                <span class="task-check">${completed ? '✓' : ''}</span>
+                <span>${completed ? 'Done' : 'Mark done'}</span>
+              </button>
+              <span class="pill ${signal.severity}">${signal.severity}</span>
+            </div>
+          </div>
+          <h4>${signal.title}</h4>
+          <p>${signal.body}</p>
+          <div class="meta-row"><span>Due</span><span>${signal.due}</span></div>
+        `;
+        ui.attentionList.appendChild(item);
+      });
+    }
+
+    function renderNextMove(account) {
+      const nextMove = account.nextMove;
+      const recommendedResource = getRecommendedResource(account);
+      const tool = recommendedResource.tool;
+      const launchMeta = getLaunchModeMeta(tool, account);
+
+      ui.strategicAction.textContent = nextMove.title;
+      ui.strategicRationale.textContent = nextMove.body;
+      ui.nextMoveWhy.textContent = nextMove.why;
+      ui.confidenceReason.textContent = `Confidence reason: ${getConfidenceReason(account)}`;
+      ui.bestNextStep.textContent = nextMove.session;
+      ui.sessionBody.textContent = nextMove.sessionBody;
+      ui.recommendedResourceTitle.textContent = tool.title;
+      ui.recommendedResourceBody.textContent = `${recommendedResource.when} ${launchMeta.detail}`;
+      ui.recommendedResourceButtonRow.innerHTML = `${makeLaunchMarkup(tool, account)}<span class="tool-tag">${launchMeta.short}</span>`;
+      ui.decisionOwner.textContent = `${getDecisionOwner(account)} · ${nextMove.dueWindow}`;
+      ui.targetFunction.textContent = getTargetFunction(account);
+      ui.primaryFrictionType.textContent = getPrimaryFrictionType(account);
+      ui.capturePrompt.textContent = getCapturePrompt(account);
+
+      ui.recommendedDocTitle.textContent = account.doc.title;
+      ui.recommendedDocBody.textContent = account.doc.body;
+      ui.recommendedDocButton.href = account.doc.url;
+
+      ui.recommendedToolTitle.textContent = tool.title;
+      ui.recommendedToolBody.textContent = `${tool.value} ${launchMeta.detail}`;
+      ui.recommendedToolButtonRow.innerHTML = `${makeLaunchMarkup(tool, account)}<span class="tool-tag">${launchMeta.short}</span>`;
+
+      ui.recommendedAssetTitle.textContent = recommendedResource.asset;
+      ui.recommendedAssetBody.textContent = account.asset.body;
+      ui.assetTags.innerHTML = account.asset.tags.map(tag => `<span class="tool-tag">${tag}</span>`).join('');
+    }
+
+    function renderPlatformHealth(account) {
+      const combinedWau = account.assistant.wau + account.agents.wau;
+      const prismHealth = getPrismHealthContext(account);
+      ui.platformHealthSummary.textContent = `${account.prism.health} Prism · ${account.assistant.health} Assistant`;
+
+      const cards = [
+        {
+          title: 'Assistant health',
+          value: account.assistant.health,
+          body: `${account.assistant.wau} WAU · ${account.assistant.trend} trend`,
+          severity: account.assistant.health === 'Healthy' ? 'low' : account.assistant.health === 'Watch' ? 'medium' : 'high',
+          note: account.assistant.detail
+        },
+        {
+          title: 'Agent health',
+          value: account.agents.health,
+          body: `${account.agents.wau} WAU · ${account.agents.runs} runs`,
+          severity: account.agents.health === 'Healthy' ? 'low' : account.agents.health === 'Building' ? 'medium' : 'high',
+          note: account.agents.detail
+        },
+        {
+          title: 'Assistant + Agents',
+          value: `${combinedWau} WAU`,
+          body: 'Combined view for overall AI operating health',
+          severity: combinedWau >= 80 ? 'low' : combinedWau >= 40 ? 'medium' : 'high',
+          note: 'Rollup only. Assistant and Agents stay distinct in the underlying model.'
+        },
+        {
+          title: 'Prism knowledge',
+          value: account.prism.coverage,
+          body: `${account.prism.signals} signals · refreshed ${account.prism.refresh}`,
+          severity: account.prism.coverage === 'High' ? 'low' : account.prism.coverage === 'Medium' ? 'medium' : 'high',
+          note: account.prism.detail
+        }
+      ];
+
+      ui.platformHealthGrid.innerHTML = '';
+      cards.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'risk-card';
+        card.innerHTML = `
+          <span class="eyebrow">${item.title}</span>
+          <h4>${item.value}</h4>
+          <p>${item.body}</p>
+          <div class="meta-row"><span>${item.note}</span><span class="pill ${item.severity}">${item.severity}</span></div>
+        `;
+        ui.platformHealthGrid.appendChild(card);
+      });
+
+      ui.prismHealthSignal.textContent = prismHealth.prismHealthSignal;
+      ui.prismRiskPattern.textContent = prismHealth.prismRiskPattern;
+      ui.priorActionOutcome.textContent = prismHealth.priorActionOutcome;
+      ui.repeatedBlocker.textContent = prismHealth.repeatedBlocker;
+      ui.momentumSinceLastTouch.textContent = prismHealth.momentumSinceLastTouch;
+      ui.recommendedPlayFromHistory.textContent = prismHealth.recommendedPlayFromHistory;
+      ui.healthImpact.textContent = `Health impact: ${prismHealth.healthImpact}`;
+    }
+
+    function renderReleaseSignals(account) {
+      ui.releaseCountLabel.textContent = `${account.releases.length} active release signal${account.releases.length === 1 ? '' : 's'}`;
+      ui.releaseSignalsList.innerHTML = '';
+      if (!account.releases.length) {
+        ui.releaseSignalsList.innerHTML = `<div class="list-item"><h4>No urgent release signals</h4><p>There are no obvious release-driven comms or training prompts for this account right now.</p></div>`;
+        return;
+      }
+      account.releases.forEach(release => {
+        const tool = findToolByTitle(release.tool);
+        const row = document.createElement('div');
+        row.className = 'signal-card medium';
+        row.innerHTML = `
+          <div class="split">
+            <div>
+              <span class="eyebrow">Release signal</span>
+              <h4>${release.title}</h4>
+            </div>
+            <span class="pill medium">${release.date}</span>
+          </div>
+          <p>${release.body}</p>
+          <p class="footer-note"><strong>Recommended asset:</strong> ${release.asset}</p>
+          <div class="button-row">${makeLaunchMarkup(tool, account)}</div>
+        `;
+        ui.releaseSignalsList.appendChild(row);
+      });
+    }
+
+    function renderRisk(account) {
+      const riskItems = [
+        { title: 'Engagement health', value: account.engagement, body: `${account.signals[0]?.title || 'No major engagement signal'} · source coverage ${account.sourceCoverage}`, severity: account.engagement === 'Low' ? 'high' : account.engagement === 'Medium' ? 'medium' : 'low' },
+        { title: 'Comp / commercial risk', value: account.compRisk, body: `${account.hoursRemainingLabel} hours left · ${account.arrLabel}`, severity: account.compRisk === 'High' ? 'high' : account.compRisk === 'Medium' ? 'medium' : 'low' },
+        { title: 'Knowledge maturity', value: account.prism.coverage, body: `Prism refresh ${account.prism.refresh}`, severity: account.prism.coverage === 'Low' ? 'high' : account.prism.coverage === 'Medium' ? 'medium' : 'low' }
+      ];
+      ui.riskSummary.textContent = `${account.compRisk} comp risk`;
+      ui.riskGrid.innerHTML = '';
+      riskItems.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'risk-card';
+        card.innerHTML = `
+          <span class="eyebrow">${item.title}</span>
+          <h4>${item.value}</h4>
+          <p>${item.body}</p>
+          <div class="meta-row"><span>Severity</span><span class="pill ${item.severity}">${item.severity}</span></div>
+        `;
+        ui.riskGrid.appendChild(card);
+      });
+    }
+
+    function renderSources(account) {
+      const coverageEntries = getSourceCoverageEntries(account);
+      const availableCount = coverageEntries.filter(source => source.status === 'available').length;
+      const missingSources = getMissingSources(account);
+      ui.sourceTitle.textContent = `${account.name} source registry`;
+      ui.sourceCountLabel.textContent = `${availableCount}/${coverageEntries.length} source categories available`;
+      ui.sourceGrid.innerHTML = '';
+      coverageEntries.forEach(source => {
+        const card = document.createElement('div');
+        card.className = 'source-card';
+        const supportingSources = source.sources.length ? source.sources.join(', ') : 'No seeded source';
+        card.innerHTML = `
+          <span class="eyebrow">${source.category}</span>
+          <h4><span class="pill ${getCoverageStatusClass(source.status)}">${source.status}</span></h4>
+          <p>${source.reason}</p>
+          <div class="meta-row"><span>Supporting sources</span><span>${supportingSources}</span></div>
+        `;
+        ui.sourceGrid.appendChild(card);
+      });
+      ui.sourceNote.textContent = `Seeded aggregation status only, not live data. Missing or verification-needed sources: ${missingSources.length ? missingSources.join(', ') : 'none'}.`;
+    }
+
+    function renderTemplates() {
+      const phase = localState.activePhaseFilter === 'all' ? null : localState.activePhaseFilter;
+      const items = phase ? templatesLibrary.filter(t => t.phase === phase) : templatesLibrary;
+      ui.templateCountLabel.textContent = `${items.length} templates and guides`;
+      ui.templatesGrid.innerHTML = '';
+      items.forEach((template, index) => {
+        const recommended = getAccount().doc.title === template.title;
+        const card = document.createElement('div');
+        card.className = 'template-card';
+        card.innerHTML = `
+          ${recommended ? '<span class="recommend-badge">Recommended</span>' : ''}
+          <span class="eyebrow">${template.activity}</span>
+          <h4>${template.title}</h4>
+          <p>${template.type}</p>
+          <div class="meta-row"><span>${phases[template.phase]}</span><span>${template.type}</span></div>
+          <div class="button-row"><a class="buttonlike" href="${template.url}" target="_blank" rel="noopener">Open resource</a></div>
+        `;
+        ui.templatesGrid.appendChild(card);
+      });
+    }
+
+    function renderTools(account) {
+      const phase = localState.activePhaseFilter === 'all' ? null : localState.activePhaseFilter;
+      const items = phase ? toolsLibrary.filter(tool => tool.phases.includes(phase)) : toolsLibrary;
+      ui.toolCountLabel.textContent = `${items.length} tools in view`;
+      ui.toolsGrid.innerHTML = '';
+      items.forEach(tool => {
+        const launchMeta = getLaunchModeMeta(tool, account);
+        const recommended = account.tool === tool.title;
+        const card = document.createElement('div');
+        card.className = 'tool-card';
+        card.innerHTML = `
+          ${recommended ? '<span class="recommend-badge">Recommended</span>' : ''}
+          <span class="eyebrow">${tool.category}</span>
+          <h4>${tool.title}</h4>
+          <p>${tool.value}</p>
+          <div class="meta-row"><span>${tool.owner}</span><span>${tool.status}</span></div>
+          <p class="footer-note"><strong>Best for:</strong> ${tool.bestFor}</p>
+          <p class="footer-note"><strong>Launch mode:</strong> ${launchMeta.short}</p>
+          <p class="footer-note">${launchMeta.detail}</p>
+          <div class="button-row">${makeLaunchMarkup(tool, account)}</div>
+        `;
+        ui.toolsGrid.appendChild(card);
+      });
+    }
+
+    function renderSignals(account) {
+      ui.timeline.innerHTML = '';
+      account.signals.forEach(signal => {
+        const row = document.createElement('div');
+        row.className = 'timeline-item';
+        row.innerHTML = `
+          <div class="timeline-date">${signal.due}</div>
+          <div>
+            <div class="split" style="margin-bottom:8px;">
+              <h4>${signal.title}</h4>
+              <span class="pill ${signal.severity}">${signal.severity}</span>
+            </div>
+            <p class="muted">${signal.body}</p>
+          </div>
+        `;
+        ui.timeline.appendChild(row);
+      });
+
+      ui.signalsList.innerHTML = '';
+      signalDecisionGuide.forEach(rule => {
+        const card = document.createElement('div');
+        card.className = 'signal-card';
+        card.innerHTML = `
+          <span class="eyebrow">Decision rule</span>
+          <h4>${rule.title}</h4>
+          <p>${rule.body}</p>
+        `;
+        ui.signalsList.appendChild(card);
+      });
+    }
+
+    function renderRosterVerification() {
+      const roster = localState.rosterVerification;
+      const selectedCount = getSelectedRosterNames().length;
+      const verifiedCount = getVerifiedRosterNames().length;
+      ui.rosterSourceStatus.textContent = `${roster.sourceSummary} · ${roster.suggestedClients.length} suggested clients`;
+      ui.rosterStatus.textContent = roster.confirmed
+        ? `Verified roster active · ${verifiedCount} clients shown in portfolio${roster.lastConfirmedAt ? ' · confirmed this session' : ''}`
+        : `${selectedCount} selected · confirm to load portfolio intelligence`;
+      ui.rosterClientList.innerHTML = '';
+      roster.suggestedClients.forEach(client => {
+        const row = document.createElement('label');
+        row.className = 'roster-item';
+        row.innerHTML = `
+          <input type="checkbox" data-roster-client="${escapeHtmlAttr(client.name)}" ${client.selected ? 'checked' : ''} />
+          <span>
+            <strong>${client.name}</strong><br>
+            <span class="muted">Suggested by ${client.suggestedBy}</span>
+          </span>
+          <span class="pill ${client.aggregationStatus === 'Ready' ? 'low' : 'medium'}">${client.aggregationStatus}</span>
+        `;
+        ui.rosterClientList.appendChild(row);
+      });
+    }
+
+    function renderPortfolio() {
+      const ranking = getVerifiedPortfolioAccounts();
+      ui.portfolioTableBody.innerHTML = '';
+      if (!ranking.length) {
+        const tr = document.createElement('tr');
+        tr.innerHTML = '<td colspan="9"><span class="muted">Confirm the roster above to load verified portfolio intelligence.</span></td>';
+        ui.portfolioTableBody.appendChild(tr);
+        return;
+      }
+      ranking.forEach((account, index) => {
+        const tr = document.createElement('tr');
+        tr.style.cursor = 'pointer';
+        tr.innerHTML = `
+          <td>${index + 1}</td>
+          <td><strong>${account.name}</strong><br><span class="muted">${account.arrLabel}</span></td>
+          <td><span class="score-badge">${account.attentionScore}</span></td>
+          <td>${phases[account.phase]}</td>
+          <td>${account.engagement}</td>
+          <td>${account.compRisk}</td>
+          <td>${account.hoursRemainingLabel}</td>
+          <td><span class="pill ${getRosterAggregationStatus(account.name) === 'Ready' ? 'low' : 'medium'}">${getRosterAggregationStatus(account.name)}</span></td>
+          <td>${account.nextMove.title}</td>
+        `;
+        tr.addEventListener('click', () => {
+          localState.currentAccount = account.name;
+          ui.clientSelect.value = account.name;
+          syncPhaseFilterToAccount(account);
+          renderAll();
+          activateTab('overview');
+          showToast(`Opened ${account.name} workspace`);
+        });
+        ui.portfolioTableBody.appendChild(tr);
+      });
+    }
+
+    function renderWidgetAudit() {
+      ui.widgetAuditGrid.innerHTML = '';
+      widgetAudit.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'audit-card';
+        card.innerHTML = `
+          <span class="eyebrow">${item.title}</span>
+          <h4><span class="pill ${item.status}">${item.status}</span></h4>
+          <p>${item.body}</p>
+        `;
+        ui.widgetAuditGrid.appendChild(card);
+      });
+    }
+
+    function renderJson(account) {
+      const primarySignal = account.signals[0] || {};
+      const strategicAction = account.nextMove.title;
+      const bestNextStep = account.nextMove.session;
+      const phaseBackbone = getPhaseBackbone(account);
+      const recommendedResource = getRecommendedResource(account);
+      const prismHealth = getPrismHealthContext(account);
+      const prismCapture = getPrismCapture(account.name);
+      const model = {
+        product: {
+          name: 'Glean Adoption-OS',
+          purpose: 'Adoption OS Intelligence data layer for AIOM strategic action, best next step, recommended Glean resources, and Prism capture',
+          refreshMode: 'on-demand',
+          dashboardMode: 'Glean-native artifact'
+        },
+        data_layer: {
+          name: 'Adoption OS Intelligence data layer',
+          hardConstraint: 'Lives inside the Glean product',
+          decisionQuestion: 'Given this client Adoption OS phase, current signals, package reality, and available Glean resources, what strategic action should the AIOM take next?',
+          source_taxonomy: {
+            systems_of_record: [
+              { source: 'Salesforce', serves: 'Account identity, ownership, ARR/TCV, package, renewal, segment, and account context.' },
+              { source: 'Rocketlane', serves: 'Project state, hours remaining, package capacity, and milestone status.' },
+              { source: 'Sigma / adoption dashboards', serves: 'WAU, MAU, seat activation, adoption score, usage trend, stickiness, and agent usage.' },
+              { source: 'Support / Zendesk', serves: 'Open issues, escalations, technical blockers, and unresolved support friction.' }
+            ],
+            workstream_context: [
+              { source: 'Slack', serves: 'Internal and external account channels, rollout updates, responsiveness, and coordination context.' },
+              { source: 'Email / Gmail', serves: 'Sponsor responsiveness, formal follow-ups, quiet stakeholder signals, and client commitments.' },
+              { source: 'Calendar / Zoom / Gong / meeting notes', serves: 'Scheduled sessions, attendance, call themes, blockers, decisions, sentiment, and follow-ups.' },
+              { source: 'Google Drive / Docs / Slides / Sheets', serves: 'Success plans, kickoff decks, adoption plans, templates, trackers, and deliverables.' }
+            ],
+            glean_native_intelligence_action: [
+              { source: 'Prism', serves: 'Derived account memory, historical patterns, account signals, prior actions, and capture loop.' },
+              { source: 'Glean Search', serves: 'Internal research across account context, Adoption OS resources, and supporting assets.' },
+              { source: 'Glean Assistant', serves: 'Account question answering and assisted synthesis.' },
+              { source: 'Glean Agents / Skills', serves: 'Action layer for transition briefs, adoption strategy, enablement planning, change briefs, prompt/workflow support, and EBR generation.' },
+              { source: 'Glean Artifacts', serves: 'In-product operating surface where AIOMs review, decide, act, and capture.' }
+            ],
+            future_enrichment: [
+              { source: 'AI Fluency', serves: 'Q2/Q3 function-level capability, confidence, behavior change, leadership reinforcement, and capability growth signals.' }
+            ]
+          },
+          roster_verification: {
+            sourceSummary: localState.rosterVerification.sourceSummary,
+            confirmed: localState.rosterVerification.confirmed,
+            verifiedRoster: localState.rosterVerification.verifiedRoster,
+            suggestedClients: localState.rosterVerification.suggestedClients.map(client => ({
+              name: client.name,
+              suggestedBy: client.suggestedBy,
+              aggregationStatus: client.aggregationStatus,
+              selected: client.selected,
+              verified: client.verified
+            }))
+          },
+          what_was: {
+            prismSummary: account.prism.detail,
+            prismHealthSignal: prismHealth.prismHealthSignal,
+            prismRiskPattern: prismHealth.prismRiskPattern,
+            priorActionOutcome: prismHealth.priorActionOutcome,
+            repeatedBlocker: prismHealth.repeatedBlocker,
+            momentumSinceLastTouch: prismHealth.momentumSinceLastTouch,
+            healthImpact: prismHealth.healthImpact,
+            actionTaken: prismCapture.actionTaken || 'Not yet captured in this V1 artifact session',
+            actionOutcome: prismCapture.actionOutcome || 'Not yet captured in this V1 artifact session',
+            remainingBlocker: prismCapture.remainingBlocker || 'Not yet captured in this V1 artifact session',
+            ownerDateCommitments: prismCapture.ownerDateCommitments || 'Not yet captured in this V1 artifact session',
+            whatWorked: prismCapture.whatWorked || 'Not yet captured in this V1 artifact session',
+            whatDidNotWork: prismCapture.whatDidNotWork || 'Not yet captured in this V1 artifact session',
+            recommendedFollowup: prismCapture.recommendedFollowup || 'Not yet captured in this V1 artifact session',
+            priorMotionsUsed: [account.nextMove.session],
+            recommendedPlayFromHistory: prismHealth.recommendedPlayFromHistory,
+            toolsThatWorkedBefore: [account.tool]
+          },
+          what_is: {
+            currentAdoptionPhase: phases[account.phase],
+            phaseObjective: phaseBackbone.phaseObjective,
+            currentMilestone: phaseBackbone.currentMilestone,
+            openAdoptionActivities: phaseBackbone.openAdoptionActivities,
+            overdueAdoptionActivities: phaseBackbone.overdueAdoptionActivities,
+            phaseAssets: phaseBackbone.phaseAssets,
+            functionPhaseStatus: phaseBackbone.functionPhaseStatus,
+            currentSignals: account.signals.map(signal => ({
+              type: signal.type,
+              severity: signal.severity,
+              title: signal.title,
+              due: signal.due
+            })),
+            sourceCoverage: account.sourceCoverage,
+            sourceCoverageStatus: account.sourceCoverageStatus,
+            missingSources: getMissingSources(account),
+            supportingSources: account.sources.map(source => ({
+              name: source.name,
+              type: source.type,
+              role: source.role
+            })),
+            dataConfidence: account.sourceCoverage,
+            confidenceReason: getConfidenceReason(account),
+            hoursRemaining: account.hoursRemainingLabel,
+            packageEntitlements: account.phase === 'prep' || account.phase === 'readiness' ? 'Launch and enablement package motions' : 'Post-launch adoption, expansion, and value-realization motions',
+            engagementLevel: account.engagement,
+            commercialRisk: account.compRisk,
+            targetFunction: getTargetFunction(account),
+            primarySignal: primarySignal.title || 'No primary signal',
+            primaryFrictionType: getPrimaryFrictionType(account)
+          },
+          what_could_be: {
+            decisionOwner: getDecisionOwner(account),
+            strategicAction,
+            strategicRationale: account.nextMove.why,
+            bestNextStep,
+            recommendedMotion: account.nextMove.session,
+            recommendedToolOrAgent: recommendedResource.title,
+            recommendedAsset: recommendedResource.asset,
+            expectedOutcome: account.nextMove.body,
+            capturePrompt: getCapturePrompt(account)
+          }
+        },
+        account: {
+          name: account.name,
+          business: account.business,
+          phase: phases[account.phase],
+          arr: account.arrLabel,
+          hoursRemaining: account.hoursRemainingLabel,
+          sourceCoverage: account.sourceCoverage
+        },
+        platform_health: {
+          assistant: account.assistant,
+          agents: account.agents,
+          assistant_and_agents: {
+            wau: account.assistant.wau + account.agents.wau,
+            note: 'Rollup metric only; keep Assistant and Agents separable in product.'
+          },
+          prism: account.prism
+        },
+        prism_memory_health_loop: {
+          healthInput: prismHealth,
+          sessionCapture: prismCapture,
+          copyIntoPrism: getPrismCopySummary(account, prismCapture)
+        },
+        signals: account.signals,
+        recommendation: account.nextMove,
+        future_enrichment: {
+          ai_fluency_layer: {
+            timing: 'Q2/Q3 placeholder',
+            v1_dependency: false,
+            note: 'AI Fluency is not required for V1. It should later enrich Adoption OS recommendations with function-level capability, confidence, behavior change, leadership reinforcement, and capability growth signals.'
+          }
+        },
+        widget_audit: widgetAudit
+      };
+      ui.jsonView.textContent = JSON.stringify(model, null, 2);
+    }
+
+    function getPrismCapture(accountName) {
+      if (!localState.prismCapture[accountName]) {
+        localState.prismCapture[accountName] = {
+          summary: '',
+          risks: '',
+          opportunities: '',
+          followups: '',
+          actionTaken: '',
+          actionOutcome: '',
+          remainingBlocker: '',
+          ownerDateCommitments: '',
+          whatWorked: '',
+          whatDidNotWork: '',
+          recommendedFollowup: '',
+          savedAt: ''
+        };
+      }
+      return localState.prismCapture[accountName];
+    }
+
+    function getPrismCopySummary(account, capture) {
+      const prismHealth = getPrismHealthContext(account);
+      return [
+        `Account: ${account.name}`,
+        `Recommended action: ${account.nextMove.title}`,
+        `Recommended next step: ${account.nextMove.session}`,
+        `Recommended play from history: ${prismHealth.recommendedPlayFromHistory}`,
+        `Prism health signal: ${prismHealth.prismHealthSignal}`,
+        `Prism risk pattern: ${prismHealth.prismRiskPattern}`,
+        `Prior action outcome: ${prismHealth.priorActionOutcome}`,
+        `Repeated blocker: ${prismHealth.repeatedBlocker}`,
+        `Momentum since last touch: ${prismHealth.momentumSinceLastTouch}`,
+        `Health impact: ${prismHealth.healthImpact}`,
+        `Action taken: ${capture.actionTaken || 'Not captured yet'}`,
+        `Action outcome: ${capture.actionOutcome || 'Not captured yet'}`,
+        `Remaining blocker: ${capture.remainingBlocker || 'Not captured yet'}`,
+        `Owner/date commitments: ${capture.ownerDateCommitments || 'Not captured yet'}`,
+        `What worked: ${capture.whatWorked || 'Not captured yet'}`,
+        `What did not work: ${capture.whatDidNotWork || 'Not captured yet'}`,
+        `Recommended follow-up: ${capture.recommendedFollowup || capture.followups || 'Not captured yet'}`
+      ].join('\n');
+    }
+
+    function renderPrismWorkspace(account) {
+      const capture = getPrismCapture(account.name);
+      const prismHealth = getPrismHealthContext(account);
+      const sources = account.sources.slice(0, 3).map(source => `
+        <div class="source-card">
+          <span class="eyebrow">${source.role}</span>
+          <h4>${source.name}</h4>
+          <p>${source.purpose}</p>
+          <div class="meta-row"><span>${source.type}</span><span>${source.role}</span></div>
+        </div>
+      `).join('');
+
+      ui.prismInlineContext.innerHTML = `
+        <p><strong>${account.name}</strong> · ${account.business}</p>
+        <div class="pill-row" style="margin-top:12px;">
+          <span class="tool-tag">Phase: ${phases[account.phase]}</span>
+          <span class="tool-tag">Attention: ${account.attentionScore}</span>
+          <span class="tool-tag">Engagement: ${account.engagement}</span>
+          <span class="tool-tag">Prism: ${account.prism.coverage}</span>
+        </div>
+        <div class="callout" style="margin-top:14px;">
+          <strong>Recommended next move:</strong> ${account.nextMove.title}<br>
+          <span>${account.nextMove.body}</span>
+        </div>
+        <div class="callout" style="margin-top:14px;">
+          <strong>Health input from Prism:</strong> ${prismHealth.prismHealthSignal}<br>
+          <span>${prismHealth.prismRiskPattern} · ${prismHealth.healthImpact}</span>
+        </div>
+        <div class="callout" style="margin-top:14px;">
+          <strong>Recommended asset:</strong> ${account.asset.title}<br>
+          <span>${account.asset.body}</span>
+        </div>
+        <div class="source-grid" style="margin-top:14px;">${sources}</div>
+      `;
+
+      ui.prismSummaryInput.value = capture.summary;
+      ui.prismRisksInput.value = capture.risks;
+      ui.prismOpportunitiesInput.value = capture.opportunities;
+      ui.prismFollowupsInput.value = capture.followups;
+      ui.prismActionTakenInput.value = capture.actionTaken;
+      ui.prismActionOutcomeInput.value = capture.actionOutcome;
+      ui.prismRemainingBlockerInput.value = capture.remainingBlocker;
+      ui.prismCommitmentsInput.value = capture.ownerDateCommitments;
+      ui.prismWorkedInput.value = capture.whatWorked;
+      ui.prismDidNotWorkInput.value = capture.whatDidNotWork;
+      ui.prismRecommendedFollowupInput.value = capture.recommendedFollowup;
+      ui.prismCopySummary.value = getPrismCopySummary(account, capture);
+      ui.prismCaptureStatus.textContent = capture.savedAt
+        ? `Session notes kept for ${account.name} · ${capture.savedAt}`
+        : 'Notes are held in memory while this artifact is open.';
+
+      ui.prismInlineSignalList.innerHTML = '';
+      account.signals.slice(0, 4).forEach(signal => {
+        const row = document.createElement('div');
+        row.className = `signal-card ${signal.severity}`;
+        row.innerHTML = `
+          <div class="split" style="margin-bottom:8px;">
+            <h4>${signal.title}</h4>
+            <span class="pill ${signal.severity}">${signal.severity}</span>
+          </div>
+          <p>${signal.body}</p>
+          <div class="meta-row"><span>Due</span><span>${signal.due}</span></div>
+        `;
+        ui.prismInlineSignalList.appendChild(row);
+      });
+    }
+
+    function savePrismCapture() {
+      const account = getAccount();
+      localState.prismCapture[account.name] = {
+        summary: ui.prismSummaryInput.value,
+        risks: ui.prismRisksInput.value,
+        opportunities: ui.prismOpportunitiesInput.value,
+        followups: ui.prismFollowupsInput.value,
+        actionTaken: ui.prismActionTakenInput.value,
+        actionOutcome: ui.prismActionOutcomeInput.value,
+        remainingBlocker: ui.prismRemainingBlockerInput.value,
+        ownerDateCommitments: ui.prismCommitmentsInput.value,
+        whatWorked: ui.prismWorkedInput.value,
+        whatDidNotWork: ui.prismDidNotWorkInput.value,
+        recommendedFollowup: ui.prismRecommendedFollowupInput.value,
+        savedAt: new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })
+      };
+      renderPrismWorkspace(account);
+      showToast(`Session notes kept for ${account.name}`);
+    }
+
+    function openPrismPanel() {
+      const account = getAccount();
+      ui.prismTitle.textContent = `${account.name} Prism snapshot`;
+      ui.prismCoverage.textContent = account.prism.coverage;
+      ui.prismDetail.textContent = account.prism.detail;
+      ui.prismRefresh.textContent = account.prism.refresh;
+      ui.prismSignals.textContent = `${account.prism.signals} derived signals`;
+      ui.prismNarrative.textContent = `Prism is acting as the derived knowledge layer for ${account.name}. It stores synthesized account context so recommendations can improve without changing the AIOM-facing dashboard structure.`;
+      ui.prismSignalList.innerHTML = '';
+      account.signals.slice(0, 4).forEach(signal => {
+        const row = document.createElement('div');
+        row.className = 'list-item';
+        row.innerHTML = `
+          <span class="eyebrow">${signal.type.replace(/_/g, ' ')}</span>
+          <h4>${signal.title}</h4>
+          <p>${signal.body}</p>
+        `;
+        ui.prismSignalList.appendChild(row);
+      });
+      ui.prismOverlay.classList.add('open');
+      ui.prismOverlay.setAttribute('aria-hidden', 'false');
+    }
+
+    function closePrismPanel() {
+      ui.prismOverlay.classList.remove('open');
+      ui.prismOverlay.setAttribute('aria-hidden', 'true');
+    }
+
+    function activateTab(tabName) {
+      document.querySelectorAll('.tab').forEach(tab => tab.classList.toggle('active', tab.dataset.tab === tabName));
+      document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.toggle('active', panel.id === tabName));
+    }
+
+    function syncPhaseFilterToAccount(account) {
+      localState.activePhaseFilter = account.phase;
+      document.querySelectorAll('.phase-chip').forEach(chip => {
+        chip.classList.toggle('active', chip.dataset.phase === localState.activePhaseFilter);
+      });
+    }
+
+    function advancePhase() {
+      const order = ['prep', 'readiness', 'stickiness', 'scale'];
+      const account = getAccount();
+      const index = order.indexOf(account.phase);
+      const next = order[Math.min(index + 1, order.length - 1)];
+      if (next === account.phase) {
+        showToast('No further phase movement available');
+        return;
+      }
+      account.phase = next;
+      syncPhaseFilterToAccount(account);
+      renderAll();
+      showToast(`${account.name} moved to ${phases[next]}`);
+    }
+
+    function renderAll() {
+      const account = getAccount();
+      renderHero(account);
+      renderPhaseBackbone(account);
+      renderMetrics(account);
+      renderAttention(account);
+      renderNextMove(account);
+      renderReleaseSignals(account);
+      renderRisk(account);
+      renderSources(account);
+      renderPlatformHealth(account);
+      renderTemplates();
+      renderTools(account);
+      renderSignals(account);
+      renderRosterVerification();
+      renderPortfolio();
+      renderWidgetAudit();
+      renderJson(account);
+      renderPrismWorkspace(account);
+    }
+
+    function refreshLocalState() {
+      const now = new Date();
+      ui.refreshChip.textContent = 'Last refreshed · ' + now.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+      showToast(`Local demo state refreshed for ${localState.currentAccount}`);
+    }
+
+    populateClientSelect();
+    syncPhaseFilterToAccount(getAccount());
+
+    document.querySelectorAll('.tab').forEach(button => {
+      button.addEventListener('click', () => activateTab(button.dataset.tab));
+    });
+
+    ui.clientSelect.addEventListener('change', (event) => {
+      localState.currentAccount = event.target.value;
+      syncPhaseFilterToAccount(getAccount());
+      renderAll();
+      showToast(`Switched to ${localState.currentAccount}`);
+    });
+
+    document.getElementById('selectAllRosterBtn').addEventListener('click', () => {
+      localState.rosterVerification.suggestedClients.forEach(client => { client.selected = true; });
+      confirmRoster(getSelectedRosterNames());
+      renderAll();
+      showToast('Verified all suggested clients');
+    });
+
+    document.getElementById('confirmRosterBtn').addEventListener('click', () => {
+      const selectedNames = getSelectedRosterNames();
+      if (!selectedNames.length) {
+        showToast('Select at least one client to load the portfolio');
+        renderRosterVerification();
+        return;
+      }
+      confirmRoster(selectedNames);
+      renderAll();
+      showToast(`Verified ${selectedNames.length} client${selectedNames.length === 1 ? '' : 's'}`);
+    });
+
+    document.getElementById('addMissingClientBtn').addEventListener('click', addMissingClient);
+    ui.missingClientInput.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') addMissingClient();
+    });
+
+    document.querySelectorAll('.phase-chip').forEach(button => {
+      button.addEventListener('click', () => {
+        localState.activePhaseFilter = button.dataset.phase;
+        document.querySelectorAll('.phase-chip').forEach(chip => chip.classList.toggle('active', chip.dataset.phase === button.dataset.phase));
+        renderTemplates();
+        renderTools(getAccount());
+        showToast(button.dataset.phase === 'all' ? 'Showing all phases' : `Filtered to ${button.textContent}`);
+      });
+    });
+
+    document.getElementById('refreshBtn').addEventListener('click', refreshLocalState);
+    document.getElementById('openPrismBtn').addEventListener('click', openPrismPanel);
+    document.getElementById('closePrismBtn').addEventListener('click', closePrismPanel);
+    document.getElementById('savePrismCaptureBtn').addEventListener('click', savePrismCapture);
+    document.getElementById('dataModelLink').addEventListener('click', (event) => {
+      event.preventDefault();
+      activateTab('model');
+      showToast('Opened data model');
+    });
+    ui.prismOverlay.addEventListener('click', (event) => {
+      if (event.target === ui.prismOverlay) closePrismPanel();
+    });
+
+    document.addEventListener('click', (event) => {
+      const attentionToggle = event.target.closest('[data-attention-toggle="true"]');
+      if (attentionToggle) {
+        const account = getAccount();
+        const matchedSignal = account.signals.find(signal =>
+          signal.type === attentionToggle.dataset.attentionType &&
+          signal.title === attentionToggle.dataset.attentionTitle
+        );
+        if (!matchedSignal) return;
+
+        const wasCompleted = isAttentionCompleted(account.name, matchedSignal);
+        toggleAttentionCompleted(account.name, matchedSignal);
+        renderAttention(account);
+
+        const refreshedToggle = Array.from(document.querySelectorAll('[data-attention-toggle="true"]')).find(button =>
+          button.dataset.attentionType === matchedSignal.type &&
+          button.dataset.attentionTitle === matchedSignal.title
+        );
+        if (refreshedToggle && !wasCompleted) {
+          refreshedToggle.classList.add('just-completed');
+          const card = refreshedToggle.closest('.attention-item');
+          if (card) card.classList.add('celebrate');
+          setTimeout(() => {
+            refreshedToggle.classList.remove('just-completed');
+            if (card) card.classList.remove('celebrate');
+          }, 700);
+          showToast(`Nice — ${matchedSignal.title} is complete`);
+        } else {
+          showToast(`${matchedSignal.title} moved back to active`);
+        }
+        return;
+      }
+
+      const rosterToggle = event.target.closest('[data-roster-client]');
+      if (rosterToggle) {
+        const rosterClient = getRosterClient(rosterToggle.dataset.rosterClient);
+        if (!rosterClient) return;
+        rosterClient.selected = rosterToggle.checked;
+        localState.rosterVerification.confirmed = false;
+        localState.rosterVerification.verifiedRoster = [];
+        renderRosterVerification();
+        renderPortfolio();
+        showToast(`${rosterClient.name} ${rosterClient.selected ? 'selected' : 'removed from selected roster'}`);
+        return;
+      }
+
+      const copyTarget = event.target.getAttribute('data-copy');
+      if (!copyTarget) return;
+      copyWithPromptFallback(copyTarget);
+    });
+
+    refreshLocalState();
+    renderAll();
+
+    if (window.GleanBridge && typeof window.GleanBridge.postMessage === 'function' && typeof window.GleanBridge.onMessage === 'function') {
+      window.GleanBridge.postMessage({
+        actionId: 'export-pdf',
+        type: 'glean-add-menu',
+        metadata: { label: 'Export as PDF', icon: 'export' }
+      });
+      window.GleanBridge.onMessage('action', function(data) {
+        if (data.actionId === 'export-pdf') window.print();
+      });
+    }
+
+    function prepareChartsForPrint() {}
+    function cleanUpAfterPrint() {}
+    window.addEventListener('beforeprint', prepareChartsForPrint);
+    window.addEventListener('afterprint', cleanUpAfterPrint);
+  </script>
+</body>
+</html>

@@ -1,0 +1,197 @@
+{
+  "name": "Adoption OS Agentic Build Plan",
+  "version": "0.1.0",
+  "hardConstraint": "The artifact must live inside the Glean product as a single-file Glean-ready HTML artifact.",
+  "validationGate": "npm run check",
+  "globalGuardrails": [
+    "Do not introduce live network calls from the artifact.",
+    "Do not use browser storage APIs.",
+    "Do not add iframes, external scripts, or external CSS imports.",
+    "Keep GleanBridge usage guarded.",
+    "Keep the V1 data layer, AI Fluency placeholder, and source taxonomy intact.",
+    "Preserve dist/glean_adoption_os.html as generated output."
+  ],
+  "roles": {
+    "controller": "Main Codex agent. Owns sequencing, integration, validation, and final user-facing summary.",
+    "implementer": "Worker sub-agent. Owns a specific slice and writes only within the declared write scope.",
+    "specReviewer": "Reviewer sub-agent. Checks slice output against scope and acceptance criteria.",
+    "runtimeReviewer": "Reviewer sub-agent. Checks Glean runtime safety and repo validation risks."
+  },
+  "slices": [
+    {
+      "id": "roster-verification",
+      "title": "Roster Verification",
+      "priority": 0,
+      "ownerLane": "artifact-ui-data",
+      "writeScope": [
+        "src/glean_adoption_os.html",
+        "docs/v1-data-layer.md",
+        "scripts/validate-artifact.js"
+      ],
+      "goal": "Let an AIOM confirm or edit their suggested client roster before portfolio intelligence loads.",
+      "requirements": [
+        "Show suggested clients from seeded Staffing Sheet / Salesforce-style roster data.",
+        "Support select all, individual selection, and adding a missing client.",
+        "Only verified clients should appear in the portfolio view after confirmation.",
+        "Expose verification state in the artifact data model."
+      ],
+      "acceptanceCriteria": [
+        "AIOM can verify all suggested clients in one action.",
+        "AIOM can deselect clients that are not theirs.",
+        "AIOM can add a missing client with a visible aggregation status.",
+        "Portfolio table respects the verified roster.",
+        "npm run check passes."
+      ]
+    },
+    {
+      "id": "aggregation-status",
+      "title": "Aggregation Status Layer",
+      "priority": 1,
+      "ownerLane": "artifact-ui-data",
+      "writeScope": [
+        "src/glean_adoption_os.html",
+        "docs/v1-data-layer.md",
+        "scripts/validate-artifact.js"
+      ],
+      "goal": "Show what source data is available, missing, or needs verification for each verified account.",
+      "requirements": [
+        "Represent Salesforce, AIOM Staffing Sheet, Rocketlane, Sigma, Slack, Gong/meetings, Docs/Drive, and Prism status.",
+        "Show confidence reason and supporting sources in a human-readable way.",
+        "Do not imply live data when using seeded data."
+      ],
+      "acceptanceCriteria": [
+        "Each account exposes source coverage by category.",
+        "Missing sources are visible.",
+        "Confidence reason is visible near the recommendation.",
+        "npm run check passes."
+      ]
+    },
+    {
+      "id": "strategic-action-module",
+      "title": "Strategic Action Module",
+      "priority": 2,
+      "ownerLane": "artifact-ui",
+      "writeScope": [
+        "src/glean_adoption_os.html",
+        "scripts/validate-artifact.js"
+      ],
+      "goal": "Make strategic action, rationale, best next step, owner, target audience, and recommended resource obvious on the first screen.",
+      "requirements": [
+        "Render strategicAction, strategicRationale, bestNextStep, decisionOwner, targetFunction, primaryFrictionType, recommendedToolOrAgent, recommendedAsset, and capturePrompt.",
+        "Keep the experience practical for an AIOM and tied to Adoption OS.",
+        "Avoid marketing copy or abstract dashboard language."
+      ],
+      "acceptanceCriteria": [
+        "An AIOM can answer what to do next and why from the first screen.",
+        "Recommended Glean resource is visible next to the next step.",
+        "npm run check passes."
+      ]
+    },
+    {
+      "id": "adoption-os-phase-backbone",
+      "title": "Adoption OS Phase Backbone",
+      "priority": 3,
+      "ownerLane": "artifact-ui-data",
+      "writeScope": [
+        "src/glean_adoption_os.html",
+        "docs/v1-data-layer.md",
+        "scripts/validate-artifact.js"
+      ],
+      "goal": "Make the Adoption OS framework explicit as the operating backbone of the artifact.",
+      "requirements": [
+        "Show current phase, phase objective, current milestone, open activities, and phase-relevant assets.",
+        "Preserve phase-aware templates and tools.",
+        "Keep Monday/weekly priority as a summary layer, not the operating model."
+      ],
+      "acceptanceCriteria": [
+        "Overview is visibly phase-led.",
+        "Phase objective and open activities are inspectable.",
+        "npm run check passes."
+      ]
+    },
+    {
+      "id": "resource-launcher",
+      "title": "Recommended Resource Launcher",
+      "priority": 4,
+      "ownerLane": "artifact-tools",
+      "writeScope": [
+        "src/glean_adoption_os.html",
+        "docs/v1-data-layer.md"
+      ],
+      "goal": "Map strategic actions to the best Glean agent, skill, tool, or asset.",
+      "requirements": [
+        "Keep existing tools.",
+        "Add placeholders or entries for AIOM Account Ramp Companion, Meeting Summarizer + Follow Up, and Optimal Agent Use Case Recommender if URLs are known or can be safely represented as copy prompts.",
+        "Launch/copy behavior must remain explicit."
+      ],
+      "acceptanceCriteria": [
+        "Every strategic action has a recommended Glean resource.",
+        "Missing direct URLs degrade to copyable prompt behavior.",
+        "npm run check passes."
+      ]
+    },
+    {
+      "id": "prism-capture-loop",
+      "title": "Prism Capture Loop",
+      "priority": 5,
+      "ownerLane": "artifact-ui",
+      "writeScope": [
+        "src/glean_adoption_os.html",
+        "docs/v1-data-layer.md",
+        "scripts/validate-artifact.js"
+      ],
+      "goal": "Turn Prism capture into the memory loop for strategic action outcomes.",
+      "requirements": [
+        "Capture action taken, action outcome, remaining blocker, owner/date commitments, what worked, what did not work, and recommended follow-up.",
+        "Keep capture session-local unless a Glean-native persistence path is explicitly added.",
+        "Make it clear what should be copied or saved into Prism."
+      ],
+      "acceptanceCriteria": [
+        "Capture form reflects the strategic action model.",
+        "AIOM can capture whether the recommendation worked.",
+        "npm run check passes."
+      ]
+    },
+    {
+      "id": "glean-runtime-readiness",
+      "title": "Glean Runtime Readiness",
+      "priority": 6,
+      "ownerLane": "runtime-validation",
+      "writeScope": [
+        "scripts/validate-artifact.js",
+        "docs/glean-artifact-runtime.md",
+        "README.md"
+      ],
+      "goal": "Keep the final artifact safe to place back inside Glean.",
+      "requirements": [
+        "Preserve single-file HTML output.",
+        "Keep runtime restrictions encoded in validation.",
+        "Document placement steps and smoke test steps."
+      ],
+      "acceptanceCriteria": [
+        "npm run check passes.",
+        "Runtime docs include the current smoke test.",
+        "Validation catches Glean-breaking patterns."
+      ]
+    },
+    {
+      "id": "in-glean-smoke-test",
+      "title": "In-Glean Smoke Test",
+      "priority": 7,
+      "ownerLane": "manual-verification",
+      "writeScope": [
+        "docs/glean-artifact-runtime.md"
+      ],
+      "goal": "Document the final in-product test path for the user or a Glean operator.",
+      "requirements": [
+        "List the exact checks to perform after placing dist/glean_adoption_os.html into Glean.",
+        "Include roster verification, account clickthrough, strategic action, resource launcher, Prism capture, and export behavior."
+      ],
+      "acceptanceCriteria": [
+        "Smoke test checklist is documented.",
+        "No code runtime changes are needed for this slice unless a defect is found.",
+        "npm run check passes."
+      ]
+    }
+  ]
+}
