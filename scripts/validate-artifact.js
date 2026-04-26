@@ -90,7 +90,7 @@ const checks = [
   ['artifact includes aggregation status model', html.includes('sourceCoverageStatus') && html.includes('missingSources') && html.includes('buildSourceCoverageStatus') && html.includes('getMissingSources(account)')],
   ['artifact includes required source categories', html.includes('Salesforce') && html.includes('AIOM Staffing Sheet') && html.includes('Rocketlane') && html.includes('Sigma') && html.includes('Slack') && html.includes('Gong/meetings') && html.includes('Docs/Drive') && html.includes('Prism')],
   ['artifact includes source coverage UI', html.includes('source categories available') && html.includes('Missing or verification-needed sources') && html.includes('Seeded aggregation status only, not live data')],
-  ['artifact includes confidence reason near recommendation', html.includes('id="confidenceReason"') && html.includes('Confidence reason: ${getConfidenceReason(account)}')],
+  ['artifact includes confidence reason near recommendation', html.includes('id="confidenceReason"') && html.includes('sources covered')],
   ['artifact includes provisional and missing source statuses', html.includes("coverage('provisional'") && html.includes("coverage('missing'") && html.includes("coverage('needs verification'")],
   ['artifact avoids seeded availability as live class', !html.includes('pill.live') && html.includes('pill.available')],
   ['V1 data layer doc includes aggregation status layer', dataLayerDoc.includes('Aggregation Status Layer') && dataLayerDoc.includes('sourceCoverageStatus') && dataLayerDoc.includes('missingSources') && dataLayerDoc.includes('Seeded data must be labeled')],

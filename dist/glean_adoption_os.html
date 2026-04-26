@@ -97,10 +97,10 @@
     }
 
     .hero h1 {
-      color: var(--glean-green);
-      font-size: 44px;
-      line-height: 1.02;
-      letter-spacing: -0.03em;
+      color: var(--glean-white);
+      font-size: 28px;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
       margin-bottom: 10px;
     }
 
@@ -108,6 +108,155 @@
       max-width: 860px;
       color: rgba(255,255,255,0.82);
       font-size: 17px;
+    }
+
+    .account-rail {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      background: rgba(255,255,255,0.6);
+      border: 1px solid rgba(199,199,171,0.4);
+      border-radius: 14px;
+      backdrop-filter: blur(10px);
+      margin-bottom: var(--space-4);
+    }
+
+    .account-rail-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .account-rail-select {
+      flex: 1;
+      min-width: 200px;
+      padding: 8px 12px;
+      border: 1px solid rgba(199,199,171,0.55);
+      border-radius: 10px;
+      background: var(--glean-white);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .account-rail-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: 0 0 auto;
+    }
+
+    .account-rail .chip {
+      background: rgba(52,60,237,0.06);
+      border-color: rgba(52,60,237,0.10);
+      color: var(--muted);
+      text-transform: none;
+      letter-spacing: 0;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 10px;
+      backdrop-filter: none;
+    }
+
+    .account-rail .primary {
+      padding: 8px 14px;
+      font-size: 13px;
+    }
+
+    .hero-status-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .hero-status-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.16);
+      backdrop-filter: blur(6px);
+      color: var(--glean-white);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+    }
+
+    .hero-status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.6);
+      flex: 0 0 auto;
+    }
+
+    .hero-status-chip.tone-risk {
+      background: rgba(255,179,161,0.22);
+      border-color: rgba(255,179,161,0.55);
+      color: #FFD8CE;
+    }
+    .hero-status-chip.tone-risk .hero-status-dot { background: #FFB3A1; box-shadow: 0 0 0 3px rgba(255,179,161,0.18); }
+
+    .hero-status-chip.tone-medium {
+      background: rgba(255,214,107,0.20);
+      border-color: rgba(255,214,107,0.50);
+      color: #FFE8B5;
+    }
+    .hero-status-chip.tone-medium .hero-status-dot { background: #FFD66B; }
+
+    .hero-status-chip.tone-low {
+      background: rgba(216,253,73,0.18);
+      border-color: rgba(216,253,73,0.45);
+      color: var(--glean-green);
+    }
+    .hero-status-chip.tone-low .hero-status-dot { background: var(--glean-green); }
+
+    .hero-status-chip.tone-info {
+      background: rgba(178,229,239,0.20);
+      border-color: rgba(178,229,239,0.45);
+      color: #DAF1F7;
+    }
+    .hero-status-chip.tone-info .hero-status-dot { background: var(--glean-lightblue); }
+
+    .hero-kpi.tone-risk-card {
+      border-color: rgba(255,179,161,0.55);
+      background: rgba(255,179,161,0.12);
+    }
+    .hero-kpi.tone-medium-card {
+      border-color: rgba(255,214,107,0.50);
+      background: rgba(255,214,107,0.10);
+    }
+    .hero-kpi-value.tone-risk { color: #FFD8CE; }
+    .hero-kpi-value.tone-medium { color: #FFE8B5; }
+    .hero-kpi-value.tone-healthy { color: var(--glean-green); }
+
+    .hero-kpi--preview {
+      border-style: dashed;
+      opacity: 0.82;
+      position: relative;
+    }
+
+    .hero-kpi-preview-tag {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 0.10em;
+      padding: 3px 7px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.20);
+      color: var(--glean-white);
+      border: 1px solid rgba(255,255,255,0.28);
+      text-transform: uppercase;
     }
 
     .hero-badges, .toolbar, .inline-actions, .meta-row, .button-row, .pill-row {
@@ -123,26 +272,59 @@
       z-index: 3;
     }
 
-    .hero-company-picker {
+    .hero-picker-row {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      margin-top: 4px;
       position: relative;
-      z-index: 4;
-    }
-
-    .hero-controls {
-      display: grid;
-      gap: 10px;
-      justify-items: end;
-      flex: 0 0 300px;
-      max-width: 300px;
       z-index: 3;
     }
 
-    .hero-refresh-row {
+    .hero-kpis {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .hero-kpi {
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.16);
+      border-radius: 16px;
+      padding: 14px 16px;
+      backdrop-filter: blur(10px);
+      color: var(--glean-white);
       display: flex;
-      gap: 8px;
-      justify-content: flex-end;
-      align-items: center;
-      width: 100%;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 0;
+    }
+
+    .hero-kpi-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+    }
+
+    .hero-kpi-value {
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      color: var(--glean-white);
+      word-wrap: break-word;
+    }
+
+    .hero-kpi-value.tone-pending { color: rgba(255,255,255,0.7); }
+
+    .hero-kpi-sub {
+      font-size: 12px;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.35;
+      word-wrap: break-word;
     }
 
     .tag, .chip {
@@ -776,6 +958,92 @@
 
     .hidden { display: none !important; }
 
+    .account-rail-ask {
+      flex: 0 0 auto;
+      padding: 8px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      background: rgba(52,60,237,0.08);
+      color: var(--glean-blue);
+      border: 1px solid rgba(52,60,237,0.14);
+      border-radius: 12px;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .account-rail-ask:hover { background: rgba(52,60,237,0.14); }
+    .account-rail-ask::before {
+      content: '';
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--glean-blue);
+      margin-right: 6px;
+      vertical-align: middle;
+    }
+
+    .assistant-modal {
+      width: min(680px, 100%);
+      max-height: 88vh;
+      overflow-y: auto;
+      background: var(--surface-strong);
+      border: 1px solid rgba(199,199,171,0.4);
+      border-radius: 24px;
+      padding: 28px;
+      box-shadow: var(--shadow-2);
+    }
+
+    .assistant-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 6px;
+    }
+
+    .assistant-modal h2 {
+      font-size: 22px;
+      color: var(--text);
+      letter-spacing: -0.01em;
+      margin-bottom: 4px;
+    }
+
+    .assistant-context-line {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+
+    .assistant-prompt-textarea {
+      width: 100%;
+      min-height: 110px;
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--glean-white);
+      color: var(--text);
+      font: inherit;
+      resize: vertical;
+      margin-bottom: 14px;
+    }
+
+    .assistant-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .assistant-actions .primary {
+      background: var(--glean-blue);
+      color: var(--glean-white);
+      padding: 12px 18px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+    }
+
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(12px); }
       to { opacity: 1; transform: translateY(0); }
@@ -793,13 +1061,350 @@
       100% { transform: scale(1.1); opacity: 0; }
     }
 
+    .fluency-shell { display: grid; gap: 18px; }
+
+    .fluency-mockup-banner {
+      background: rgba(255, 241, 234, 0.85);
+      border: 1px solid rgba(255, 126, 76, 0.28);
+      border-radius: 14px;
+      padding: 10px 14px;
+      font-size: 13px;
+      color: #c2410c;
+    }
+
+    .fluency-hero {
+      background: linear-gradient(135deg, #343CED 0%, #4148f0 100%);
+      border-radius: var(--radius-card);
+      padding: 32px;
+      color: var(--glean-white);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .fluency-hero-eyebrow {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.85);
+      margin-bottom: 18px;
+    }
+
+    .fluency-hero-title { font-size: 44px; line-height: 1.04; letter-spacing: -0.025em; max-width: 600px; margin-bottom: 16px; color: var(--glean-white); }
+    .fluency-hero-desc { color: rgba(255,255,255,0.85); max-width: 620px; margin-bottom: 16px; line-height: 1.5; }
+    .fluency-hero-sub { font-size: 13px; color: rgba(255,255,255,0.78); margin-bottom: 24px; }
+    .fluency-hero-sub strong { color: var(--glean-white); }
+
+    .fluency-hero-badge {
+      position: absolute;
+      top: 32px;
+      right: 32px;
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.16);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.18);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .fluency-hero-badge-value { font-size: 36px; font-weight: 700; line-height: 1; }
+    .fluency-hero-badge-label { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; color: rgba(255,255,255,0.85); margin-top: 4px; }
+
+    .fluency-hero-cards {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .fluency-hero-card {
+      background: rgba(255,255,255,0.95);
+      border-radius: 16px;
+      padding: 16px 18px;
+      color: var(--text);
+    }
+
+    .fluency-hero-card-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+    .fluency-hero-card-title { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+    .fluency-hero-card-body { font-size: 13px; color: var(--muted); }
+
+    .fluency-hero-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+    .fluency-hero-btn {
+      flex: 1;
+      padding: 14px 18px;
+      border-radius: 14px;
+      font-weight: 700;
+      font-size: 14px;
+      text-align: center;
+      cursor: pointer;
+      border: none;
+    }
+    .fluency-hero-btn.primary { background: var(--glean-white); color: var(--glean-blue); }
+    .fluency-hero-btn.secondary { background: rgba(255,255,255,0.14); color: var(--glean-white); border: 1px solid rgba(255,255,255,0.22); }
+
+    .fluency-section-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--glean-blue); margin-bottom: 12px; }
+
+    .fluency-cohort-block {
+      background: linear-gradient(180deg, #f6f4ff 0%, #fafff0 100%);
+      border-radius: 18px;
+      padding: 20px;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .fluency-cohort-block h3 { font-size: 18px; margin-bottom: 10px; }
+    .fluency-cohort-block p { font-size: 14px; color: var(--muted); line-height: 1.5; }
+    .fluency-cohort-aside { display: grid; gap: 10px; }
+    .fluency-cohort-aside-card {
+      background: rgba(255,255,255,0.78);
+      border-radius: 12px;
+      padding: 12px 14px;
+    }
+    .fluency-cohort-aside-eyebrow { font-size: 12px; color: var(--muted); }
+    .fluency-cohort-aside-value { font-size: 18px; font-weight: 700; }
+    .fluency-cohort-aside-sub { font-size: 12px; color: var(--muted); }
+
+    .fluency-filter-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+    .fluency-filter-label { font-size: 13px; color: var(--muted); margin-right: 4px; }
+    .fluency-filter-pill {
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(52,60,237,0.06);
+      color: var(--glean-blue);
+      font-size: 13px;
+      font-weight: 600;
+      border: 1px solid transparent;
+      cursor: default;
+    }
+    .fluency-filter-pill.active {
+      background: var(--glean-blue);
+      color: var(--glean-white);
+    }
+
+    .fluency-function-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+    .fluency-function-pill {
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(52,60,237,0.04);
+      color: var(--text);
+      font-size: 13px;
+      border: 1px solid rgba(52,60,237,0.08);
+    }
+    .fluency-function-pill strong { color: var(--glean-blue); margin-left: 6px; }
+
+    .fluency-cohort-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .fluency-cohort-card {
+      background: rgba(246,243,235,0.55);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px;
+    }
+    .fluency-cohort-card.highlight {
+      background: linear-gradient(180deg, #fafff0 0%, rgba(255,255,255,0.72) 100%);
+      border-color: rgba(216,253,73,0.6);
+    }
+    .fluency-cohort-card-eyebrow { font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; font-weight: 700; color: var(--muted); margin-bottom: 8px; }
+    .fluency-cohort-card-value { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 6px; line-height: 1; }
+    .fluency-cohort-card-sub { font-size: 13px; color: var(--muted); margin-bottom: 10px; }
+    .fluency-cohort-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+    .fluency-cohort-chip {
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(52,60,237,0.08);
+      color: var(--glean-blue);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .fluency-progress {
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(199,199,171,0.4);
+      overflow: hidden;
+      margin-top: 10px;
+    }
+    .fluency-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--glean-blue), var(--glean-green));
+      border-radius: 999px;
+    }
+
+    .fluency-dimension-card {
+      background: rgba(255,255,255,0.86);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+    .fluency-dimension-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 4px; }
+    .fluency-dimension-title { display: flex; gap: 8px; align-items: center; }
+    .fluency-dimension-badge {
+      padding: 4px 10px;
+      background: rgba(52,60,237,0.10);
+      border-radius: 999px;
+      color: var(--glean-blue);
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .fluency-dimension-name { font-size: 16px; font-weight: 700; }
+    .fluency-dimension-pct { font-size: 22px; font-weight: 700; color: var(--glean-blue); line-height: 1; }
+    .fluency-dimension-out { font-size: 11px; color: var(--muted); text-align: right; }
+    .fluency-dimension-sub { font-size: 12px; color: var(--muted); margin: 4px 0 8px; }
+    .fluency-dimension-body { font-size: 13px; color: var(--text); margin-bottom: 8px; }
+
+    .fluency-spider-card { background: rgba(255,255,255,0.86); border: 1px solid var(--border); border-radius: 18px; padding: 18px; margin-bottom: 12px; }
+    .fluency-spider-title { font-weight: 700; margin-bottom: 4px; }
+    .fluency-spider-sub { font-size: 13px; color: var(--muted); margin-bottom: 12px; }
+    .fluency-spider svg { display: block; margin: 0 auto; max-width: 100%; }
+    .fluency-spider-axes {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .fluency-spider-axis {
+      background: rgba(255,255,255,0.7);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 8px 10px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .fluency-spider-axis strong { display: block; font-size: 16px; color: var(--text); margin-top: 2px; }
+
+    .fluency-pathway-card {
+      background: rgba(255,255,255,0.78);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 14px 16px;
+      margin: 8px 0;
+    }
+    .fluency-pathway-eyebrow { font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; font-weight: 700; color: var(--glean-blue); }
+    .fluency-pathway-title { font-size: 16px; font-weight: 700; margin: 4px 0; }
+    .fluency-pathway-body { font-size: 13px; color: var(--muted); }
+    .fluency-pathway-arrow { text-align: center; color: var(--glean-blue); font-size: 18px; margin: 4px 0; line-height: 1; }
+
+    .fluency-pathway-tabs { display: flex; gap: 8px; margin: 14px 0; }
+    .fluency-pathway-tab {
+      padding: 8px 16px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 13px;
+      background: rgba(52,60,237,0.08);
+      color: var(--glean-blue);
+      border: none;
+      cursor: default;
+    }
+    .fluency-pathway-tab.active { background: var(--glean-blue); color: var(--glean-white); }
+    .fluency-pathway-tab { cursor: pointer; }
+
+    .fluency-filter-pill { cursor: pointer; transition: background-color 0.15s ease, color 0.15s ease; }
+    .fluency-function-pill { cursor: pointer; transition: background-color 0.15s ease, border-color 0.15s ease; }
+    .fluency-function-pill.active { background: var(--glean-blue); color: var(--glean-white); border-color: var(--glean-blue); }
+    .fluency-function-pill.active strong { color: var(--glean-green); }
+
+    .fluency-aiom-callout {
+      background: linear-gradient(135deg, rgba(52,60,237,0.06), rgba(216,253,73,0.10));
+      border: 1px solid rgba(52,60,237,0.18);
+      border-radius: 18px;
+      padding: 18px 20px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      align-items: center;
+      margin-top: 14px;
+    }
+    .fluency-aiom-callout-eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--glean-blue);
+      margin-bottom: 6px;
+    }
+    .fluency-aiom-callout-title { font-size: 17px; font-weight: 700; margin-bottom: 6px; }
+    .fluency-aiom-callout-body { font-size: 13px; color: var(--muted); line-height: 1.5; }
+    .fluency-aiom-callout-resource {
+      background: var(--glean-white);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px 14px;
+      min-width: 180px;
+      text-align: left;
+    }
+    .fluency-aiom-callout-resource-eyebrow { font-size: 11px; color: var(--muted); letter-spacing: 0.04em; text-transform: uppercase; }
+    .fluency-aiom-callout-resource-name { font-size: 14px; font-weight: 700; color: var(--glean-blue); margin-top: 4px; }
+
+    .fluency-strategy-card {
+      background: linear-gradient(135deg, #fafff0 0%, #f4f4ff 100%);
+      border: 1px solid rgba(216,253,73,0.5);
+      border-radius: 18px;
+      padding: 22px;
+    }
+    .fluency-strategy-step { display: grid; grid-template-columns: 38px 1fr; gap: 14px; padding: 14px 0; border-bottom: 1px solid rgba(199,199,171,0.3); }
+    .fluency-strategy-step:last-child { border-bottom: none; padding-bottom: 0; }
+    .fluency-strategy-step:first-child { padding-top: 0; }
+    .fluency-strategy-num {
+      width: 30px; height: 30px; border-radius: 50%; background: var(--glean-blue); color: var(--glean-white);
+      display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700;
+    }
+    .fluency-strategy-step-title { font-weight: 700; margin-bottom: 4px; }
+    .fluency-strategy-step-body { font-size: 13px; color: var(--muted); }
+
+    .fluency-insights {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .fluency-insight-col-eyebrow { font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; font-weight: 700; color: var(--muted); margin-bottom: 4px; }
+    .fluency-insight-col-title { font-size: 18px; font-weight: 700; margin-bottom: 12px; }
+    .fluency-insight-card {
+      background: rgba(255,255,255,0.78);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+    .fluency-insight-card h4 { font-size: 15px; margin-bottom: 8px; }
+    .fluency-insight-card p { font-size: 13px; color: var(--muted); margin-bottom: 8px; line-height: 1.5; }
+    .fluency-insight-card p.note { font-style: italic; color: var(--muted); }
+
     @media screen and (max-width: 1180px) {
       .grid.metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); }
       .grid.two, .grid.three, .source-grid, .templates-grid, .tools-grid, .risk-grid, .audit-grid { grid-template-columns: 1fr; }
       .hero-top { flex-direction: column; }
-      .hero-controls { width: 100%; max-width: 100%; justify-items: stretch; }
-      .hero-refresh-row { justify-content: flex-start; flex-wrap: wrap; }
+      .hero-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .account-rail { flex-wrap: wrap; }
+      .account-rail-actions { width: 100%; justify-content: flex-end; }
       .toolbar { justify-content: flex-start; min-width: 100%; }
+      .fluency-cohort-block { grid-template-columns: 1fr; }
+      .fluency-cohort-grid { grid-template-columns: 1fr; }
+      .fluency-insights { grid-template-columns: 1fr; }
+      .fluency-spider-axes { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .fluency-hero-cards { grid-template-columns: 1fr; }
+      .fluency-hero-badge { position: static; margin-bottom: 18px; }
     }
 
     @media screen and (max-width: 760px) {
@@ -809,7 +1414,9 @@
       .hero h1 { font-size: 34px; }
       .timeline-item { grid-template-columns: 1fr; gap: 6px; }
       .client-select { min-width: 100%; }
-      .hero-refresh-row { display: grid; grid-template-columns: 1fr; }
+      .account-rail-actions .primary { flex: 1; }
+      .hero-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+      .hero-kpi-value { font-size: 20px; }
       .roster-item, .roster-add-row { grid-template-columns: 1fr; }
       .portfolio-table, .portfolio-table thead, .portfolio-table tbody, .portfolio-table tr, .portfolio-table th, .portfolio-table td { display: block; width: 100%; }
       .portfolio-table thead { display: none; }
@@ -841,22 +1448,44 @@
 <body>
   <div class="page">
     <div class="shell">
+      <div class="account-rail">
+        <span class="account-rail-label">Account</span>
+        <select id="clientSelect" class="account-rail-select" aria-label="Select client"></select>
+        <div class="account-rail-actions">
+          <div class="chip" id="refreshChip">Last refreshed · Ready</div>
+          <button class="account-rail-ask" id="askAssistantBtn" type="button">Ask Glean Assistant</button>
+          <button class="primary" id="refreshBtn">Refresh</button>
+        </div>
+      </div>
+
       <header class="hero">
         <div class="hero-top">
           <div class="hero-copy">
-            <div class="tag">Glean Adoption-OS</div>
             <h1 id="heroTitle">Amplify Education</h1>
-            <p id="heroSubtitle">A proactive AIOM workspace for messy real-world account management: unified signals, next-best-action guidance, recommended sessions/docs/tools, release-intelligence watchpoints, and engagement + comp-risk alerts.</p>
-            <div class="hero-badges" id="heroBadges"></div>
+            <div class="hero-status-strip" id="heroStatusStrip"></div>
           </div>
-          <div class="hero-controls">
-            <div class="hero-company-picker">
-              <select id="clientSelect" class="client-select" aria-label="Select client"></select>
-            </div>
-            <div class="hero-refresh-row">
-              <div class="chip" id="refreshChip">Last refreshed · Ready</div>
-              <button class="primary" id="refreshBtn">Refresh</button>
-            </div>
+        </div>
+        <div class="hero-kpis" id="heroKpis">
+          <div class="hero-kpi">
+            <span class="hero-kpi-label">Phase</span>
+            <span class="hero-kpi-value" id="heroKpiPhase">—</span>
+            <span class="hero-kpi-sub" id="heroKpiPhaseSub"></span>
+          </div>
+          <div class="hero-kpi">
+            <span class="hero-kpi-label">Account health</span>
+            <span class="hero-kpi-value" id="heroKpiHealth">—</span>
+            <span class="hero-kpi-sub" id="heroKpiHealthSub"></span>
+          </div>
+          <div class="hero-kpi">
+            <span class="hero-kpi-label">Hours left in package</span>
+            <span class="hero-kpi-value" id="heroKpiHours">—</span>
+            <span class="hero-kpi-sub" id="heroKpiHoursSub">Remaining service-package capacity</span>
+          </div>
+          <div class="hero-kpi hero-kpi--placeholder hero-kpi--preview">
+            <span class="hero-kpi-preview-tag">Preview</span>
+            <span class="hero-kpi-label">AI Fluency score</span>
+            <span class="hero-kpi-value" id="heroKpiFluency">72%</span>
+            <span class="hero-kpi-sub" id="heroKpiFluencySub">Q2/Q3 placeholder · not live</span>
           </div>
         </div>
       </header>
@@ -868,6 +1497,7 @@
         <button class="tab" data-tab="signals">Signals</button>
         <button class="tab" data-tab="portfolio">Portfolio</button>
         <button class="tab" data-tab="prism">Prism</button>
+        <button class="tab" data-tab="fluency">AI Fluency</button>
       </nav>
 
       <div class="phase-toolbar" aria-label="Adoption phase filter">
@@ -901,6 +1531,22 @@
               <div class="button-row" id="recommendedResourceButtonRow" style="margin-top:10px;"></div>
             </div>
           </div>
+          <div class="grid two" style="margin-top:16px;">
+            <div class="metric-card" style="min-height:auto;">
+              <div class="eyebrow">Recommended doc</div>
+              <div class="metric-value" style="font-size:18px;" id="recommendedDocTitle"></div>
+              <div class="metric-sub" id="recommendedDocBody"></div>
+              <div class="button-row" style="margin-top:10px;">
+                <a class="buttonlike" id="recommendedDocButton" href="#" target="_blank" rel="noopener">Open resource</a>
+              </div>
+            </div>
+            <div class="metric-card" style="min-height:auto;">
+              <div class="eyebrow">Recommended asset</div>
+              <div class="metric-value" style="font-size:18px;" id="recommendedAssetTitle"></div>
+              <div class="metric-sub" id="recommendedAssetBody"></div>
+              <div class="pill-row" id="assetTags" style="margin-top:10px;"></div>
+            </div>
+          </div>
           <div class="grid three" style="margin-top:16px;">
             <div class="metric-card" style="min-height:auto;">
               <div class="eyebrow">Decision owner</div>
@@ -926,7 +1572,6 @@
               <div class="section-kicker">Adoption OS phase backbone</div>
               <h2 id="currentPhaseTitle"></h2>
             </div>
-            <div class="status blue"><i></i><span id="currentMilestone"></span></div>
           </div>
           <div class="grid two" style="margin-top:16px;">
             <div class="metric-card" style="min-height:auto;">
@@ -959,8 +1604,6 @@
           <p class="footer-note">Weekly priority is a summary layer. The operating model is the Adoption OS phase, and different client functions may be moving through different phases at the same time.</p>
         </section>
 
-        <div class="grid metrics" id="metricsGrid"></div>
-
         <div class="grid two" style="margin-top:18px;">
           <section class="surface">
             <div class="split">
@@ -971,31 +1614,6 @@
               <div class="status orange"><i></i><span id="attentionSummary"></span></div>
             </div>
             <div class="list" id="attentionList"></div>
-          </section>
-        </div>
-
-        <div class="grid three" style="margin-top:18px;">
-          <section class="surface recommendation-card">
-            <div class="section-kicker">Recommended doc</div>
-            <h2 id="recommendedDocTitle"></h2>
-            <p id="recommendedDocBody" class="muted"></p>
-            <div class="button-row">
-              <a class="buttonlike" id="recommendedDocButton" href="#" target="_blank" rel="noopener">Open resource</a>
-            </div>
-          </section>
-
-          <section class="surface recommendation-card">
-            <div class="section-kicker">Recommended Glean resource</div>
-            <h2 id="recommendedToolTitle"></h2>
-            <p id="recommendedToolBody" class="muted"></p>
-            <div class="button-row" id="recommendedToolButtonRow"></div>
-          </section>
-
-          <section class="surface recommendation-card">
-            <div class="section-kicker">Recommended asset</div>
-            <h2 id="recommendedAssetTitle"></h2>
-            <p id="recommendedAssetBody" class="muted"></p>
-            <div class="pill-row" id="assetTags"></div>
           </section>
         </div>
 
@@ -1043,7 +1661,6 @@
                 <div class="section-kicker">AI health + knowledge</div>
                 <h2>Assistant, Agents, and Prism</h2>
               </div>
-              <div class="status blue"><i></i><span id="platformHealthSummary"></span></div>
             </div>
             <div class="risk-grid" id="platformHealthGrid"></div>
             <div class="callout" id="prismHealthInputPanel" style="margin-top:14px;">
@@ -1083,33 +1700,6 @@
           </section>
         </div>
 
-        <section class="surface" style="margin-top:18px;">
-          <div class="split">
-            <div>
-              <div class="section-kicker">Future intelligence layer</div>
-              <h2>AI Fluency layer</h2>
-            </div>
-            <div class="status blue"><i></i><span>Q2/Q3 placeholder</span></div>
-          </div>
-          <p class="muted">AI Fluency is planned as a Q2/Q3 enrichment layer and is not required for V1. Today, the artifact uses Adoption OS phase, client signals, existing tools, and Prism context to recommend the strategic action and best next step.</p>
-          <div class="grid three" style="margin-top:16px;">
-            <div class="risk-card">
-              <span class="eyebrow">What it will add</span>
-              <h4>Capability context</h4>
-              <p>Function-level fluency signals can explain why a team is ready, stalled, or likely to regress.</p>
-            </div>
-            <div class="risk-card">
-              <span class="eyebrow">How it will fit</span>
-              <h4>Strategy refinement</h4>
-              <p>Fluency data should tune the recommended motion without replacing the Adoption OS backbone.</p>
-            </div>
-            <div class="risk-card">
-              <span class="eyebrow">V1 boundary</span>
-              <h4>Do not block launch</h4>
-              <p>Missing AI Fluency data should be treated as future enrichment, not a reason to delay the Glean artifact.</p>
-            </div>
-          </div>
-        </section>
       </section>
 
       <section class="tab-panel" id="templates">
@@ -1310,6 +1900,389 @@
         </section>
       </section>
 
+      <section class="tab-panel" id="fluency">
+        <div class="fluency-shell">
+          <div class="fluency-mockup-banner">
+            <strong>Design mockup of the AI Fluency layer.</strong> This view previews the planned sponsor report (Northstar Enterprise sample data). It is a static placeholder until the live integration ships in Q2/Q3 — not required for V1.
+          </div>
+
+          <section class="fluency-hero">
+            <div class="fluency-hero-badge">
+              <span class="fluency-hero-badge-value" id="fluencyHeroBadgeValue">72%</span>
+              <span class="fluency-hero-badge-label">Average<br>fluency</span>
+            </div>
+            <div class="fluency-hero-eyebrow">Your organizational AI Fluency</div>
+            <h2 class="fluency-hero-title">Your Organizational AI Fluency</h2>
+            <p class="fluency-hero-desc">Northstar Enterprise shows clear cohort-level movement from Time 1 to Time 2. Fluency improved materially, and the readiness and impact measures moved in the same direction.</p>
+            <p class="fluency-hero-sub"><strong id="fluencyHeroSubAvg">72% average fluency</strong><br><span id="fluencyHeroSubCohort">All respondents · 5,000 anonymous respondents</span></p>
+            <div class="fluency-hero-cards">
+              <div class="fluency-hero-card">
+                <div class="fluency-hero-card-eyebrow">Current view</div>
+                <div class="fluency-hero-card-title" id="fluencyHeroCurrentTitle">All respondents</div>
+                <div class="fluency-hero-card-body" id="fluencyHeroCurrentBody">5,000 anonymous respondents in this filtered cohort.</div>
+              </div>
+              <div class="fluency-hero-card">
+                <div class="fluency-hero-card-eyebrow">Strongest dimension</div>
+                <div class="fluency-hero-card-title" id="fluencyHeroStrongestTitle">Confidence</div>
+                <div class="fluency-hero-card-body" id="fluencyHeroStrongestBody">75%. This is where momentum is strongest.</div>
+              </div>
+              <div class="fluency-hero-card">
+                <div class="fluency-hero-card-eyebrow">Growth edge</div>
+                <div class="fluency-hero-card-title" id="fluencyHeroGrowthTitle">Leadership Reinforcement</div>
+                <div class="fluency-hero-card-body" id="fluencyHeroGrowthBody">64%. This is the cleanest enablement opportunity.</div>
+              </div>
+              <div class="fluency-hero-card">
+                <div class="fluency-hero-card-eyebrow">Change since baseline</div>
+                <div class="fluency-hero-card-title" id="fluencyHeroChangeTitle">+15 pts</div>
+                <div class="fluency-hero-card-body" id="fluencyHeroChangeBody">Org-level cohort movement from Time 1 to Time 2.</div>
+              </div>
+            </div>
+            <div class="fluency-hero-actions">
+              <button class="fluency-hero-btn primary" type="button">Copy summary</button>
+              <button class="fluency-hero-btn secondary" type="button">Download summary</button>
+            </div>
+          </section>
+
+          <section class="surface">
+            <div class="fluency-section-eyebrow">Admin filters</div>
+            <div class="fluency-cohort-block">
+              <div>
+                <h3>Anonymous cohort movement from Time 1 to Time 2</h3>
+                <p>This view uses the same results surface as the individual profile. The only admin layer is filtering: choose a function, level, or exposure group to update the cohort movement and profile shape.</p>
+              </div>
+              <div class="fluency-cohort-aside">
+                <div class="fluency-cohort-aside-card">
+                  <div class="fluency-cohort-aside-eyebrow">Baseline</div>
+                  <div class="fluency-cohort-aside-value" id="fluencyAsideBaselineValue">58%</div>
+                  <div class="fluency-cohort-aside-sub" id="fluencyAsideBaselineSub">5,000 respondents</div>
+                </div>
+                <div class="fluency-cohort-aside-card">
+                  <div class="fluency-cohort-aside-eyebrow">Follow-up</div>
+                  <div class="fluency-cohort-aside-value" id="fluencyAsideFollowupValue">72%</div>
+                  <div class="fluency-cohort-aside-sub" id="fluencyAsideFollowupSub">Impact 64%</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="fluency-filter-row" id="fluencyFilterRow">
+              <span class="fluency-filter-label">Filter by</span>
+              <span class="fluency-filter-pill" data-fluency-group="function">Function</span>
+              <span class="fluency-filter-pill" data-fluency-group="level">Level</span>
+              <span class="fluency-filter-pill" data-fluency-group="exposure">AI exposure</span>
+              <span class="fluency-filter-pill active" data-fluency-group="all">All</span>
+            </div>
+
+            <div class="fluency-function-row" id="fluencyFunctionRow"></div>
+
+            <div class="fluency-cohort-grid">
+              <div class="fluency-cohort-card">
+                <div class="fluency-cohort-card-eyebrow">Time 1 baseline</div>
+                <div class="fluency-cohort-card-value" id="fluencyTime1Value">58%</div>
+                <div class="fluency-cohort-card-sub" id="fluencyTime1Sub">5,000 anonymous respondents</div>
+                <div class="fluency-cohort-chips" id="fluencyTime1Chips">
+                  <span class="fluency-cohort-chip">Readiness 58%</span>
+                  <span class="fluency-cohort-chip">Impact 50%</span>
+                </div>
+              </div>
+              <div class="fluency-cohort-card">
+                <div class="fluency-cohort-card-eyebrow">Time 2 follow-up</div>
+                <div class="fluency-cohort-card-value" id="fluencyTime2Value">72%</div>
+                <div class="fluency-cohort-card-sub" id="fluencyTime2Sub">5,000 anonymous respondents</div>
+                <div class="fluency-cohort-chips" id="fluencyTime2Chips">
+                  <span class="fluency-cohort-chip">Readiness 70%</span>
+                  <span class="fluency-cohort-chip">Impact 64%</span>
+                </div>
+              </div>
+              <div class="fluency-cohort-card highlight">
+                <div class="fluency-cohort-card-eyebrow">Net movement</div>
+                <div class="fluency-cohort-card-value" id="fluencyNetValue">+15 pts</div>
+                <div class="fluency-cohort-card-sub" id="fluencyNetSub">AI Fluency lift from baseline to follow-up.</div>
+                <div class="fluency-cohort-chips" id="fluencyNetChips">
+                  <span class="fluency-cohort-chip">Impact moved +14 pts</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="fluency-aiom-callout">
+              <div>
+                <div class="fluency-aiom-callout-eyebrow">What this means for the AIOM</div>
+                <div class="fluency-aiom-callout-title" id="fluencyAiomTitle">Spread the strongest behaviors and run a leadership reinforcement sprint.</div>
+                <div class="fluency-aiom-callout-body" id="fluencyAiomBody">Use the strongest dimension as the proof-of-value example, then target the lowest dimension with a role-specific motion.</div>
+              </div>
+              <div class="fluency-aiom-callout-resource">
+                <div class="fluency-aiom-callout-resource-eyebrow">Recommended Glean resource</div>
+                <div class="fluency-aiom-callout-resource-name" id="fluencyAiomResource">Optimal Agent Use Case Recommender</div>
+              </div>
+            </div>
+          </section>
+
+          <div class="grid two">
+            <section class="surface">
+              <div class="fluency-section-eyebrow">Fluency dimensions</div>
+
+              <div class="fluency-dimension-card">
+                <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:12px;">
+                  <div>
+                    <h3 style="font-size:18px; margin-bottom:4px;" id="fluencyDimIntroTitle">All respondents</h3>
+                    <p class="muted" style="font-size:13px; line-height:1.5;">The spider profile and dimension cards update with the selected admin filter, so the executive view keeps the same profile logic while showing where a cohort needs different enablement.</p>
+                  </div>
+                  <div style="display:grid; gap:8px; min-width:180px;">
+                    <div class="fluency-cohort-aside-card">
+                      <div class="fluency-cohort-aside-eyebrow">Highest signal</div>
+                      <div class="fluency-cohort-aside-value" id="fluencyDimHighestName">Confidence</div>
+                      <div class="fluency-cohort-aside-sub" id="fluencyDimHighestPct">75%</div>
+                    </div>
+                    <div class="fluency-cohort-aside-card">
+                      <div class="fluency-cohort-aside-eyebrow">Primary build area</div>
+                      <div class="fluency-cohort-aside-value" id="fluencyDimBuildName">Leadership Reinforcement</div>
+                      <div class="fluency-cohort-aside-sub" id="fluencyDimBuildPct">64%</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="fluency-spider-card">
+                <div class="fluency-spider-title">Interactive profile view</div>
+                <div class="fluency-spider-sub">The shape updates when an admin filter is selected.</div>
+                <div class="fluency-spider">
+                  <svg viewBox="0 0 240 240" width="280" height="280" role="img" aria-label="Fluency dimensions radar chart">
+                    <polygon points="120,20 215.1,89.1 178.8,200.9 61.2,200.9 24.9,89.1" fill="none" stroke="rgba(52,60,237,0.18)" stroke-width="1" />
+                    <polygon points="120,49 191.3,101.8 164.1,185.7 75.9,185.7 48.7,101.8" fill="none" stroke="rgba(52,60,237,0.14)" stroke-width="1" />
+                    <polygon points="120,78 167.6,114.6 149.4,170.4 90.6,170.4 72.4,114.6" fill="none" stroke="rgba(52,60,237,0.12)" stroke-width="1" />
+                    <polygon points="120,107 143.8,127.3 134.7,155.2 105.3,155.2 96.2,127.3" fill="none" stroke="rgba(52,60,237,0.10)" stroke-width="1" />
+                    <line x1="120" y1="120" x2="120" y2="20" stroke="rgba(52,60,237,0.12)" />
+                    <line x1="120" y1="120" x2="215.1" y2="89.1" stroke="rgba(52,60,237,0.12)" />
+                    <line x1="120" y1="120" x2="178.8" y2="200.9" stroke="rgba(52,60,237,0.12)" />
+                    <line x1="120" y1="120" x2="61.2" y2="200.9" stroke="rgba(52,60,237,0.12)" />
+                    <line x1="120" y1="120" x2="24.9" y2="89.1" stroke="rgba(52,60,237,0.12)" />
+                    <polygon id="fluencySpiderPolygon" points="120,45 190.4,97.1 160.6,175.8 82.4,171.8 51.5,97.8" fill="rgba(52,60,237,0.22)" stroke="#343CED" stroke-width="2" />
+                    <circle id="fluencySpiderC0" cx="120" cy="45" r="5" fill="#D8FD49" stroke="#343CED" stroke-width="2" />
+                    <circle id="fluencySpiderC1" cx="190.4" cy="97.1" r="5" fill="#D8FD49" stroke="#343CED" stroke-width="2" />
+                    <circle id="fluencySpiderC2" cx="160.6" cy="175.8" r="5" fill="#D8FD49" stroke="#343CED" stroke-width="2" />
+                    <circle id="fluencySpiderC3" cx="82.4" cy="171.8" r="5" fill="#D8FD49" stroke="#343CED" stroke-width="2" />
+                    <circle id="fluencySpiderC4" cx="51.5" cy="97.8" r="5" fill="#D8FD49" stroke="#343CED" stroke-width="2" />
+                  </svg>
+                </div>
+                <div class="fluency-spider-axes">
+                  <div class="fluency-spider-axis">Confidence<strong id="fluencyAxis0">75%</strong></div>
+                  <div class="fluency-spider-axis">Usage Quality<strong id="fluencyAxis1">74%</strong></div>
+                  <div class="fluency-spider-axis">Behavior Change<strong id="fluencyAxis2">69%</strong></div>
+                  <div class="fluency-spider-axis">Leadership<strong id="fluencyAxis3">64%</strong></div>
+                  <div class="fluency-spider-axis">Growth<strong id="fluencyAxis4">72%</strong></div>
+                </div>
+              </div>
+
+              <div class="fluency-dimension-card" id="fluencyDimCard0">
+                <div class="fluency-dimension-head">
+                  <div class="fluency-dimension-title">
+                    <span class="fluency-dimension-badge">Compass</span>
+                    <span class="fluency-dimension-name">Confidence</span>
+                  </div>
+                  <div>
+                    <div class="fluency-dimension-pct" id="fluencyDim0Pct">75%</div>
+                    <div class="fluency-dimension-out" id="fluencyDim0Out">3.74 out of 5</div>
+                  </div>
+                </div>
+                <div class="fluency-dimension-sub" id="fluencyDim0Sub">Highest current signal</div>
+                <div class="fluency-dimension-body" id="fluencyDim0Body">This is where the selected cohort is showing the strongest AI fluency signal.</div>
+                <div class="fluency-progress"><div class="fluency-progress-fill" id="fluencyDim0Progress" style="width:75%;"></div></div>
+              </div>
+
+              <div class="fluency-dimension-card" id="fluencyDimCard1">
+                <div class="fluency-dimension-head">
+                  <div class="fluency-dimension-title">
+                    <span class="fluency-dimension-badge">Bench</span>
+                    <span class="fluency-dimension-name">Usage Quality</span>
+                  </div>
+                  <div>
+                    <div class="fluency-dimension-pct" id="fluencyDim1Pct">74%</div>
+                    <div class="fluency-dimension-out" id="fluencyDim1Out">3.68 out of 5</div>
+                  </div>
+                </div>
+                <div class="fluency-dimension-sub" id="fluencyDim1Sub">Building traction</div>
+                <div class="fluency-dimension-body" id="fluencyDim1Body">This signal helps explain how fluency is showing up across the selected cohort.</div>
+                <div class="fluency-progress"><div class="fluency-progress-fill" id="fluencyDim1Progress" style="width:74%;"></div></div>
+              </div>
+
+              <div class="fluency-dimension-card" id="fluencyDimCard4">
+                <div class="fluency-dimension-head">
+                  <div class="fluency-dimension-title">
+                    <span class="fluency-dimension-badge">Lift</span>
+                    <span class="fluency-dimension-name">Capability Growth</span>
+                  </div>
+                  <div>
+                    <div class="fluency-dimension-pct" id="fluencyDim4Pct">72%</div>
+                    <div class="fluency-dimension-out" id="fluencyDim4Out">3.58 out of 5</div>
+                  </div>
+                </div>
+                <div class="fluency-dimension-sub" id="fluencyDim4Sub">Building traction</div>
+                <div class="fluency-dimension-body" id="fluencyDim4Body">This signal helps explain how fluency is showing up across the selected cohort.</div>
+                <div class="fluency-progress"><div class="fluency-progress-fill" id="fluencyDim4Progress" style="width:72%;"></div></div>
+              </div>
+
+              <div class="fluency-dimension-card" id="fluencyDimCard2">
+                <div class="fluency-dimension-head">
+                  <div class="fluency-dimension-title">
+                    <span class="fluency-dimension-badge">Flow</span>
+                    <span class="fluency-dimension-name">Behavior Change</span>
+                  </div>
+                  <div>
+                    <div class="fluency-dimension-pct" id="fluencyDim2Pct">69%</div>
+                    <div class="fluency-dimension-out" id="fluencyDim2Out">3.44 out of 5</div>
+                  </div>
+                </div>
+                <div class="fluency-dimension-sub" id="fluencyDim2Sub">Emerging signal</div>
+                <div class="fluency-dimension-body" id="fluencyDim2Body">This signal helps explain how fluency is showing up across the selected cohort.</div>
+                <div class="fluency-progress"><div class="fluency-progress-fill" id="fluencyDim2Progress" style="width:69%;"></div></div>
+              </div>
+
+              <div class="fluency-dimension-card" id="fluencyDimCard3">
+                <div class="fluency-dimension-head">
+                  <div class="fluency-dimension-title">
+                    <span class="fluency-dimension-badge">Beacon</span>
+                    <span class="fluency-dimension-name">Leadership Reinforcement</span>
+                  </div>
+                  <div>
+                    <div class="fluency-dimension-pct" id="fluencyDim3Pct">64%</div>
+                    <div class="fluency-dimension-out" id="fluencyDim3Out">3.18 out of 5</div>
+                  </div>
+                </div>
+                <div class="fluency-dimension-sub" id="fluencyDim3Sub">Highest-leverage build area</div>
+                <div class="fluency-dimension-body" id="fluencyDim3Body">This is the most useful place to focus enablement for the selected cohort.</div>
+                <div class="fluency-progress"><div class="fluency-progress-fill" id="fluencyDim3Progress" style="width:64%;"></div></div>
+              </div>
+            </section>
+
+            <section class="surface">
+              <div class="fluency-section-eyebrow">Downstream outcomes</div>
+
+              <div class="fluency-pathway-card">
+                <div class="fluency-pathway-eyebrow">Executive summary</div>
+                <div class="fluency-pathway-title">Fluency is the capability lever in this cohort.</div>
+                <div class="fluency-pathway-body">The active filter is <strong>All respondents</strong>. Use this view to decide where a team, level, or exposure group needs a different enablement motion.</div>
+              </div>
+
+              <div class="fluency-pathway-card" style="background: linear-gradient(180deg, #fafff0 0%, #f4f4ff 100%); border-color: rgba(216,253,73,0.5);">
+                <div class="fluency-pathway-eyebrow">Transformation strategy</div>
+                <div class="fluency-pathway-title">Build fluency to raise readiness, then convert readiness into impact.</div>
+                <div class="fluency-pathway-body">The pathway below uses the selected cohort values, avoiding a generic scenario that is detached from the organization view.</div>
+              </div>
+
+              <div class="fluency-pathway-tabs" id="fluencyPathwayTabs">
+                <button class="fluency-pathway-tab" type="button" data-fluency-view="baseline">Baseline</button>
+                <button class="fluency-pathway-tab active" type="button" data-fluency-view="followup">Follow-up</button>
+              </div>
+
+              <div class="fluency-pathway-card">
+                <div class="fluency-pathway-eyebrow">Capability lever</div>
+                <div class="fluency-pathway-title">AI Fluency</div>
+                <div class="fluency-pathway-body" id="fluencyPathLever">72% in the selected cohort view.</div>
+              </div>
+              <div class="fluency-pathway-arrow">↓</div>
+
+              <div class="fluency-pathway-card">
+                <div class="fluency-pathway-eyebrow">Readiness shift</div>
+                <div class="fluency-pathway-title">Attitude + Intent</div>
+                <div class="fluency-pathway-body" id="fluencyPathReadiness">70% in the selected cohort view.</div>
+              </div>
+              <div class="fluency-pathway-arrow">↓</div>
+
+              <div class="fluency-pathway-card">
+                <div class="fluency-pathway-eyebrow">Business outcome</div>
+                <div class="fluency-pathway-title">Perceived Impact</div>
+                <div class="fluency-pathway-body" id="fluencyPathImpact">64% in the selected cohort view.</div>
+              </div>
+
+              <div class="grid" style="grid-template-columns: repeat(2, minmax(0,1fr)); gap:10px; margin-top:10px;">
+                <div class="fluency-cohort-aside-card">
+                  <div class="fluency-cohort-aside-eyebrow">AI Attitude</div>
+                  <div class="fluency-cohort-aside-value" id="fluencyMiniAttitude">72%</div>
+                  <div class="fluency-cohort-aside-sub" id="fluencyMiniAttitudeOut">3.58 out of 5</div>
+                </div>
+                <div class="fluency-cohort-aside-card">
+                  <div class="fluency-cohort-aside-eyebrow">Behavioral Intent</div>
+                  <div class="fluency-cohort-aside-value" id="fluencyMiniIntent">69%</div>
+                  <div class="fluency-cohort-aside-sub" id="fluencyMiniIntentOut">3.45 out of 5</div>
+                </div>
+              </div>
+
+              <div class="fluency-cohort-aside-card" style="margin-top:10px;">
+                <div class="fluency-cohort-aside-eyebrow">Perceived Impact</div>
+                <div class="fluency-cohort-aside-value" id="fluencyMiniImpact">64%</div>
+                <div class="fluency-cohort-aside-sub" id="fluencyMiniImpactOut">3.20 out of 5</div>
+              </div>
+
+              <div class="fluency-strategy-card" style="margin-top:18px;">
+                <div class="fluency-section-eyebrow">Strategy for this view</div>
+                <h3 style="font-size:18px; margin-bottom:6px;" id="fluencyStrategyTitle">Scale what is working in Confidence, then focus enablement on Leadership Reinforcement.</h3>
+                <p style="font-size:13px; color: var(--muted); margin-bottom:8px; line-height:1.5;">At the organization level, spread the strongest behavior patterns while targeting the weakest fluency dimension with role-specific enablement.</p>
+                <div class="fluency-strategy-step">
+                  <div class="fluency-strategy-num">01</div>
+                  <div>
+                    <div class="fluency-strategy-step-title">Turn confidence into visible examples</div>
+                    <div class="fluency-strategy-step-body">Publish two examples from this team that show what strong confidence looks like in an actual workflow.</div>
+                  </div>
+                </div>
+                <div class="fluency-strategy-step">
+                  <div class="fluency-strategy-num">02</div>
+                  <div>
+                    <div class="fluency-strategy-step-title">Run a leadership reinforcement practice sprint</div>
+                    <div class="fluency-strategy-step-body">Pick one recurring workflow and give managers a 30-minute exercise that targets leadership reinforcement with before-and-after examples.</div>
+                  </div>
+                </div>
+                <div class="fluency-strategy-step">
+                  <div class="fluency-strategy-num">03</div>
+                  <div>
+                    <div class="fluency-strategy-step-title">Create a weekly reinforcement loop</div>
+                    <div class="fluency-strategy-step-body">Ask leaders to review one AI-assisted work artifact each week and name the behavior they want the team to repeat.</div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+
+          <section class="surface">
+            <div class="fluency-section-eyebrow">Strategic insights</div>
+            <div class="fluency-insights">
+              <div>
+                <div class="fluency-insight-col-eyebrow">Immediate focus</div>
+                <div class="fluency-insight-col-title">Do now</div>
+                <div class="fluency-insight-card">
+                  <h4>Make leadership sponsorship visible in the work</h4>
+                  <p>Embed AI expectations into team reviews, planning, and recognition so people see that usage is institutionally supported, not optional side experimentation.</p>
+                  <p class="note">When leadership signals are weak, even capable teams hesitate to operationalize AI consistently.</p>
+                </div>
+                <div class="fluency-insight-card">
+                  <h4>Prioritize one or two role-critical AI workflows</h4>
+                  <p>Pick the workflows where AI should become the default starting point, then redesign enablement around those moments instead of broad awareness.</p>
+                  <p class="note">Organizations build fluency faster when people repeatedly apply AI in real work instead of treating it as a general capability topic.</p>
+                </div>
+              </div>
+
+              <div>
+                <div class="fluency-insight-col-eyebrow">Capability build</div>
+                <div class="fluency-insight-col-title">Build next</div>
+                <div class="fluency-insight-card">
+                  <h4>Shift from access and awareness to operating discipline</h4>
+                  <p>Move beyond general encouragement and codify where AI use is expected, how good usage is reviewed, and which wins should be scaled across teams.</p>
+                  <p class="note">At this maturity level, the next gains come from reinforcement and consistency more than from introductory education.</p>
+                </div>
+              </div>
+
+              <div>
+                <div class="fluency-insight-col-eyebrow">Operating scale</div>
+                <div class="fluency-insight-col-title">Scale</div>
+                <div class="fluency-insight-card">
+                  <h4>Equip managers to reinforce the new way of working</h4>
+                  <p>Give frontline leaders simple language, examples, and review habits so teams hear consistent signals about where AI belongs in the workflow.</p>
+                  <p class="note">Leadership reinforcement is what turns isolated adoption into durable team-level behavior change.</p>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </section>
+
       <div class="footer-link-row">
         <p class="footer-note"><a href="#" id="dataModelLink">View data model and widget status</a></p>
       </div>
@@ -1330,6 +2303,24 @@
           </section>
         </div>
       </section>
+    </div>
+  </div>
+
+  <div class="overlay" id="assistantOverlay" aria-hidden="true">
+    <div class="assistant-modal">
+      <div class="assistant-header">
+        <h2 id="assistantModalTitle">Ask about this account</h2>
+        <button class="secondary" id="closeAssistantBtn" type="button">Close</button>
+      </div>
+
+      <p class="assistant-context-line">This account's context is included with your prompt.</p>
+
+      <textarea class="assistant-prompt-textarea" id="assistantPromptInput" placeholder="Ask anything about this account..."></textarea>
+
+      <div class="assistant-actions">
+        <a class="primary" id="launchAssistantBtn" href="https://app.glean.com/chat" target="_blank" rel="noopener">Open in Glean Assistant</a>
+        <button class="buttonlike" id="copyAssistantBtn" type="button">Copy prompt</button>
+      </div>
     </div>
   </div>
 
@@ -2011,17 +3002,20 @@
     const ui = {
       clientSelect: document.getElementById('clientSelect'),
       heroTitle: document.getElementById('heroTitle'),
-      heroBadges: document.getElementById('heroBadges'),
-      heroSubtitle: document.getElementById('heroSubtitle'),
+      heroStatusStrip: document.getElementById('heroStatusStrip'),
+      heroKpiPhase: document.getElementById('heroKpiPhase'),
+      heroKpiPhaseSub: document.getElementById('heroKpiPhaseSub'),
+      heroKpiHealth: document.getElementById('heroKpiHealth'),
+      heroKpiHealthSub: document.getElementById('heroKpiHealthSub'),
+      heroKpiHours: document.getElementById('heroKpiHours'),
+      heroKpiHoursSub: document.getElementById('heroKpiHoursSub'),
       currentPhaseTitle: document.getElementById('currentPhaseTitle'),
-      currentMilestone: document.getElementById('currentMilestone'),
       phaseObjective: document.getElementById('phaseObjective'),
       phaseMilestoneDetail: document.getElementById('phaseMilestoneDetail'),
       openActivitiesList: document.getElementById('openActivitiesList'),
       overdueActivitiesList: document.getElementById('overdueActivitiesList'),
       phaseAssetsList: document.getElementById('phaseAssetsList'),
       functionPhaseStatusList: document.getElementById('functionPhaseStatusList'),
-      metricsGrid: document.getElementById('metricsGrid'),
       attentionSummary: document.getElementById('attentionSummary'),
       attentionList: document.getElementById('attentionList'),
       strategicAction: document.getElementById('strategicAction'),
@@ -2040,9 +3034,6 @@
       recommendedDocTitle: document.getElementById('recommendedDocTitle'),
       recommendedDocBody: document.getElementById('recommendedDocBody'),
       recommendedDocButton: document.getElementById('recommendedDocButton'),
-      recommendedToolTitle: document.getElementById('recommendedToolTitle'),
-      recommendedToolBody: document.getElementById('recommendedToolBody'),
-      recommendedToolButtonRow: document.getElementById('recommendedToolButtonRow'),
       recommendedAssetTitle: document.getElementById('recommendedAssetTitle'),
       recommendedAssetBody: document.getElementById('recommendedAssetBody'),
       assetTags: document.getElementById('assetTags'),
@@ -2066,7 +3057,6 @@
       missingClientInput: document.getElementById('missingClientInput'),
       portfolioTableBody: document.getElementById('portfolioTableBody'),
       platformHealthGrid: document.getElementById('platformHealthGrid'),
-      platformHealthSummary: document.getElementById('platformHealthSummary'),
       prismHealthSignal: document.getElementById('prismHealthSignal'),
       prismRiskPattern: document.getElementById('prismRiskPattern'),
       priorActionOutcome: document.getElementById('priorActionOutcome'),
@@ -2363,13 +3353,127 @@
       return Promise.resolve();
     }
 
+    function getAccountHealthLabel(account) {
+      const score = value => {
+        if (!value) return null;
+        const s = String(value).toLowerCase();
+        if (s === 'high' || s === 'healthy') return 3;
+        if (s === 'medium' || s === 'watch' || s === 'building' || s === 'partial' || s === 'ready') return 2;
+        if (s === 'low' || s === 'thin') return 1;
+        return null;
+      };
+      const parts = [
+        score(account.engagement),
+        score(account.assistant && account.assistant.health),
+        score(account.agents && account.agents.health)
+      ].filter(value => value !== null);
+      if (!parts.length) return { label: 'Pending', tone: 'pending' };
+      const avg = parts.reduce((sum, v) => sum + v, 0) / parts.length;
+      if (avg >= 2.5) return { label: 'Healthy', tone: 'healthy' };
+      if (avg >= 1.5) return { label: 'Watch', tone: 'watch' };
+      return { label: 'At risk', tone: 'risk' };
+    }
+
+    function getDueWindowTone(window) {
+      if (!window) return 'info';
+      const w = String(window).toLowerCase();
+      if (w.includes('now') || w.includes('today')) return 'risk';
+      if (w.includes('week') || w.includes('3 business days') || w.includes('before')) return 'medium';
+      return 'info';
+    }
+
+    function getCoverageTone(coverage) {
+      if (coverage === 'high') return 'low';
+      if (coverage === 'medium') return 'medium';
+      return 'risk';
+    }
+
+    function getCoverageLabel(coverage) {
+      if (coverage === 'high') return 'High source coverage';
+      if (coverage === 'medium') return 'Medium source coverage';
+      if (coverage === 'low') return 'Sparse source coverage';
+      if (coverage === 'pending') return 'Source aggregation pending';
+      return 'Coverage unclear';
+    }
+
+    function renderHeroStatusStrip(account) {
+      const strip = ui.heroStatusStrip;
+      if (!strip) return;
+      const criticalCount = account.signals.filter(s => s.severity === 'high').length;
+      const totalSignals = account.signals.length;
+      const dueWindow = account.nextMove && account.nextMove.dueWindow;
+      const coverage = account.sourceCoverage;
+      const openIssues = account.openIssues || 0;
+      const criticalIssues = account.criticalIssues || 0;
+
+      const chips = [];
+      if (criticalCount > 0) {
+        chips.push({ tone: 'risk', text: `${criticalCount} critical · ${totalSignals} active signals` });
+      } else if (totalSignals > 0) {
+        chips.push({ tone: 'low', text: `${totalSignals} active signals` });
+      } else {
+        chips.push({ tone: 'info', text: 'No active signals' });
+      }
+      if (dueWindow) {
+        chips.push({ tone: getDueWindowTone(dueWindow), text: `Action due ${String(dueWindow).toLowerCase()}` });
+      }
+      chips.push({ tone: getCoverageTone(coverage), text: getCoverageLabel(coverage) });
+      if (openIssues > 0) {
+        const issueTone = criticalIssues > 0 ? 'risk' : 'medium';
+        const issueText = criticalIssues > 0 ? `${openIssues} open issues · ${criticalIssues} critical` : `${openIssues} open issues`;
+        chips.push({ tone: issueTone, text: issueText });
+      }
+
+      strip.innerHTML = chips.map(chip =>
+        `<span class="hero-status-chip tone-${chip.tone}"><span class="hero-status-dot"></span>${chip.text}</span>`
+      ).join('');
+    }
+
+    function renderHeroKpis(account) {
+      const phaseLabel = phases[account.phase] || 'Unknown phase';
+      const phaseShort = phaseLabel.split(',')[0].split('&')[0].trim();
+      const backbone = getPhaseBackbone(account);
+      ui.heroKpiPhase.textContent = phaseShort;
+      ui.heroKpiPhaseSub.textContent = backbone.currentMilestone || 'Phase milestone pending';
+
+      const health = getAccountHealthLabel(account);
+      ui.heroKpiHealth.textContent = health.label;
+      ui.heroKpiHealth.classList.remove('tone-medium', 'tone-risk', 'tone-pending', 'tone-healthy');
+      if (health.tone === 'healthy') ui.heroKpiHealth.classList.add('tone-healthy');
+      else if (health.tone === 'watch') ui.heroKpiHealth.classList.add('tone-medium');
+      else if (health.tone === 'risk') ui.heroKpiHealth.classList.add('tone-risk');
+      else if (health.tone === 'pending') ui.heroKpiHealth.classList.add('tone-pending');
+
+      const assistantHealth = (account.assistant && account.assistant.health) || 'Pending';
+      const agentsHealth = (account.agents && account.agents.health) || 'Pending';
+      const adoption = account.engagement || 'Pending';
+      ui.heroKpiHealthSub.textContent = `${adoption} adoption · ${assistantHealth} Assistant · ${agentsHealth} Agents`;
+
+      const hoursLabel = account.hoursRemainingLabel || '—';
+      ui.heroKpiHours.textContent = hoursLabel;
+      ui.heroKpiHours.classList.remove('tone-medium', 'tone-risk', 'tone-pending', 'tone-healthy');
+      const hoursDigits = String(hoursLabel).replace(/[^0-9]/g, '');
+      const hoursNum = hoursDigits ? parseInt(hoursDigits, 10) : NaN;
+      if (Number.isNaN(hoursNum)) {
+        ui.heroKpiHours.classList.add('tone-pending');
+      } else if (hoursNum <= 10) {
+        ui.heroKpiHours.classList.add('tone-risk');
+      } else if (hoursNum <= 30) {
+        ui.heroKpiHours.classList.add('tone-medium');
+      }
+    }
+
     function renderHero(account) {
       ui.heroTitle.textContent = account.name;
-      ui.heroSubtitle.textContent = account.business;
-      ui.heroBadges.innerHTML = `
-        <span class="tag">Phase: ${escapeHtml(phases[account.phase])}</span>
-        <span class="tag">Mode: signal triage</span>
-      `;
+      if (ui.heroSubtitle) ui.heroSubtitle.textContent = account.business;
+      if (ui.heroBadges) {
+        ui.heroBadges.innerHTML = `
+          <span class="tag">Phase: ${escapeHtml(phases[account.phase])}</span>
+          <span class="tag">Mode: signal triage</span>
+        `;
+      }
+      renderHeroStatusStrip(account);
+      renderHeroKpis(account);
     }
 
     function renderPhaseBackbone(account) {
@@ -2377,7 +3481,6 @@
       const openActivities = backbone.openAdoptionActivities || [];
       const overdueActivities = backbone.overdueAdoptionActivities || [];
       ui.currentPhaseTitle.textContent = phases[account.phase];
-      ui.currentMilestone.textContent = backbone.currentMilestone;
       ui.phaseObjective.textContent = backbone.phaseObjective;
       ui.phaseMilestoneDetail.textContent = `${backbone.currentMilestone} · ${openActivities.length} open · ${overdueActivities.length} overdue`;
       ui.openActivitiesList.innerHTML = openActivities.map(activity => `
@@ -2474,7 +3577,11 @@
       ui.strategicAction.textContent = nextMove.title;
       ui.strategicRationale.textContent = nextMove.body;
       ui.nextMoveWhy.textContent = nextMove.why;
-      ui.confidenceReason.textContent = `Confidence reason: ${getConfidenceReason(account)}`;
+
+      const coverageEntries = getSourceCoverageEntries(account);
+      const availableCount = coverageEntries.filter(item => item.status === 'available').length;
+      ui.confidenceReason.textContent = `Confidence: ${account.sourceCoverage} · ${availableCount}/${coverageEntries.length} sources covered`;
+
       ui.bestNextStep.textContent = nextMove.session;
       ui.sessionBody.textContent = nextMove.sessionBody;
       ui.recommendedResourceTitle.textContent = tool.title;
@@ -2489,10 +3596,6 @@
       ui.recommendedDocBody.textContent = account.doc.body;
       ui.recommendedDocButton.href = account.doc.url;
 
-      ui.recommendedToolTitle.textContent = tool.title;
-      ui.recommendedToolBody.textContent = `${tool.value} ${launchMeta.detail}`;
-      ui.recommendedToolButtonRow.innerHTML = `${makeLaunchMarkup(tool, account)}<span class="tool-tag">${escapeHtml(launchMeta.short)}</span>`;
-
       ui.recommendedAssetTitle.textContent = recommendedResource.asset;
       ui.recommendedAssetBody.textContent = account.asset.body;
       ui.assetTags.innerHTML = account.asset.tags.map(tag => `<span class="tool-tag">${escapeHtml(tag)}</span>`).join('');
@@ -2501,7 +3604,6 @@
     function renderPlatformHealth(account) {
       const combinedWau = account.assistant.wau + account.agents.wau;
       const prismHealth = getPrismHealthContext(account);
-      ui.platformHealthSummary.textContent = `${account.prism.health} Prism · ${account.assistant.health} Assistant`;
 
       const cards = [
         {
@@ -2584,21 +3686,22 @@
     }
 
     function renderRisk(account) {
-      const riskItems = [
-        { title: 'Engagement health', value: account.engagement, body: `${account.signals[0]?.title || 'No major engagement signal'} · source coverage ${account.sourceCoverage}`, severity: account.engagement === 'Low' ? 'high' : account.engagement === 'Medium' ? 'medium' : 'low' },
-        { title: 'Comp / commercial risk', value: account.compRisk, body: `${account.hoursRemainingLabel} hours left · ${account.arrLabel}`, severity: account.compRisk === 'High' ? 'high' : account.compRisk === 'Medium' ? 'medium' : 'low' },
-        { title: 'Knowledge maturity', value: account.prism.coverage, body: `Prism refresh ${account.prism.refresh}`, severity: account.prism.coverage === 'Low' ? 'high' : account.prism.coverage === 'Medium' ? 'medium' : 'low' }
-      ];
+      const riskItems = [{
+        title: 'Comp / commercial risk',
+        value: account.compRisk,
+        body: `${account.hoursRemainingLabel} hours left · ${account.arrLabel}`,
+        severity: account.compRisk === 'High' ? 'high' : account.compRisk === 'Medium' ? 'medium' : 'low'
+      }];
       ui.riskSummary.textContent = `${account.compRisk} comp risk`;
       ui.riskGrid.innerHTML = '';
-      riskItems.forEach(item => {
+      riskItems.forEach(risk => {
         const card = document.createElement('div');
         card.className = 'risk-card';
         card.innerHTML = `
-          <span class="eyebrow">${escapeHtml(item.title)}</span>
-          <h4>${escapeHtml(item.value)}</h4>
-          <p>${escapeHtml(item.body)}</p>
-          <div class="meta-row"><span>Severity</span><span class="pill ${escapeHtmlAttr(item.severity)}">${escapeHtml(item.severity)}</span></div>
+          <span class="eyebrow">${escapeHtml(risk.title)}</span>
+          <h4>${escapeHtml(risk.value)}</h4>
+          <p>${escapeHtml(risk.body)}</p>
+          <div class="meta-row"><span>Severity</span><span class="pill ${escapeHtmlAttr(risk.severity)}">${escapeHtml(risk.severity)}</span></div>
         `;
         ui.riskGrid.appendChild(card);
       });
@@ -3120,7 +4223,6 @@
       const account = getAccount();
       renderHero(account);
       renderPhaseBackbone(account);
-      renderMetrics(account);
       renderAttention(account);
       renderNextMove(account);
       renderReleaseSignals(account);
@@ -3142,6 +4244,242 @@
       ui.refreshChip.textContent = 'Last refreshed · ' + now.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
       showToast(`Local demo state refreshed for ${localState.currentAccount}`);
     }
+
+    const fluencyDimLabels = ['Confidence', 'Usage Quality', 'Behavior Change', 'Leadership Reinforcement', 'Capability Growth'];
+
+    function makeFluencyCohort(label, count, baseline, followup, impactBaseline, impactFollowup, dims, aiomNextMove, aiomResource) {
+      return {
+        label, count, baseline, followup, impactBaseline, impactFollowup,
+        readinessBaseline: baseline,
+        readinessFollowup: Math.max(baseline, Math.round(followup * 0.97)),
+        dims, aiomNextMove, aiomResource
+      };
+    }
+
+    const fluencyData = {
+      all: {
+        label: 'All',
+        cohorts: {
+          all: makeFluencyCohort('All respondents', '5,000 anonymous respondents', 58, 72, 50, 64,
+            [75, 74, 69, 64, 72],
+            'Spread the strongest behaviors from Confidence and run a leadership reinforcement sprint with frontline managers.',
+            'Optimal Agent Use Case Recommender')
+        }
+      },
+      function: {
+        label: 'Function',
+        cohorts: {
+          sales:     makeFluencyCohort('Sales',            '820 anonymous respondents', 60, 76, 52, 68, [80, 78, 72, 60, 75], 'Sales has high confidence but soft leadership reinforcement — package power-user examples for sales managers and lock a weekly review cadence.', 'Optimal Agent Use Case Recommender'),
+          marketing: makeFluencyCohort('Marketing',        '560 anonymous respondents', 54, 70, 48, 62, [73, 72, 70, 62, 70], 'Marketing uses AI broadly but inconsistently — codify reviewable workflows and the prompts behind them.', 'Prompt Crafter'),
+          cs:        makeFluencyCohort('Customer success', '740 anonymous respondents', 56, 71, 50, 63, [76, 73, 68, 65, 72], 'CS shows confidence but uneven behavior change — embed AI prompts into the meeting follow-up motion.', 'Meeting Summarizer + Follow Up'),
+          ops:       makeFluencyCohort('Operations',       '980 anonymous respondents', 50, 65, 44, 56, [64, 62, 60, 54, 65], 'Operations is the largest cohort with the lowest fluency — run a planning reset and pick one role-critical workflow to redesign around AI.', 'AIOM Account Ramp Companion'),
+          eng:       makeFluencyCohort('Engineering / IT', '900 anonymous respondents', 65, 80, 58, 70, [84, 82, 76, 70, 80], 'Engineering is your strongest cohort — graduate them into champion programs and use them as proof-of-value for other functions.', 'Client Adoption Strategy Chatbot'),
+          hr:        makeFluencyCohort('People / HR',      '410 anonymous respondents', 55, 68, 48, 60, [70, 70, 66, 62, 68], 'HR is steady mid-pack — use them as the example owner for the leadership reinforcement loop you roll out elsewhere.', 'Glean Change Briefing Agent'),
+          finance:   makeFluencyCohort('Finance',          '370 anonymous respondents', 48, 60, 42, 52, [60, 58, 56, 52, 60], 'Finance is lagging on confidence and leadership — start with one high-trust workflow (forecasts, board prep) and codify the review pattern.', 'AIOM Account Ramp Companion'),
+          other:     makeFluencyCohort('Other',            '220 anonymous respondents', 52, 64, 46, 56, [66, 64, 62, 56, 65], 'Mixed cohort — split by role before recommending a single play.', 'AIOM Account Transition Agent')
+        }
+      },
+      level: {
+        label: 'Level',
+        cohorts: {
+          ic:       makeFluencyCohort('Individual contributors', '2,650 anonymous respondents', 56, 70, 48, 62, [73, 73, 68, 60, 70], 'ICs are doing the work — give them prompt patterns and visible peer examples to lift behavior change.', 'Prompt Crafter'),
+          manager:  makeFluencyCohort('Managers',                '1,400 anonymous respondents', 60, 74, 52, 66, [76, 74, 70, 66, 74], 'Managers are the leverage point — equip them to review AI-assisted work weekly and name the behavior to repeat.', 'Optimal Agent Use Case Recommender'),
+          director: makeFluencyCohort('Directors',               '660 anonymous respondents',   58, 72, 50, 64, [74, 72, 70, 68, 72], 'Directors should sponsor visible workflow wins — use the EBR motion to scale them across teams.', 'EBR Generator'),
+          vp:       makeFluencyCohort('VP+',                     '290 anonymous respondents',   62, 76, 54, 68, [78, 74, 72, 72, 76], 'Senior leaders set the tone — turn their wins into the executive value narrative for the rest of the org.', 'EBR Generator')
+        }
+      },
+      exposure: {
+        label: 'AI exposure',
+        cohorts: {
+          heavy:    makeFluencyCohort('Heavy AI usage',    '1,800 anonymous respondents', 70, 84, 60, 74, [88, 86, 80, 72, 82], 'Heavy users are champions — surface their workflows and recruit them into the power-user program.', 'Client Adoption Strategy Chatbot'),
+          moderate: makeFluencyCohort('Moderate AI usage', '2,200 anonymous respondents', 56, 70, 48, 62, [73, 72, 68, 62, 70], 'Moderate users are the swing population — make AI the default starting point in one role-critical workflow.', 'Optimal Agent Use Case Recommender'),
+          light:    makeFluencyCohort('Light AI usage',    '720 anonymous respondents',   44, 56, 38, 48, [58, 56, 54, 48, 56], 'Light users need clarity, not encouragement — run a planning reset with their managers and codify a reviewable workflow.', 'AIOM Account Ramp Companion'),
+          none:     makeFluencyCohort('No AI usage',       '280 anonymous respondents',   32, 42, 28, 36, [44, 42, 40, 38, 42], 'Non-users are a blocker conversation, not a training one — get the manager to name what is in the way.', 'AIOM Account Transition Agent')
+        }
+      }
+    };
+
+    const fluencyState = { group: 'all', value: 'all', view: 'followup' };
+
+    function getActiveFluencyCohort() {
+      const group = fluencyData[fluencyState.group] || fluencyData.all;
+      return group.cohorts[fluencyState.value] || group.cohorts[Object.keys(group.cohorts)[0]];
+    }
+
+    function dimensionRank(dims) {
+      const indexed = dims.map((value, index) => ({ value, index, label: fluencyDimLabels[index] }));
+      const sorted = [...indexed].sort((a, b) => b.value - a.value);
+      return { highest: sorted[0], lowest: sorted[sorted.length - 1] };
+    }
+
+    function computeFluencySpiderGeometry(dims) {
+      const cx = 120, cy = 120, maxR = 100;
+      const start = -Math.PI / 2;
+      const step = (Math.PI * 2) / 5;
+      const points = dims.map((value, i) => {
+        const angle = start + i * step;
+        const r = (Math.max(0, Math.min(100, value)) / 100) * maxR;
+        return [cx + r * Math.cos(angle), cy + r * Math.sin(angle)];
+      });
+      const polygon = points.map(([x, y]) => `${x.toFixed(1)},${y.toFixed(1)}`).join(' ');
+      return { polygon, points };
+    }
+
+    function rebuildFluencyFunctionRow() {
+      const row = document.getElementById('fluencyFunctionRow');
+      if (!row) return;
+      const sourceGroupKey = fluencyState.group === 'all' ? 'function' : fluencyState.group;
+      const sourceGroup = fluencyData[sourceGroupKey];
+      const entries = Object.entries(sourceGroup.cohorts);
+      row.innerHTML = entries.map(([key, cohort]) => {
+        const countLabel = cohort.count.split(' ')[0];
+        const active = (fluencyState.group === sourceGroupKey && key === fluencyState.value) ? ' active' : '';
+        return `<span class="fluency-function-pill${active}" data-fluency-cohort="${key}" data-fluency-group="${sourceGroupKey}">${cohort.label} <strong>${countLabel}</strong></span>`;
+      }).join('');
+    }
+
+    function renderFluency() {
+      const cohort = getActiveFluencyCohort();
+      const rank = dimensionRank(cohort.dims);
+      const isFollowup = fluencyState.view === 'followup';
+      const respondents = cohort.count;
+      const netMovement = cohort.followup - cohort.baseline;
+      const impactDelta = cohort.impactFollowup - cohort.impactBaseline;
+
+      document.querySelectorAll('#fluencyFilterRow [data-fluency-group]').forEach(el => {
+        el.classList.toggle('active', el.dataset.fluencyGroup === fluencyState.group);
+      });
+      document.querySelectorAll('#fluencyFunctionRow [data-fluency-cohort]').forEach(el => {
+        el.classList.toggle('active', el.dataset.fluencyCohort === fluencyState.value && el.dataset.fluencyGroup === fluencyState.group);
+      });
+      document.querySelectorAll('#fluencyPathwayTabs [data-fluency-view]').forEach(el => {
+        el.classList.toggle('active', el.dataset.fluencyView === fluencyState.view);
+      });
+
+      document.getElementById('fluencyHeroBadgeValue').textContent = `${cohort.followup}%`;
+      document.getElementById('fluencyHeroSubAvg').textContent = `${cohort.followup}% average fluency`;
+      document.getElementById('fluencyHeroSubCohort').textContent = `${cohort.label} · ${respondents}`;
+      document.getElementById('fluencyHeroCurrentTitle').textContent = cohort.label;
+      document.getElementById('fluencyHeroCurrentBody').textContent = `${respondents} in this filtered cohort.`;
+      document.getElementById('fluencyHeroStrongestTitle').textContent = rank.highest.label;
+      document.getElementById('fluencyHeroStrongestBody').textContent = `${rank.highest.value}%. This is where momentum is strongest.`;
+      document.getElementById('fluencyHeroGrowthTitle').textContent = rank.lowest.label;
+      document.getElementById('fluencyHeroGrowthBody').textContent = `${rank.lowest.value}%. This is the cleanest enablement opportunity.`;
+      document.getElementById('fluencyHeroChangeTitle').textContent = `${netMovement >= 0 ? '+' : ''}${netMovement} pts`;
+      document.getElementById('fluencyHeroChangeBody').textContent = 'Cohort movement from Time 1 to Time 2.';
+
+      document.getElementById('fluencyAsideBaselineValue').textContent = `${cohort.baseline}%`;
+      document.getElementById('fluencyAsideBaselineSub').textContent = respondents;
+      document.getElementById('fluencyAsideFollowupValue').textContent = `${cohort.followup}%`;
+      document.getElementById('fluencyAsideFollowupSub').textContent = `Impact ${cohort.impactFollowup}%`;
+
+      document.getElementById('fluencyTime1Value').textContent = `${cohort.baseline}%`;
+      document.getElementById('fluencyTime1Sub').textContent = respondents;
+      document.getElementById('fluencyTime1Chips').innerHTML = `<span class="fluency-cohort-chip">Readiness ${cohort.readinessBaseline}%</span><span class="fluency-cohort-chip">Impact ${cohort.impactBaseline}%</span>`;
+      document.getElementById('fluencyTime2Value').textContent = `${cohort.followup}%`;
+      document.getElementById('fluencyTime2Sub').textContent = respondents;
+      document.getElementById('fluencyTime2Chips').innerHTML = `<span class="fluency-cohort-chip">Readiness ${cohort.readinessFollowup}%</span><span class="fluency-cohort-chip">Impact ${cohort.impactFollowup}%</span>`;
+      document.getElementById('fluencyNetValue').textContent = `${netMovement >= 0 ? '+' : ''}${netMovement} pts`;
+      document.getElementById('fluencyNetSub').textContent = `AI Fluency lift from baseline to follow-up for ${cohort.label.toLowerCase()}.`;
+      document.getElementById('fluencyNetChips').innerHTML = `<span class="fluency-cohort-chip">Impact moved ${impactDelta >= 0 ? '+' : ''}${impactDelta} pts</span>`;
+
+      document.getElementById('fluencyAiomTitle').textContent = cohort.aiomNextMove;
+      document.getElementById('fluencyAiomBody').textContent = `Strongest dimension: ${rank.highest.label} (${rank.highest.value}%). Build area: ${rank.lowest.label} (${rank.lowest.value}%).`;
+      document.getElementById('fluencyAiomResource').textContent = cohort.aiomResource;
+
+      document.getElementById('fluencyDimIntroTitle').textContent = cohort.label;
+      document.getElementById('fluencyDimHighestName').textContent = rank.highest.label;
+      document.getElementById('fluencyDimHighestPct').textContent = `${rank.highest.value}%`;
+      document.getElementById('fluencyDimBuildName').textContent = rank.lowest.label;
+      document.getElementById('fluencyDimBuildPct').textContent = `${rank.lowest.value}%`;
+
+      const geometry = computeFluencySpiderGeometry(cohort.dims);
+      document.getElementById('fluencySpiderPolygon').setAttribute('points', geometry.polygon);
+      geometry.points.forEach(([x, y], i) => {
+        const c = document.getElementById(`fluencySpiderC${i}`);
+        if (c) {
+          c.setAttribute('cx', x.toFixed(1));
+          c.setAttribute('cy', y.toFixed(1));
+        }
+        const a = document.getElementById(`fluencyAxis${i}`);
+        if (a) a.textContent = `${cohort.dims[i]}%`;
+      });
+
+      cohort.dims.forEach((value, i) => {
+        const pct = document.getElementById(`fluencyDim${i}Pct`);
+        if (pct) pct.textContent = `${value}%`;
+        const out = document.getElementById(`fluencyDim${i}Out`);
+        if (out) out.textContent = `${(value / 20).toFixed(2)} out of 5`;
+        const prog = document.getElementById(`fluencyDim${i}Progress`);
+        if (prog) prog.style.width = `${value}%`;
+        const sub = document.getElementById(`fluencyDim${i}Sub`);
+        if (sub) {
+          if (i === rank.highest.index) sub.textContent = 'Highest current signal';
+          else if (i === rank.lowest.index) sub.textContent = 'Highest-leverage build area';
+          else sub.textContent = value >= 70 ? 'Building traction' : 'Emerging signal';
+        }
+      });
+
+      const lever = isFollowup ? cohort.followup : cohort.baseline;
+      const readiness = isFollowup ? cohort.readinessFollowup : cohort.readinessBaseline;
+      const impact = isFollowup ? cohort.impactFollowup : cohort.impactBaseline;
+      document.getElementById('fluencyPathLever').textContent = `${lever}% in the selected cohort view.`;
+      document.getElementById('fluencyPathReadiness').textContent = `${readiness}% in the selected cohort view.`;
+      document.getElementById('fluencyPathImpact').textContent = `${impact}% in the selected cohort view.`;
+      document.getElementById('fluencyMiniAttitude').textContent = `${lever}%`;
+      document.getElementById('fluencyMiniAttitudeOut').textContent = `${(lever / 20).toFixed(2)} out of 5`;
+      document.getElementById('fluencyMiniIntent').textContent = `${readiness}%`;
+      document.getElementById('fluencyMiniIntentOut').textContent = `${(readiness / 20).toFixed(2)} out of 5`;
+      document.getElementById('fluencyMiniImpact').textContent = `${impact}%`;
+      document.getElementById('fluencyMiniImpactOut').textContent = `${(impact / 20).toFixed(2)} out of 5`;
+
+      document.getElementById('fluencyStrategyTitle').textContent = `Scale what is working in ${rank.highest.label}, then focus enablement on ${rank.lowest.label}.`;
+    }
+
+    function setFluencyGroup(group) {
+      if (!fluencyData[group]) return;
+      fluencyState.group = group;
+      const cohortKeys = Object.keys(fluencyData[group].cohorts);
+      fluencyState.value = cohortKeys[0];
+      rebuildFluencyFunctionRow();
+      renderFluency();
+    }
+
+    function setFluencyCohort(value, group) {
+      if (group && fluencyData[group]) fluencyState.group = group;
+      const g = fluencyData[fluencyState.group];
+      if (!g || !g.cohorts[value]) return;
+      fluencyState.value = value;
+      rebuildFluencyFunctionRow();
+      renderFluency();
+    }
+
+    function setFluencyView(view) {
+      if (view !== 'baseline' && view !== 'followup') return;
+      fluencyState.view = view;
+      renderFluency();
+    }
+
+    document.getElementById('fluencyFilterRow').addEventListener('click', (event) => {
+      const target = event.target.closest('[data-fluency-group]');
+      if (!target) return;
+      setFluencyGroup(target.dataset.fluencyGroup);
+    });
+
+    document.getElementById('fluencyFunctionRow').addEventListener('click', (event) => {
+      const target = event.target.closest('[data-fluency-cohort]');
+      if (!target) return;
+      setFluencyCohort(target.dataset.fluencyCohort, target.dataset.fluencyGroup);
+    });
+
+    document.getElementById('fluencyPathwayTabs').addEventListener('click', (event) => {
+      const target = event.target.closest('[data-fluency-view]');
+      if (!target) return;
+      setFluencyView(target.dataset.fluencyView);
+    });
+
+    rebuildFluencyFunctionRow();
+    renderFluency();
 
     populateClientSelect();
     syncPhaseFilterToAccount(getAccount());
@@ -3192,6 +4530,71 @@
     });
 
     document.getElementById('refreshBtn').addEventListener('click', refreshLocalState);
+
+    function buildAssistantContext(account) {
+      const recommendedResource = getRecommendedResource(account);
+      const topSignals = (account.signals || []).slice(0, 3).map(s => `${String(s.severity).toUpperCase()} · ${s.title}`).join(' · ');
+      const missingSources = getMissingSources(account);
+      const missingLabel = missingSources.length ? missingSources.join(', ') : 'none flagged';
+      return [
+        { key: 'Account', value: `${account.name} — ${account.business}` },
+        { key: 'Phase', value: phases[account.phase] || 'Unknown' },
+        { key: 'Strategic action', value: account.nextMove.title },
+        { key: 'Why this matters', value: account.nextMove.why },
+        { key: 'Recommended Glean resource', value: (recommendedResource.tool && recommendedResource.tool.title) || recommendedResource.title || '—' },
+        { key: 'Top signals', value: topSignals || 'No active signals' },
+        { key: 'Source coverage', value: `${account.sourceCoverage} · missing: ${missingLabel}` },
+        { key: 'Hours remaining', value: account.hoursRemainingLabel || '—' }
+      ];
+    }
+
+    function buildAssistantPrompt(account, question) {
+      const ctx = buildAssistantContext(account);
+      const ctxLines = ctx.map(item => `- ${item.key}: ${item.value}`).join('\n');
+      const trimmed = (question || '').trim();
+      return `I'm an AI Outcomes Manager working in the Glean Adoption-OS workspace. Context for the active account:\n\n${ctxLines}\n\nMy question: ${trimmed || '[fill in your question]'}`;
+    }
+
+    function updateAssistantLaunchHref() {
+      const account = getAccount();
+      const question = document.getElementById('assistantPromptInput').value;
+      const promptText = buildAssistantPrompt(account, question);
+      document.getElementById('launchAssistantBtn').href = `https://app.glean.com/chat?message=${encodeURIComponent(promptText)}`;
+    }
+
+    function openAssistantOverlay() {
+      const account = getAccount();
+      document.getElementById('assistantModalTitle').textContent = `Ask about ${account.name}`;
+      updateAssistantLaunchHref();
+      const overlay = document.getElementById('assistantOverlay');
+      overlay.classList.add('open');
+      overlay.setAttribute('aria-hidden', 'false');
+      setTimeout(() => {
+        const input = document.getElementById('assistantPromptInput');
+        if (input) input.focus();
+      }, 50);
+    }
+
+    function closeAssistantOverlay() {
+      const overlay = document.getElementById('assistantOverlay');
+      overlay.classList.remove('open');
+      overlay.setAttribute('aria-hidden', 'true');
+    }
+
+    function copyAssistantPrompt() {
+      const account = getAccount();
+      const question = document.getElementById('assistantPromptInput').value;
+      copyWithPromptFallback(buildAssistantPrompt(account, question));
+    }
+
+    document.getElementById('askAssistantBtn').addEventListener('click', openAssistantOverlay);
+    document.getElementById('closeAssistantBtn').addEventListener('click', closeAssistantOverlay);
+    document.getElementById('copyAssistantBtn').addEventListener('click', copyAssistantPrompt);
+    document.getElementById('assistantPromptInput').addEventListener('input', updateAssistantLaunchHref);
+    document.getElementById('assistantOverlay').addEventListener('click', (event) => {
+      if (event.target === document.getElementById('assistantOverlay')) closeAssistantOverlay();
+    });
+
     document.getElementById('openPrismBtn').addEventListener('click', openPrismPanel);
     document.getElementById('closePrismBtn').addEventListener('click', closePrismPanel);
     document.getElementById('savePrismCaptureBtn').addEventListener('click', savePrismCapture);
