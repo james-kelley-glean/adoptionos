@@ -3465,11 +3465,15 @@
 
     function renderHero(account) {
       ui.heroTitle.textContent = account.name;
-      ui.heroSubtitle.textContent = account.business;
-      ui.heroBadges.innerHTML = `
-        <span class="tag">Phase: ${escapeHtml(phases[account.phase])}</span>
-        <span class="tag">Mode: signal triage</span>
-      `;
+      if (ui.heroSubtitle) ui.heroSubtitle.textContent = account.business;
+      if (ui.heroBadges) {
+        ui.heroBadges.innerHTML = `
+          <span class="tag">Phase: ${escapeHtml(phases[account.phase])}</span>
+          <span class="tag">Mode: signal triage</span>
+        `;
+      }
+      renderHeroStatusStrip(account);
+      renderHeroKpis(account);
     }
 
     function renderPhaseBackbone(account) {
@@ -3592,10 +3596,6 @@
       ui.recommendedDocBody.textContent = account.doc.body;
       ui.recommendedDocButton.href = account.doc.url;
 
-      ui.recommendedToolTitle.textContent = tool.title;
-      ui.recommendedToolBody.textContent = `${tool.value} ${launchMeta.detail}`;
-      ui.recommendedToolButtonRow.innerHTML = `${makeLaunchMarkup(tool, account)}<span class="tool-tag">${escapeHtml(launchMeta.short)}</span>`;
-
       ui.recommendedAssetTitle.textContent = recommendedResource.asset;
       ui.recommendedAssetBody.textContent = account.asset.body;
       ui.assetTags.innerHTML = account.asset.tags.map(tag => `<span class="tool-tag">${escapeHtml(tag)}</span>`).join('');
@@ -3686,22 +3686,22 @@
     }
 
     function renderRisk(account) {
-      const item = {
+      const riskItems = [{
         title: 'Comp / commercial risk',
         value: account.compRisk,
         body: `${account.hoursRemainingLabel} hours left · ${account.arrLabel}`,
         severity: account.compRisk === 'High' ? 'high' : account.compRisk === 'Medium' ? 'medium' : 'low'
-      };
+      }];
       ui.riskSummary.textContent = `${account.compRisk} comp risk`;
       ui.riskGrid.innerHTML = '';
-      riskItems.forEach(item => {
+      riskItems.forEach(risk => {
         const card = document.createElement('div');
         card.className = 'risk-card';
         card.innerHTML = `
-          <span class="eyebrow">${escapeHtml(item.title)}</span>
-          <h4>${escapeHtml(item.value)}</h4>
-          <p>${escapeHtml(item.body)}</p>
-          <div class="meta-row"><span>Severity</span><span class="pill ${escapeHtmlAttr(item.severity)}">${escapeHtml(item.severity)}</span></div>
+          <span class="eyebrow">${escapeHtml(risk.title)}</span>
+          <h4>${escapeHtml(risk.value)}</h4>
+          <p>${escapeHtml(risk.body)}</p>
+          <div class="meta-row"><span>Severity</span><span class="pill ${escapeHtmlAttr(risk.severity)}">${escapeHtml(risk.severity)}</span></div>
         `;
         ui.riskGrid.appendChild(card);
       });
