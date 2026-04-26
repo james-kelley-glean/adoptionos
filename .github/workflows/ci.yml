@@ -17,6 +17,10 @@ jobs:
     name: Build and validate Glean artifact
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    # Hermetic browser install (under node_modules) so Playwright does not use a
+    # mismatched or partial host/IDE cache. Matches local: PLAYWRIGHT_BROWSERS_PATH=0 npm run ci
+    env:
+      PLAYWRIGHT_BROWSERS_PATH: "0"
 
     steps:
       - name: Checkout
@@ -32,7 +36,7 @@ jobs:
         run: npm ci
 
       - name: Install Playwright browser
-        run: npx playwright install --with-deps chromium
+        run: npm run playwright:install
 
       - name: Run artifact, agent, and iframe validation
         run: npm run ci

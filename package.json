@@ -9,6 +9,7 @@
     "validate": "node scripts/validate-artifact.js",
     "validate:agents": "node --check integrations/openai-agents/adoption-os-dev-agent.mjs && node --check integrations/openai-agents/run-dev-agent.mjs && node --check integrations/openai-agents/run-slice-orchestrator.mjs",
     "smoke:iframe": "node scripts/smoke-iframe.js",
+    "playwright:install": "PLAYWRIGHT_BROWSERS_PATH=0 npx playwright install --with-deps chromium",
     "glean:copy": "npm run build && node scripts/copy-artifact-for-glean.js",
     "orchestrator:plan": "node scripts/orchestrate-slices.js plan",
     "orchestrator:validate": "node scripts/orchestrate-slices.js validate",
