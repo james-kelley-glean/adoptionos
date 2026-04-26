@@ -38,10 +38,16 @@ async function main() {
   const page = await browser.newPage({ viewport: { width: 1440, height: 1200 } });
 
   try {
-    await page.setContent(hostHtml, { waitUntil: 'domcontentloaded' });
+    // Parent: wait for the outer document. Child srcdoc: wait for 'load' so inline boot
+    // (renderAll) has run; static panels like #strategicActionPanel can appear before
+    // the bottom script, so we must not advance on those alone.
+    await page.setContent(hostHtml, { waitUntil: 'load' });
     const frameHandle = await page.waitForSelector('#glean-canvas');
     const frame = await frameHandle.contentFrame();
     assert(frame, 'Glean Canvas iframe did not load');
+    await frame.waitForLoadState('load');
+    // Empty portfolio still gets one tr from renderPortfolio; this gates boot completion.
+    await frame.waitForSelector('#portfolioTableBody tr', { state: 'attached', timeout: 60_000 });
 
     await frame.waitForSelector('#strategicActionPanel', { state: 'visible' });
     await frame.waitForSelector('#phaseBackbonePanel', { state: 'visible' });
@@ -50,8 +56,9 @@ async function main() {
     await frame.locator('[data-tab="portfolio"]').click();
     await frame.waitForSelector('#portfolio.active', { state: 'visible' });
 
+    await frame.locator('#rosterClientList input[type="checkbox"]').first().check();
     await frame.locator('#confirmRosterBtn').click();
-    await frame.waitForFunction(() => document.querySelectorAll('#portfolioTableBody tr').length > 0);
+    await frame.waitForSelector('#portfolioTableBody tr', { state: 'attached', timeout: 60_000 });
 
     const payload = '<img src=x onerror="window.__adoptionOsXss=1">';
     await frame.locator('#missingClientInput').fill(payload);
