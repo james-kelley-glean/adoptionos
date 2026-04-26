@@ -15,6 +15,7 @@ Glean Adoption OS is a single-file Glean artifact for AI Outcomes Managers. It t
 npm run build
 npm run validate
 npm run check
+npm run glean:copy
 npm run orchestrator:plan
 npm run orchestrator:prompt -- roster-verification implementer
 npm run agent:dev -- "Review the artifact and recommend the next smallest useful slice."
@@ -56,3 +57,13 @@ npm run check:dist
 ```
 
 `check:dist` catches cases where `src/glean_adoption_os.html` changed but the generated Glean-ready artifact in `dist/` was not committed.
+
+## Test In Glean
+
+Run this command to build the artifact and copy a Glean Canvas-ready prompt plus the full HTML to your clipboard:
+
+```bash
+npm run glean:copy
+```
+
+Then paste into Glean Assistant and preview the interactive content in Canvas.
