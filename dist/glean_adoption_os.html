@@ -1510,22 +1510,58 @@
       </div>
 
       <section class="tab-panel active" id="overview">
+        <section class="surface" id="accountHealthOverlayPanel">
+          <div class="split">
+            <div>
+              <div class="section-kicker">Account health overlay</div>
+              <h2 id="accountHealthOverlayTitle">Overall account health</h2>
+            </div>
+            <div class="status blue"><i></i><span id="accountHealthOverlayStatus">Health overlay</span></div>
+          </div>
+          <p class="muted" id="accountHealthOverlayBody"></p>
+          <div class="grid three" style="margin-top:16px;">
+            <div class="metric-card" style="min-height:auto;">
+              <div class="eyebrow">Trend</div>
+              <div class="metric-sub" id="accountHealthTrend"></div>
+            </div>
+            <div class="metric-card" style="min-height:auto;">
+              <div class="eyebrow">Confidence</div>
+              <div class="metric-sub" id="accountHealthConfidence"></div>
+            </div>
+            <div class="metric-card" style="min-height:auto;">
+              <div class="eyebrow">Package pressure</div>
+              <div class="metric-sub" id="accountHealthPackagePressure"></div>
+            </div>
+          </div>
+          <div class="grid two" style="margin-top:16px;">
+            <div class="metric-card" style="min-height:auto;">
+              <div class="eyebrow">Top risk driver</div>
+              <div class="metric-sub" id="accountHealthRiskDriver"></div>
+            </div>
+            <div class="metric-card" style="min-height:auto;">
+              <div class="eyebrow">Top opportunity driver</div>
+              <div class="metric-sub" id="accountHealthOpportunityDriver"></div>
+            </div>
+          </div>
+          <p class="footer-note">This is a prioritization overlay. It helps the AIOM quickly understand account condition without replacing the phase-by-function operating model below.</p>
+        </section>
+
         <section class="surface recommendation-card" id="strategicActionPanel">
-          <div class="section-kicker">Strategic action</div>
-          <h2 id="strategicAction">Run the next strategic motion</h2>
+          <div class="section-kicker">Action stack</div>
+          <h2 id="strategicAction">What the AIOM should do now</h2>
           <p id="strategicRationale" class="muted"></p>
           <div class="callout">
-            <strong>Why this matters:</strong> <span id="nextMoveWhy"></span>
+            <strong>Why now:</strong> <span id="nextMoveWhy"></span>
           </div>
           <p class="footer-note" id="confidenceReason"></p>
           <div class="grid two" style="margin-top:16px;">
             <div class="metric-card" style="min-height:auto;">
-              <div class="eyebrow">Best next step</div>
+              <div class="eyebrow">Do this now</div>
               <div class="metric-value" style="font-size:22px;" id="bestNextStep"></div>
               <div class="metric-sub" id="sessionBody"></div>
             </div>
             <div class="metric-card" style="min-height:auto;">
-              <div class="eyebrow">Recommended Glean resource</div>
+              <div class="eyebrow">Use this</div>
               <div class="metric-value" style="font-size:22px;" id="recommendedResourceTitle"></div>
               <div class="metric-sub" id="recommendedResourceBody"></div>
               <div class="button-row" id="recommendedResourceButtonRow" style="margin-top:10px;"></div>
@@ -1533,7 +1569,7 @@
           </div>
           <div class="grid two" style="margin-top:16px;">
             <div class="metric-card" style="min-height:auto;">
-              <div class="eyebrow">Recommended doc</div>
+              <div class="eyebrow">Open first</div>
               <div class="metric-value" style="font-size:18px;" id="recommendedDocTitle"></div>
               <div class="metric-sub" id="recommendedDocBody"></div>
               <div class="button-row" style="margin-top:10px;">
@@ -1541,7 +1577,7 @@
               </div>
             </div>
             <div class="metric-card" style="min-height:auto;">
-              <div class="eyebrow">Recommended asset</div>
+              <div class="eyebrow">Support this motion</div>
               <div class="metric-value" style="font-size:18px;" id="recommendedAssetTitle"></div>
               <div class="metric-sub" id="recommendedAssetBody"></div>
               <div class="pill-row" id="assetTags" style="margin-top:10px;"></div>
@@ -1549,27 +1585,27 @@
           </div>
           <div class="grid three" style="margin-top:16px;">
             <div class="metric-card" style="min-height:auto;">
-              <div class="eyebrow">Decision owner</div>
+              <div class="eyebrow">Who needs to move</div>
               <div class="metric-sub" id="decisionOwner"></div>
             </div>
             <div class="metric-card" style="min-height:auto;">
-              <div class="eyebrow">Target audience</div>
+              <div class="eyebrow">Who this is for</div>
               <div class="metric-sub" id="targetFunction"></div>
             </div>
             <div class="metric-card" style="min-height:auto;">
-              <div class="eyebrow">Friction</div>
+              <div class="eyebrow">What is blocking progress</div>
               <div class="metric-sub" id="primaryFrictionType"></div>
             </div>
           </div>
           <div class="callout" style="margin-top:16px;">
-            <strong>What to capture in Prism:</strong> <span id="capturePrompt"></span>
+            <strong>Capture back into Prism:</strong> <span id="capturePrompt"></span>
           </div>
         </section>
 
         <section class="surface" id="phaseBackbonePanel">
           <div class="split">
             <div>
-              <div class="section-kicker">Adoption OS phase backbone</div>
+              <div class="section-kicker">Phase-by-function view</div>
               <h2 id="currentPhaseTitle"></h2>
             </div>
           </div>
@@ -1583,6 +1619,10 @@
               <div class="metric-sub" id="phaseMilestoneDetail"></div>
             </div>
           </div>
+          <section class="list-item" style="margin-top:16px;">
+            <h4>Function phase lanes</h4>
+            <div class="list" id="functionPhaseStatusList"></div>
+          </section>
           <div class="grid three" style="margin-top:16px;">
             <div class="list-item">
               <h4>Open adoption activities</h4>
@@ -1596,13 +1636,137 @@
               <h4>Phase-relevant assets</h4>
               <div class="list" id="phaseAssetsList"></div>
             </div>
-            <div class="list-item">
-              <h4>Function phase status</h4>
-              <div class="list" id="functionPhaseStatusList"></div>
+          </div>
+          <p class="footer-note">The account can have one overall health read while still showing different adoption phases by function. This section is the operating view AIOMs use to see what each group needs next.</p>
+        </section>
+
+        <section class="surface" id="topWorkflowsPanel" style="margin-top:18px;">
+          <div class="split">
+            <div>
+              <div class="section-kicker">Top 3 workflows</div>
+              <h2 id="topWorkflowsSummary">Priority workflows driving account health</h2>
+            </div>
+            <div class="status blue"><i></i><span id="topWorkflowsStatus">Required on every account</span></div>
+          </div>
+          <p class="muted" id="topWorkflowsBody">These workflows explain whether the account is healthy, blocked, or ready to scale. They sit inside the phase model rather than replacing it.</p>
+          <div class="list" id="topWorkflowsList"></div>
+          <p class="footer-note">Each workflow should show whether it already exists, needs to be created, or needs redesign because AI is changing how the work should happen.</p>
+        </section>
+
+        <div class="grid two" style="margin-top:18px;">
+          <section class="surface" id="packagePosturePanel">
+            <div class="split">
+              <div>
+                <div class="section-kicker">Package economics and support posture</div>
+                <h2 id="packagePostureSummary">Commercial reality for this account</h2>
+              </div>
+              <div class="status orange"><i></i><span id="packagePostureStatus">Planning object</span></div>
+            </div>
+            <div class="grid three" style="margin-top:16px;">
+              <div class="metric-card" style="min-height:auto;">
+                <div class="eyebrow">Package type</div>
+                <div class="metric-sub" id="packageType"></div>
+              </div>
+              <div class="metric-card" style="min-height:auto;">
+                <div class="eyebrow">Hours</div>
+                <div class="metric-sub" id="packageHours"></div>
+              </div>
+              <div class="metric-card" style="min-height:auto;">
+                <div class="eyebrow">Pressure</div>
+                <div class="metric-sub" id="packagePressure"></div>
+              </div>
+            </div>
+            <div class="grid two" style="margin-top:16px;">
+              <div class="metric-card" style="min-height:auto;">
+                <div class="eyebrow">What is consuming time</div>
+                <div class="metric-sub" id="packageBurnDrivers"></div>
+              </div>
+              <div class="metric-card" style="min-height:auto;">
+                <div class="eyebrow">Support posture</div>
+                <div class="metric-sub" id="packageSupportPosture"></div>
+              </div>
+            </div>
+            <p class="footer-note" id="packageScopeNote"></p>
+          </section>
+
+          <section class="surface" id="standardPackPanel">
+            <div class="split">
+              <div>
+                <div class="section-kicker">Standard Agent/Skill pack</div>
+                <h2 id="standardPackSummary">Baseline intervention layer</h2>
+              </div>
+              <div class="status green"><i></i><span id="standardPackStatus">Baseline pack</span></div>
+            </div>
+            <p class="muted" id="standardPackBody">Every client should have a standard starting pack. This view shows what is active, what is missing, and what should be used next.</p>
+            <div class="list" id="standardPackList"></div>
+          </section>
+        </div>
+
+        <section class="surface" id="trainingReadinessPanel" style="margin-top:18px;">
+          <div class="split">
+            <div>
+              <div class="section-kicker">Training readiness</div>
+              <h2 id="trainingReadinessSummary">Training is not the blocker right now</h2>
+            </div>
+            <div class="status blue"><i></i><span id="trainingReadinessStatus"></span></div>
+          </div>
+          <div class="grid three" style="margin-top:16px;">
+            <div class="metric-card" style="min-height:auto;">
+              <div class="eyebrow">Audience</div>
+              <div class="metric-sub" id="trainingReadinessAudience"></div>
+            </div>
+            <div class="metric-card" style="min-height:auto;">
+              <div class="eyebrow">Plan</div>
+              <div class="metric-sub" id="trainingReadinessPlan"></div>
+            </div>
+            <div class="metric-card" style="min-height:auto;">
+              <div class="eyebrow">Why this matters now</div>
+              <div class="metric-sub" id="trainingReadinessReason"></div>
             </div>
           </div>
-          <p class="footer-note">Weekly priority is a summary layer. The operating model is the Adoption OS phase, and different client functions may be moving through different phases at the same time.</p>
+          <div class="button-row" style="margin-top:16px;">
+            <a class="buttonlike" id="trainingReadinessCta" href="#" target="_blank" rel="noopener">Launch training motion</a>
+          </div>
+          <p class="footer-note" id="trainingReadinessNote"></p>
         </section>
+
+        <div class="grid three" style="margin-top:18px;">
+          <section class="surface" id="contactMapPanel">
+            <div class="split">
+              <div>
+                <div class="section-kicker">Who to contact</div>
+                <h2 id="contactMapSummary">Key people for the next motion</h2>
+              </div>
+              <div class="status blue"><i></i><span id="contactMapStatus">Stakeholder map</span></div>
+            </div>
+            <p class="muted">Contacts are ranked by their role in the recommended action, relationship signal, and whether they need re-engagement.</p>
+            <div class="list" id="contactMapList"></div>
+          </section>
+
+          <section class="surface" id="taskOwnershipPanel">
+            <div class="split">
+              <div>
+                <div class="section-kicker">Task ownership</div>
+                <h2 id="taskOwnershipSummary">What is ours vs. theirs</h2>
+              </div>
+              <div class="status orange"><i></i><span id="taskOwnershipStatus">Action split</span></div>
+            </div>
+            <p class="muted">The AIOM should leave this section knowing exactly what Glean owes, what the client owes, and what is blocked elsewhere.</p>
+            <div class="list" id="taskOwnershipList"></div>
+          </section>
+
+          <section class="surface" id="seatDistributionPanel">
+            <div class="split">
+              <div>
+                <div class="section-kicker">Seat and function map</div>
+                <h2 id="seatDistributionSummary">Where adoption is landing</h2>
+              </div>
+              <div class="status green"><i></i><span id="seatDistributionStatus">Function graph</span></div>
+            </div>
+            <p class="muted">This converts Sigma/job-function usage into a practical function view for phase planning.</p>
+            <div class="list" id="seatDistributionList"></div>
+          </section>
+        </div>
 
         <div class="grid two" style="margin-top:18px;">
           <section class="surface">
@@ -1694,9 +1858,9 @@
               <p class="footer-note" id="healthImpact"></p>
             </div>
             <div class="button-row" style="margin-top:14px;">
-              <button class="buttonlike" id="openPrismBtn">Open Prism snapshot</button>
+              <a class="buttonlike" id="openPrismBtn" href="https://app.glean.com/prism" target="_blank" rel="noopener">Open Prism</a>
             </div>
-            <p class="footer-note">This keeps the AIOM operating surface focused while Prism-derived health and account memory inform the recommendation.</p>
+            <p class="footer-note">This keeps the AIOM operating surface focused while linking directly to live Prism in Glean. Account-specific Prism view links should only be added after the exact view URLs are verified.</p>
           </section>
         </div>
 
@@ -1820,20 +1984,20 @@
         <section class="surface">
           <div class="split">
             <div>
-              <div class="section-kicker">Prism workspace</div>
-              <h2>Capture the most relevant information for this account</h2>
+              <div class="section-kicker">Prism account health brief</div>
+              <h2>See the Prism health read for this account</h2>
             </div>
             <div class="status blue"><i></i><span>Canvas-safe inline view</span></div>
           </div>
-          <p class="muted">This is a dedicated Prism memory and health loop for the selected account. It shows what Prism already tells us about client health, then captures whether the recommended action worked so the next recommendation can improve.</p>
+          <p class="muted">This tab is the focused Prism health brief. It is separate from the overview so AIOMs can quickly see the health narrative, repeated blockers, momentum, and recommended next play without rereading the full workspace.</p>
           <div class="prism-workspace">
-            <div class="grid two">
+            <div class="grid">
               <section class="metric-card" style="min-height:auto;">
-                <div class="section-kicker">Most relevant context</div>
+                <div class="section-kicker">Prism briefing card</div>
                 <div id="prismInlineContext"></div>
               </section>
-              <section class="metric-card" style="min-height:auto;">
-                <div class="section-kicker">AIOM capture</div>
+              <section class="hidden" aria-hidden="true">
+                <div class="section-kicker">Session capture only</div>
                 <div class="capture-grid">
                   <div>
                     <label class="field-label" for="prismSummaryInput">Executive summary</label>
@@ -1887,7 +2051,7 @@
               </section>
             </div>
             <section class="metric-card" style="min-height:auto;">
-              <div class="section-kicker">Top signals informing this capture</div>
+              <div class="section-kicker">Top signals informing the Prism brief</div>
               <div class="list" id="prismInlineSignalList"></div>
             </section>
             <section class="metric-card" style="min-height:auto;">
@@ -2433,8 +2597,8 @@
       { title: 'Prompt Crafter', category: 'Prompting & agent design', owner: 'Mark Christianson', status: 'Completed', value: 'Turns plain-language input into a structured prompt or agent-ready system prompt.', url: 'https://app.glean.com/chat/agents/77304e39f3bf4535971235b298aac8c9', bestFor: 'Prompting workshops, business workshops', phases: ['readiness', 'stickiness'] },
       { title: 'Create an Enablement Plan', category: 'Account productivity', owner: 'Harshit Kohli', status: 'Completed', value: 'Generates a comprehensive enablement plan for a new customer.', url: '', bestFor: 'New accounts, enablement planning', phases: ['prep', 'readiness'] },
       { title: 'AIOM Account Ramp Companion', category: 'Account productivity', owner: 'AIOM team', status: 'Prompt fallback', value: 'Creates a fast account ramp brief when source coverage is thin or ownership just changed.', url: '', prompt: 'Act as the AIOM Account Ramp Companion for [Customer]. Build a concise ramp brief with known context, missing sources, decision owner, target audience, current friction, recommended next step, and what I should capture in Prism.', bestFor: 'Account ramp, sparse context, ownership changes', phases: ['prep', 'stickiness'] },
-      { title: 'Meeting Summarizer + Follow Up', category: 'Customer communication & content', owner: 'AIOM team', status: 'Prompt fallback', value: 'Turns a customer or internal meeting into decisions, blockers, owner/date commitments, and follow-up copy.', url: '', prompt: 'Use Meeting Summarizer + Follow Up behavior for [Customer]. Summarize decisions, blockers, commitments, owners, dates, follow-up message, and Prism capture notes from the latest meeting context.', bestFor: 'Planning resets, blocker triage, customer follow-up', phases: ['prep', 'readiness', 'stickiness'] },
-      { title: 'Optimal Agent Use Case Recommender', category: 'Prompting & agent design', owner: 'AIOM team', status: 'Prompt fallback', value: 'Recommends the most realistic agent or skill use case based on user workflows, adoption friction, and available champions.', url: '', prompt: 'Act as the Optimal Agent Use Case Recommender for [Customer]. Identify the highest-fit agent or skill use case, target function, enabling prompt, adoption friction, rollout path, and Prism capture note.', bestFor: 'Agent use cases, workflow transformation, champion motions', phases: ['stickiness', 'scale'] },
+      { title: 'Meeting Summarizer + Follow Up', category: 'Customer communication & content', owner: 'AIOM team', status: 'Prompt fallback', value: 'Turns a customer or internal meeting into decisions, blockers, owner/date commitments, and follow-up copy.', url: 'https://app.glean.com/chat/agents/29d02c233ef140758cd4b42e98bad2c6', prompt: 'Use Meeting Summarizer + Follow Up behavior for [Customer]. Summarize decisions, blockers, commitments, owners, dates, follow-up message, and Prism capture notes from the latest meeting context.', bestFor: 'Planning resets, blocker triage, customer follow-up', phases: ['prep', 'readiness', 'stickiness'] },
+      { title: 'Optimal Agent Use Case Recommender', category: 'Prompting & agent design', owner: 'AIOM team', status: 'Prompt fallback', value: 'Recommends the most realistic agent or skill use case based on user workflows, adoption friction, and available champions.', url: 'https://app.glean.com/chat/agents/5c30a82810aa4b6eaed920bd49f97e08', prompt: 'Act as the Optimal Agent Use Case Recommender for [Customer]. Identify the highest-fit agent or skill use case, target function, enabling prompt, adoption friction, rollout path, and Prism capture note.', bestFor: 'Agent use cases, workflow transformation, champion motions', phases: ['stickiness', 'scale'] },
       { title: 'EBR Generator', category: 'Executive reviews', owner: 'Leigh Whittaker Coleman', status: 'Skill', value: 'Builds an EBR deck end-to-end so AIOMs can generate polished reviews much faster.', url: 'https://app.glean.com/library/1d5124153e8c4312a011138257888aec', prompt: 'Use my glean-ebr-generator skill. The customer is [Customer].', bestFor: 'EBRs, executive readouts, showcasing value', phases: ['stickiness', 'scale', 'readiness'] }
     ];
 
@@ -2542,6 +2706,83 @@
         phaseAssets: account.phaseAssets || defaults.phaseAssets,
         functionPhaseStatus: account.functionPhaseStatus || defaults.functionPhaseStatus
       };
+    }
+
+    function getTrainingReadiness(account) {
+      const phase = account.phase;
+      const functionPhaseStatus = (account.functionPhaseStatus || []).map(item => `${item.function}: ${item.phase}`);
+      const hasTrainingSignal = (account.signals || []).some(signal =>
+        /training|enablement|readiness/i.test(`${signal.title} ${signal.body}`)
+      );
+      const audience = phase === 'prep'
+        ? 'Admins, implementation leads, and first customer-facing user groups'
+        : phase === 'readiness'
+          ? 'Admins plus the first live end-user audience'
+          : phase === 'stickiness'
+            ? 'Champions, power users, and the next workflow cohort'
+            : 'Managers, COE owners, and newly expanding teams';
+
+      if (phase === 'prep') {
+        return {
+          summary: 'Training should stay lightweight until launch decisions are locked',
+          status: hasTrainingSignal ? 'Needed soon' : 'Not yet the blocker',
+          audience,
+          plan: 'Finalize audience, sequence, and owner first. Then queue launch training and invites.',
+          reason: 'Preparation is still about scoping, decision ownership, and launch sequence. Training gets stronger after those decisions are named.',
+          note: `Current phase lanes: ${functionPhaseStatus.join(' · ')}`,
+          ctaLabel: 'Open training invite template',
+          ctaUrl: 'https://docs.google.com/document/d/1wNUUaoCyAP-FdhNyaDRT62Bgm5uyOYjfx8sBcz-EuxA/edit?tab=t.0'
+        };
+      }
+
+      if (phase === 'readiness') {
+        return {
+          summary: 'Training is part of launch readiness right now',
+          status: hasTrainingSignal ? 'Active blocker' : 'Needed now',
+          audience,
+          plan: 'Run admin briefing first, then deliver role-based launch training with a short follow-up recap.',
+          reason: 'The account is close enough to launch that unclear training ownership or timing will create confusion and support noise.',
+          note: `Readiness should match the active phase lanes across the account: ${functionPhaseStatus.join(' · ')}`,
+          ctaLabel: 'Open enablement package',
+          ctaUrl: 'https://docs.google.com/document/d/1m-_cm_cTaBqZBwqRegrDJ485DLbzPl8SvzLO6dkFLzo/edit?usp=sharing'
+        };
+      }
+
+      if (phase === 'stickiness') {
+        return {
+          summary: 'Training should reinforce workflow habits, not re-teach the product',
+          status: 'Reinforcement motion',
+          audience,
+          plan: 'Use short role-specific refreshers, champion examples, and one workflow-focused session instead of broad onboarding.',
+          reason: 'This phase is about repetition and business relevance. The best training helps teams repeat a useful workflow, not relearn basics.',
+          note: `Use the phase lanes to target only the functions that still need readiness support: ${functionPhaseStatus.join(' · ')}`,
+          ctaLabel: 'Open workshop guide',
+          ctaUrl: 'https://docs.google.com/document/d/1MblgO5Ws7JMAKb9tNE6BpzWn8LgcoDSEfY8Rh8BAO48/edit?usp=sharing'
+        };
+      }
+
+      return {
+        summary: 'Training becomes an expansion and governance lever at scale',
+        status: 'Ongoing reinforcement',
+        audience,
+        plan: 'Train new teams, refresh managers, and support the governance rhythm with lightweight enablement.',
+        reason: 'At scale, training keeps expansion clean and helps new functions adopt proven behaviors without creating extra noise.',
+        note: `Scale accounts still need phase-aware reinforcement by function: ${functionPhaseStatus.join(' · ')}`,
+        ctaLabel: 'Open governance support guide',
+        ctaUrl: 'https://docs.google.com/document/d/1I7O4ATeC75naQipxFGnnSJpgHYH9gsI2jWKOl4wvviI/edit?usp=sharing'
+      };
+    }
+
+    function renderTrainingReadiness(account) {
+      const training = getTrainingReadiness(account);
+      ui.trainingReadinessSummary.textContent = training.summary;
+      ui.trainingReadinessStatus.textContent = training.status;
+      ui.trainingReadinessAudience.textContent = training.audience;
+      ui.trainingReadinessPlan.textContent = training.plan;
+      ui.trainingReadinessReason.textContent = training.reason;
+      ui.trainingReadinessCta.textContent = training.ctaLabel;
+      ui.trainingReadinessCta.href = training.ctaUrl;
+      ui.trainingReadinessNote.textContent = training.note;
     }
 
     const accounts = {
@@ -3009,6 +3250,14 @@
       heroKpiHealthSub: document.getElementById('heroKpiHealthSub'),
       heroKpiHours: document.getElementById('heroKpiHours'),
       heroKpiHoursSub: document.getElementById('heroKpiHoursSub'),
+      accountHealthOverlayTitle: document.getElementById('accountHealthOverlayTitle'),
+      accountHealthOverlayStatus: document.getElementById('accountHealthOverlayStatus'),
+      accountHealthOverlayBody: document.getElementById('accountHealthOverlayBody'),
+      accountHealthTrend: document.getElementById('accountHealthTrend'),
+      accountHealthConfidence: document.getElementById('accountHealthConfidence'),
+      accountHealthPackagePressure: document.getElementById('accountHealthPackagePressure'),
+      accountHealthRiskDriver: document.getElementById('accountHealthRiskDriver'),
+      accountHealthOpportunityDriver: document.getElementById('accountHealthOpportunityDriver'),
       currentPhaseTitle: document.getElementById('currentPhaseTitle'),
       phaseObjective: document.getElementById('phaseObjective'),
       phaseMilestoneDetail: document.getElementById('phaseMilestoneDetail'),
@@ -3016,6 +3265,38 @@
       overdueActivitiesList: document.getElementById('overdueActivitiesList'),
       phaseAssetsList: document.getElementById('phaseAssetsList'),
       functionPhaseStatusList: document.getElementById('functionPhaseStatusList'),
+      trainingReadinessSummary: document.getElementById('trainingReadinessSummary'),
+      trainingReadinessStatus: document.getElementById('trainingReadinessStatus'),
+      trainingReadinessAudience: document.getElementById('trainingReadinessAudience'),
+      trainingReadinessPlan: document.getElementById('trainingReadinessPlan'),
+      trainingReadinessReason: document.getElementById('trainingReadinessReason'),
+      trainingReadinessCta: document.getElementById('trainingReadinessCta'),
+      trainingReadinessNote: document.getElementById('trainingReadinessNote'),
+      topWorkflowsSummary: document.getElementById('topWorkflowsSummary'),
+      topWorkflowsStatus: document.getElementById('topWorkflowsStatus'),
+      topWorkflowsBody: document.getElementById('topWorkflowsBody'),
+      topWorkflowsList: document.getElementById('topWorkflowsList'),
+      packagePostureSummary: document.getElementById('packagePostureSummary'),
+      packagePostureStatus: document.getElementById('packagePostureStatus'),
+      packageType: document.getElementById('packageType'),
+      packageHours: document.getElementById('packageHours'),
+      packagePressure: document.getElementById('packagePressure'),
+      packageBurnDrivers: document.getElementById('packageBurnDrivers'),
+      packageSupportPosture: document.getElementById('packageSupportPosture'),
+      packageScopeNote: document.getElementById('packageScopeNote'),
+      standardPackSummary: document.getElementById('standardPackSummary'),
+      standardPackStatus: document.getElementById('standardPackStatus'),
+      standardPackBody: document.getElementById('standardPackBody'),
+      standardPackList: document.getElementById('standardPackList'),
+      contactMapSummary: document.getElementById('contactMapSummary'),
+      contactMapStatus: document.getElementById('contactMapStatus'),
+      contactMapList: document.getElementById('contactMapList'),
+      taskOwnershipSummary: document.getElementById('taskOwnershipSummary'),
+      taskOwnershipStatus: document.getElementById('taskOwnershipStatus'),
+      taskOwnershipList: document.getElementById('taskOwnershipList'),
+      seatDistributionSummary: document.getElementById('seatDistributionSummary'),
+      seatDistributionStatus: document.getElementById('seatDistributionStatus'),
+      seatDistributionList: document.getElementById('seatDistributionList'),
       attentionSummary: document.getElementById('attentionSummary'),
       attentionList: document.getElementById('attentionList'),
       strategicAction: document.getElementById('strategicAction'),
@@ -3514,6 +3795,306 @@
       `).join('');
     }
 
+    function getHealthOverlay(account) {
+      const primarySignal = (account.signals || [])[0];
+      const riskDriver = primarySignal ? primarySignal.title : 'No immediate risk driver captured';
+      const opportunityDriver = account.nextMove ? account.nextMove.title : 'No opportunity driver captured';
+      const hoursDigits = String(account.hoursRemainingLabel || '').replace(/[^0-9]/g, '');
+      const hoursNum = hoursDigits ? parseInt(hoursDigits, 10) : NaN;
+      const packagePressure = Number.isNaN(hoursNum)
+        ? 'Capacity unknown until package data is verified'
+        : hoursNum <= 10
+          ? 'High pressure. Very limited room for extra motion.'
+          : hoursNum <= 24
+            ? 'Moderate pressure. Prioritize only the highest-value move.'
+            : 'Manageable pressure. There is room for a focused intervention.';
+      const health = getAccountHealthLabel(account);
+      return {
+        title: `${health.label} account health with ${phases[account.phase].split(',')[0].toLowerCase()} still driving the work`,
+        status: `${health.label} overlay`,
+        body: `Overall health is ${health.label.toLowerCase()} because engagement, AI usage, blockers, and package reality are pulling together into one account read. The AIOM should still work the account through phase-by-function below.`,
+        trend: `${(account.assistant && account.assistant.trend) || 'No trend'} in Assistant usage · ${(account.agents && account.agents.health) || 'Agents pending'} agent motion`,
+        confidence: getConfidenceReason(account),
+        packagePressure,
+        riskDriver,
+        opportunityDriver
+      };
+    }
+
+    function getTopWorkflows(account) {
+      if (account.topWorkflows && account.topWorkflows.length) return account.topWorkflows;
+      const targetFunction = getTargetFunction(account);
+      const phaseLabel = phases[account.phase].split(',')[0];
+      const recommendedResource = getRecommendedResource(account);
+      const workflowSets = {
+        prep: [
+          { name: 'Launch planning and owner path', state: 'needs redesign', why: 'Planning exists, but owner/date certainty and scope still need to harden.', phase: phaseLabel, function: targetFunction, leverage: 'Creates a clean path to launch and reduces noisy follow-up.' },
+          { name: 'Admin readiness and blocker triage', state: 'exists', why: 'There is already implementation motion, but it needs a tighter blocker path.', phase: 'Readiness', function: 'Admins / IT', leverage: 'Prevents support noise from hijacking the launch motion.' },
+          { name: 'Audience-specific enablement motion', state: 'needs creation', why: 'Training and comms are not yet fully targeted to the right audience.', phase: 'Preparation', function: 'End users', leverage: 'Keeps enablement tied to the right audience at the right moment.' }
+        ],
+        readiness: [
+          { name: 'Launch comms and enablement motion', state: 'exists', why: 'There is enough motion to activate, but the message must stay tied to readiness blockers.', phase: phaseLabel, function: targetFunction, leverage: 'Turns readiness work into visible launch progress.' },
+          { name: 'Approval and blocker resolution workflow', state: 'needs redesign', why: 'Approvals and blocker owners still need a cleaner operating path.', phase: phaseLabel, function: 'Admins / IT', leverage: 'Removes the friction that delays wider rollout.' },
+          { name: 'Executive value narrative reset', state: 'needs creation', why: 'Sponsors need a clearer story for why the next step matters now.', phase: 'Stickiness', function: 'Executive sponsor', leverage: 'Keeps strategic pull alive while readiness work finishes.' }
+        ],
+        stickiness: [
+          { name: 'Priority workflow habit', state: 'needs creation', why: 'The account needs one repeatable AI-assisted workflow people will actually keep using.', phase: phaseLabel, function: targetFunction, leverage: 'Creates the first durable adoption behavior.' },
+          { name: 'Champion reinforcement motion', state: 'exists', why: 'Champion energy is present, but it needs structure and repetition.', phase: phaseLabel, function: 'Champions / power users', leverage: 'Turns isolated use into a repeatable habit others can copy.' },
+          { name: 'Executive value review', state: 'needs redesign', why: 'The account may have activity, but the value story needs to be sharper.', phase: 'Readiness', function: 'Executive sponsor', leverage: 'Protects account health while adoption broadens.' }
+        ],
+        scale: [
+          { name: 'Governance and support rhythm', state: 'exists', why: 'A scale account needs a visible operating rhythm, not ad hoc follow-up.', phase: phaseLabel, function: 'Admins / COE', leverage: 'Sustains adoption quality after launch energy fades.' },
+          { name: 'Expansion workflow rollout', state: 'needs creation', why: 'New teams need proven workflow patterns, not generic encouragement.', phase: phaseLabel, function: targetFunction, leverage: 'Makes expansion practical and repeatable.' },
+          { name: 'Executive proof of value', state: 'needs redesign', why: 'Leadership still needs a crisp narrative that connects adoption to business outcomes.', phase: 'Scale', function: 'Executive sponsor', leverage: 'Supports renewal, expansion, and long-term sponsorship.' }
+        ]
+      };
+      return workflowSets[account.phase].map((item, index) => ({ ...item, resource: index === 0 ? recommendedResource.title : recommendedResource.asset }));
+    }
+
+    function getPackagePosture(account) {
+      const hoursDigits = String(account.hoursRemainingLabel || '').replace(/[^0-9]/g, '');
+      const hoursNum = hoursDigits ? parseInt(hoursDigits, 10) : NaN;
+      const pressure = Number.isNaN(hoursNum)
+        ? 'Unknown until package data is verified'
+        : hoursNum <= 10
+          ? 'High pressure'
+          : hoursNum <= 24
+            ? 'Moderate pressure'
+            : 'Manageable pressure';
+      const packageType = account.phase === 'prep' || account.phase === 'readiness'
+        ? 'Launch and enablement package'
+        : 'Adoption and value-realization package';
+      const burnDrivers = [
+        `${account.openIssues || 0} open issues`,
+        `${account.criticalIssues || 0} critical issues`,
+        `${account.nextMove ? account.nextMove.session : 'next-step motion'} in flight`
+      ].join(' · ');
+      const supportPosture = account.openIssues >= 5
+        ? 'Support-heavy. The AIOM should protect time by resolving blockers before broadening the motion.'
+        : account.openIssues >= 2
+          ? 'Balanced. There is still real support load, so proactive work must stay tightly prioritized.'
+          : 'Adoption-led. Support noise is low enough to focus on forward motion.';
+      return {
+        summary: `${packageType} with ${pressure.toLowerCase()}`,
+        status: pressure,
+        type: packageType,
+        hours: `${account.hoursRemainingLabel} remaining against ${account.arrLabel}`,
+        pressure,
+        burnDrivers,
+        supportPosture,
+        scopeNote: 'Package economics should change what the AIOM chooses to do next. It is not just metadata.'
+      };
+    }
+
+    function getStandardPack(account) {
+      const currentTool = account.tool;
+      const pack = [
+        { name: 'AIOM Account Transition Agent', status: currentTool === 'AIOM Account Transition Agent' ? 'active' : 'baseline', note: 'Baseline brief for ownership changes and account memory.' },
+        { name: 'Client Adoption Strategy Chatbot', status: currentTool === 'Client Adoption Strategy Chatbot' ? 'active' : 'baseline', note: 'Default planning and strategy support for AIOMs.' },
+        { name: 'Meeting Summarizer + Follow Up', status: currentTool === 'Meeting Summarizer + Follow Up' ? 'active' : 'baseline', note: 'Turns meetings into actions, commitments, and Prism-ready notes.' },
+        { name: account.phase === 'prep' || account.phase === 'readiness' ? 'Glean Change Briefing Agent' : 'Optimal Agent Use Case Recommender', status: 'next', note: account.phase === 'prep' || account.phase === 'readiness' ? 'Best next pack item for launch or readiness comms.' : 'Best next pack item for workflow habit and expansion motion.' }
+      ];
+      return {
+        summary: `Baseline pack visible for ${account.name}`,
+        status: 'Baseline pack in view',
+        body: 'Every account should start with a standard intervention layer, then add phase-specific tools only when they actually help the next move.',
+        items: pack
+      };
+    }
+
+    function renderHealthOverlay(account) {
+      const overlay = getHealthOverlay(account);
+      ui.accountHealthOverlayTitle.textContent = overlay.title;
+      ui.accountHealthOverlayStatus.textContent = overlay.status;
+      ui.accountHealthOverlayBody.textContent = overlay.body;
+      ui.accountHealthTrend.textContent = overlay.trend;
+      ui.accountHealthConfidence.textContent = overlay.confidence;
+      ui.accountHealthPackagePressure.textContent = overlay.packagePressure;
+      ui.accountHealthRiskDriver.textContent = overlay.riskDriver;
+      ui.accountHealthOpportunityDriver.textContent = overlay.opportunityDriver;
+    }
+
+    function renderTopWorkflows(account) {
+      const workflows = getTopWorkflows(account);
+      ui.topWorkflowsSummary.textContent = `Top 3 workflows for ${account.name}`;
+      ui.topWorkflowsStatus.textContent = `${workflows.length} workflows in view`;
+      ui.topWorkflowsBody.textContent = 'These workflows are the operational middle of the product. They explain what already exists, what must be created, and what should be redesigned.';
+      ui.topWorkflowsList.innerHTML = workflows.map((workflow, index) => `
+        <div class="list-item">
+          <div class="split" style="margin-bottom:8px;">
+            <span class="eyebrow">Workflow ${index + 1}</span>
+            <span class="pill ${workflow.state === 'exists' ? 'low' : workflow.state === 'needs redesign' ? 'medium' : 'high'}">${escapeHtml(workflow.state)}</span>
+          </div>
+          <h4>${escapeHtml(workflow.name)}</h4>
+          <p>${escapeHtml(workflow.why)}</p>
+          <div class="meta-row"><span>${escapeHtml(workflow.function)} · ${escapeHtml(workflow.phase)}</span><span>${escapeHtml(workflow.resource || '')}</span></div>
+          <p class="footer-note">${escapeHtml(workflow.leverage)}</p>
+        </div>
+      `).join('');
+    }
+
+    function renderPackagePosture(account) {
+      const posture = getPackagePosture(account);
+      ui.packagePostureSummary.textContent = posture.summary;
+      ui.packagePostureStatus.textContent = posture.status;
+      ui.packageType.textContent = posture.type;
+      ui.packageHours.textContent = posture.hours;
+      ui.packagePressure.textContent = posture.pressure;
+      ui.packageBurnDrivers.textContent = posture.burnDrivers;
+      ui.packageSupportPosture.textContent = posture.supportPosture;
+      ui.packageScopeNote.textContent = posture.scopeNote;
+    }
+
+    function renderStandardPack(account) {
+      const pack = getStandardPack(account);
+      ui.standardPackSummary.textContent = pack.summary;
+      ui.standardPackStatus.textContent = pack.status;
+      ui.standardPackBody.textContent = pack.body;
+      ui.standardPackList.innerHTML = pack.items.map(item => `
+        <div class="list-item">
+          <div class="split" style="margin-bottom:8px;">
+            <h4>${escapeHtml(item.name)}</h4>
+            <span class="pill ${item.status === 'active' ? 'low' : item.status === 'next' ? 'medium' : 'available'}">${escapeHtml(item.status)}</span>
+          </div>
+          <p>${escapeHtml(item.note)}</p>
+        </div>
+      `).join('');
+    }
+
+    function getKeyContacts(account) {
+      if (account.keyContacts && account.keyContacts.length) return account.keyContacts;
+      const dueWindow = account.nextMove && account.nextMove.dueWindow ? account.nextMove.dueWindow : 'This week';
+      const phaseLabel = phases[account.phase].split(',')[0];
+      const engagement = account.engagement === 'Low' ? 'fading' : account.engagement === 'Pending' ? 'unknown' : 'active';
+      return [
+        {
+          name: 'Primary champion',
+          role: `${getTargetFunction(account)} contact`,
+          lastContact: account.prism.refresh || 'Needs verification',
+          engagement,
+          nextAction: `Validate the ${phaseLabel.toLowerCase()} motion and confirm owner/date commitments.`
+        },
+        {
+          name: 'Decision owner',
+          role: getDecisionOwner(account),
+          lastContact: dueWindow,
+          engagement: account.compRisk === 'High' ? 'fading' : 'active',
+          nextAction: account.nextMove ? account.nextMove.session : 'Confirm the next account motion.'
+        },
+        {
+          name: 'Executive sponsor',
+          role: 'Value narrative and commercial alignment',
+          lastContact: account.compRisk === 'High' ? 'Needs re-engagement' : 'Current quarter',
+          engagement: account.compRisk === 'High' ? 'fading' : 'unknown',
+          nextAction: account.phase === 'scale' || account.phase === 'stickiness'
+            ? 'Anchor the next review in proof of value and the next expansion path.'
+            : 'Keep sponsor context warm while readiness work progresses.'
+        }
+      ];
+    }
+
+    function getTaskOwnership(account) {
+      if (account.taskOwnership && account.taskOwnership.length) return account.taskOwnership;
+      const blocker = account.signals[0] || { title: 'No primary blocker captured', due: 'Current', severity: 'medium' };
+      const overdue = getPhaseBackbone(account).overdueAdoptionActivities || [];
+      return [
+        {
+          lane: 'AIOM',
+          priority: blocker.severity === 'high' ? 'urgent' : 'high',
+          title: account.nextMove ? account.nextMove.session : 'Build account recommendation',
+          detail: `Prepare a point of view using Prism health, source coverage, and the current phase before contacting the client.`,
+          due: account.nextMove ? account.nextMove.dueWindow : blocker.due
+        },
+        {
+          lane: 'Client',
+          priority: 'medium',
+          title: 'Confirm owner/date commitments',
+          detail: `Client-side owner must confirm the next milestone, target audience, and blocker path.`,
+          due: blocker.due || 'This week'
+        },
+        {
+          lane: 'Waiting',
+          priority: overdue.length ? 'high' : 'medium',
+          title: overdue[0] || blocker.title,
+          detail: overdue.length
+            ? 'An Adoption OS activity is overdue and should be unblocked before broadening the motion.'
+            : 'Monitor the primary signal and confirm whether an internal or customer dependency is blocking progress.',
+          due: overdue.length ? 'Overdue' : blocker.due
+        }
+      ];
+    }
+
+    function getSeatDistribution(account) {
+      if (account.seatDistribution && account.seatDistribution.length) return account.seatDistribution;
+      const totalSeats = Math.max(1, Number(String(account.arrLabel || '').replace(/[^0-9]/g, '').slice(0, 3)) || 100);
+      const assistantWau = account.assistant && Number(account.assistant.wau) ? Number(account.assistant.wau) : 0;
+      const agentWau = account.agents && Number(account.agents.wau) ? Number(account.agents.wau) : 0;
+      const targetFunction = getTargetFunction(account).split(',')[0];
+      const phaseLabel = phases[account.phase].split(',')[0];
+      const rows = [
+        { function: targetFunction, phase: phaseLabel, seats: Math.round(totalSeats * 0.42), active: assistantWau, signal: 'Primary motion' },
+        { function: 'Admins / IT', phase: account.phase === 'prep' ? 'Preparation' : 'Readiness', seats: Math.round(totalSeats * 0.18), active: Math.max(2, Math.round(agentWau / 2)), signal: 'Readiness and governance' },
+        { function: 'Broader users', phase: account.phase === 'scale' ? 'Scale' : 'Readiness', seats: Math.round(totalSeats * 0.40), active: Math.max(1, Math.round((assistantWau + agentWau) / 3)), signal: 'Habit formation' }
+      ];
+      return rows.map(row => ({
+        ...row,
+        adoption: Math.min(100, Math.round((row.active / Math.max(row.seats, 1)) * 100))
+      }));
+    }
+
+    function renderKeyContacts(account) {
+      const contacts = getKeyContacts(account);
+      ui.contactMapSummary.textContent = `Who to contact for ${account.name}`;
+      ui.contactMapStatus.textContent = `${contacts.length} contacts`;
+      ui.contactMapList.innerHTML = contacts.map(contact => `
+        <div class="list-item">
+          <div class="split" style="margin-bottom:8px;">
+            <h4>${escapeHtml(contact.name)}</h4>
+            <span class="pill ${contact.engagement === 'active' ? 'low' : contact.engagement === 'fading' ? 'high' : 'medium'}">${escapeHtml(contact.engagement)}</span>
+          </div>
+          <p>${escapeHtml(contact.role)}</p>
+          <div class="meta-row"><span>Last contact</span><span>${escapeHtml(contact.lastContact)}</span></div>
+          <p class="footer-note">${escapeHtml(contact.nextAction)}</p>
+        </div>
+      `).join('');
+    }
+
+    function renderTaskOwnership(account) {
+      const tasks = getTaskOwnership(account);
+      ui.taskOwnershipSummary.textContent = `Task split for ${account.name}`;
+      ui.taskOwnershipStatus.textContent = `${tasks.length} lanes`;
+      ui.taskOwnershipList.innerHTML = tasks.map(task => `
+        <div class="list-item">
+          <div class="split" style="margin-bottom:8px;">
+            <span class="eyebrow">${escapeHtml(task.lane)}</span>
+            <span class="pill ${task.priority === 'urgent' || task.priority === 'high' ? 'high' : 'medium'}">${escapeHtml(task.priority)}</span>
+          </div>
+          <h4>${escapeHtml(task.title)}</h4>
+          <p>${escapeHtml(task.detail)}</p>
+          <div class="meta-row"><span>Due</span><span>${escapeHtml(task.due)}</span></div>
+        </div>
+      `).join('');
+    }
+
+    function renderSeatDistribution(account) {
+      const rows = getSeatDistribution(account);
+      ui.seatDistributionSummary.textContent = `Function adoption for ${account.name}`;
+      ui.seatDistributionStatus.textContent = `${rows.length} functions`;
+      ui.seatDistributionList.innerHTML = rows.map(row => `
+        <div class="list-item">
+          <div class="split" style="margin-bottom:8px;">
+            <h4>${escapeHtml(row.function)}</h4>
+            <span class="pill ${row.adoption >= 40 ? 'low' : row.adoption >= 20 ? 'medium' : 'high'}">${escapeHtml(row.adoption)}%</span>
+          </div>
+          <div class="fluency-progress" aria-label="${escapeHtmlAttr(row.function)} adoption">
+            <span class="fluency-progress-fill" style="width:${Math.max(4, Math.min(100, row.adoption))}%;"></span>
+          </div>
+          <div class="meta-row"><span>${escapeHtml(row.phase)}</span><span>${escapeHtml(row.active)} active / ${escapeHtml(row.seats)} seats</span></div>
+          <p class="footer-note">${escapeHtml(row.signal)}</p>
+        </div>
+      `).join('');
+    }
+
     function renderMetrics(account) {
       ui.metricsGrid.innerHTML = '';
       const metrics = [
@@ -3580,7 +4161,7 @@
 
       const coverageEntries = getSourceCoverageEntries(account);
       const availableCount = coverageEntries.filter(item => item.status === 'available').length;
-      ui.confidenceReason.textContent = `Confidence: ${account.sourceCoverage} · ${availableCount}/${coverageEntries.length} sources covered`;
+      ui.confidenceReason.textContent = getConfidenceReason(account);
 
       ui.bestNextStep.textContent = nextMove.session;
       ui.sessionBody.textContent = nextMove.sessionBody;
@@ -3888,6 +4469,13 @@
       const recommendedResource = getRecommendedResource(account);
       const prismHealth = getPrismHealthContext(account);
       const prismCapture = getPrismCapture(account.name);
+      const healthOverlay = getHealthOverlay(account);
+      const topWorkflows = getTopWorkflows(account);
+      const packagePosture = getPackagePosture(account);
+      const standardPack = getStandardPack(account);
+      const keyContacts = getKeyContacts(account);
+      const taskOwnership = getTaskOwnership(account);
+      const seatDistribution = getSeatDistribution(account);
       const model = {
         product: {
           name: 'Glean Adoption-OS',
@@ -3986,6 +4574,13 @@
             primarySignal: primarySignal.title || 'No primary signal',
             primaryFrictionType: getPrimaryFrictionType(account)
           },
+          account_health_overlay: healthOverlay,
+          top_workflows: topWorkflows,
+          package_posture: packagePosture,
+          standard_pack: standardPack,
+          key_contacts: keyContacts,
+          task_ownership: taskOwnership,
+          seat_distribution: seatDistribution,
           what_could_be: {
             decisionOwner: getDecisionOwner(account),
             strategicAction,
@@ -4092,22 +4687,32 @@
       ui.prismInlineContext.innerHTML = `
         <p><strong>${escapeHtml(account.name)}</strong> · ${escapeHtml(account.business)}</p>
         <div class="pill-row" style="margin-top:12px;">
-          <span class="tool-tag">Phase: ${escapeHtml(phases[account.phase])}</span>
-          <span class="tool-tag">Attention: ${escapeHtml(account.attentionScore)}</span>
-          <span class="tool-tag">Engagement: ${escapeHtml(account.engagement)}</span>
-          <span class="tool-tag">Prism: ${escapeHtml(account.prism.coverage)}</span>
+          <span class="tool-tag">Coverage: ${escapeHtml(account.prism.coverage)}</span>
+          <span class="tool-tag">Refreshed: ${escapeHtml(account.prism.refresh)}</span>
+          <span class="tool-tag">Signals: ${escapeHtml(account.prism.signals)}</span>
+          <span class="tool-tag">Health: ${escapeHtml(account.prism.health)}</span>
         </div>
         <div class="callout" style="margin-top:14px;">
-          <strong>Recommended next move:</strong> ${escapeHtml(account.nextMove.title)}<br>
-          <span>${escapeHtml(account.nextMove.body)}</span>
+          <strong>What Prism says now:</strong> ${escapeHtml(prismHealth.prismHealthSignal)}<br>
+          <span>${escapeHtml(prismHealth.prismRiskPattern)}</span>
+        </div>
+        <div class="grid two" style="margin-top:14px;">
+          <div class="source-card">
+            <span class="eyebrow">Current account read</span>
+            <h4>${escapeHtml(account.nextMove.title)}</h4>
+            <p>${escapeHtml(account.nextMove.body)}</p>
+            <div class="meta-row"><span>Momentum</span><span>${escapeHtml(prismHealth.momentumSinceLastTouch)}</span></div>
+          </div>
+          <div class="source-card">
+            <span class="eyebrow">Best next play</span>
+            <h4>${escapeHtml(prismHealth.recommendedPlayFromHistory)}</h4>
+            <p>${escapeHtml(prismHealth.priorActionOutcome)}</p>
+            <div class="meta-row"><span>Repeated blocker</span><span>${escapeHtml(prismHealth.repeatedBlocker)}</span></div>
+          </div>
         </div>
         <div class="callout" style="margin-top:14px;">
-          <strong>Health input from Prism:</strong> ${escapeHtml(prismHealth.prismHealthSignal)}<br>
-          <span>${escapeHtml(prismHealth.prismRiskPattern)} · ${escapeHtml(prismHealth.healthImpact)}</span>
-        </div>
-        <div class="callout" style="margin-top:14px;">
-          <strong>Recommended asset:</strong> ${escapeHtml(account.asset.title)}<br>
-          <span>${escapeHtml(account.asset.body)}</span>
+          <strong>If Prism were live here, this panel should pull:</strong> coverage, refresh cadence, signal count, health state, health narrative, risk pattern, prior action outcome, repeated blocker, momentum since last touch, and recommended play from history.<br>
+          <span>${escapeHtml(getConfidenceReason(account))}</span>
         </div>
         <div class="source-grid" style="margin-top:14px;">${sources}</div>
       `;
@@ -4222,7 +4827,15 @@
     function renderAll() {
       const account = getAccount();
       renderHero(account);
+      renderHealthOverlay(account);
       renderPhaseBackbone(account);
+      renderTopWorkflows(account);
+      renderPackagePosture(account);
+      renderStandardPack(account);
+      renderTrainingReadiness(account);
+      renderKeyContacts(account);
+      renderTaskOwnership(account);
+      renderSeatDistribution(account);
       renderAttention(account);
       renderNextMove(account);
       renderReleaseSignals(account);
@@ -4595,7 +5208,10 @@
       if (event.target === document.getElementById('assistantOverlay')) closeAssistantOverlay();
     });
 
-    document.getElementById('openPrismBtn').addEventListener('click', openPrismPanel);
+    document.getElementById('openPrismBtn').addEventListener('click', (event) => {
+      event.preventDefault();
+      window.open('https://app.glean.com/prism', '_blank', 'noopener');
+    });
     document.getElementById('closePrismBtn').addEventListener('click', closePrismPanel);
     document.getElementById('savePrismCaptureBtn').addEventListener('click', savePrismCapture);
     document.getElementById('dataModelLink').addEventListener('click', (event) => {
