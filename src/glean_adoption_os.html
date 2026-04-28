@@ -653,6 +653,72 @@
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
+    .health-read-card {
+      border: 1px solid rgba(52,68,255,0.18);
+      border-left: 4px solid var(--glean-blue);
+      border-radius: 16px;
+      padding: 16px;
+      background: rgba(255,255,255,0.84);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .health-read-card h4 {
+      font-size: 20px;
+      line-height: 1.25;
+      margin-bottom: 8px;
+    }
+
+    .health-action-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .health-action-tile {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px;
+      background: rgba(255,255,255,0.78);
+    }
+
+    .health-action-tile strong {
+      display: block;
+      margin: 5px 0;
+      font-size: 15px;
+      line-height: 1.3;
+    }
+
+    .health-driver-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .health-driver {
+      display: grid;
+      grid-template-columns: 28px 1fr auto;
+      gap: 10px;
+      align-items: start;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--glean-white);
+    }
+
+    .driver-rank {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      background: rgba(216,253,73,0.42);
+      color: var(--glean-black);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
     .meta-row {
       justify-content: space-between;
       font-size: 13px;
@@ -1447,6 +1513,7 @@
       .page { padding: 16px; }
       .grid.metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       #clientHealthUsageGrid { grid-template-columns: 1fr; }
+      .health-action-grid, .health-driver { grid-template-columns: 1fr; }
       .hero { padding: 24px; border-radius: 22px; }
       .hero h1 { font-size: 34px; }
       .timeline-item { grid-template-columns: 1fr; gap: 6px; }
@@ -2157,7 +2224,7 @@
               <div class="risk-grid" id="clientHealthUsageGrid"></div>
             </section>
             <section class="metric-card" style="min-height:auto;">
-              <div class="section-kicker">What is worrying</div>
+              <div class="section-kicker">Client health read</div>
               <div class="list" id="clientHealthWorryList"></div>
             </section>
           </div>
@@ -5059,25 +5126,53 @@
         </div>
       `).join('');
 
-      const worryItems = [
-        { title: 'Risk pattern', body: prismHealth.prismRiskPattern, severity: 'high' },
-        { title: 'Repeated blocker', body: prismHealth.repeatedBlocker, severity: 'medium' },
-        { title: 'Health impact', body: prismHealth.healthImpact, severity: getAccountHealthLabel(account).tone === 'risk' ? 'high' : 'medium' },
-        ...account.signals
-          .filter(signal => signal.severity === 'high')
-          .slice(0, 2)
-          .map(signal => ({ title: signal.title, body: signal.body, severity: signal.severity }))
-      ].slice(0, 5);
+      const healthTone = getAccountHealthLabel(account);
+      const severity = healthTone.tone === 'risk' || account.criticalIssues > 0 ? 'high' : healthTone.tone === 'stable' ? 'low' : 'medium';
+      const primarySignal = account.signals.find(signal => signal.severity === 'high') || account.signals[0];
+      const recommendedTool = findToolByTitle(account.tool);
+      const recommendedResource = recommendedTool ? recommendedTool.title : account.tool;
+      const recommendedAsset = account.doc ? account.doc.title : account.asset.title;
+      const driverItems = [
+        { label: 'Pattern', title: 'Risk is repeating', body: prismHealth.prismRiskPattern, severity },
+        { label: 'Blocker', title: 'Blocker needs ownership', body: prismHealth.repeatedBlocker, severity: 'medium' },
+        { label: 'Signal', title: primarySignal.title, body: primarySignal.body, severity: primarySignal.severity }
+      ];
 
-      ui.clientHealthWorryList.innerHTML = worryItems.map(item => `
-        <div class="list-item">
-          <div class="split" style="margin-bottom:8px;">
-            <h4>${escapeHtml(item.title)}</h4>
-            <span class="pill ${escapeHtmlAttr(item.severity)}">${escapeHtml(item.severity)}</span>
+      ui.clientHealthWorryList.innerHTML = `
+        <div class="health-read-card">
+          <div class="split" style="margin-bottom:10px;">
+            <span class="eyebrow">Current read</span>
+            <span class="pill ${escapeHtmlAttr(severity)}">${escapeHtml(severity)}</span>
           </div>
-          <p class="muted">${escapeHtml(item.body)}</p>
+          <h4>${escapeHtml(account.nextMove.title)}</h4>
+          <p class="muted">${escapeHtml(prismHealth.healthImpact)}</p>
+          <div class="health-action-grid">
+            <div class="health-action-tile">
+              <span class="eyebrow">AIOM move</span>
+              <strong>${escapeHtml(account.nextMove.session)}</strong>
+              <p class="muted">${escapeHtml(account.nextMove.sessionBody)}</p>
+            </div>
+            <div class="health-action-tile">
+              <span class="eyebrow">Use this</span>
+              <strong>${escapeHtml(recommendedResource)}</strong>
+              <p class="muted">${escapeHtml(recommendedAsset)}</p>
+            </div>
+          </div>
         </div>
-      `).join('');
+        <div class="health-driver-list">
+          ${driverItems.map((item, index) => `
+            <div class="health-driver">
+              <span class="driver-rank">${index + 1}</span>
+              <div>
+                <span class="eyebrow">${escapeHtml(item.label)}</span>
+                <h4>${escapeHtml(item.title)}</h4>
+                <p class="muted">${escapeHtml(item.body)}</p>
+              </div>
+              <span class="pill ${escapeHtmlAttr(item.severity)}">${escapeHtml(item.severity)}</span>
+            </div>
+          `).join('')}
+        </div>
+      `;
 
       ui.clientHealthSignalsList.innerHTML = '';
       account.signals.forEach(signal => {

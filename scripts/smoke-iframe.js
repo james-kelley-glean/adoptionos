@@ -79,7 +79,8 @@ async function main() {
     await frame.locator('[data-tab="clientHealth"]').click();
     await frame.waitForSelector('#clientHealth.active', { state: 'visible' });
     assert(await frame.locator('#clientHealthUsageGrid .risk-card').count() > 0, 'Client Health did not render usage metrics');
-    assert(await frame.locator('#clientHealthWorryList .list-item').count() > 0, 'Client Health did not render AIOM worry items');
+    assert(await frame.locator('#clientHealthWorryList .health-read-card').count() > 0, 'Client Health did not render the health read');
+    assert(await frame.locator('#clientHealthWorryList .health-driver').count() >= 3, 'Client Health did not render health drivers');
 
     await frame.locator('[data-tab="tools"]').click();
     await frame.waitForSelector('#tools.active', { state: 'visible' });

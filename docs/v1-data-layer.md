@@ -282,6 +282,7 @@ Behavior:
 
 - The AIOM-facing tab should be named `Client Health`, not `Prism`, because the user need is account condition and risk, not the internal source label.
 - Client Health should collapse the former Signals and Prism surfaces into one view: usage metrics, AIOM worry items, account-memory context, signal history, and capture output.
+- The Client Health read should synthesize risk into a decision panel: current read, AIOM move, recommended resource or asset, and the top drivers. It should not render every worry as an equal-priority card.
 - Prism should remain available as a health input and capture destination, but not as the primary visible navigation label.
 - The account view should explain what Prism already tells the AIOM about client health: health signal, risk pattern, prior action outcome, repeated blocker, momentum since last touch, recommended play from history, and expected health impact.
 - Outcome capture should stay session-local inside the artifact. No browser storage APIs, live network calls, iframes, external scripts, or external CSS are allowed.
