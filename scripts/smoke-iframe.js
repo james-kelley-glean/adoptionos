@@ -76,6 +76,11 @@ async function main() {
     assert(injectedImages === 0, 'Manual roster input created an HTML image element');
     assert(escapedPayloadVisible.includes(payload), 'Manual roster input should render as text');
 
+    await frame.locator('[data-tab="clientHealth"]').click();
+    await frame.waitForSelector('#clientHealth.active', { state: 'visible' });
+    assert(await frame.locator('#clientHealthUsageGrid .risk-card').count() > 0, 'Client Health did not render usage metrics');
+    assert(await frame.locator('#clientHealthWorryList .list-item').count() > 0, 'Client Health did not render AIOM worry items');
+
     await frame.locator('[data-tab="tools"]').click();
     await frame.waitForSelector('#tools.active', { state: 'visible' });
     assert(await frame.locator('#toolsGrid .tool-card').count() > 0, 'Tools tab did not render tool cards');

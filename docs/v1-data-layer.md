@@ -280,7 +280,9 @@ Fields:
 
 Behavior:
 
-- Prism should be visible as a health input, not only as a capture destination.
+- The AIOM-facing tab should be named `Client Health`, not `Prism`, because the user need is account condition and risk, not the internal source label.
+- Client Health should collapse the former Signals and Prism surfaces into one view: usage metrics, AIOM worry items, account-memory context, signal history, and capture output.
+- Prism should remain available as a health input and capture destination, but not as the primary visible navigation label.
 - The account view should explain what Prism already tells the AIOM about client health: health signal, risk pattern, prior action outcome, repeated blocker, momentum since last touch, recommended play from history, and expected health impact.
 - Outcome capture should stay session-local inside the artifact. No browser storage APIs, live network calls, iframes, external scripts, or external CSS are allowed.
 
@@ -344,10 +346,21 @@ What it serves: maps the strategic motion to the best Glean agent, skill, tool, 
 
 Required seeded resources:
 
+- AIOM Briefing Report
 - Client Adoption Strategy Chatbot
+- What We Heard Agent
+- Common Client Inquiries Prep
 - Glean Change Briefing Agent
+- Glean Tip Drop Agent
 - Prompt Crafter
+- Custom Prompt Generator for Specific Client
+- Glean Guided: Agent Build Partner
+- Audit My Agent
+- Glean Q&A Bot
+- Joint Success Planning Builder
 - EBR Generator
+- AIOM QBR Deck Creator
+- HackaComms
 - AIOM Account Ramp Companion
 - Meeting Summarizer + Follow Up
 - Optimal Agent Use Case Recommender
@@ -355,6 +368,9 @@ Required seeded resources:
 Behavior:
 
 - Resource mapping should consider motion, Adoption OS phase, primary friction type, target audience, and recommended asset.
+- Each resource card should carry visible metadata for Adoption OS stage, job category, resource type, creator or owner, and status.
+- Category should describe the job the resource serves, such as Account Strategy, Communication, Builder Enablement, Enablement Planning, Governance & Support, Adoption Strategy, or Value Proof.
+- The V1 catalog should stay curated to AIOM adoption motions rather than exposing every internal productivity resource.
 - If a direct Glean URL exists, the CTA should open the resource and prefill or copy client context where supported.
 - Missing direct URLs must degrade to copyable prompt behavior so the AIOM still has an executable next step.
 - Recommended assets should sit next to the Glean resource rather than appearing as a separate generic dashboard widget.

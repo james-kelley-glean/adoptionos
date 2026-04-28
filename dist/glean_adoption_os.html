@@ -649,6 +649,10 @@
 
     .source-grid, .templates-grid, .tools-grid, .risk-grid, .audit-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 
+    #clientHealthUsageGrid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
     .meta-row {
       justify-content: space-between;
       font-size: 13px;
@@ -700,12 +704,21 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
+      max-width: 100%;
       padding: 8px 10px;
       border-radius: 999px;
       background: rgba(216,253,73,0.35);
       color: var(--glean-black);
       font-size: 12px;
       font-weight: 600;
+      line-height: 1.2;
+    }
+
+    .tool-tag span {
+      color: var(--muted);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
     }
 
     .recommend-badge {
@@ -1416,6 +1429,7 @@
     @media screen and (max-width: 1180px) {
       .grid.metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); }
       .grid.two, .grid.three, .grid.four, .source-grid, .templates-grid, .tools-grid, .risk-grid, .audit-grid { grid-template-columns: 1fr; }
+      #clientHealthUsageGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .hero-top { flex-direction: column; }
       .hero-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .account-rail { flex-wrap: wrap; }
@@ -1432,6 +1446,7 @@
     @media screen and (max-width: 760px) {
       .page { padding: 16px; }
       .grid.metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      #clientHealthUsageGrid { grid-template-columns: 1fr; }
       .hero { padding: 24px; border-radius: 22px; }
       .hero h1 { font-size: 34px; }
       .timeline-item { grid-template-columns: 1fr; gap: 6px; }
@@ -1516,8 +1531,7 @@
         <button class="tab active" data-tab="overview">Overview</button>
         <button class="tab" data-tab="templates">Templates</button>
         <button class="tab" data-tab="tools">Tools</button>
-        <button class="tab" data-tab="signals">Signals</button>
-        <button class="tab" data-tab="prism">Prism</button>
+        <button class="tab" data-tab="clientHealth">Client Health</button>
         <button class="tab" data-tab="fluency">AI Fluency</button>
       </nav>
 
@@ -2086,14 +2100,6 @@
         </section>
       </section>
 
-      <section class="tab-panel" id="signals">
-        <section class="surface">
-          <div class="section-kicker">Signal inbox</div>
-          <h2>All signals for this account</h2>
-          <div class="timeline" id="timeline"></div>
-        </section>
-      </section>
-
       <section class="tab-panel" id="portfolio">
         <section class="surface">
           <div class="section-kicker">Who needs me this week</div>
@@ -2135,20 +2141,30 @@
         </section>
       </section>
 
-      <section class="tab-panel" id="prism">
+      <section class="tab-panel" id="clientHealth">
         <section class="surface">
           <div class="split">
             <div>
-              <div class="section-kicker">Prism account health brief</div>
-              <h2>See the Prism health read for this account</h2>
+              <div class="section-kicker">Client health</div>
+              <h2>Usage, risk, and AIOM watch items</h2>
             </div>
             <div class="status blue"><i></i><span>Canvas-safe inline view</span></div>
           </div>
-          <p class="muted">This tab is the focused Prism health brief. It is separate from the overview so AIOMs can quickly see the health narrative, repeated blockers, momentum, and recommended next play without rereading the full workspace.</p>
+          <p class="muted">This tab combines usage metrics, account-memory signals, and current worries so the AIOM can see what is healthy, what is slipping, and what deserves action.</p>
+          <div class="grid two" style="margin-top:16px;">
+            <section class="metric-card" style="min-height:auto;">
+              <div class="section-kicker">Usage metrics</div>
+              <div class="risk-grid" id="clientHealthUsageGrid"></div>
+            </section>
+            <section class="metric-card" style="min-height:auto;">
+              <div class="section-kicker">What is worrying</div>
+              <div class="list" id="clientHealthWorryList"></div>
+            </section>
+          </div>
           <div class="prism-workspace">
             <div class="grid">
               <section class="metric-card" style="min-height:auto;">
-                <div class="section-kicker">Prism briefing card</div>
+                <div class="section-kicker">Health briefing card</div>
                 <div id="prismInlineContext"></div>
               </section>
               <section class="hidden" aria-hidden="true">
@@ -2206,8 +2222,12 @@
               </section>
             </div>
             <section class="metric-card" style="min-height:auto;">
-              <div class="section-kicker">Top signals informing the Prism brief</div>
+              <div class="section-kicker">Top signals informing Client Health</div>
               <div class="list" id="prismInlineSignalList"></div>
+            </section>
+            <section class="metric-card" style="min-height:auto;">
+              <div class="section-kicker">Signal history</div>
+              <div class="timeline" id="clientHealthSignalsList"></div>
             </section>
             <section class="metric-card" style="min-height:auto;">
               <div class="section-kicker">Copy into Prism</div>
@@ -2792,15 +2812,26 @@
     ];
 
     const toolsLibrary = [
-      { title: 'AIOM Account Transition Agent', category: 'Account productivity', owner: 'Karan Gupta', status: 'Completed', value: 'Creates a comprehensive briefing when an AIOM takes over an account.', url: 'https://app.glean.com/chat/agents/17b2d958cb814a7690e514e07e39e188', bestFor: 'Transitions, onboarding, inherited books of business', phases: ['prep', 'stickiness'] },
-      { title: 'Client Adoption Strategy Chatbot', category: 'Customer insights & strategy', owner: 'Carrie Arndt', status: 'Completed', value: 'Answers general or client-specific adoption strategy questions for AIOMs.', url: 'https://app.glean.com/chat/agents/ef9c3c4e22474e08bd5286a32d81607b', bestFor: 'Adoption strategy, workshops, planning', phases: ['prep', 'readiness', 'stickiness'] },
-      { title: 'Glean Change Briefing Agent', category: 'Customer communication & content', owner: 'Mark Christianson', status: 'Completed', value: 'Turns release-note noise into an admin briefing and end-user digest tuned to the customer environment.', url: 'https://app.glean.com/chat/agents/333c00cb6d2d4638acf9b332077dca36', bestFor: 'Admin comms, release change management', phases: ['readiness', 'stickiness', 'scale'] },
-      { title: 'Prompt Crafter', category: 'Prompting & agent design', owner: 'Mark Christianson', status: 'Completed', value: 'Turns plain-language input into a structured prompt or agent-ready system prompt.', url: 'https://app.glean.com/chat/agents/77304e39f3bf4535971235b298aac8c9', bestFor: 'Prompting workshops, business workshops', phases: ['readiness', 'stickiness'] },
-      { title: 'Create an Enablement Plan', category: 'Account productivity', owner: 'Harshit Kohli', status: 'Completed', value: 'Generates a comprehensive enablement plan for a new customer.', url: '', bestFor: 'New accounts, enablement planning', phases: ['prep', 'readiness'] },
-      { title: 'AIOM Account Ramp Companion', category: 'Account productivity', owner: 'AIOM team', status: 'Prompt fallback', value: 'Creates a fast account ramp brief when source coverage is thin or ownership just changed.', url: '', prompt: 'Act as the AIOM Account Ramp Companion for [Customer]. Build a concise ramp brief with known context, missing sources, decision owner, target audience, current friction, recommended next step, and what I should capture in Prism.', bestFor: 'Account ramp, sparse context, ownership changes', phases: ['prep', 'stickiness'] },
-      { title: 'Meeting Summarizer + Follow Up', category: 'Customer communication & content', owner: 'AIOM team', status: 'Prompt fallback', value: 'Turns a customer or internal meeting into decisions, blockers, owner/date commitments, and follow-up copy.', url: 'https://app.glean.com/chat/agents/29d02c233ef140758cd4b42e98bad2c6', prompt: 'Use Meeting Summarizer + Follow Up behavior for [Customer]. Summarize decisions, blockers, commitments, owners, dates, follow-up message, and Prism capture notes from the latest meeting context.', bestFor: 'Planning resets, blocker triage, customer follow-up', phases: ['prep', 'readiness', 'stickiness'] },
-      { title: 'Optimal Agent Use Case Recommender', category: 'Prompting & agent design', owner: 'AIOM team', status: 'Prompt fallback', value: 'Recommends the most realistic agent or skill use case based on user workflows, adoption friction, and available champions.', url: 'https://app.glean.com/chat/agents/5c30a82810aa4b6eaed920bd49f97e08', prompt: 'Act as the Optimal Agent Use Case Recommender for [Customer]. Identify the highest-fit agent or skill use case, target function, enabling prompt, adoption friction, rollout path, and Prism capture note.', bestFor: 'Agent use cases, workflow transformation, champion motions', phases: ['stickiness', 'scale'] },
-      { title: 'EBR Generator', category: 'Executive reviews', owner: 'Leigh Whittaker Coleman', status: 'Skill', value: 'Builds an EBR deck end-to-end so AIOMs can generate polished reviews much faster.', url: 'https://app.glean.com/library/1d5124153e8c4312a011138257888aec', prompt: 'Use my glean-ebr-generator skill. The customer is [Customer].', bestFor: 'EBRs, executive readouts, showcasing value', phases: ['stickiness', 'scale', 'readiness'] }
+      { title: 'AIOM Briefing Report', category: 'Customer insights & strategy', job: 'Account Strategy', resourceType: 'Agent', owner: 'Carrie Arndt', status: 'Completed', value: 'Creates a briefing report from account context so an AIOM can prepare before the customer motion.', url: 'https://app.glean.com/chat/agents/3a000eca5e9a4dcdbe16076897674969', bestFor: 'Preparation, account briefing, internal alignment', phases: ['prep'] },
+      { title: 'AIOM Account Transition Agent', category: 'Account productivity', job: 'Account Strategy', resourceType: 'Agent', owner: 'Karan Gupta', status: 'Completed', value: 'Creates a comprehensive briefing when an AIOM takes over an account.', url: 'https://app.glean.com/chat/agents/17b2d958cb814a7690e514e07e39e188', bestFor: 'Transitions, onboarding, inherited books of business', phases: ['prep', 'stickiness'] },
+      { title: 'AIOM Account Ramp Companion', category: 'Account productivity', job: 'Account Strategy', resourceType: 'Agent', owner: 'Sam Coulson', status: 'Completed', value: 'Creates a fast account ramp brief when source coverage is thin or ownership just changed.', url: 'https://app.glean.com/chat/agents/28adcd2970c54682b3eb295365701c5d', prompt: 'Act as the AIOM Account Ramp Companion for [Customer]. Build a concise ramp brief with known context, missing sources, decision owner, target audience, current friction, recommended next step, and what I should capture in Client Health.', bestFor: 'Account ramp, sparse context, ownership changes', phases: ['prep', 'stickiness'] },
+      { title: 'Client Adoption Strategy Chatbot', category: 'Customer insights & strategy', job: 'Adoption Strategy', resourceType: 'Agent', owner: 'Carrie Arndt', status: 'Completed', value: 'Answers general or client-specific adoption strategy questions for AIOMs.', url: 'https://app.glean.com/chat/agents/ef9c3c4e22474e08bd5286a32d81607b', bestFor: 'Adoption strategy, workshops, planning', phases: ['prep', 'readiness', 'stickiness'] },
+      { title: 'What We Heard Agent', category: 'Customer communication & content', job: 'Communication', resourceType: 'Agent', owner: 'Ken Cavanagh', status: 'Completed', value: 'Turns customer discovery or planning notes into a clean what-we-heard narrative for enablement planning.', url: 'https://app.glean.com/chat/agents/3385428f65c54c94a8da40aa0a8243f3', bestFor: 'Discovery readouts, enablement planning, customer alignment', phases: ['prep', 'readiness'] },
+      { title: 'Common Client Inquiries Prep', category: 'Customer communication & content', job: 'Communication', resourceType: 'Agent', owner: 'Carrie Arndt', status: 'Completed', value: 'Prepares clear answers for common customer questions before meetings, launches, or stakeholder follow-ups.', url: 'https://app.glean.com/chat/agents/8209700fdcfc425e9e1fb20aba304a51', bestFor: 'Meeting prep, customer questions, launch readiness', phases: ['prep', 'readiness'] },
+      { title: 'Meeting Summarizer + Follow Up', category: 'Customer communication & content', job: 'Communication', resourceType: 'Agent', owner: 'AnhThu Vuong', status: 'In progress', value: 'Turns a customer or internal meeting into decisions, blockers, owner/date commitments, and follow-up copy.', url: 'https://app.glean.com/chat/agents/29d02c233ef140758cd4b42e98bad2c6', prompt: 'Use Meeting Summarizer + Follow Up behavior for [Customer]. Summarize decisions, blockers, commitments, owners, dates, follow-up message, and Client Health capture notes from the latest meeting context.', bestFor: 'Planning resets, blocker triage, customer follow-up', phases: ['prep', 'readiness', 'stickiness'] },
+      { title: 'Glean Change Briefing Agent', category: 'Customer communication & content', job: 'Communication', resourceType: 'Agent', owner: 'Mark Christianson', status: 'Completed', value: 'Turns release-note noise into an admin briefing and end-user digest tuned to the customer environment.', url: 'https://app.glean.com/chat/agents/333c00cb6d2d4638acf9b332077dca36', bestFor: 'Admin comms, release change management', phases: ['readiness', 'stickiness', 'scale'] },
+      { title: 'Glean Tip Drop Agent', category: 'Customer communication & content', job: 'Communication', resourceType: 'Agent', owner: 'Mark Christianson', status: 'Completed', value: 'Creates lightweight tips and nudges that keep end users practicing useful Glean behaviors after launch.', url: 'https://app.glean.com/chat/agents/6dcfc936d39641cfa468183fe8c3d753', bestFor: 'End-user nudges, habit building, adoption reminders', phases: ['readiness', 'stickiness'] },
+      { title: 'Create an Enablement Plan', category: 'Account productivity', job: 'Enablement Planning', resourceType: 'Prompt fallback', owner: 'Harshit Kohli', status: 'Completed', value: 'Generates a comprehensive enablement plan for a new customer.', url: '', bestFor: 'New accounts, enablement planning', phases: ['prep', 'readiness'] },
+      { title: 'Prompt Crafter', category: 'Prompting & agent design', job: 'Builder Enablement', resourceType: 'Agent', owner: 'Mark Christianson', status: 'Completed', value: 'Turns plain-language input into a structured prompt or agent-ready system prompt.', url: 'https://app.glean.com/chat/agents/77304e39f3bf4535971235b298aac8c9', bestFor: 'Prompting workshops, business workshops', phases: ['readiness', 'stickiness'] },
+      { title: 'Custom Prompt Generator for Specific Client', category: 'Prompting & agent design', job: 'Builder Enablement', resourceType: 'Agent', owner: 'Carrie Arndt', status: 'Completed', value: 'Creates client-specific prompts that turn generic enablement into a realistic workflow habit.', url: 'https://app.glean.com/chat/agents/471f61f61b304dc4b56037966a9414d5', bestFor: 'Client-specific prompts, workshops, workflow examples', phases: ['stickiness'] },
+      { title: 'Glean Guided: Agent Build Partner', category: 'Prompting & agent design', job: 'Builder Enablement', resourceType: 'Agent', owner: 'Mark Christianson', status: 'Completed', value: 'Guides builders through agent design decisions so the use case is structured before build work begins.', url: 'https://app.glean.com/chat/agents/a183e4a5e64b46acb4c596df2122e1f4', bestFor: 'Agent building, creator coaching, use-case structure', phases: ['stickiness'] },
+      { title: 'Optimal Agent Use Case Recommender', category: 'Prompting & agent design', job: 'Builder Enablement', resourceType: 'Agent', owner: 'Carrie Arndt', status: 'Completed', value: 'Recommends the most realistic agent or skill use case based on user workflows, adoption friction, and available champions.', url: 'https://app.glean.com/chat/agents/5c30a82810aa4b6eaed920bd49f97e08', prompt: 'Act as the Optimal Agent Use Case Recommender for [Customer]. Identify the highest-fit agent or skill use case, target function, enabling prompt, adoption friction, rollout path, and Client Health capture note.', bestFor: 'Agent use cases, workflow transformation, champion motions', phases: ['stickiness', 'scale'] },
+      { title: 'Audit My Agent', category: 'Prompting & agent design', job: 'Governance & Support', resourceType: 'Agent', owner: 'Sam Coulson', status: 'Completed', value: 'Reviews an agent for quality, clarity, and adoption readiness before it becomes part of a customer motion.', url: 'https://app.glean.com/chat/agents/e50173611e124a7ca04c07a048c29e41', bestFor: 'Agent QA, governance, builder coaching', phases: ['stickiness', 'scale'] },
+      { title: 'Glean Q&A Bot', category: 'Account productivity', job: 'Governance & Support', resourceType: 'Agent', owner: 'Carrie Arndt', status: 'Completed', value: 'Supports AIOMs with Glean questions so customer responses are faster and more consistent.', url: 'https://app.glean.com/chat/agents/06831dfece0645f6b168f5667e787fc8', bestFor: 'Support questions, fast answers, internal enablement', phases: ['readiness', 'scale'] },
+      { title: 'Joint Success Planning Builder', category: 'Account productivity', job: 'Value Proof', resourceType: 'Agent', owner: 'Ken Cavanagh', status: 'Completed', value: 'Builds a joint success planning motion that connects adoption work to measurable outcomes.', url: 'https://app.glean.com/chat/agents/9529f2ec47264a2da56fea36aa38d906', bestFor: 'Success planning, outcome alignment, executive commitments', phases: ['prep', 'scale'] },
+      { title: 'EBR Generator', category: 'Executive reviews', job: 'Value Proof', resourceType: 'Skill', owner: 'Leigh Whittaker Coleman', status: 'Completed', value: 'Builds an EBR deck end-to-end so AIOMs can generate polished reviews much faster.', url: 'https://app.glean.com/library/1d5124153e8c4312a011138257888aec', prompt: 'Use my glean-ebr-generator skill. The customer is [Customer].', bestFor: 'EBRs, executive readouts, showcasing value', phases: ['stickiness', 'scale', 'readiness'] },
+      { title: 'AIOM QBR Deck Creator', category: 'Customer insights & strategy', job: 'Value Proof', resourceType: 'Agent', owner: 'Gustav Bergman', status: 'Completed', value: 'Creates a QBR-style deck to package adoption evidence, recommendations, and executive narrative.', url: 'https://app.glean.com/chat/agents/df5259c63d9d4a09a41de1dee77472d5', bestFor: 'QBRs, executive proof, account reviews', phases: ['scale'] },
+      { title: 'HackaComms', category: 'Customer communication & content', job: 'Communication', resourceType: 'Agent', owner: 'Leigh Whittaker Coleman', status: 'Completed', value: 'Packages hackathon or activation communications so program moments are easier to promote and sustain.', url: 'https://app.glean.com/chat/agents/894b6961595141c482e26f372ac37992', bestFor: 'Hackathons, activation campaigns, participant comms', phases: ['scale'] }
     ];
 
     const resourceCatalog = [
@@ -3747,7 +3778,9 @@
       templateCountLabel: document.getElementById('templateCountLabel'),
       toolsGrid: document.getElementById('toolsGrid'),
       toolCountLabel: document.getElementById('toolCountLabel'),
-      timeline: document.getElementById('timeline'),
+      clientHealthUsageGrid: document.getElementById('clientHealthUsageGrid'),
+      clientHealthWorryList: document.getElementById('clientHealthWorryList'),
+      clientHealthSignalsList: document.getElementById('clientHealthSignalsList'),
       rosterSourceStatus: document.getElementById('rosterSourceStatus'),
       rosterClientList: document.getElementById('rosterClientList'),
       rosterStatus: document.getElementById('rosterStatus'),
@@ -4946,6 +4979,21 @@
       });
     }
 
+    function renderToolTag(label, value) {
+      return `<span class="tool-tag"><span>${escapeHtml(label)}</span>${escapeHtml(value)}</span>`;
+    }
+
+    function renderToolTags(tool) {
+      const phaseLabels = tool.phases.map(phase => phases[phase] || phase).join(', ');
+      return [
+        renderToolTag('Stage', phaseLabels),
+        renderToolTag('Category', tool.job || tool.category),
+        renderToolTag('Type', tool.resourceType || tool.status),
+        renderToolTag('Creator', tool.owner),
+        renderToolTag('Status', tool.status)
+      ].join('');
+    }
+
     function renderTools(account) {
       const phase = localState.activePhaseFilter === 'all' ? null : localState.activePhaseFilter;
       const items = phase ? toolsLibrary.filter(tool => tool.phases.includes(phase)) : toolsLibrary;
@@ -4961,7 +5009,7 @@
           <span class="eyebrow">${escapeHtml(tool.category)}</span>
           <h4>${escapeHtml(tool.title)}</h4>
           <p>${escapeHtml(tool.value)}</p>
-          <div class="meta-row"><span>${escapeHtml(tool.owner)}</span><span>${escapeHtml(tool.status)}</span></div>
+          <div class="pill-row">${renderToolTags(tool)}</div>
           <p class="footer-note"><strong>Best for:</strong> ${escapeHtml(tool.bestFor)}</p>
           <p class="footer-note"><strong>Launch mode:</strong> ${escapeHtml(launchMeta.short)}</p>
           <p class="footer-note">${escapeHtml(launchMeta.detail)}</p>
@@ -4971,8 +5019,65 @@
       });
     }
 
-    function renderSignals(account) {
-      ui.timeline.innerHTML = '';
+    function renderClientHealth(account) {
+      const prismHealth = getPrismHealthContext(account);
+      const usageMetrics = [
+        {
+          title: 'Assistant usage',
+          value: `${account.assistant.wau} WAU`,
+          body: `${account.assistant.health} · ${account.assistant.trend} trend`,
+          severity: account.assistant.health === 'Healthy' ? 'low' : account.assistant.health === 'Watch' ? 'medium' : 'high'
+        },
+        {
+          title: 'Agent usage',
+          value: `${account.agents.wau} WAU`,
+          body: `${account.agents.runs} runs · ${account.agents.health}`,
+          severity: account.agents.health === 'Healthy' ? 'low' : account.agents.health === 'Building' ? 'medium' : 'high'
+        },
+        {
+          title: 'Engagement',
+          value: account.engagement,
+          body: `${account.openIssues} open issues · ${account.criticalIssues} critical`,
+          severity: account.engagement === 'Strong' ? 'low' : account.engagement === 'At risk' ? 'high' : 'medium'
+        },
+        {
+          title: 'Commercial pressure',
+          value: account.compRisk,
+          body: `${account.hoursRemainingLabel} · ${account.packageType || 'Package context pending'}`,
+          severity: account.compRisk === 'Low' ? 'low' : account.compRisk === 'High' ? 'high' : 'medium'
+        }
+      ];
+
+      ui.clientHealthUsageGrid.innerHTML = usageMetrics.map(metric => `
+        <div class="risk-card">
+          <span class="eyebrow">${escapeHtml(metric.title)}</span>
+          <h4>${escapeHtml(metric.value)}</h4>
+          <p>${escapeHtml(metric.body)}</p>
+          <span class="pill ${escapeHtmlAttr(metric.severity)}">${escapeHtml(metric.severity)}</span>
+        </div>
+      `).join('');
+
+      const worryItems = [
+        { title: 'Risk pattern', body: prismHealth.prismRiskPattern, severity: 'high' },
+        { title: 'Repeated blocker', body: prismHealth.repeatedBlocker, severity: 'medium' },
+        { title: 'Health impact', body: prismHealth.healthImpact, severity: getAccountHealthLabel(account).tone === 'risk' ? 'high' : 'medium' },
+        ...account.signals
+          .filter(signal => signal.severity === 'high')
+          .slice(0, 2)
+          .map(signal => ({ title: signal.title, body: signal.body, severity: signal.severity }))
+      ].slice(0, 5);
+
+      ui.clientHealthWorryList.innerHTML = worryItems.map(item => `
+        <div class="list-item">
+          <div class="split" style="margin-bottom:8px;">
+            <h4>${escapeHtml(item.title)}</h4>
+            <span class="pill ${escapeHtmlAttr(item.severity)}">${escapeHtml(item.severity)}</span>
+          </div>
+          <p class="muted">${escapeHtml(item.body)}</p>
+        </div>
+      `).join('');
+
+      ui.clientHealthSignalsList.innerHTML = '';
       account.signals.forEach(signal => {
         const row = document.createElement('div');
         row.className = 'timeline-item';
@@ -4986,9 +5091,8 @@
             <p class="muted">${escapeHtml(signal.body)}</p>
           </div>
         `;
-        ui.timeline.appendChild(row);
+        ui.clientHealthSignalsList.appendChild(row);
       });
-
     }
 
     function renderRosterVerification() {
@@ -5471,7 +5575,7 @@
       renderPlatformHealth(account);
       renderTemplates();
       renderTools(account);
-      renderSignals(account);
+      renderClientHealth(account);
       renderRosterVerification();
       renderPortfolio();
       renderWidgetAudit();
