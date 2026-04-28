@@ -50,11 +50,15 @@ async function main() {
     await frame.waitForSelector('#portfolioTableBody tr', { state: 'attached', timeout: 60_000 });
 
     await frame.waitForSelector('#strategicActionPanel', { state: 'visible' });
+    await frame.waitForSelector('#overviewFollowupPanel', { state: 'visible' });
+    assert(await frame.locator('#phaseBackbonePanel').isHidden(), 'Phase backbone should be tucked behind operating context by default');
+    await frame.locator('#overviewSecondaryDetails > summary').click();
     await frame.waitForSelector('#phaseBackbonePanel', { state: 'visible' });
     assert(await frame.locator('.tab.active').textContent() === 'Overview', 'Overview tab should render first');
 
-    await frame.locator('[data-tab="portfolio"]').click();
+    await frame.locator('#clientSelect').selectOption('__portfolio__');
     await frame.waitForSelector('#portfolio.active', { state: 'visible' });
+    assert(await frame.locator('#clientSelect option:checked').textContent() === 'My Portfolio', 'Portfolio should open from account dropdown');
 
     await frame.locator('#rosterClientList input[type="checkbox"]').first().check();
     await frame.locator('#confirmRosterBtn').click();

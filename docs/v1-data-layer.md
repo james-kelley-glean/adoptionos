@@ -221,6 +221,17 @@ Behavior:
 - Details on demand should preserve source states such as `live`, `sample`, `inferred`, `missing`, and `stale`.
 - Live launch should treat Sigma / BigQuery usage metrics as the quantitative baseline while cross-checking qualitative signals from Prism, Slack, meetings, support, email, docs, and CRM.
 
+### 3B. Overview Simplification Rule
+
+What it serves: keeps the Overview usable for an AIOM who needs to decide what to do next, not audit every available account signal at once.
+
+Behavior:
+
+- The default Overview should operate as an AIOM command center.
+- The always-visible path should stay limited to the strategic action, recommendation evidence, account plan spine, and follow-up split.
+- More operating context must remain available progressively for phase lanes, workflows, package posture, training readiness, contacts, tasks, sources, and platform health.
+- Supporting detail should not be removed; it should be tucked behind progressive disclosure unless it changes the immediate action.
+
 ### 4. Capacity And Commercial Context
 
 What it serves: what the AIOM can realistically do and how urgent the motion is.

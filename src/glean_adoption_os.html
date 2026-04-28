@@ -484,6 +484,27 @@
       backdrop-filter: blur(16px);
     }
 
+    .overview-secondary-details {
+      margin-top: 18px;
+    }
+
+    .overview-secondary-summary {
+      cursor: pointer;
+      list-style: none;
+    }
+
+    .overview-secondary-summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .overview-secondary-summary h2 {
+      margin-bottom: 6px;
+    }
+
+    .overview-secondary-content {
+      margin-top: 18px;
+    }
+
     .surface h2 {
       color: var(--glean-blue);
       font-size: 28px;
@@ -1496,7 +1517,6 @@
         <button class="tab" data-tab="templates">Templates</button>
         <button class="tab" data-tab="tools">Tools</button>
         <button class="tab" data-tab="signals">Signals</button>
-        <button class="tab" data-tab="portfolio">Portfolio</button>
         <button class="tab" data-tab="prism">Prism</button>
         <button class="tab" data-tab="fluency">AI Fluency</button>
       </nav>
@@ -1511,42 +1531,6 @@
       </div>
 
       <section class="tab-panel active" id="overview">
-        <section class="surface" id="accountHealthOverlayPanel">
-          <div class="split">
-            <div>
-              <div class="section-kicker">Account health overlay</div>
-              <h2 id="accountHealthOverlayTitle">Overall account health</h2>
-            </div>
-            <div class="status blue"><i></i><span id="accountHealthOverlayStatus">Health overlay</span></div>
-          </div>
-          <p class="muted" id="accountHealthOverlayBody"></p>
-          <div class="grid three" style="margin-top:16px;">
-            <div class="metric-card" style="min-height:auto;">
-              <div class="eyebrow">Trend</div>
-              <div class="metric-sub" id="accountHealthTrend"></div>
-            </div>
-            <div class="metric-card" style="min-height:auto;">
-              <div class="eyebrow">Confidence</div>
-              <div class="metric-sub" id="accountHealthConfidence"></div>
-            </div>
-            <div class="metric-card" style="min-height:auto;">
-              <div class="eyebrow">Package pressure</div>
-              <div class="metric-sub" id="accountHealthPackagePressure"></div>
-            </div>
-          </div>
-          <div class="grid two" style="margin-top:16px;">
-            <div class="metric-card" style="min-height:auto;">
-              <div class="eyebrow">Top risk driver</div>
-              <div class="metric-sub" id="accountHealthRiskDriver"></div>
-            </div>
-            <div class="metric-card" style="min-height:auto;">
-              <div class="eyebrow">Top opportunity driver</div>
-              <div class="metric-sub" id="accountHealthOpportunityDriver"></div>
-            </div>
-          </div>
-          <p class="footer-note">This is a prioritization overlay. It helps the AIOM quickly understand account condition without replacing the phase-by-function operating model below.</p>
-        </section>
-
         <section class="surface recommendation-card" id="strategicActionPanel">
           <div class="section-kicker">Action stack</div>
           <h2 id="strategicAction">What the AIOM should do now</h2>
@@ -1707,6 +1691,75 @@
             </div>
           </div>
           <p class="footer-note">Sample account plan data is acceptable for local shaping. Launch requires live accountSnapshot assembly upstream from Glean-accessible sources before this artifact is placed in production.</p>
+        </section>
+
+        <section class="surface" id="overviewFollowupPanel">
+          <div class="split">
+            <div>
+              <div class="section-kicker">AIOM command center</div>
+              <h2>What needs follow-up</h2>
+            </div>
+            <div class="status orange"><i></i><span id="overviewFollowupStatus">Action split</span></div>
+          </div>
+          <p class="muted">A short handoff from the operating model: what Glean owns, what the client owes, and what is currently waiting.</p>
+          <div class="grid three" style="margin-top:16px;">
+            <div class="metric-card" style="min-height:auto;">
+              <div class="eyebrow">AIOM owns</div>
+              <div class="metric-sub" id="overviewAiomFollowup"></div>
+            </div>
+            <div class="metric-card" style="min-height:auto;">
+              <div class="eyebrow">Client owes</div>
+              <div class="metric-sub" id="overviewClientFollowup"></div>
+            </div>
+            <div class="metric-card" style="min-height:auto;">
+              <div class="eyebrow">Waiting on</div>
+              <div class="metric-sub" id="overviewWaitingFollowup"></div>
+            </div>
+          </div>
+        </section>
+
+        <details class="overview-secondary-details" id="overviewSecondaryDetails">
+          <summary class="surface overview-secondary-summary">
+            <div class="section-kicker">More operating context</div>
+            <h2>Open supporting detail</h2>
+            <p class="muted">Phase lanes, workflow posture, package reality, training readiness, contacts, task ownership, sources, and platform health stay available when the AIOM needs to go deeper.</p>
+          </summary>
+          <div class="overview-secondary-content">
+
+        <section class="surface" id="accountHealthOverlayPanel">
+          <div class="split">
+            <div>
+              <div class="section-kicker">Account health overlay</div>
+              <h2 id="accountHealthOverlayTitle">Overall account health</h2>
+            </div>
+            <div class="status blue"><i></i><span id="accountHealthOverlayStatus">Health overlay</span></div>
+          </div>
+          <p class="muted" id="accountHealthOverlayBody"></p>
+          <div class="grid three" style="margin-top:16px;">
+            <div class="metric-card" style="min-height:auto;">
+              <div class="eyebrow">Trend</div>
+              <div class="metric-sub" id="accountHealthTrend"></div>
+            </div>
+            <div class="metric-card" style="min-height:auto;">
+              <div class="eyebrow">Confidence</div>
+              <div class="metric-sub" id="accountHealthConfidence"></div>
+            </div>
+            <div class="metric-card" style="min-height:auto;">
+              <div class="eyebrow">Package pressure</div>
+              <div class="metric-sub" id="accountHealthPackagePressure"></div>
+            </div>
+          </div>
+          <div class="grid two" style="margin-top:16px;">
+            <div class="metric-card" style="min-height:auto;">
+              <div class="eyebrow">Top risk driver</div>
+              <div class="metric-sub" id="accountHealthRiskDriver"></div>
+            </div>
+            <div class="metric-card" style="min-height:auto;">
+              <div class="eyebrow">Top opportunity driver</div>
+              <div class="metric-sub" id="accountHealthOpportunityDriver"></div>
+            </div>
+          </div>
+          <p class="footer-note">This is a prioritization overlay. It helps the AIOM quickly understand account condition without replacing the phase-by-function operating model below.</p>
         </section>
 
         <section class="surface" id="phaseBackbonePanel">
@@ -2000,6 +2053,9 @@
           </section>
         </div>
 
+          </div>
+        </details>
+
       </section>
 
       <section class="tab-panel" id="templates">
@@ -2031,89 +2087,52 @@
       </section>
 
       <section class="tab-panel" id="signals">
-        <div class="grid two">
-          <section class="surface">
-            <div class="section-kicker">Signal inbox</div>
-            <h2>All signals for this account</h2>
-            <div class="timeline" id="timeline"></div>
-          </section>
-
-          <section class="surface">
-            <div class="section-kicker">Signal-to-action framework</div>
-            <h2>How the workspace decides</h2>
-            <div class="signal-list" id="signalsList"></div>
-          </section>
-        </div>
+        <section class="surface">
+          <div class="section-kicker">Signal inbox</div>
+          <h2>All signals for this account</h2>
+          <div class="timeline" id="timeline"></div>
+        </section>
       </section>
 
       <section class="tab-panel" id="portfolio">
-        <div class="grid two">
-          <section class="surface">
-            <div class="section-kicker">Who needs me this week</div>
-            <h2>Portfolio ranking</h2>
-            <div class="roster-panel" id="rosterVerificationPanel">
-              <div class="split">
-                <div>
-                  <p class="muted">Confirm the suggested client roster before portfolio intelligence loads.</p>
-                  <p class="footer-note" id="rosterSourceStatus"></p>
-                </div>
-                <div class="button-row">
-                  <button class="secondary" id="selectAllRosterBtn">Verify all suggested</button>
-                  <button class="primary" id="confirmRosterBtn">Confirm selected roster</button>
-                </div>
+        <section class="surface">
+          <div class="section-kicker">Who needs me this week</div>
+          <h2>Portfolio ranking</h2>
+          <div class="roster-panel" id="rosterVerificationPanel">
+            <div class="split">
+              <div>
+                <p class="muted">Confirm the suggested client roster before portfolio intelligence loads.</p>
+                <p class="footer-note" id="rosterSourceStatus"></p>
               </div>
-              <div class="roster-list" id="rosterClientList"></div>
-              <div class="roster-add-row">
-                <input class="roster-input" id="missingClientInput" type="text" placeholder="Add missing client" aria-label="Add missing client" />
-                <button class="buttonlike" id="addMissingClientBtn">Add client</button>
-              </div>
-              <p class="footer-note" id="rosterStatus"></p>
-            </div>
-            <table class="portfolio-table">
-              <thead>
-                <tr>
-                  <th>Rank</th>
-                  <th>Account</th>
-                  <th>Attention</th>
-                  <th>Phase</th>
-                  <th>Engagement</th>
-                  <th>Comp risk</th>
-                  <th>Hours left</th>
-                  <th>Aggregation</th>
-                  <th>Next move</th>
-                </tr>
-              </thead>
-              <tbody id="portfolioTableBody"></tbody>
-            </table>
-          </section>
-
-          <section class="surface">
-            <div class="section-kicker">Operating model</div>
-            <h2>What this version now does</h2>
-            <div class="list">
-              <div class="list-item">
-                <span class="eyebrow">1</span>
-                <h4>Keeps the AIOM-friendly dashboard</h4>
-                <p>The primary workflow stays human-readable and action-oriented: what changed, what matters, what to do next, and what asset or tool to use.</p>
-              </div>
-              <div class="list-item">
-                <span class="eyebrow">2</span>
-                <h4>Updates the data pipeline underneath</h4>
-                <p>Assistant health, Agent health, Prism-derived knowledge, and widget maturity are now part of the underlying model instead of requiring a separate dashboard experience.</p>
-              </div>
-              <div class="list-item">
-                <span class="eyebrow">3</span>
-                <h4>Keeps model + QA secondary</h4>
-                <p>The raw model and widget audit are still available for PM, Eng, and QA, but they no longer sit in the main AIOM workflow.</p>
-              </div>
-              <div class="list-item">
-                <span class="eyebrow">4</span>
-                <h4>Expands the portfolio again</h4>
-                <p>The toolbar and portfolio now use the fuller client set so the dashboard feels like a true operating surface rather than a narrowed demo.</p>
+              <div class="button-row">
+                <button class="secondary" id="selectAllRosterBtn">Verify all suggested</button>
+                <button class="primary" id="confirmRosterBtn">Confirm selected roster</button>
               </div>
             </div>
-          </section>
-        </div>
+            <div class="roster-list" id="rosterClientList"></div>
+            <div class="roster-add-row">
+              <input class="roster-input" id="missingClientInput" type="text" placeholder="Add missing client" aria-label="Add missing client" />
+              <button class="buttonlike" id="addMissingClientBtn">Add client</button>
+            </div>
+            <p class="footer-note" id="rosterStatus"></p>
+          </div>
+          <table class="portfolio-table">
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Account</th>
+                <th>Attention</th>
+                <th>Phase</th>
+                <th>Engagement</th>
+                <th>Comp risk</th>
+                <th>Hours left</th>
+                <th>Aggregation</th>
+                <th>Next move</th>
+              </tr>
+            </thead>
+            <tbody id="portfolioTableBody"></tbody>
+          </table>
+        </section>
       </section>
 
       <section class="tab-panel" id="prism">
@@ -2660,6 +2679,8 @@
   <div class="toast" id="toast"></div>
 
   <script>
+    const PORTFOLIO_SELECT_VALUE = '__portfolio__';
+
     const phases = {
       prep: 'Preparation, Strategy & Planning',
       readiness: 'Build Awareness & Readiness',
@@ -2790,14 +2811,6 @@
       { motion: 'use_case_selection', title: 'Optimal Agent Use Case Recommender', asset: 'Agent use-case recommendation', frictionTypes: ['low_engagement', 'power_user_due'], phases: ['stickiness', 'scale'], when: 'Use when the next adoption move should become a concrete agent, skill, or workflow habit.' },
       { motion: 'value_review', title: 'EBR Generator', asset: 'Executive review pack', frictionTypes: ['qbr_due', 'low_engagement'], phases: ['readiness', 'stickiness', 'scale'], when: 'Use when the account needs executive value proof and a sharper commercial narrative.' },
       { motion: 'prompt_workshop', title: 'Prompt Crafter', asset: 'Business-relevance one-pager', frictionTypes: ['low_engagement'], phases: ['stickiness'], when: 'Use when the next move is practical workflow prompting or business-user habit support.' }
-    ];
-
-    const signalDecisionGuide = [
-      { title: 'Support noise + unresolved blockers', body: 'Prioritize planning reset, issue triage, customer communication, and a clear owner/date path before doing broader enablement.' },
-      { title: 'Release landing soon + affected workflows', body: 'Trigger admin comms, short enablement refreshers, optional office hours, and a lightweight video before confusion shows up.' },
-      { title: 'Post-launch + low engagement', body: 'Move into next-steps strategy, business workshops, and champion/use-case motions rather than generic follow-up meetings.' },
-      { title: 'Large account + stale executive touch', body: 'Escalate toward a QBR / EBR or planning session before value narratives decay and commercial risk compounds.' },
-      { title: 'High-value account + weak governance', body: 'Push governance and ownership before long-term quality and reinforcement drift.' }
     ];
 
     const widgetAudit = [
@@ -3681,6 +3694,10 @@
       taskOwnershipSummary: document.getElementById('taskOwnershipSummary'),
       taskOwnershipStatus: document.getElementById('taskOwnershipStatus'),
       taskOwnershipList: document.getElementById('taskOwnershipList'),
+      overviewFollowupStatus: document.getElementById('overviewFollowupStatus'),
+      overviewAiomFollowup: document.getElementById('overviewAiomFollowup'),
+      overviewClientFollowup: document.getElementById('overviewClientFollowup'),
+      overviewWaitingFollowup: document.getElementById('overviewWaitingFollowup'),
       seatDistributionSummary: document.getElementById('seatDistributionSummary'),
       seatDistributionStatus: document.getElementById('seatDistributionStatus'),
       seatDistributionList: document.getElementById('seatDistributionList'),
@@ -3731,7 +3748,6 @@
       toolsGrid: document.getElementById('toolsGrid'),
       toolCountLabel: document.getElementById('toolCountLabel'),
       timeline: document.getElementById('timeline'),
-      signalsList: document.getElementById('signalsList'),
       rosterSourceStatus: document.getElementById('rosterSourceStatus'),
       rosterClientList: document.getElementById('rosterClientList'),
       rosterStatus: document.getElementById('rosterStatus'),
@@ -3871,6 +3887,10 @@
     function populateClientSelect() {
       const accountNames = localState.rosterVerification.confirmed ? getVerifiedRosterNames() : Object.keys(accounts);
       ui.clientSelect.innerHTML = '';
+      const portfolioOption = document.createElement('option');
+      portfolioOption.value = PORTFOLIO_SELECT_VALUE;
+      portfolioOption.textContent = 'My Portfolio';
+      ui.clientSelect.appendChild(portfolioOption);
       accountNames.forEach(name => {
         const option = document.createElement('option');
         option.value = name;
@@ -3880,7 +3900,7 @@
       if (!accountNames.includes(localState.currentAccount) && accountNames.length) {
         localState.currentAccount = accountNames[0];
       }
-      ui.clientSelect.value = localState.currentAccount;
+      ui.clientSelect.value = getActiveTabName() === 'portfolio' ? PORTFOLIO_SELECT_VALUE : localState.currentAccount;
     }
 
     function confirmRoster(names) {
@@ -4657,6 +4677,20 @@
       `).join('');
     }
 
+    function renderOverviewFollowup(account) {
+      const tasks = getTaskOwnership(account);
+      const getLane = (laneName, fallbackIndex) =>
+        tasks.find(task => task.lane.toLowerCase() === laneName) || tasks[fallbackIndex] || {};
+      const aiomTask = getLane('aiom', 0);
+      const clientTask = getLane('client', 1);
+      const waitingTask = getLane('waiting', 2);
+
+      ui.overviewFollowupStatus.textContent = `${tasks.length} lanes`;
+      ui.overviewAiomFollowup.textContent = `${aiomTask.title || 'Prepare next action'} - ${aiomTask.due || 'This week'}`;
+      ui.overviewClientFollowup.textContent = `${clientTask.title || 'Confirm owner commitments'} - ${clientTask.due || 'This week'}`;
+      ui.overviewWaitingFollowup.textContent = `${waitingTask.title || 'Monitor blocker'} - ${waitingTask.due || 'This week'}`;
+    }
+
     function renderSeatDistribution(account) {
       const rows = getSeatDistribution(account);
       ui.seatDistributionSummary.textContent = `Function adoption for ${account.name}`;
@@ -4955,17 +4989,6 @@
         ui.timeline.appendChild(row);
       });
 
-      ui.signalsList.innerHTML = '';
-      signalDecisionGuide.forEach(rule => {
-        const card = document.createElement('div');
-        card.className = 'signal-card';
-        card.innerHTML = `
-          <span class="eyebrow">Decision rule</span>
-          <h4>${escapeHtml(rule.title)}</h4>
-          <p>${escapeHtml(rule.body)}</p>
-        `;
-        ui.signalsList.appendChild(card);
-      });
     }
 
     function renderRosterVerification() {
@@ -5391,9 +5414,16 @@
       ui.prismOverlay.setAttribute('aria-hidden', 'true');
     }
 
+    function getActiveTabName() {
+      const activePanel = document.querySelector('.tab-panel.active');
+      return activePanel ? activePanel.id : 'overview';
+    }
+
     function activateTab(tabName) {
       document.querySelectorAll('.tab').forEach(tab => tab.classList.toggle('active', tab.dataset.tab === tabName));
       document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.toggle('active', panel.id === tabName));
+      if (tabName === 'portfolio') ui.clientSelect.value = PORTFOLIO_SELECT_VALUE;
+      else if (ui.clientSelect.value === PORTFOLIO_SELECT_VALUE) ui.clientSelect.value = localState.currentAccount;
     }
 
     function syncPhaseFilterToAccount(account) {
@@ -5431,6 +5461,7 @@
       renderTrainingReadiness(account);
       renderKeyContacts(account);
       renderTaskOwnership(account);
+      renderOverviewFollowup(account);
       renderSeatDistribution(account);
       renderAttention(account);
       renderNextMove(account);
@@ -5698,7 +5729,14 @@
     });
 
     ui.clientSelect.addEventListener('change', (event) => {
+      if (event.target.value === PORTFOLIO_SELECT_VALUE) {
+        activateTab('portfolio');
+        renderAll();
+        showToast('Opened My Portfolio');
+        return;
+      }
       localState.currentAccount = event.target.value;
+      activateTab('overview');
       syncPhaseFilterToAccount(getAccount());
       renderAll();
       showToast(`Switched to ${localState.currentAccount}`);
