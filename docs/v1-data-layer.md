@@ -371,6 +371,8 @@ Behavior:
 - Each resource card should carry visible metadata for Adoption OS stage, job category, resource type, creator or owner, and status.
 - Category should describe the job the resource serves, such as Account Strategy, Communication, Builder Enablement, Enablement Planning, Governance & Support, Adoption Strategy, or Value Proof.
 - The V1 catalog should stay curated to AIOM adoption motions rather than exposing every internal productivity resource.
+- Template and asset additions should replace weaker duplicates when possible; do not add companion resources as separate cards unless they create a materially different AIOM action.
+- Current non-duplicative asset set includes Self-Serve Training / LMS Module Outline, Status Report Template, Incentive Ideation Resource Pack, Platform Governance Follow-Up Pack, and Special Events Blueprint + Comms Bundle.
 - If a direct Glean URL exists, the CTA should open the resource and prefill or copy client context where supported.
 - Missing direct URLs must degrade to copyable prompt behavior so the AIOM still has an executable next step.
 - Recommended assets should sit next to the Glean resource rather than appearing as a separate generic dashboard widget.
