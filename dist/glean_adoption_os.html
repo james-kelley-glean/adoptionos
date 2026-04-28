@@ -472,6 +472,7 @@
     .grid { display: grid; gap: var(--space-4); }
     .grid.two { grid-template-columns: 1.15fr 0.85fr; }
     .grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
     .grid.metrics { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 14px; }
 
     .surface {
@@ -1393,7 +1394,7 @@
 
     @media screen and (max-width: 1180px) {
       .grid.metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-      .grid.two, .grid.three, .source-grid, .templates-grid, .tools-grid, .risk-grid, .audit-grid { grid-template-columns: 1fr; }
+      .grid.two, .grid.three, .grid.four, .source-grid, .templates-grid, .tools-grid, .risk-grid, .audit-grid { grid-template-columns: 1fr; }
       .hero-top { flex-direction: column; }
       .hero-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .account-rail { flex-wrap: wrap; }
@@ -1602,6 +1603,112 @@
           </div>
         </section>
 
+        <section class="surface" id="accountEvidencePanel">
+          <div class="split">
+            <div>
+              <div class="section-kicker">Evidence behind this recommendation</div>
+              <h2 id="evidenceSummaryTitle">Why this recommendation is credible</h2>
+            </div>
+            <div class="status blue"><i></i><span id="evidenceHealthRating">Evidence state</span></div>
+          </div>
+          <p class="muted" id="evidenceSummaryBody"></p>
+          <div class="grid four" style="margin-top:16px;">
+            <div class="metric-card" style="min-height:auto;">
+              <div class="eyebrow">Top metric signal</div>
+              <div class="metric-sub" id="evidenceMetricSignal"></div>
+            </div>
+            <div class="metric-card" style="min-height:auto;">
+              <div class="eyebrow">Top qualitative signal</div>
+              <div class="metric-sub" id="evidenceQualSignal"></div>
+            </div>
+            <div class="metric-card" style="min-height:auto;">
+              <div class="eyebrow">Staleness flag</div>
+              <div class="metric-sub" id="evidenceStalenessFlag"></div>
+            </div>
+            <div class="metric-card" style="min-height:auto;">
+              <div class="eyebrow">Source completeness</div>
+              <div class="metric-sub" id="evidenceSourceCompleteness"></div>
+            </div>
+          </div>
+          <details id="evidenceDetails" style="margin-top:16px;">
+            <summary class="buttonlike" style="display:inline-flex; cursor:pointer;">View evidence details</summary>
+            <div class="grid three" style="margin-top:16px;">
+              <div class="list-item">
+                <h4>Usage metrics</h4>
+                <div class="list" id="evidenceMetricsList"></div>
+              </div>
+              <div class="list-item">
+                <h4>Function breakdown</h4>
+                <div class="list" id="evidenceFunctionList"></div>
+              </div>
+              <div class="list-item">
+                <h4>Open items</h4>
+                <div class="list" id="evidenceOpenItemsList"></div>
+              </div>
+            </div>
+            <div class="grid three" style="margin-top:16px;">
+              <div class="list-item">
+                <h4>Risks</h4>
+                <div class="list" id="evidenceRisksList"></div>
+              </div>
+              <div class="list-item">
+                <h4>Wins</h4>
+                <div class="list" id="evidenceWinsList"></div>
+              </div>
+              <div class="list-item">
+                <h4>Sources checked</h4>
+                <div class="list" id="evidenceSourcesList"></div>
+              </div>
+            </div>
+          </details>
+          <p class="footer-note">Evidence only earns screen space if it changes the next action. The summary stays action-first, while details remain available when an AIOM wants to inspect why.</p>
+        </section>
+
+        <section class="surface" id="accountPlanPanel">
+          <div class="split">
+            <div>
+              <div class="section-kicker">Plan spine</div>
+              <h2 id="planStatusTitle">Account plan</h2>
+            </div>
+            <div class="status blue"><i></i><span id="planReviewState">Plan status</span></div>
+          </div>
+          <div class="grid two" style="margin-top:16px;">
+            <div class="metric-card" style="min-height:auto;">
+              <div class="eyebrow">Business objective</div>
+              <div class="metric-sub" id="planBusinessObjective"></div>
+            </div>
+            <div class="metric-card" style="min-height:auto;">
+              <div class="eyebrow">North star outcome</div>
+              <div class="metric-sub" id="planNorthStarOutcome"></div>
+            </div>
+          </div>
+          <div class="grid three" style="margin-top:16px;">
+            <div class="metric-card" style="min-height:auto;">
+              <div class="eyebrow">Next milestone</div>
+              <div class="metric-sub" id="planNextMilestone"></div>
+            </div>
+            <div class="metric-card" style="min-height:auto;">
+              <div class="eyebrow">Primary blocker</div>
+              <div class="metric-sub" id="planPrimaryBlocker"></div>
+            </div>
+            <div class="metric-card" style="min-height:auto;">
+              <div class="eyebrow">Source state</div>
+              <div class="metric-sub" id="planSourceState"></div>
+            </div>
+          </div>
+          <div class="grid two" style="margin-top:16px;">
+            <div class="list-item">
+              <h4>Milestone evidence</h4>
+              <div class="list" id="planMilestoneList"></div>
+            </div>
+            <div class="list-item">
+              <h4>Plan evolution</h4>
+              <div class="list" id="planEvolutionList"></div>
+            </div>
+          </div>
+          <p class="footer-note">Sample account plan data is acceptable for local shaping. Launch requires live accountSnapshot assembly upstream from Glean-accessible sources before this artifact is placed in production.</p>
+        </section>
+
         <section class="surface" id="phaseBackbonePanel">
           <div class="split">
             <div>
@@ -1617,6 +1724,35 @@
             <div class="metric-card" style="min-height:auto;">
               <div class="eyebrow">Current milestone</div>
               <div class="metric-sub" id="phaseMilestoneDetail"></div>
+            </div>
+          </div>
+          <div class="grid three" style="margin-top:16px;">
+            <div class="metric-card" style="min-height:auto;">
+              <div class="eyebrow">What AIOM needs to know</div>
+              <div class="metric-sub" id="phaseAiomNeedsToKnow"></div>
+            </div>
+            <div class="metric-card" style="min-height:auto;">
+              <div class="eyebrow">Decision lens</div>
+              <div class="metric-sub" id="phaseDecisionLens"></div>
+            </div>
+            <div class="metric-card" style="min-height:auto;">
+              <div class="eyebrow">What good looks like</div>
+              <div class="metric-sub" id="phaseGoodLooksLike"></div>
+            </div>
+          </div>
+          <div class="grid three" style="margin-top:16px;">
+            <div class="list-item">
+              <h4>Common blockers</h4>
+              <div class="list" id="phaseCommonBlockersList"></div>
+            </div>
+            <div class="list-item">
+              <h4>Prism decision use</h4>
+              <p class="muted" id="phasePrismDecisionUse"></p>
+              <p class="footer-note" id="phaseNextMotion"></p>
+            </div>
+            <div class="list-item">
+              <h4>Skill package inputs</h4>
+              <div class="list" id="phaseSkillInputsList"></div>
             </div>
           </div>
           <section class="list-item" style="margin-top:16px;">
@@ -2535,6 +2671,17 @@
       prep: {
         phaseObjective: 'Define outcomes, owners, scope, success criteria, and the first credible path to launch.',
         currentMilestone: 'Operating plan locked',
+        aiomNeedsToKnow: 'This phase establishes AIOM credibility before implementation crowds out enablement. The AIOM needs the account context, stakeholder map, available hours, launch scope, success criteria, and governance questions clear enough to guide the client.',
+        decisionLens: 'Do we know who owns enablement, which audience matters first, what success means in the first 60 days, and which blockers must be solved before broader rollout?',
+        whatGoodLooksLike: 'The client understands the AIOM role, sees the Adoption OS journey, commits to the next planning motions, and leaves with owner/date clarity for adoption strategy, success planning, and agent governance.',
+        commonBlockers: ['Enablement stakeholders are missing or too junior', 'AIOM content is buried in kick-off materials', 'Package hours or custom work scope is unclear', 'Client has no decision-maker in the adoption strategy motion'],
+        prismDecisionUse: 'Use Prism to check pre-sales commitments, repeated blockers, missing context, prior account motions, and whether the recommended plan is grounded in durable account memory.',
+        skillInputs: [
+          { name: 'Account Analysis', role: 'Validate source coverage, health signal, package pressure, and account gaps before proposing the plan.' },
+          { name: 'Plan Generation', role: 'Convert kickoff context, success plan, and available hours into a practical Adoption OS path.' },
+          { name: 'Triage Classification', role: 'Turn meeting notes and channel noise into owner/date commitments and unresolved dependencies.' }
+        ],
+        nextMotion: 'Run the AIOM brief or transition flow, validate gaps, prepare the adoption strategy point of view, and capture the agreed plan back into Prism.',
         openAdoptionActivities: ['Confirm stakeholder map and decision owner', 'Lock launch scope and blocker path', 'Package the planning asset for the next customer touch'],
         overdueAdoptionActivities: [],
         phaseAssets: ['Success Planning Deck', 'Kickoff questions guide', 'Client Adoption Strategy Chatbot'],
@@ -2546,6 +2693,17 @@
       readiness: {
         phaseObjective: 'Build customer readiness through launch comms, enablement, training, and blocker resolution.',
         currentMilestone: 'Readiness path activated',
+        aiomNeedsToKnow: 'This phase turns the plan into launch conditions. The AIOM needs to know whether platform readiness, comms, training, support path, and first-user audience are actually ready for people to show up and find value.',
+        decisionLens: 'Are users going to understand why Glean matters, know where to start, have the right access/content, and have a clear support path if launch friction appears?',
+        whatGoodLooksLike: 'Launch comms, intranet/FAQ resources, training invites, office-hours coverage, and admin readiness are sequenced so end users can start with confidence.',
+        commonBlockers: ['Approvals or support issues block the launch path', 'Comms exist but are not sponsor-backed', 'Training is scheduled before platform readiness is real', 'Admins lack a clear path for predictable user questions'],
+        prismDecisionUse: 'Use Prism to see which launch blockers keep repeating, whether prior follow-up resolved ownership, and what readiness signal should change the recommended next action.',
+        skillInputs: [
+          { name: 'Account Analysis', role: 'Surface readiness risk, open support issues, training gaps, and package pressure.' },
+          { name: 'Plan Generation', role: 'Sequence comms, enablement, training, and monitoring into a feasible launch path.' },
+          { name: 'Triage Classification', role: 'Classify launch blockers, waiting-on-client items, meeting-prep tasks, and overdue enablement work.' }
+        ],
+        nextMotion: 'Resolve named blockers, package launch communications and training assets, and capture readiness decisions plus follow-up commitments in Prism.',
         openAdoptionActivities: ['Resolve launch blockers with named owners', 'Prepare enablement package and comms', 'Schedule training or office-hours motion'],
         overdueAdoptionActivities: [],
         phaseAssets: ['Enablement Resource Package', 'Training Calendar Invites', 'Glean Change Briefing Agent'],
@@ -2557,6 +2715,17 @@
       stickiness: {
         phaseObjective: 'Turn launch activity into repeatable workflow behavior, champions, and business-relevant habits.',
         currentMilestone: 'Workflow adoption motion active',
+        aiomNeedsToKnow: 'This phase is where adoption becomes behavior change. The AIOM needs to know which teams are using Glean, which workflows are worth changing, who can champion them, and whether agents/skills make the behavior easier to repeat.',
+        decisionLens: 'Which workflow, champion group, or business unit has enough relevance and sponsorship to become the next durable habit instead of another generic enablement touch?',
+        whatGoodLooksLike: 'Champions and power users have a cadence, priority use cases are tied to real work, and business workshops produce repeatable prompts, agents, or skills people keep using.',
+        commonBlockers: ['Usage exists but is shallow or isolated', 'Champions are named but not operating as a network', 'Power users are selected without time or accountability', 'Use cases are interesting but not connected to daily work'],
+        prismDecisionUse: 'Use Prism to compare prior motions, repeated engagement blockers, champion evidence, and which play from history is most likely to create durable behavior.',
+        skillInputs: [
+          { name: 'Account Analysis', role: 'Identify momentum, softening engagement, champion evidence, workflow usage, and value narrative risk.' },
+          { name: 'Plan Generation', role: 'Create the champion, power-user, or business-workshop path that fits the account phase and capacity.' },
+          { name: 'Triage Classification', role: 'Separate ours/theirs/waiting tasks so workshops, champions, and follow-ups do not drift.' }
+        ],
+        nextMotion: 'Pick the highest-leverage workflow or champion motion, launch the supporting agent/skill/resource, and record outcome evidence in Prism.',
         openAdoptionActivities: ['Run next-steps strategy or business workshop', 'Identify priority use cases and champions', 'Capture value narrative and follow-up commitments'],
         overdueAdoptionActivities: [],
         phaseAssets: ['Next Steps in Maxing Out Adoption Deck', 'Business-Level Workshop Facilitation Guide', 'Prompt Crafter'],
@@ -2568,6 +2737,17 @@
       scale: {
         phaseObjective: 'Sustain adoption through governance, platform ownership, COE rhythms, and repeatable value proof.',
         currentMilestone: 'Sustainability motion active',
+        aiomNeedsToKnow: 'This phase moves ownership toward the client. The AIOM needs to know who owns governance, how champions or COE rhythms continue, which value proof matters to sponsors, and what support model keeps Glean alive after Glean steps back.',
+        decisionLens: 'Can the client sustain adoption through people, process, governance, measurement, and reinforcement without relying on the AIOM for every next move?',
+        whatGoodLooksLike: 'The client has a durable operating rhythm: governance owner, champion/community cadence, support path, recognition or events, and executive proof of value.',
+        commonBlockers: ['Governance is discussed but not owned', 'No COE or operating cadence exists', 'Value proof is anecdotal instead of executive-ready', 'Launch energy fades without recognition, events, or new-hire reinforcement'],
+        prismDecisionUse: 'Use Prism to check long-term momentum, recurring blockers, prior value proof, governance gaps, and which sustainment play should be reused or escalated.',
+        skillInputs: [
+          { name: 'Account Analysis', role: 'Expose scale readiness, sponsor risk, support posture, function-level adoption, and value evidence.' },
+          { name: 'Plan Generation', role: 'Translate sustainment needs into COE, governance, event, and executive-review operating rhythms.' },
+          { name: 'Triage Classification', role: 'Keep governance, value proof, and follow-up commitments visible across ours/theirs/waiting lanes.' }
+        ],
+        nextMotion: 'Formalize the governance or COE rhythm, package executive value proof, and capture the client-owned operating model in Prism.',
         openAdoptionActivities: ['Define governance calendar and COE owner', 'Package end-user support model', 'Prepare executive value proof'],
         overdueAdoptionActivities: [],
         phaseAssets: ['Platform / COE Governance Calendar Invite', 'End-User Support Strategy for COE', 'EBR Generator'],
@@ -2696,15 +2876,29 @@
       };
     }
 
-    function getPhaseBackbone(account) {
-      const defaults = phaseBackboneDefaults[account.phase] || phaseBackboneDefaults.prep;
+    function getActivePhaseKey(account) {
+      return localState.activePhaseFilter === 'all'
+        ? account.phase
+        : localState.activePhaseFilter || account.phase;
+    }
+
+    function getPhaseBackbone(account, phaseKey = account.phase) {
+      const defaults = phaseBackboneDefaults[phaseKey] || phaseBackboneDefaults.prep;
+      const useAccountSpecificState = phaseKey === account.phase;
       return {
-        phaseObjective: account.phaseObjective || defaults.phaseObjective,
-        currentMilestone: account.currentMilestone || defaults.currentMilestone,
-        openAdoptionActivities: account.openAdoptionActivities || defaults.openAdoptionActivities,
-        overdueAdoptionActivities: account.overdueAdoptionActivities || defaults.overdueAdoptionActivities,
-        phaseAssets: account.phaseAssets || defaults.phaseAssets,
-        functionPhaseStatus: account.functionPhaseStatus || defaults.functionPhaseStatus
+        phaseObjective: useAccountSpecificState ? account.phaseObjective || defaults.phaseObjective : defaults.phaseObjective,
+        currentMilestone: useAccountSpecificState ? account.currentMilestone || defaults.currentMilestone : defaults.currentMilestone,
+        aiomNeedsToKnow: useAccountSpecificState ? account.aiomNeedsToKnow || defaults.aiomNeedsToKnow : defaults.aiomNeedsToKnow,
+        decisionLens: useAccountSpecificState ? account.decisionLens || defaults.decisionLens : defaults.decisionLens,
+        whatGoodLooksLike: useAccountSpecificState ? account.whatGoodLooksLike || defaults.whatGoodLooksLike : defaults.whatGoodLooksLike,
+        commonBlockers: useAccountSpecificState ? account.commonBlockers || defaults.commonBlockers : defaults.commonBlockers,
+        prismDecisionUse: useAccountSpecificState ? account.prismDecisionUse || defaults.prismDecisionUse : defaults.prismDecisionUse,
+        skillInputs: useAccountSpecificState ? account.skillInputs || defaults.skillInputs : defaults.skillInputs,
+        nextMotion: useAccountSpecificState ? account.nextMotion || defaults.nextMotion : defaults.nextMotion,
+        openAdoptionActivities: useAccountSpecificState ? account.openAdoptionActivities || defaults.openAdoptionActivities : defaults.openAdoptionActivities,
+        overdueAdoptionActivities: useAccountSpecificState ? account.overdueAdoptionActivities || defaults.overdueAdoptionActivities : defaults.overdueAdoptionActivities,
+        phaseAssets: useAccountSpecificState ? account.phaseAssets || defaults.phaseAssets : defaults.phaseAssets,
+        functionPhaseStatus: useAccountSpecificState ? account.functionPhaseStatus || defaults.functionPhaseStatus : defaults.functionPhaseStatus
       };
     }
 
@@ -2800,6 +2994,65 @@
           { function: 'Instructional / curriculum users', phase: 'Preparation', status: 'Still needs audience-specific launch path' },
           { function: 'Executive sponsor', phase: 'Preparation', status: 'Needs clearer outcome and decision cadence' }
         ],
+        accountPlan: {
+          planStatus: 'DRAFT',
+          lastReviewed: 'Not yet reviewed',
+          businessObjective: 'Launch Glean into instructional and administrative workflows without implementation noise undermining confidence before the first broad user moment.',
+          northStarOutcome: 'Named launch owners, blocker paths, and audience-specific enablement are locked before broad rollout begins.',
+          currentPhaseAssessment: 'Preparation with admin readiness already in motion; the plan needs owner/date certainty before readiness can scale.',
+          sourceState: 'sample',
+          sourceStateLabel: 'Sample account plan data · replace with live accountSnapshot at launch',
+          milestones: [
+            { name: 'Lock launch operating plan', target: 'This week', status: 'At Risk', successCriteria: 'UAT exit criteria, blocker owners, and launch audience are documented with dates.', resources: ['Success Planning Deck', 'Client Adoption Strategy Chatbot'] },
+            { name: 'Resolve blocker communication path', target: 'Next customer touch', status: 'In Progress', successCriteria: 'Customer-facing blocker summary names issue status, owner, date, and expected resolution path.', resources: ['Customer-facing blocker summary', 'Meeting Summarizer + Follow Up'] },
+            { name: 'Package launch enablement', target: 'Before readiness motion', status: 'Not Started', successCriteria: 'Role-specific enablement path is ready for the instructional audience.', resources: ['Kickoff questions guide'] }
+          ],
+          blockers: ['Training audience decision still open', 'Rocketlane and Gong evidence need live verification'],
+          successCriteria: ['Owner/date commitments captured in Prism', 'No critical launch blocker lacks a named owner', 'Initial enablement path is accepted by admin owner'],
+          keyContacts: [
+            { name: 'Admin owner', role: 'Launch decision owner', relevance: 'Approves blocker path and audience sequence.' },
+            { name: 'Executive sponsor', role: 'Outcome owner', relevance: 'Needs clear launch success criteria before broader motion.' }
+          ],
+          planEvolution: [
+            { date: '2026-04-27', whatChanged: 'Planning reset became the primary motion', previousState: 'Generic readiness preparation', reason: 'Support noise and training decisions kept recurring before launch sequencing locked.' }
+          ],
+          sourcesUsed: [
+            { source: 'Strategic Enablement framework', status: 'sample', takeaway: 'Preparation and success-planning motions fit the current need.' },
+            { source: 'Pre-sales plan / success plan', status: 'inferred', takeaway: 'Business objective is inferred from launch and stakeholder context.' },
+            { source: 'Rocketlane', status: 'missing', takeaway: 'Live project milestone evidence is required before launch.' },
+            { source: 'Prism', status: 'sample', takeaway: 'Seeded Prism memory flags blocker ownership and planning reset risk.' }
+          ]
+        },
+        accountEvidence: {
+          healthRating: 'NEEDS ATTENTION',
+          healthTrend: 'up',
+          confidence: 'Medium',
+          summary: 'Assistant usage is moving in the right direction, but launch readiness depends on resolving support noise and training-audience ownership. The recommendation is credible because usage momentum and Prism blockers point to the same planning-reset motion.',
+          topMetricSignal: 'Assistant WAU is up 8%, showing enough momentum to justify tightening the launch path now.',
+          topQualitativeSignal: 'Planning notes and Prism memory both point to unresolved blocker ownership before broad enablement.',
+          sourceCompleteness: '6 of 8 source categories available; Rocketlane and Gong need verification.',
+          metricsSnapshot: [
+            { label: 'Assistant WAU', value: '61', delta: '+8%', sourceState: 'sample' },
+            { label: 'Agents WAU', value: '18', delta: 'building', sourceState: 'sample' },
+            { label: 'Open issues', value: '4', delta: '1 critical', sourceState: 'sample' }
+          ],
+          sixMonthTrendSummary: 'Seeded trend suggests positive Assistant momentum with agent usage still emerging.',
+          functionMetrics: [
+            { function: 'Instructional / curriculum users', signal: 'Audience-specific launch path still pending', sourceState: 'inferred' },
+            { function: 'Admins / IT', signal: 'Readiness blockers already active', sourceState: 'sample' }
+          ],
+          stalenessFlags: ['Training audience decision is still open', 'Meeting evidence needs live verification'],
+          openItems: ['Confirm UAT exit criteria', 'Map support blockers to owner/date commitments'],
+          supportPosture: 'Support-heavy enough that blocker triage should precede broad enablement.',
+          risks: ['Support noise can undermine launch confidence', 'Training audience ambiguity can create wasted enablement effort'],
+          wins: ['Assistant usage momentum is positive', 'Prism has enough account memory to support a focused recommendation'],
+          sourcesChecked: [
+            { source: 'Sigma / Usage Metrics', status: 'sample', note: 'Seeded Assistant and Agents usage available.' },
+            { source: 'Slack', status: 'sample', note: 'Rollout and internal channels represented.' },
+            { source: 'Rocketlane', status: 'missing', note: 'Live milestone and capacity evidence required.' },
+            { source: 'Prism', status: 'sample', note: 'Seeded Prism blockers and health signal available.' }
+          ]
+        },
         arrLabel: '$859.8K',
         hoursRemainingLabel: '38',
         openIssues: 4,
@@ -2863,6 +3116,65 @@
           { function: 'Claims operations', phase: 'Preparation', status: 'Needs workflow examples before training' },
           { function: 'Executive sponsor', phase: 'Stickiness', status: 'Ready for value framing once blockers clear' }
         ],
+        accountPlan: {
+          planStatus: 'NEEDS REFRESH',
+          lastReviewed: '2026-04-15',
+          businessObjective: 'Reduce rollout friction for risk and claims teams by clearing admin approvals, support blockers, and communication gaps before adoption expands.',
+          northStarOutcome: 'Security admins and claims operations have a clear launch path, support posture, and first workflow examples they can use with confidence.',
+          currentPhaseAssessment: 'Readiness is active but blocked; usage is healthy enough to move, but approvals and support sequencing must be refreshed.',
+          sourceState: 'inferred',
+          sourceStateLabel: 'Inferred from sample readiness signals · live source verification required before launch',
+          milestones: [
+            { name: 'Confirm approval owner and date', target: 'Within 3 business days', status: 'Blocked', successCriteria: 'Approval owner, date, and escalation path are captured.', resources: ['Meeting Summarizer + Follow Up'] },
+            { name: 'Sequence support triage before enablement', target: 'This week', status: 'At Risk', successCriteria: 'Critical support blockers have owners and customer-facing language.', resources: ['Enablement Resource Package'] },
+            { name: 'Prepare admin-facing launch comms', target: 'Before broad training', status: 'In Progress', successCriteria: 'Admin digest and end-user guidance are ready for sponsor review.', resources: ['Glean Change Briefing Agent'] }
+          ],
+          blockers: ['Approval path needs executive visibility', 'Slack and Rocketlane verification are missing'],
+          successCriteria: ['Approval path is confirmed', 'Critical support issues have owner/date commitments', 'Admin comms are approved before broad enablement'],
+          keyContacts: [
+            { name: 'Security admin owner', role: 'Readiness owner', relevance: 'Owns approval path and support escalation.' },
+            { name: 'Claims operations lead', role: 'Target workflow owner', relevance: 'Validates whether launch examples fit daily work.' }
+          ],
+          planEvolution: [
+            { date: '2026-04-24', whatChanged: 'Enablement motion shifted toward blocker sequencing', previousState: 'Broad launch activation', reason: 'Support and approval blockers kept gating readiness.' }
+          ],
+          sourcesUsed: [
+            { source: 'Strategic Enablement framework', status: 'sample', takeaway: 'Build Awareness & Readiness is the primary phase.' },
+            { source: 'Gong/meetings', status: 'sample', takeaway: 'Training and rollout sessions support the readiness path.' },
+            { source: 'Slack', status: 'missing', takeaway: 'Named coordination channel must be verified.' },
+            { source: 'Rocketlane', status: 'missing', takeaway: 'Live rollout blocker and hours context must be verified.' }
+          ]
+        },
+        accountEvidence: {
+          healthRating: 'NEEDS ATTENTION',
+          healthTrend: 'mixed',
+          confidence: 'Medium',
+          summary: 'Usage is strong, but support and approval blockers are still gating readiness. The recommendation is credible because quantitative momentum conflicts with unresolved qualitative blockers, which is exactly the pattern that needs AIOM intervention.',
+          topMetricSignal: 'Assistant WAU is 74 and Agents WAU is 29, so adoption motion exists.',
+          topQualitativeSignal: 'Approvals and support blockers keep delaying readiness despite healthy usage.',
+          sourceCompleteness: '6 of 8 source categories available; Slack and Rocketlane need verification.',
+          metricsSnapshot: [
+            { label: 'Assistant WAU', value: '74', delta: '+11%', sourceState: 'sample' },
+            { label: 'Agents WAU', value: '29', delta: 'healthy', sourceState: 'sample' },
+            { label: 'Open issues', value: '6', delta: '2 critical', sourceState: 'sample' }
+          ],
+          sixMonthTrendSummary: 'Seeded trend suggests adoption strength with execution friction, not demand weakness.',
+          functionMetrics: [
+            { function: 'Security / IT admins', signal: 'Approval and support path are the readiness constraint', sourceState: 'inferred' },
+            { function: 'Claims operations', signal: 'Needs workflow examples before broad training', sourceState: 'sample' }
+          ],
+          stalenessFlags: ['Approval path needs executive visibility', 'Slack channel verification is missing'],
+          openItems: ['Confirm approval owner and date', 'Sequence support triage before enablement'],
+          supportPosture: 'Support-heavy with active critical issues; the AIOM should resolve blocker ownership before broad activation.',
+          risks: ['Healthy usage could be misread as no action needed', 'Approval delays can stall readiness'],
+          wins: ['Assistant and Agents usage are both meaningful', 'QBR window can convert momentum into value narrative'],
+          sourcesChecked: [
+            { source: 'Sigma / Usage Metrics', status: 'sample', note: 'Seeded Assistant and Agents usage available.' },
+            { source: 'Gong/meetings', status: 'sample', note: 'Training and rollout sessions represented.' },
+            { source: 'Slack', status: 'missing', note: 'Named channel evidence must be verified.' },
+            { source: 'Support', status: 'sample', note: 'Open issue severity represented.' }
+          ]
+        },
         arrLabel: '$680.0K',
         hoursRemainingLabel: '24',
         openIssues: 6,
@@ -2925,6 +3237,65 @@
           { function: 'Broader business users', phase: 'Readiness', status: 'Needs refreshed examples and clear relevance' },
           { function: 'Executive sponsor', phase: 'Readiness', status: 'Needs value narrative reset' }
         ],
+        accountPlan: {
+          planStatus: 'NEEDS REFRESH',
+          lastReviewed: '2026-04-03',
+          businessObjective: 'Reconnect Glean usage to executive value by showing where builder and creator teams are already finding workflow leverage.',
+          northStarOutcome: 'Executive sponsor sees a credible value narrative and approves the next stickiness motion for priority teams.',
+          currentPhaseAssessment: 'Readiness is softening while one function is already in stickiness; the plan should focus on value review and next expansion motion.',
+          sourceState: 'inferred',
+          sourceStateLabel: 'Inferred from sample usage and Prism signals · live plan refresh required',
+          milestones: [
+            { name: 'Refresh executive value narrative', target: 'Within 2 weeks', status: 'At Risk', successCriteria: 'Executive-ready value story connects usage pockets to business outcomes.', resources: ['EBR Generator', 'Executive review pack'] },
+            { name: 'Verify champion and power-user evidence', target: 'Before QBR', status: 'In Progress', successCriteria: 'Champion evidence is tied to named workflows and teams.', resources: ['Next Steps in Maxing Out Adoption Deck'] },
+            { name: 'Select next workshop motion', target: 'This month', status: 'Not Started', successCriteria: 'One priority workflow or function is selected for deeper enablement.', resources: ['Optimal Agent Use Case Recommender'] }
+          ],
+          blockers: ['Executive review overdue', 'Rocketlane and Slack verification are missing'],
+          successCriteria: ['Sponsor reviews value narrative', 'Power-user evidence is source-backed', 'Next expansion motion has owner/date commitments'],
+          keyContacts: [
+            { name: 'Executive sponsor', role: 'Value narrative owner', relevance: 'Approves whether the story is strong enough for expansion.' },
+            { name: 'Builder champion', role: 'Power-user proof point', relevance: 'Shows where stickiness already exists.' }
+          ],
+          planEvolution: [
+            { date: '2026-04-22', whatChanged: 'Plan shifted from broad readiness to executive value reset', previousState: 'General post-launch enablement', reason: 'Engagement softened while power-user signal stayed useful.' }
+          ],
+          sourcesUsed: [
+            { source: 'Strategic Enablement framework', status: 'sample', takeaway: 'Readiness and stickiness are both relevant by function.' },
+            { source: 'Current usage metrics', status: 'sample', takeaway: 'Usage is softening outside the power-user group.' },
+            { source: 'Slack', status: 'missing', takeaway: 'Champion evidence needs live collaboration context.' },
+            { source: 'Prism', status: 'sample', takeaway: 'Seeded Prism memory points toward executive value risk.' }
+          ]
+        },
+        accountEvidence: {
+          healthRating: 'AT RISK',
+          healthTrend: 'down',
+          confidence: 'Medium',
+          summary: 'Engagement is softening while executive value review is overdue, but power-user evidence creates a recoverable path. The recommendation is credible because usage decline and stale value narrative point to the same executive reset.',
+          topMetricSignal: 'Assistant WAU is down 4%, with Agents usage concentrated in a small power-user group.',
+          topQualitativeSignal: 'Prism shows the executive review keeps slipping while power-user evidence remains available.',
+          sourceCompleteness: '5 of 8 source categories available; Rocketlane, Staffing Sheet, and Slack need verification.',
+          metricsSnapshot: [
+            { label: 'Assistant WAU', value: '47', delta: '-4%', sourceState: 'sample' },
+            { label: 'Agents WAU', value: '15', delta: 'concentrated', sourceState: 'sample' },
+            { label: 'Open issues', value: '2', delta: '0 critical', sourceState: 'sample' }
+          ],
+          sixMonthTrendSummary: 'Seeded trend suggests a softening broader-user pattern with power-user pockets still available.',
+          functionMetrics: [
+            { function: 'Builder / creator teams', signal: 'Power-user motion is available', sourceState: 'sample' },
+            { function: 'Broader business users', signal: 'Readiness examples need refresh', sourceState: 'inferred' }
+          ],
+          stalenessFlags: ['Executive review overdue', 'Plan last reviewed 2026-04-03'],
+          openItems: ['Refresh executive value narrative', 'Verify champion and power-user evidence'],
+          supportPosture: 'Support is not the main blocker; value narrative and engagement are.',
+          risks: ['Executive value story may decay before renewal or expansion motion', 'Broader engagement can keep softening without a concrete next workflow'],
+          wins: ['Power-user evidence can support an executive story', 'Next Steps deck and EBR Generator are aligned to the recovery motion'],
+          sourcesChecked: [
+            { source: 'Sigma / Usage Metrics', status: 'sample', note: 'Seeded softening usage trend available.' },
+            { source: 'Prism', status: 'sample', note: 'Seeded value-risk pattern available.' },
+            { source: 'Slack', status: 'missing', note: 'Champion evidence needs live collaboration context.' },
+            { source: 'Docs/Drive', status: 'sample', note: 'Executive review assets represented.' }
+          ]
+        },
         arrLabel: '$800.4K',
         hoursRemainingLabel: '18',
         openIssues: 2,
@@ -3261,7 +3632,23 @@
       currentPhaseTitle: document.getElementById('currentPhaseTitle'),
       phaseObjective: document.getElementById('phaseObjective'),
       phaseMilestoneDetail: document.getElementById('phaseMilestoneDetail'),
-      openActivitiesList: document.getElementById('openActivitiesList'),
+      phaseAiomNeedsToKnow: document.getElementById('phaseAiomNeedsToKnow'),
+      phaseDecisionLens: document.getElementById('phaseDecisionLens'),
+      phaseGoodLooksLike: document.getElementById('phaseGoodLooksLike'),
+      phaseCommonBlockersList: document.getElementById('phaseCommonBlockersList'),
+        phasePrismDecisionUse: document.getElementById('phasePrismDecisionUse'),
+        phaseSkillInputsList: document.getElementById('phaseSkillInputsList'),
+        phaseNextMotion: document.getElementById('phaseNextMotion'),
+        planStatusTitle: document.getElementById('planStatusTitle'),
+        planReviewState: document.getElementById('planReviewState'),
+        planBusinessObjective: document.getElementById('planBusinessObjective'),
+        planNorthStarOutcome: document.getElementById('planNorthStarOutcome'),
+        planNextMilestone: document.getElementById('planNextMilestone'),
+        planPrimaryBlocker: document.getElementById('planPrimaryBlocker'),
+        planSourceState: document.getElementById('planSourceState'),
+        planMilestoneList: document.getElementById('planMilestoneList'),
+        planEvolutionList: document.getElementById('planEvolutionList'),
+        openActivitiesList: document.getElementById('openActivitiesList'),
       overdueActivitiesList: document.getElementById('overdueActivitiesList'),
       phaseAssetsList: document.getElementById('phaseAssetsList'),
       functionPhaseStatusList: document.getElementById('functionPhaseStatusList'),
@@ -3311,8 +3698,21 @@
       decisionOwner: document.getElementById('decisionOwner'),
       targetFunction: document.getElementById('targetFunction'),
       primaryFrictionType: document.getElementById('primaryFrictionType'),
-      capturePrompt: document.getElementById('capturePrompt'),
-      recommendedDocTitle: document.getElementById('recommendedDocTitle'),
+        capturePrompt: document.getElementById('capturePrompt'),
+        evidenceSummaryTitle: document.getElementById('evidenceSummaryTitle'),
+        evidenceHealthRating: document.getElementById('evidenceHealthRating'),
+        evidenceSummaryBody: document.getElementById('evidenceSummaryBody'),
+        evidenceMetricSignal: document.getElementById('evidenceMetricSignal'),
+        evidenceQualSignal: document.getElementById('evidenceQualSignal'),
+        evidenceStalenessFlag: document.getElementById('evidenceStalenessFlag'),
+        evidenceSourceCompleteness: document.getElementById('evidenceSourceCompleteness'),
+        evidenceMetricsList: document.getElementById('evidenceMetricsList'),
+        evidenceFunctionList: document.getElementById('evidenceFunctionList'),
+        evidenceOpenItemsList: document.getElementById('evidenceOpenItemsList'),
+        evidenceRisksList: document.getElementById('evidenceRisksList'),
+        evidenceWinsList: document.getElementById('evidenceWinsList'),
+        evidenceSourcesList: document.getElementById('evidenceSourcesList'),
+        recommendedDocTitle: document.getElementById('recommendedDocTitle'),
       recommendedDocBody: document.getElementById('recommendedDocBody'),
       recommendedDocButton: document.getElementById('recommendedDocButton'),
       recommendedAssetTitle: document.getElementById('recommendedAssetTitle'),
@@ -3757,13 +4157,101 @@
       renderHeroKpis(account);
     }
 
-    function renderPhaseBackbone(account) {
-      const backbone = getPhaseBackbone(account);
+    function getAccountPlan(account) {
+      if (account.accountPlan) return account.accountPlan;
+      const firstOpenActivity = (account.openAdoptionActivities && account.openAdoptionActivities[0]) || account.currentMilestone || 'Confirm the next Adoption OS motion';
+      const firstBlocker = (account.overdueAdoptionActivities && account.overdueAdoptionActivities[0]) || (account.missingSources && account.missingSources[0]) || 'Live account plan source verification pending';
+      return {
+        planStatus: 'DRAFT',
+        lastReviewed: 'Not yet reviewed',
+        businessObjective: `Move ${account.name} from account signals into a focused Adoption OS plan that ties next actions to customer value.`,
+        northStarOutcome: account.nextMove ? account.nextMove.body : 'The AIOM has a clear next motion, owner path, and measurable success criteria.',
+        currentPhaseAssessment: `${phases[account.phase]} based on seeded phase and signal data.`,
+        sourceState: 'sample',
+        sourceStateLabel: 'Sample account plan data · replace with live accountSnapshot at launch',
+        milestones: [
+          {
+            name: firstOpenActivity,
+            target: account.nextMove ? account.nextMove.dueWindow : 'Next review',
+            status: 'In Progress',
+            successCriteria: 'Owner, date, recommended resource, and Prism capture path are clear.',
+            resources: [account.doc && account.doc.title, account.tool].filter(Boolean)
+          }
+        ],
+        blockers: [firstBlocker],
+        successCriteria: ['AIOM can explain why this is the next move', 'Plan source state is visible before customer-facing action'],
+        keyContacts: [
+          { name: getDecisionOwner(account), role: 'Plan owner', relevance: 'Owns the next plan decision or customer commitment.' }
+        ],
+        planEvolution: [
+          { date: 'Prototype', whatChanged: 'Plan spine added to seeded artifact', previousState: 'Phase guidance without account-plan contract', reason: 'Plan Generation needs a visible path into Adoption OS.' }
+        ],
+        sourcesUsed: [
+          { source: 'Current artifact signals', status: 'sample', takeaway: 'Local prototype data is enough to shape the experience.' },
+          { source: 'Live accountSnapshot', status: 'missing', takeaway: 'Launch requires live accountSnapshot assembly upstream.' }
+        ]
+      };
+    }
+
+    function getPrimaryPlanMilestone(plan) {
+      const milestones = plan.milestones || [];
+      return milestones.find(milestone => ['Blocked', 'At Risk', 'In Progress'].includes(milestone.status)) || milestones[0] || {};
+    }
+
+    function renderAccountPlan(account) {
+      const plan = getAccountPlan(account);
+      const primaryMilestone = getPrimaryPlanMilestone(plan);
+      const primaryBlocker = (plan.blockers && plan.blockers[0]) || 'No primary blocker captured';
+      ui.planStatusTitle.textContent = `${account.name} account plan`;
+      ui.planReviewState.textContent = `${plan.planStatus} · last reviewed ${plan.lastReviewed}`;
+      ui.planBusinessObjective.textContent = plan.businessObjective;
+      ui.planNorthStarOutcome.textContent = plan.northStarOutcome;
+      ui.planNextMilestone.textContent = primaryMilestone.name
+        ? `${primaryMilestone.name} · ${primaryMilestone.status} · ${primaryMilestone.target}`
+        : 'No milestone captured';
+      ui.planPrimaryBlocker.textContent = primaryBlocker;
+      ui.planSourceState.textContent = plan.sourceStateLabel || `${plan.sourceState || 'sample'} plan source state`;
+      ui.planMilestoneList.innerHTML = (plan.milestones || []).slice(0, 3).map(milestone => `
+        <div class="meta-row">
+          <span><strong>${escapeHtml(milestone.name)}</strong><br><span class="muted">${escapeHtml(milestone.successCriteria)}</span></span>
+          <span class="pill medium">${escapeHtml(milestone.status)}</span>
+        </div>
+      `).join('');
+      ui.planEvolutionList.innerHTML = (plan.planEvolution || []).slice(0, 2).map(change => `
+        <div class="meta-row">
+          <span><strong>${escapeHtml(change.whatChanged)}</strong><br><span class="muted">${escapeHtml(change.reason)}</span></span>
+          <span class="pill low">${escapeHtml(change.date)}</span>
+        </div>
+      `).join('');
+    }
+
+    function renderPhaseBackbone(account, phaseKey = account.phase) {
+      const backbone = getPhaseBackbone(account, phaseKey);
       const openActivities = backbone.openAdoptionActivities || [];
       const overdueActivities = backbone.overdueAdoptionActivities || [];
-      ui.currentPhaseTitle.textContent = phases[account.phase];
+      const isAccountPhase = phaseKey === account.phase;
+      ui.currentPhaseTitle.textContent = isAccountPhase
+        ? phases[account.phase]
+        : `${phases[phaseKey]} guidance`;
       ui.phaseObjective.textContent = backbone.phaseObjective;
-      ui.phaseMilestoneDetail.textContent = `${backbone.currentMilestone} · ${openActivities.length} open · ${overdueActivities.length} overdue`;
+      ui.phaseMilestoneDetail.textContent = `${backbone.currentMilestone} · ${openActivities.length} open · ${overdueActivities.length} overdue${isAccountPhase ? '' : ` · ${account.name} is currently in ${phases[account.phase]}`}`;
+      ui.phaseAiomNeedsToKnow.textContent = backbone.aiomNeedsToKnow;
+      ui.phaseDecisionLens.textContent = backbone.decisionLens;
+      ui.phaseGoodLooksLike.textContent = backbone.whatGoodLooksLike;
+      ui.phaseCommonBlockersList.innerHTML = (backbone.commonBlockers || []).map(blocker => `
+        <div class="meta-row">
+          <span>${escapeHtml(blocker)}</span>
+          <span class="pill medium">Watch</span>
+        </div>
+      `).join('');
+      ui.phasePrismDecisionUse.textContent = backbone.prismDecisionUse;
+      ui.phaseNextMotion.textContent = `Next motion: ${backbone.nextMotion}`;
+      ui.phaseSkillInputsList.innerHTML = (backbone.skillInputs || []).map(input => `
+        <div class="list-item" style="margin:0;">
+          <h4>${escapeHtml(input.name)}</h4>
+          <p>${escapeHtml(input.role)}</p>
+        </div>
+      `).join('');
       ui.openActivitiesList.innerHTML = openActivities.map(activity => `
         <div class="meta-row">
           <span>${escapeHtml(activity)}</span>
@@ -3912,6 +4400,99 @@
       ui.accountHealthPackagePressure.textContent = overlay.packagePressure;
       ui.accountHealthRiskDriver.textContent = overlay.riskDriver;
       ui.accountHealthOpportunityDriver.textContent = overlay.opportunityDriver;
+    }
+
+    function getAccountEvidence(account) {
+      if (account.accountEvidence) return account.accountEvidence;
+      const health = getAccountHealthLabel(account);
+      const coverageEntries = getSourceCoverageEntries(account);
+      const availableCount = coverageEntries.filter(entry => entry.status === 'available').length;
+      const missingCount = getMissingSources(account).length;
+      const tasks = getTaskOwnership(account);
+      const seats = getSeatDistribution(account);
+      return {
+        healthRating: health.label.toUpperCase(),
+        healthTrend: (account.assistant && account.assistant.trend) || 'flat',
+        confidence: account.sourceCoverage === 'high' ? 'High' : account.sourceCoverage === 'medium' ? 'Medium' : 'Low',
+        summary: `Evidence points to ${health.label.toLowerCase()} account health. The next recommendation is grounded in usage direction, source coverage, open work, support posture, and Prism memory rather than a standalone dashboard score.`,
+        topMetricSignal: `${(account.assistant && account.assistant.wau) || 0} Assistant WAU · ${(account.agents && account.agents.wau) || 0} Agents WAU`,
+        topQualitativeSignal: account.prism && account.prism.prismRiskPattern ? account.prism.prismRiskPattern : 'Qualitative risk pattern needs live account analysis.',
+        sourceCompleteness: `${availableCount} of ${coverageEntries.length} source categories available; ${missingCount} missing or needing verification.`,
+        metricsSnapshot: [
+          { label: 'Assistant WAU', value: String((account.assistant && account.assistant.wau) || 0), delta: (account.assistant && account.assistant.trend) || 'No trend', sourceState: 'sample' },
+          { label: 'Agents WAU', value: String((account.agents && account.agents.wau) || 0), delta: (account.agents && account.agents.health) || 'Pending', sourceState: 'sample' },
+          { label: 'Open issues', value: String(account.openIssues || 0), delta: `${account.criticalIssues || 0} critical`, sourceState: 'sample' }
+        ],
+        sixMonthTrendSummary: 'Sample trend summary only. Launch requires live Sigma / BigQuery usage trend assembly upstream.',
+        functionMetrics: seats.map(row => ({ function: row.function, signal: `${row.active} active / ${row.seats} seats · ${row.phase}`, sourceState: 'sample' })),
+        stalenessFlags: getPhaseBackbone(account).overdueAdoptionActivities || ['No overdue Adoption OS activity captured'],
+        openItems: tasks.map(task => `${task.lane}: ${task.title}`),
+        supportPosture: getPackagePosture(account).supportPosture,
+        risks: (account.signals || []).filter(signal => signal.severity === 'high').map(signal => signal.title),
+        wins: [account.nextMove ? account.nextMove.title : 'Recommendation available', account.prism ? account.prism.detail : 'Prism detail pending'],
+        sourcesChecked: coverageEntries.map(entry => ({ source: entry.category, status: entry.status, note: entry.reason }))
+      };
+    }
+
+    function evidenceStatusTone(status) {
+      if (status === 'available' || status === 'sample' || status === 'live') return 'low';
+      if (status === 'missing' || status === 'stale') return 'high';
+      return 'medium';
+    }
+
+    function renderSimpleEvidenceRows(items, emptyLabel, itemMapper) {
+      if (!items || !items.length) {
+        return `<div class="meta-row"><span>${escapeHtml(emptyLabel)}</span><span class="pill medium">None</span></div>`;
+      }
+      return items.map(itemMapper).join('');
+    }
+
+    function renderAccountEvidence(account) {
+      const evidence = getAccountEvidence(account);
+      const firstStalenessFlag = (evidence.stalenessFlags && evidence.stalenessFlags[0]) || 'No staleness flag captured';
+      ui.evidenceSummaryTitle.textContent = `Evidence for ${account.name}`;
+      ui.evidenceHealthRating.textContent = `${evidence.healthRating} · ${evidence.confidence} confidence`;
+      ui.evidenceSummaryBody.textContent = evidence.summary;
+      ui.evidenceMetricSignal.textContent = evidence.topMetricSignal;
+      ui.evidenceQualSignal.textContent = evidence.topQualitativeSignal;
+      ui.evidenceStalenessFlag.textContent = firstStalenessFlag;
+      ui.evidenceSourceCompleteness.textContent = evidence.sourceCompleteness;
+      ui.evidenceMetricsList.innerHTML = renderSimpleEvidenceRows(evidence.metricsSnapshot, 'No metrics captured', metric => `
+        <div class="meta-row">
+          <span><strong>${escapeHtml(metric.label)}</strong><br><span class="muted">${escapeHtml(metric.delta)}</span></span>
+          <span class="pill ${evidenceStatusTone(metric.sourceState)}">${escapeHtml(metric.value)}</span>
+        </div>
+      `);
+      ui.evidenceFunctionList.innerHTML = renderSimpleEvidenceRows(evidence.functionMetrics, 'No function evidence captured', item => `
+        <div class="meta-row">
+          <span><strong>${escapeHtml(item.function)}</strong><br><span class="muted">${escapeHtml(item.signal)}</span></span>
+          <span class="pill ${evidenceStatusTone(item.sourceState)}">${escapeHtml(item.sourceState)}</span>
+        </div>
+      `);
+      ui.evidenceOpenItemsList.innerHTML = renderSimpleEvidenceRows(evidence.openItems, 'No open items captured', item => `
+        <div class="meta-row">
+          <span>${escapeHtml(item)}</span>
+          <span class="pill medium">Open</span>
+        </div>
+      `);
+      ui.evidenceRisksList.innerHTML = renderSimpleEvidenceRows(evidence.risks, 'No risks captured', item => `
+        <div class="meta-row">
+          <span>${escapeHtml(item)}</span>
+          <span class="pill high">Risk</span>
+        </div>
+      `);
+      ui.evidenceWinsList.innerHTML = renderSimpleEvidenceRows(evidence.wins, 'No wins captured', item => `
+        <div class="meta-row">
+          <span>${escapeHtml(item)}</span>
+          <span class="pill low">Win</span>
+        </div>
+      `);
+      ui.evidenceSourcesList.innerHTML = renderSimpleEvidenceRows(evidence.sourcesChecked, 'No sources checked', source => `
+        <div class="meta-row">
+          <span><strong>${escapeHtml(source.source)}</strong><br><span class="muted">${escapeHtml(source.note)}</span></span>
+          <span class="pill ${evidenceStatusTone(source.status)}">${escapeHtml(source.status)}</span>
+        </div>
+      `);
     }
 
     function renderTopWorkflows(account) {
@@ -4465,7 +5046,8 @@
       const primarySignal = account.signals[0] || {};
       const strategicAction = account.nextMove.title;
       const bestNextStep = account.nextMove.session;
-      const phaseBackbone = getPhaseBackbone(account);
+      const activePhaseKey = getActivePhaseKey(account);
+      const phaseBackbone = getPhaseBackbone(account, activePhaseKey);
       const recommendedResource = getRecommendedResource(account);
       const prismHealth = getPrismHealthContext(account);
       const prismCapture = getPrismCapture(account.name);
@@ -4476,6 +5058,8 @@
       const keyContacts = getKeyContacts(account);
       const taskOwnership = getTaskOwnership(account);
       const seatDistribution = getSeatDistribution(account);
+      const accountPlan = getAccountPlan(account);
+      const accountEvidence = getAccountEvidence(account);
       const model = {
         product: {
           name: 'Glean Adoption-OS',
@@ -4544,8 +5128,18 @@
           },
           what_is: {
             currentAdoptionPhase: phases[account.phase],
+            accountPlan,
+            accountEvidence,
+            selectedPhaseGuidance: phases[activePhaseKey],
             phaseObjective: phaseBackbone.phaseObjective,
             currentMilestone: phaseBackbone.currentMilestone,
+            aiomNeedsToKnow: phaseBackbone.aiomNeedsToKnow,
+            decisionLens: phaseBackbone.decisionLens,
+            whatGoodLooksLike: phaseBackbone.whatGoodLooksLike,
+            commonBlockers: phaseBackbone.commonBlockers,
+            prismDecisionUse: phaseBackbone.prismDecisionUse,
+            skillInputs: phaseBackbone.skillInputs,
+            nextMotion: phaseBackbone.nextMotion,
             openAdoptionActivities: phaseBackbone.openAdoptionActivities,
             overdueAdoptionActivities: phaseBackbone.overdueAdoptionActivities,
             phaseAssets: phaseBackbone.phaseAssets,
@@ -4828,7 +5422,9 @@
       const account = getAccount();
       renderHero(account);
       renderHealthOverlay(account);
-      renderPhaseBackbone(account);
+      renderAccountEvidence(account);
+      renderAccountPlan(account);
+      renderPhaseBackbone(account, getActivePhaseKey(account));
       renderTopWorkflows(account);
       renderPackagePosture(account);
       renderStandardPack(account);
@@ -5136,9 +5732,8 @@
       button.addEventListener('click', () => {
         localState.activePhaseFilter = button.dataset.phase;
         document.querySelectorAll('.phase-chip').forEach(chip => chip.classList.toggle('active', chip.dataset.phase === button.dataset.phase));
-        renderTemplates();
-        renderTools(getAccount());
-        showToast(button.dataset.phase === 'all' ? 'Showing all phases' : `Filtered to ${button.textContent}`);
+        renderAll();
+        showToast(button.dataset.phase === 'all' ? 'Showing account phase guidance' : `Filtered overview to ${button.textContent}`);
       });
     });
 

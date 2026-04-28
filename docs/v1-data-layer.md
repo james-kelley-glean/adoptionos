@@ -84,8 +84,16 @@ What it serves: where the client is in the journey and which phase-specific moti
 Fields:
 
 - currentAdoptionPhase
+- selectedPhaseGuidance
 - phaseObjective
 - currentMilestone
+- aiomNeedsToKnow
+- decisionLens
+- whatGoodLooksLike
+- commonBlockers
+- prismDecisionUse
+- skillInputs
+- nextMotion
 - targetFunction
 - targetAudience
 - completedAdoptionActivities
@@ -99,9 +107,51 @@ Behavior:
 
 - The Overview should lead with the Adoption OS phase backbone before generic risk, source, or weekly-priority detail.
 - The current phase should expose its objective, current milestone, open adoption activities, overdue adoption activities, and phase-relevant assets.
+- The phase toolbar should update the Overview guidance itself, not only Templates and Tools. If a selected phase is not the account's current phase, the artifact should show that phase's general AIOM guidance while clearly preserving the account's actual current phase.
+- Each phase should explain what the AIOM needs to know, the decision lens, what good looks like, common blockers, how to use Prism, which skill-package inputs matter, and the next motion.
 - Weekly or Monday priority should summarize what needs attention this week; it should not replace the operating model.
 - A single client can have multiple functions in different phases at the same time. `functionPhaseStatus` should represent function, phase, and status so the AIOM can see where readiness, stickiness, or scale motions differ inside the same account.
 - Phase-aware templates, tools, and recommended assets should remain filtered by phase and connected to the current account motion.
+
+### 2A. Account Plan Contract
+
+What it serves: connects Plan Generation output to the Adoption OS operating surface so the recommended action is grounded in the customer's business objective, north-star outcome, and current milestone path.
+
+Prototype rule:
+
+- Seeded or sample account plan data is acceptable while shaping the artifact locally.
+- Launch requires live accountSnapshot assembly upstream from Glean-accessible sources before the artifact is used as production account intelligence.
+- The artifact should render the prepared `accountPlan`; it should not directly fetch Salesforce, Sigma, Slack, Prism, or Drive data from inside Canvas.
+- Every major plan field should carry source-state metadata so the AIOM can distinguish `live`, `sample`, `inferred`, `missing`, and `stale` inputs.
+
+Fields:
+
+- accountPlan
+- planStatus
+- lastReviewed
+- businessObjective
+- northStarOutcome
+- currentPhaseAssessment
+- milestones
+- milestone.name
+- milestone.target
+- milestone.status
+- milestone.successCriteria
+- milestone.resources
+- blockers
+- successCriteria
+- keyContacts
+- planEvolution
+- sourcesUsed
+- sourceState
+- sourceStateLabel
+
+Behavior:
+
+- The Overview should show a compact plan spine before the phase backbone: business objective, north-star outcome, plan status, next milestone, primary blocker, and source state.
+- New or unreviewed plans should be marked `DRAFT`; stale plans should be marked `NEEDS REFRESH`; reviewed plans can become `ACTIVE`.
+- Plan evolution should preserve why the business objective, north-star outcome, phase, or milestone path changed.
+- `sourcesUsed` should show what was found, inferred, missing, or stale so launch readiness depends on evidence rather than hidden assumptions.
 
 ### 3. Current Signals
 
@@ -128,6 +178,48 @@ Fields:
 - supportingSources
 - dataConfidence
 - confidenceReason
+
+### 3A. Account Evidence Contract
+
+What it serves: gives the AIOM evidence behind the recommendation without turning Adoption OS into a generic reporting dashboard.
+
+Prototype rule:
+
+- Sample account evidence can be used in local prototype data.
+- Launch requires live `accountSnapshot` assembly upstream from Sigma / BigQuery, Salesforce, Prism, Slack, meetings, support, docs, and other relevant Glean-accessible sources.
+- The artifact should render prepared `accountEvidence`; it should not query live systems directly from Canvas.
+- Progressive detail should always be available: the AIOM should see a compact evidence summary by default and be able to expand into metrics, functions, open items, risks, wins, support posture, and sources checked.
+
+Fields:
+
+- accountEvidence
+- healthRating
+- healthTrend
+- confidence
+- summary
+- topMetricSignal
+- topQualitativeSignal
+- sourceCompleteness
+- metricsSnapshot
+- metric.label
+- metric.value
+- metric.delta
+- metric.sourceState
+- sixMonthTrendSummary
+- functionMetrics
+- stalenessFlags
+- openItems
+- supportPosture
+- risks
+- wins
+- sourcesChecked
+
+Behavior:
+
+- The default view remains action-first. Evidence explains why the recommendation is credible; it does not replace the recommendation.
+- Evidence only earns screen space if it changes the next action, confidence, timing, owner path, or source verification need.
+- Details on demand should preserve source states such as `live`, `sample`, `inferred`, `missing`, and `stale`.
+- Live launch should treat Sigma / BigQuery usage metrics as the quantitative baseline while cross-checking qualitative signals from Prism, Slack, meetings, support, email, docs, and CRM.
 
 ### 4. Capacity And Commercial Context
 
