@@ -46,6 +46,10 @@ The core repo is model-agnostic, but this repo also includes an optional OpenAI 
 
 For agent-safe implementation flow, source-of-truth hierarchy, and CI expectations, see [docs/agentic-development.md](docs/agentic-development.md).
 
+## V2 Skill And Data Map
+
+For the V2 operating-system scope, skill contribution map, and software/source taxonomy, see [docs/v2-skill-value-and-software-map.md](docs/v2-skill-value-and-software-map.md).
+
 ## CI
 
 GitHub Actions runs on all pushes and pull requests:
