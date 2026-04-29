@@ -50,6 +50,12 @@ async function main() {
     await frame.waitForSelector('#portfolioTableBody tr', { state: 'attached', timeout: 60_000 });
 
     await frame.waitForSelector('#strategicActionPanel', { state: 'visible' });
+    const motionState = await frame.evaluate(() => ({
+      title: document.querySelector('#phaseMotionTitle')?.textContent || '',
+      actions: document.querySelectorAll('[data-motion-action]').length
+    }));
+    assert(/Run this .* motion/.test(motionState.title), 'missing phase motion title');
+    assert(motionState.actions === 4, 'expected four phase motion actions');
     await frame.waitForSelector('#overviewFollowupPanel', { state: 'visible' });
     assert(await frame.locator('#phaseBackbonePanel').isHidden(), 'Phase backbone should be tucked behind operating context by default');
     await frame.locator('#overviewSecondaryDetails > summary').click();

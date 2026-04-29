@@ -904,6 +904,30 @@
       color: var(--glean-black);
     }
 
+    .motion-launcher {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 16px;
+      align-items: center;
+      margin-top: 16px;
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: rgba(255,255,255,0.72);
+    }
+
+    .motion-action-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(150px, 1fr));
+      gap: 8px;
+    }
+
+    .motion-action-button {
+      min-height: 42px;
+      justify-content: flex-start;
+      text-align: left;
+    }
+
     .pill {
       display: inline-block;
       padding: 6px 10px;
@@ -1652,6 +1676,7 @@
     @media screen and (max-width: 1180px) {
       .grid.metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); }
       .grid.two, .grid.three, .grid.four, .source-grid, .templates-grid, .tools-grid, .risk-grid, .audit-grid { grid-template-columns: 1fr; }
+      .motion-launcher { grid-template-columns: 1fr; }
       #clientHealthUsageGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .health-evidence-summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .hero-top { flex-direction: column; }
@@ -1671,6 +1696,7 @@
       .page { padding: 16px; }
       .grid.metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       #clientHealthUsageGrid { grid-template-columns: 1fr; }
+      .motion-launcher, .motion-action-grid { grid-template-columns: 1fr; }
       .health-action-grid, .health-driver, .health-driver-list, .health-evidence-summary { grid-template-columns: 1fr; }
       .evidence-card { grid-template-columns: 1fr; }
       .evidence-rail { width: 100%; height: 6px; }
@@ -1829,6 +1855,14 @@
           </div>
           <div class="callout" style="margin-top:16px;">
             <strong>Update Account Memory:</strong> <span id="capturePrompt"></span>
+          </div>
+          <div class="motion-launcher" id="phaseMotionLauncher">
+            <div>
+              <div class="eyebrow" id="phaseMotionKicker">Run this motion</div>
+              <h3 id="phaseMotionTitle">Run this motion</h3>
+              <p class="muted" id="phaseMotionContext"></p>
+            </div>
+            <div class="motion-action-grid" id="phaseMotionActions"></div>
           </div>
         </section>
 
@@ -3035,6 +3069,49 @@
       }
     };
 
+    const phaseMotionActionDefaults = {
+      prep: {
+        title: 'Run this Prep motion',
+        context: 'Prep focuses on account baseline, stakeholder clarity, source gaps, and success criteria.',
+        actions: [
+          { type: 'analyze_account', label: 'Analyze prep risk', skill: 'Account Analysis', output: 'Prep risk read' },
+          { type: 'generate_plan', label: 'Generate success plan', skill: 'Plan Generation', output: 'Success plan' },
+          { type: 'draft_followup', label: 'Draft context follow-up', skill: 'Meeting Summarizer + Follow Up', output: 'Customer context follow-up' },
+          { type: 'save_account_memory', label: 'Save prep memory', skill: 'Account Memory', output: 'Prep memory update' }
+        ]
+      },
+      readiness: {
+        title: 'Run this Readiness motion',
+        context: 'Readiness focuses on launch blockers, training audience, enablement path, comms risk, and owner/date commitments.',
+        actions: [
+          { type: 'analyze_account', label: 'Analyze launch risk', skill: 'Account Analysis', output: 'Launch risk read' },
+          { type: 'generate_plan', label: 'Generate readiness plan', skill: 'Plan Generation', output: 'Readiness plan' },
+          { type: 'draft_followup', label: 'Draft blocker follow-up', skill: 'Meeting Summarizer + Follow Up', output: 'Blocker follow-up' },
+          { type: 'save_account_memory', label: 'Save readiness memory', skill: 'Account Memory', output: 'Readiness memory update' }
+        ]
+      },
+      stickiness: {
+        title: 'Run this Stickiness motion',
+        context: 'Stickiness focuses on usage quality, workflow adoption, champion motion, power-user evidence, and habit formation.',
+        actions: [
+          { type: 'analyze_account', label: 'Analyze adoption momentum', skill: 'Account Analysis', output: 'Adoption momentum read' },
+          { type: 'generate_plan', label: 'Generate growth plan', skill: 'Plan Generation', output: 'Adoption growth plan' },
+          { type: 'draft_followup', label: 'Draft champion follow-up', skill: 'Meeting Summarizer + Follow Up', output: 'Champion follow-up' },
+          { type: 'save_account_memory', label: 'Save adoption memory', skill: 'Account Memory', output: 'Adoption memory update' }
+        ]
+      },
+      scale: {
+        title: 'Run this Scale motion',
+        context: 'Scale focuses on governance, executive value proof, COE rhythm, expansion readiness, and durable operating model.',
+        actions: [
+          { type: 'analyze_account', label: 'Analyze governance risk', skill: 'Account Analysis', output: 'Governance risk read' },
+          { type: 'generate_plan', label: 'Generate scale plan', skill: 'Plan Generation', output: 'Scale plan' },
+          { type: 'draft_followup', label: 'Draft exec follow-up', skill: 'Meeting Summarizer + Follow Up', output: 'Executive follow-up' },
+          { type: 'save_account_memory', label: 'Save scale memory', skill: 'Account Memory', output: 'Scale memory update' }
+        ]
+      }
+    };
+
     const templatesLibrary = [
       { phase: 'prep', title: 'Success Planning Deck', type: 'Presentation', activity: 'Success planning', url: 'https://docs.google.com/presentation/d/1VqVluTgCPrnSNveUxoUOoFzBmzKFifqooCJn4oCrhpc/edit' },
       { phase: 'prep', title: 'Kickoff questions guide', type: 'Guide', activity: 'Internal preparation', url: 'https://docs.google.com/document/d/1ENpn22mAktHHDjw5MSq1I3BJKbGGbJIvVypIDxxbTGk/edit?usp=sharing' },
@@ -3182,6 +3259,11 @@
         phaseAssets: useAccountSpecificState ? account.phaseAssets || defaults.phaseAssets : defaults.phaseAssets,
         functionPhaseStatus: useAccountSpecificState ? account.functionPhaseStatus || defaults.functionPhaseStatus : defaults.functionPhaseStatus
       };
+    }
+
+    function getPhaseMotionActions(account) {
+      const phaseKey = account.phase || 'prep';
+      return phaseMotionActionDefaults[phaseKey] || phaseMotionActionDefaults.prep;
     }
 
     function getTrainingReadiness(account) {
@@ -4041,6 +4123,11 @@
       decisionOwner: document.getElementById('decisionOwner'),
       targetFunction: document.getElementById('targetFunction'),
       primaryFrictionType: document.getElementById('primaryFrictionType'),
+        phaseMotionLauncher: document.getElementById('phaseMotionLauncher'),
+        phaseMotionKicker: document.getElementById('phaseMotionKicker'),
+        phaseMotionTitle: document.getElementById('phaseMotionTitle'),
+        phaseMotionContext: document.getElementById('phaseMotionContext'),
+        phaseMotionActions: document.getElementById('phaseMotionActions'),
         capturePrompt: document.getElementById('capturePrompt'),
         evidenceSummaryTitle: document.getElementById('evidenceSummaryTitle'),
         evidenceHealthRating: document.getElementById('evidenceHealthRating'),
@@ -4311,6 +4398,50 @@
 
     function getCapturePrompt(account) {
       return `Save the ${account.nextMove.session.toLowerCase()} outcome, what changed, remaining blockers, owner/date commitments, recommended resource used, and the next follow-up needed.`;
+    }
+
+    function buildPhaseMotionPrompt(account, action) {
+      const phase = phases[account.phase] || phases.prep;
+      const evidence = getAccountEvidence(account);
+      const missingSources = getMissingSources(account);
+      const prismHealth = getPrismHealthContext(account);
+      return [
+        `Run Adoption OS action: ${action.label}`,
+        `Use skill/modeling pattern: ${action.skill}`,
+        `Account: ${account.name}`,
+        `Phase: ${phase}`,
+        `Business context: ${account.business}`,
+        `Recommended move: ${account.nextMove.title}`,
+        `Best next step: ${account.nextMove.session}`,
+        `Why now: ${account.nextMove.why}`,
+        `Evidence confidence: ${evidence.confidence}`,
+        `Client Health signal: ${prismHealth.prismHealthSignal}`,
+        `Risk pattern: ${prismHealth.prismRiskPattern}`,
+        `Missing or verification-needed sources: ${missingSources.length ? missingSources.join(', ') : 'None flagged'}`,
+        `Output needed: ${action.output}`,
+        'Keep the output concise, AIOM-ready, source-aware, and tied to owner/date next steps.'
+      ].join('\n');
+    }
+
+    function launchPhaseMotionAction(actionType) {
+      const account = getAccount();
+      const motion = getPhaseMotionActions(account);
+      const action = motion.actions.find(item => item.type === actionType);
+      if (!action) return;
+      const prompt = buildPhaseMotionPrompt(account, action);
+      if (window.GleanBridge && typeof window.GleanBridge.postMessage === 'function') {
+        window.GleanBridge.postMessage({
+          actionId: `adoption-os-${action.type}`,
+          type: 'glean-send-message',
+          metadata: {
+            displayLabel: action.label,
+            context: prompt
+          }
+        });
+        showToast(`${action.label} sent to Glean`);
+        return;
+      }
+      copyWithPromptFallback(prompt);
     }
 
     function getRecommendedResource(account) {
@@ -5205,6 +5336,19 @@
       });
     }
 
+    function renderPhaseMotionLauncher(account) {
+      const motion = getPhaseMotionActions(account);
+      const phaseLabel = phases[account.phase] || phases.prep;
+      ui.phaseMotionKicker.textContent = `Run this ${phaseLabel} motion`;
+      ui.phaseMotionTitle.textContent = motion.title;
+      ui.phaseMotionContext.textContent = motion.context;
+      ui.phaseMotionActions.innerHTML = motion.actions.map(action => `
+        <button class="buttonlike motion-action-button" data-motion-action="${escapeHtmlAttr(action.type)}">
+          ${escapeHtml(action.label)}
+        </button>
+      `).join('');
+    }
+
     function renderNextMove(account) {
       const nextMove = account.nextMove;
       const recommendedResource = getRecommendedResource(account);
@@ -6014,6 +6158,7 @@
       renderSeatDistribution(account);
       renderAttention(account);
       renderNextMove(account);
+      renderPhaseMotionLauncher(account);
       renderReleaseSignals(account);
       renderRisk(account);
       renderSources(account);
@@ -6326,6 +6471,12 @@
     });
 
     document.getElementById('refreshBtn').addEventListener('click', refreshLocalState);
+
+    ui.phaseMotionActions.addEventListener('click', (event) => {
+      const button = event.target.closest('[data-motion-action]');
+      if (!button) return;
+      launchPhaseMotionAction(button.dataset.motionAction);
+    });
 
     function buildAssistantContext(account) {
       const recommendedResource = getRecommendedResource(account);

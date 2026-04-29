@@ -346,6 +346,19 @@ Behavior:
 - Strategic action, rationale, next step, owner, target audience, friction, recommended resource, recommended asset, and Account Memory update prompt should be visible without opening the data model.
 - Every strategic action must resolve to a recommended Glean resource before it renders.
 
+### 6A. Phase-Aware Run This Motion
+
+What it serves: lets the AIOM execute the recommendation without leaving the Adoption OS command center.
+
+Behavior:
+
+- The launcher appears on Overview directly under the recommended move.
+- It adapts visible verbs and prompt context to the current Adoption OS phase.
+- It always includes four actions: analyze account, generate plan, draft follow-up, and save Account Memory.
+- In Glean, each action should send a guarded `glean-send-message` request with account, phase, evidence, source gaps, and desired output.
+- Outside Glean, each action must degrade to a copyable prompt.
+- The launcher should not render full skill outputs on Overview; deeper output belongs in a drawer, workbench, or returned Glean follow-up.
+
 ### 7. Resource Catalog
 
 What it serves: maps the strategic motion to the best Glean agent, skill, tool, or reusable asset.
