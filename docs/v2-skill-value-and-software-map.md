@@ -68,7 +68,7 @@ V2 artifact surfaces created from this:
 - Task ownership split.
 - Who to contact.
 - Needs attention now.
-- Prism capture prompts.
+- Account Memory update prompts.
 - Recommendation resource routing.
 
 ## Software And Data Sources
@@ -92,7 +92,7 @@ V2 artifact surfaces created from this:
 
 ### Glean-Native Intelligence And Action
 
-- Prism: underlying account health memory, repeated patterns, prior action outcomes, blockers, what worked, what did not work, and recommended follow-up.
+- Account Memory: underlying account health context, repeated patterns, prior action outcomes, blockers, what worked, what did not work, and recommended follow-up.
 - Glean Search: source retrieval and evidence lookup.
 - Glean Assistant: synthesis, prompt fallback, and action explanation.
 - Glean Skills: reusable execution workflows for account analysis, plan generation, task triage, meeting prep, and follow-up.

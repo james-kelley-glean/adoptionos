@@ -414,6 +414,10 @@
     }
 
     .tab {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
       padding: 10px 14px;
       background: transparent;
       color: var(--muted);
@@ -426,6 +430,24 @@
       background: var(--glean-blue);
       color: var(--glean-white);
       box-shadow: var(--shadow-2);
+    }
+
+    .tab-alert-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: var(--danger);
+      box-shadow: 0 0 0 3px rgba(229,57,53,0.12);
+      display: none;
+      flex: 0 0 auto;
+    }
+
+    .tab.has-review .tab-alert-dot {
+      display: inline-block;
+    }
+
+    .tab.active .tab-alert-dot {
+      box-shadow: 0 0 0 2px rgba(255,255,255,0.72), 0 0 0 5px rgba(229,57,53,0.16);
     }
 
     .phase-toolbar {
@@ -544,6 +566,12 @@
       margin-top: 18px;
       display: grid;
       gap: 18px;
+    }
+
+    .client-health-spine {
+      display: grid;
+      gap: 18px;
+      margin-top: 16px;
     }
 
     .capture-grid {
@@ -693,17 +721,26 @@
       display: grid;
       gap: 10px;
       margin-top: 12px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .health-driver {
       display: grid;
-      grid-template-columns: 28px 1fr auto;
+      grid-template-columns: 1fr auto;
       gap: 10px;
       align-items: start;
       padding: 12px;
       border: 1px solid var(--border);
       border-radius: 14px;
       background: var(--glean-white);
+    }
+
+    .health-driver .eyebrow {
+      margin-bottom: 5px;
+    }
+
+    .health-driver h4 {
+      margin-bottom: 6px;
     }
 
     .driver-rank {
@@ -717,6 +754,126 @@
       color: var(--glean-black);
       font-size: 12px;
       font-weight: 800;
+    }
+
+    .health-evidence-summary {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin: 12px 0;
+    }
+
+    .health-evidence-stat {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px;
+      background: rgba(255,255,255,0.72);
+    }
+
+    .health-evidence-stat strong {
+      display: block;
+      margin-top: 4px;
+      font-size: 15px;
+      line-height: 1.25;
+    }
+
+    .health-detail-panel {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px 14px;
+      background: rgba(255,255,255,0.72);
+    }
+
+    .health-detail-panel summary {
+      cursor: pointer;
+      color: var(--glean-blue);
+      font-weight: 700;
+    }
+
+    .health-detail-panel[open] summary {
+      margin-bottom: 12px;
+    }
+
+    .evidence-stack {
+      display: grid;
+      gap: 12px;
+      margin: 14px 0;
+    }
+
+    .evidence-card {
+      display: grid;
+      grid-template-columns: 8px minmax(0, 1fr) auto;
+      gap: 14px;
+      align-items: stretch;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 12px;
+      background: rgba(255,255,255,0.82);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .evidence-card.high {
+      border-color: rgba(229,57,53,0.22);
+      background: linear-gradient(90deg, rgba(255,241,241,0.86), rgba(255,255,255,0.9));
+    }
+
+    .evidence-card.medium {
+      border-color: rgba(194,65,12,0.2);
+      background: linear-gradient(90deg, rgba(255,247,237,0.88), rgba(255,255,255,0.9));
+    }
+
+    .evidence-card.low {
+      border-color: rgba(0,178,7,0.18);
+      background: linear-gradient(90deg, rgba(237,253,238,0.86), rgba(255,255,255,0.9));
+    }
+
+    .evidence-rail {
+      width: 8px;
+      border-radius: 999px;
+      background: var(--glean-blue);
+    }
+
+    .evidence-rail.customer-friction { background: var(--danger); }
+    .evidence-rail.execution-readiness { background: var(--warning); }
+    .evidence-rail.adoption-momentum { background: var(--glean-green-dark); }
+    .evidence-rail.account-memory { background: var(--glean-blue); }
+    .evidence-rail.confidence-gap { background: var(--muted); }
+
+    .evidence-card h4 {
+      margin: 4px 0 6px;
+      font-size: 17px;
+    }
+
+    .evidence-card p {
+      margin: 0;
+    }
+
+    .evidence-source {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 10px;
+      min-width: 168px;
+      text-align: right;
+    }
+
+    .evidence-link {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: rgba(52,60,237,0.08);
+      color: var(--glean-blue);
+      font-size: 12px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .evidence-link.missing {
+      background: rgba(255,241,241,0.85);
+      color: var(--danger);
     }
 
     .meta-row {
@@ -1496,6 +1653,7 @@
       .grid.metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); }
       .grid.two, .grid.three, .grid.four, .source-grid, .templates-grid, .tools-grid, .risk-grid, .audit-grid { grid-template-columns: 1fr; }
       #clientHealthUsageGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .health-evidence-summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .hero-top { flex-direction: column; }
       .hero-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .account-rail { flex-wrap: wrap; }
@@ -1513,7 +1671,10 @@
       .page { padding: 16px; }
       .grid.metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       #clientHealthUsageGrid { grid-template-columns: 1fr; }
-      .health-action-grid, .health-driver { grid-template-columns: 1fr; }
+      .health-action-grid, .health-driver, .health-driver-list, .health-evidence-summary { grid-template-columns: 1fr; }
+      .evidence-card { grid-template-columns: 1fr; }
+      .evidence-rail { width: 100%; height: 6px; }
+      .evidence-source { min-width: 0; align-items: flex-start; text-align: left; }
       .hero { padding: 24px; border-radius: 22px; }
       .hero h1 { font-size: 34px; }
       .timeline-item { grid-template-columns: 1fr; gap: 6px; }
@@ -1598,7 +1759,10 @@
         <button class="tab active" data-tab="overview">Overview</button>
         <button class="tab" data-tab="templates">Templates</button>
         <button class="tab" data-tab="tools">Tools</button>
-        <button class="tab" data-tab="clientHealth">Client Health</button>
+        <button class="tab" data-tab="clientHealth">
+          <span>Client Health</span>
+          <span class="tab-alert-dot" id="clientHealthReviewDot" aria-label="Client Health needs review"></span>
+        </button>
         <button class="tab" data-tab="fluency">AI Fluency</button>
       </nav>
 
@@ -1664,7 +1828,7 @@
             </div>
           </div>
           <div class="callout" style="margin-top:16px;">
-            <strong>Capture back into Prism:</strong> <span id="capturePrompt"></span>
+            <strong>Update Account Memory:</strong> <span id="capturePrompt"></span>
           </div>
         </section>
 
@@ -2213,33 +2377,51 @@
           <div class="split">
             <div>
               <div class="section-kicker">Client health</div>
-              <h2>Usage, risk, and AIOM watch items</h2>
+              <h2>What changed, why it matters, and what to do next</h2>
             </div>
-            <div class="status blue"><i></i><span>Canvas-safe inline view</span></div>
+            <div class="status blue"><i></i><span>AIOM operating read</span></div>
           </div>
-          <p class="muted">This tab combines usage metrics, account-memory signals, and current worries so the AIOM can see what is healthy, what is slipping, and what deserves action.</p>
-          <div class="grid two" style="margin-top:16px;">
+          <p class="muted">Start with the account read, then inspect the four health drivers and evidence only when it changes the next action.</p>
+          <div class="client-health-spine">
             <section class="metric-card" style="min-height:auto;">
-              <div class="section-kicker">Usage metrics</div>
-              <div class="risk-grid" id="clientHealthUsageGrid"></div>
+              <div class="list" id="clientHealthWorryList"></div>
             </section>
             <section class="metric-card" style="min-height:auto;">
-              <div class="section-kicker">Client health read</div>
-              <div class="list" id="clientHealthWorryList"></div>
+              <div class="section-kicker">Health drivers</div>
+              <div class="risk-grid" id="clientHealthUsageGrid"></div>
             </section>
           </div>
           <div class="prism-workspace">
-            <div class="grid">
-              <section class="metric-card" style="min-height:auto;">
-                <div class="section-kicker">Health briefing card</div>
-                <div id="prismInlineContext"></div>
-              </section>
-              <section class="hidden" aria-hidden="true">
-                <div class="section-kicker">Session capture only</div>
+            <section class="metric-card" style="min-height:auto;">
+              <div class="split">
+                <div>
+                  <div class="section-kicker">Evidence behind the read</div>
+                  <p class="muted">Use this to validate confidence, freshness, and source gaps before acting.</p>
+                </div>
+                <span class="tool-tag">Expandable detail</span>
+              </div>
+              <div id="prismInlineContext"></div>
+              <div class="list" id="prismInlineSignalList"></div>
+              <details class="health-detail-panel">
+                <summary>View signal history</summary>
+                <div class="timeline" id="clientHealthSignalsList"></div>
+              </details>
+            </section>
+            <section class="metric-card" style="min-height:auto;">
+              <div class="split">
+                <div>
+                  <div class="section-kicker">Account Memory</div>
+                  <p class="muted">Review the proposed client update, then save it to the account workspace so the next Client Health read has durable context.</p>
+                </div>
+                <span class="tool-tag">Review step</span>
+              </div>
+              <textarea class="capture-field" id="prismCopySummary" readonly></textarea>
+              <details class="health-detail-panel" style="margin-top:12px;">
+                <summary>Refine account memory update</summary>
                 <div class="capture-grid">
                   <div>
-                    <label class="field-label" for="prismSummaryInput">Executive summary</label>
-                    <textarea class="capture-field" id="prismSummaryInput" placeholder="What is the clearest summary of the account right now?"></textarea>
+                    <label class="field-label" for="prismSummaryInput">Account summary</label>
+                    <textarea class="capture-field" id="prismSummaryInput" placeholder="What should the client record remember about this account right now?"></textarea>
                   </div>
                   <div>
                     <label class="field-label" for="prismRisksInput">Key risks and blockers</label>
@@ -2282,27 +2464,14 @@
                     <textarea class="capture-field" id="prismRecommendedFollowupInput" placeholder="What should the next AIOM or Glean action be?"></textarea>
                   </div>
                   <div class="button-row">
-                    <button class="buttonlike" id="savePrismCaptureBtn">Keep notes for this session</button>
-                    <span class="footer-note" id="prismCaptureStatus">Notes are held in memory while this artifact is open.</span>
+                    <button class="buttonlike" id="savePrismCaptureBtn">Keep account update for this session</button>
+                    <span class="footer-note" id="prismCaptureStatus">Account update is held while this artifact is open.</span>
                   </div>
                 </div>
-              </section>
-            </div>
-            <section class="metric-card" style="min-height:auto;">
-              <div class="section-kicker">Top signals informing Client Health</div>
-              <div class="list" id="prismInlineSignalList"></div>
-            </section>
-            <section class="metric-card" style="min-height:auto;">
-              <div class="section-kicker">Signal history</div>
-              <div class="timeline" id="clientHealthSignalsList"></div>
-            </section>
-            <section class="metric-card" style="min-height:auto;">
-              <div class="section-kicker">Copy into Prism</div>
-              <p class="muted">Save this summary into Prism after the customer touch so the account memory includes the recommended action, actual outcome, remaining blocker, commitments, and follow-up loop.</p>
-              <textarea class="capture-field" id="prismCopySummary" readonly></textarea>
+              </details>
             </section>
           </div>
-          <p class="footer-note">Canvas interactive content does not provide persistent browser storage, so capture notes are session-only in this artifact. Durable notes should be copied into the account workspace or captured through a Glean Agent flow.</p>
+          <p class="footer-note">Canvas interactive content does not provide persistent browser storage, so Account Memory edits are session-only here. Durable updates should be saved to the account workspace or captured through a Glean Agent flow until a direct writeback path is confirmed.</p>
         </section>
       </section>
 
@@ -2789,7 +2958,7 @@
           { name: 'Plan Generation', role: 'Convert kickoff context, success plan, and available hours into a practical Adoption OS path.' },
           { name: 'Triage Classification', role: 'Turn meeting notes and channel noise into owner/date commitments and unresolved dependencies.' }
         ],
-        nextMotion: 'Run the AIOM brief or transition flow, validate gaps, prepare the adoption strategy point of view, and capture the agreed plan back into Prism.',
+        nextMotion: 'Run the AIOM brief or transition flow, validate gaps, prepare the adoption strategy point of view, and save the agreed plan as Account Memory.',
         openAdoptionActivities: ['Confirm stakeholder map and decision owner', 'Lock launch scope and blocker path', 'Package the planning asset for the next customer touch'],
         overdueAdoptionActivities: [],
         phaseAssets: ['Success Planning Deck', 'Kickoff questions guide', 'Client Adoption Strategy Chatbot'],
@@ -2811,7 +2980,7 @@
           { name: 'Plan Generation', role: 'Sequence comms, enablement, training, and monitoring into a feasible launch path.' },
           { name: 'Triage Classification', role: 'Classify launch blockers, waiting-on-client items, meeting-prep tasks, and overdue enablement work.' }
         ],
-        nextMotion: 'Resolve named blockers, package launch communications and training assets, and capture readiness decisions plus follow-up commitments in Prism.',
+        nextMotion: 'Resolve named blockers, package launch communications and training assets, and save readiness decisions plus follow-up commitments as Account Memory.',
         openAdoptionActivities: ['Resolve launch blockers with named owners', 'Prepare enablement package and comms', 'Schedule training or office-hours motion'],
         overdueAdoptionActivities: [],
         phaseAssets: ['Enablement Resource Package', 'Self-Serve Training / LMS Module Outline', 'Status Report Template'],
@@ -2833,7 +3002,7 @@
           { name: 'Plan Generation', role: 'Create the champion, power-user, or business-workshop path that fits the account phase and capacity.' },
           { name: 'Triage Classification', role: 'Separate ours/theirs/waiting tasks so workshops, champions, and follow-ups do not drift.' }
         ],
-        nextMotion: 'Pick the highest-leverage workflow or champion motion, launch the supporting agent/skill/resource, and record outcome evidence in Prism.',
+        nextMotion: 'Pick the highest-leverage workflow or champion motion, launch the supporting agent/skill/resource, and record outcome evidence as Account Memory.',
         openAdoptionActivities: ['Run next-steps strategy or business workshop', 'Identify priority use cases and champions', 'Capture value narrative and follow-up commitments'],
         overdueAdoptionActivities: [],
         phaseAssets: ['Next Steps in Maxing Out Adoption Deck', 'Business-Level Workshop Facilitation Guide', 'Prompt Crafter'],
@@ -2855,7 +3024,7 @@
           { name: 'Plan Generation', role: 'Translate sustainment needs into COE, governance, event, and executive-review operating rhythms.' },
           { name: 'Triage Classification', role: 'Keep governance, value proof, and follow-up commitments visible across ours/theirs/waiting lanes.' }
         ],
-        nextMotion: 'Formalize the governance or COE rhythm, package executive value proof, and capture the client-owned operating model in Prism.',
+        nextMotion: 'Formalize the governance or COE rhythm, package executive value proof, and save the client-owned operating model as Account Memory.',
         openAdoptionActivities: ['Define governance calendar and COE owner', 'Package end-user support model', 'Prepare executive value proof'],
         overdueAdoptionActivities: [],
         phaseAssets: ['Platform Governance Follow-Up Pack', 'Special Events Blueprint + Comms Bundle', 'EBR Generator'],
@@ -2905,7 +3074,7 @@
 
     const resourceCatalog = [
       { motion: 'planning_reset', title: 'Client Adoption Strategy Chatbot', asset: 'Success Planning Deck', frictionTypes: ['support_blocker', 'strategic_plan_due', 'scope'], phases: ['prep', 'readiness'], when: 'Use when the account needs a tighter operating plan, owner path, and launch sequence.' },
-      { motion: 'meeting_follow_up', title: 'Meeting Summarizer + Follow Up', asset: 'Customer-facing blocker summary', frictionTypes: ['support_blocker', 'qbr_due'], phases: ['prep', 'readiness'], when: 'Use when decisions, blockers, and owner/date commitments need to become clean follow-up and Prism memory.' },
+      { motion: 'meeting_follow_up', title: 'Meeting Summarizer + Follow Up', asset: 'Customer-facing blocker summary', frictionTypes: ['support_blocker', 'qbr_due'], phases: ['prep', 'readiness'], when: 'Use when decisions, blockers, and owner/date commitments need to become clean follow-up and Account Memory.' },
       { motion: 'change_briefing', title: 'Glean Change Briefing Agent', asset: 'Short release video + admin digest', frictionTypes: ['release_enablement'], phases: ['readiness', 'stickiness', 'scale'], when: 'Use when release or governance changes need customer-ready admin communication.' },
       { motion: 'account_ramp', title: 'AIOM Account Ramp Companion', asset: 'Account ramp brief', frictionTypes: ['coverage_gap', 'roster_gap'], phases: ['prep', 'stickiness'], when: 'Use when context is thin, ownership is unclear, or the AIOM needs a fast baseline before acting.' },
       { motion: 'use_case_selection', title: 'Optimal Agent Use Case Recommender', asset: 'Agent use-case recommendation', frictionTypes: ['low_engagement', 'power_user_due'], phases: ['stickiness', 'scale'], when: 'Use when the next adoption move should become a concrete agent, skill, or workflow habit.' },
@@ -3121,7 +3290,7 @@
             { name: 'Package launch enablement', target: 'Before readiness motion', status: 'Not Started', successCriteria: 'Role-specific enablement path is ready for the instructional audience.', resources: ['Kickoff questions guide'] }
           ],
           blockers: ['Training audience decision still open', 'Rocketlane and Gong evidence need live verification'],
-          successCriteria: ['Owner/date commitments captured in Prism', 'No critical launch blocker lacks a named owner', 'Initial enablement path is accepted by admin owner'],
+          successCriteria: ['Owner/date commitments saved as Account Memory', 'No critical launch blocker lacks a named owner', 'Initial enablement path is accepted by admin owner'],
           keyContacts: [
             { name: 'Admin owner', role: 'Launch decision owner', relevance: 'Approves blocker path and audience sequence.' },
             { name: 'Executive sponsor', role: 'Outcome owner', relevance: 'Needs clear launch success criteria before broader motion.' }
@@ -3166,6 +3335,63 @@
             { source: 'Prism', status: 'sample', note: 'Seeded Prism blockers and health signal available.' }
           ]
         },
+        clientHealthEvidence: [
+          {
+            group: 'customer_friction',
+            title: '4 open service tickets',
+            body: 'Client-impacting support friction is part of the health read and should be inspected before any broad launch commitment.',
+            sourceSystem: 'Support tickets',
+            sourceTitle: 'Underlying ticket links required at launch',
+            sourceUrl: '',
+            sourceState: 'needs verification',
+            severity: 'high',
+            freshness: 'This week'
+          },
+          {
+            group: 'execution_readiness',
+            title: 'Planning reset should use the success plan',
+            body: 'The recommended reset needs owner/date commitments, blocker path, and launch sequence captured in the planning asset.',
+            sourceSystem: 'Docs/Drive',
+            sourceTitle: 'Success Planning Deck',
+            sourceUrl: 'https://docs.google.com/presentation/d/1VqVluTgCPrnSNveUxoUOoFzBmzKFifqooCJn4oCrhpc/edit',
+            sourceState: 'linked',
+            severity: 'high',
+            freshness: 'Current'
+          },
+          {
+            group: 'adoption_momentum',
+            title: 'Assistant usage is moving up',
+            body: 'Usage momentum supports acting now; the issue is not lack of activity, it is unresolved launch readiness.',
+            sourceSystem: 'Sigma / usage metrics',
+            sourceTitle: 'Assistant and Agents usage trend',
+            sourceUrl: '',
+            sourceState: 'needs verification',
+            severity: 'low',
+            freshness: 'Seeded'
+          },
+          {
+            group: 'account_memory',
+            title: 'Prism memory points to repeated blocker ownership',
+            body: 'Prism memory connects support noise, training decisions, and launch sequencing into the same readiness risk.',
+            sourceSystem: 'Prism',
+            sourceTitle: 'Amplify Prism view',
+            sourceUrl: '',
+            sourceState: 'needs verification',
+            severity: 'medium',
+            freshness: '3h ago'
+          },
+          {
+            group: 'confidence_gap',
+            title: 'Rocketlane and meeting evidence need verification',
+            body: 'Do not treat milestone timing or planning-session outcomes as fully grounded until the live project and meeting sources are linked.',
+            sourceSystem: 'Rocketlane + Gong/meetings',
+            sourceTitle: 'Missing live source links',
+            sourceUrl: '',
+            sourceState: 'needs verification',
+            severity: 'medium',
+            freshness: 'Open gap'
+          }
+        ],
         arrLabel: '$859.8K',
         hoursRemainingLabel: '38',
         openIssues: 4,
@@ -3847,6 +4073,7 @@
       templateCountLabel: document.getElementById('templateCountLabel'),
       toolsGrid: document.getElementById('toolsGrid'),
       toolCountLabel: document.getElementById('toolCountLabel'),
+      clientHealthReviewDot: document.getElementById('clientHealthReviewDot'),
       clientHealthUsageGrid: document.getElementById('clientHealthUsageGrid'),
       clientHealthWorryList: document.getElementById('clientHealthWorryList'),
       clientHealthSignalsList: document.getElementById('clientHealthSignalsList'),
@@ -4083,7 +4310,7 @@
     }
 
     function getCapturePrompt(account) {
-      return `Capture the ${account.nextMove.session.toLowerCase()} outcome, what changed, remaining blockers, owner/date commitments, recommended resource used, and the next follow-up needed.`;
+      return `Save the ${account.nextMove.session.toLowerCase()} outcome, what changed, remaining blockers, owner/date commitments, recommended resource used, and the next follow-up needed.`;
     }
 
     function getRecommendedResource(account) {
@@ -4103,7 +4330,7 @@
     }
 
     function buildSeededPrompt(tool, account) {
-      if (!tool) return `The customer is ${account.name}. Help me choose the next Adoption OS action and capture the outcome in Prism.`;
+      if (!tool) return `The customer is ${account.name}. Help me choose the next Adoption OS action and prepare the Account Memory update.`;
       if (tool.prompt) return tool.prompt.replace(/\[Customer\]/g, account.name).replace(/\[Client\]/g, account.name);
       return `The customer is ${account.name}. Help me with ${tool.bestFor.toLowerCase()}.`;
     }
@@ -4296,7 +4523,7 @@
             name: firstOpenActivity,
             target: account.nextMove ? account.nextMove.dueWindow : 'Next review',
             status: 'In Progress',
-            successCriteria: 'Owner, date, recommended resource, and Prism capture path are clear.',
+            successCriteria: 'Owner, date, recommended resource, and Account Memory update path are clear.',
             resources: [account.doc && account.doc.title, account.tool].filter(Boolean)
           }
         ],
@@ -4501,7 +4728,7 @@
       const pack = [
         { name: 'AIOM Account Transition Agent', status: currentTool === 'AIOM Account Transition Agent' ? 'active' : 'baseline', note: 'Baseline brief for ownership changes and account memory.' },
         { name: 'Client Adoption Strategy Chatbot', status: currentTool === 'Client Adoption Strategy Chatbot' ? 'active' : 'baseline', note: 'Default planning and strategy support for AIOMs.' },
-        { name: 'Meeting Summarizer + Follow Up', status: currentTool === 'Meeting Summarizer + Follow Up' ? 'active' : 'baseline', note: 'Turns meetings into actions, commitments, and Prism-ready notes.' },
+        { name: 'Meeting Summarizer + Follow Up', status: currentTool === 'Meeting Summarizer + Follow Up' ? 'active' : 'baseline', note: 'Turns meetings into actions, commitments, and Account Memory-ready notes.' },
         { name: account.phase === 'prep' || account.phase === 'readiness' ? 'Glean Change Briefing Agent' : 'Optimal Agent Use Case Recommender', status: 'next', note: account.phase === 'prep' || account.phase === 'readiness' ? 'Best next pack item for launch or readiness comms.' : 'Best next pack item for workflow habit and expansion motion.' }
       ];
       return {
@@ -4532,10 +4759,11 @@
       const missingCount = getMissingSources(account).length;
       const tasks = getTaskOwnership(account);
       const seats = getSeatDistribution(account);
+      const normalizedSourceCoverage = String(account.sourceCoverage || '').toLowerCase();
       return {
         healthRating: health.label.toUpperCase(),
         healthTrend: (account.assistant && account.assistant.trend) || 'flat',
-        confidence: account.sourceCoverage === 'high' ? 'High' : account.sourceCoverage === 'medium' ? 'Medium' : 'Low',
+        confidence: normalizedSourceCoverage === 'high' ? 'High' : normalizedSourceCoverage === 'medium' ? 'Medium' : 'Low',
         summary: `Evidence points to ${health.label.toLowerCase()} account health. The next recommendation is grounded in usage direction, source coverage, open work, support posture, and Prism memory rather than a standalone dashboard score.`,
         topMetricSignal: `${(account.assistant && account.assistant.wau) || 0} Assistant WAU · ${(account.agents && account.agents.wau) || 0} Agents WAU`,
         topQualitativeSignal: account.prism && account.prism.prismRiskPattern ? account.prism.prismRiskPattern : 'Qualitative risk pattern needs live account analysis.',
@@ -4560,6 +4788,117 @@
       if (status === 'available' || status === 'sample' || status === 'live') return 'low';
       if (status === 'missing' || status === 'stale') return 'high';
       return 'medium';
+    }
+
+    function normalizeEvidenceGroupClass(group) {
+      return String(group || 'account-memory').replace(/_/g, '-').replace(/[^a-z0-9-]/gi, '').toLowerCase();
+    }
+
+    function evidenceSourceTone(state) {
+      if (state === 'linked' || state === 'live') return 'low';
+      if (state === 'missing' || state === 'needs verification') return 'high';
+      return 'medium';
+    }
+
+    function evidenceSourceLabel(state) {
+      if (state === 'linked' || state === 'live') return 'View source';
+      if (state === 'missing') return 'Source missing';
+      return 'Needs source verification';
+    }
+
+    function renderEvidenceSourceLink(item) {
+      if (item.sourceUrl) {
+        return `<a class="evidence-link" href="${escapeHtmlAttr(item.sourceUrl)}" target="_blank" rel="noopener">${escapeHtml(evidenceSourceLabel(item.sourceState))}</a>`;
+      }
+      return `<span class="evidence-link missing">${escapeHtml(evidenceSourceLabel(item.sourceState))}</span>`;
+    }
+
+    function getClientHealthEvidence(account) {
+      if (account.clientHealthEvidence && account.clientHealthEvidence.length) return account.clientHealthEvidence;
+      const primarySignal = (account.signals || [])[0] || {};
+      const highSignal = (account.signals || []).find(signal => signal.severity === 'high') || primarySignal;
+      const prismHealth = getPrismHealthContext(account);
+      return [
+        {
+          group: 'customer_friction',
+          title: highSignal.title || 'Customer friction needs review',
+          body: highSignal.body || 'No high-confidence customer friction source is linked yet.',
+          sourceSystem: 'Support / customer signal',
+          sourceTitle: highSignal.title || 'Source pending',
+          sourceUrl: highSignal.sourceUrl || '',
+          sourceState: highSignal.sourceUrl ? 'linked' : 'needs verification',
+          severity: highSignal.severity || 'medium',
+          freshness: highSignal.due || 'Current'
+        },
+        {
+          group: 'execution_readiness',
+          title: account.nextMove ? account.nextMove.title : 'Execution readiness needs review',
+          body: account.nextMove ? account.nextMove.body : 'No current action source is linked yet.',
+          sourceSystem: account.doc ? 'Docs/Drive' : 'Account plan',
+          sourceTitle: account.doc ? account.doc.title : 'Planning source pending',
+          sourceUrl: account.doc ? account.doc.url : '',
+          sourceState: account.doc && account.doc.url ? 'linked' : 'needs verification',
+          severity: 'medium',
+          freshness: account.nextMove ? account.nextMove.dueWindow : 'Current'
+        },
+        {
+          group: 'adoption_momentum',
+          title: `${account.assistant.wau} Assistant WAU`,
+          body: `${account.assistant.health} Assistant usage with ${account.agents.health.toLowerCase()} agent usage.`,
+          sourceSystem: 'Usage metrics',
+          sourceTitle: 'Assistant and Agents trend',
+          sourceUrl: '',
+          sourceState: 'needs verification',
+          severity: account.assistant.health === 'Healthy' ? 'low' : 'medium',
+          freshness: 'Seeded'
+        },
+        {
+          group: 'account_memory',
+          title: prismHealth.recommendedPlayFromHistory,
+          body: prismHealth.prismRiskPattern,
+          sourceSystem: 'Prism',
+          sourceTitle: account.prism ? `${account.name} Prism view` : 'Prism source pending',
+          sourceUrl: account.prism && account.prism.url ? account.prism.url : '',
+          sourceState: account.prism && account.prism.url ? 'linked' : 'needs verification',
+          severity: 'medium',
+          freshness: account.prism ? account.prism.refresh : 'Pending'
+        },
+        {
+          group: 'confidence_gap',
+          title: 'Source gaps to verify',
+          body: getMissingSources(account).length ? getMissingSources(account).join(', ') : 'No missing source categories flagged.',
+          sourceSystem: 'Source coverage',
+          sourceTitle: 'Coverage checklist',
+          sourceUrl: '',
+          sourceState: getMissingSources(account).length ? 'needs verification' : 'linked',
+          severity: getMissingSources(account).length ? 'medium' : 'low',
+          freshness: 'Current'
+        }
+      ];
+    }
+
+    function getClientHealthReviewState(account) {
+      const highSignals = (account.signals || []).filter(signal => signal.severity === 'high').length;
+      const sourceGaps = getMissingSources(account).length;
+      const unverifiedEvidence = getClientHealthEvidence(account).filter(item =>
+        !item.sourceUrl || item.sourceState === 'needs verification' || item.sourceState === 'missing'
+      ).length;
+      const needsReview = highSignals > 0 || account.criticalIssues > 0 || sourceGaps > 0 || unverifiedEvidence > 0;
+      return {
+        needsReview,
+        label: needsReview
+          ? `${highSignals} high signal${highSignals === 1 ? '' : 's'} · ${sourceGaps + unverifiedEvidence} source check${sourceGaps + unverifiedEvidence === 1 ? '' : 's'}`
+          : 'No Client Health review needed'
+      };
+    }
+
+    function renderClientHealthNotification(account) {
+      const reviewState = getClientHealthReviewState(account);
+      const tab = document.querySelector('[data-tab="clientHealth"]');
+      if (!tab || !ui.clientHealthReviewDot) return;
+      tab.classList.toggle('has-review', reviewState.needsReview);
+      ui.clientHealthReviewDot.title = reviewState.label;
+      ui.clientHealthReviewDot.setAttribute('aria-label', reviewState.label);
     }
 
     function renderSimpleEvidenceRows(items, emptyLabel, itemMapper) {
@@ -5090,53 +5429,63 @@
 
     function renderClientHealth(account) {
       const prismHealth = getPrismHealthContext(account);
+      const primarySignal = account.signals.find(signal => signal.severity === 'high') || account.signals[0] || {
+        title: 'No urgent signal captured',
+        body: 'Source aggregation has not produced a current health signal yet.',
+        severity: 'medium',
+        due: 'Current'
+      };
+      const taskOwnership = getTaskOwnership(account);
+      const clientTask = taskOwnership.find(task => task.lane === 'Client') || taskOwnership[1] || {};
+      const waitingTask = taskOwnership.find(task => task.lane === 'Waiting') || taskOwnership[2] || {};
+      const timingNote = waitingTask.due === 'Overdue'
+        ? 'Overdue item present.'
+        : waitingTask.due
+          ? `Watch by ${waitingTask.due}.`
+          : 'Confirm timing before broadening the motion.';
       const usageMetrics = [
         {
           title: 'Assistant usage',
           value: `${account.assistant.wau} WAU`,
-          body: `${account.assistant.health} · ${account.assistant.trend} trend`,
+          body: `${account.assistant.health} · ${account.assistant.trend} trend. Momentum signal for whether the motion is taking hold.`,
           severity: account.assistant.health === 'Healthy' ? 'low' : account.assistant.health === 'Watch' ? 'medium' : 'high'
         },
         {
           title: 'Agent usage',
           value: `${account.agents.wau} WAU`,
-          body: `${account.agents.runs} runs · ${account.agents.health}`,
+          body: `${account.agents.runs} runs · ${account.agents.health}. Shows whether repeatable workflow support is emerging.`,
           severity: account.agents.health === 'Healthy' ? 'low' : account.agents.health === 'Building' ? 'medium' : 'high'
         },
         {
-          title: 'Engagement',
-          value: account.engagement,
-          body: `${account.openIssues} open issues · ${account.criticalIssues} critical`,
+          title: 'Blockers',
+          value: `${account.openIssues} open`,
+          body: `${account.criticalIssues} critical. ${prismHealth.repeatedBlocker}`,
           severity: account.engagement === 'Strong' ? 'low' : account.engagement === 'At risk' ? 'high' : 'medium'
         },
         {
-          title: 'Commercial pressure',
+          title: 'Timing pressure',
           value: account.compRisk,
-          body: `${account.hoursRemainingLabel} · ${account.packageType || 'Package context pending'}`,
+          body: `${account.hoursRemainingLabel} · ${account.packageType || 'Package context pending'}. ${timingNote}`,
           severity: account.compRisk === 'Low' ? 'low' : account.compRisk === 'High' ? 'high' : 'medium'
         }
       ];
 
       ui.clientHealthUsageGrid.innerHTML = usageMetrics.map(metric => `
-        <div class="risk-card">
-          <span class="eyebrow">${escapeHtml(metric.title)}</span>
-          <h4>${escapeHtml(metric.value)}</h4>
-          <p>${escapeHtml(metric.body)}</p>
+        <div class="health-driver">
+          <div>
+            <span class="eyebrow">${escapeHtml(metric.title)}</span>
+            <h4>${escapeHtml(metric.value)}</h4>
+            <p class="muted">${escapeHtml(metric.body)}</p>
+          </div>
           <span class="pill ${escapeHtmlAttr(metric.severity)}">${escapeHtml(metric.severity)}</span>
         </div>
       `).join('');
 
       const healthTone = getAccountHealthLabel(account);
       const severity = healthTone.tone === 'risk' || account.criticalIssues > 0 ? 'high' : healthTone.tone === 'stable' ? 'low' : 'medium';
-      const primarySignal = account.signals.find(signal => signal.severity === 'high') || account.signals[0];
       const recommendedTool = findToolByTitle(account.tool);
       const recommendedResource = recommendedTool ? recommendedTool.title : account.tool;
       const recommendedAsset = account.doc ? account.doc.title : account.asset.title;
-      const driverItems = [
-        { label: 'Pattern', title: 'Risk is repeating', body: prismHealth.prismRiskPattern, severity },
-        { label: 'Blocker', title: 'Blocker needs ownership', body: prismHealth.repeatedBlocker, severity: 'medium' },
-        { label: 'Signal', title: primarySignal.title, body: primarySignal.body, severity: primarySignal.severity }
-      ];
 
       ui.clientHealthWorryList.innerHTML = `
         <div class="health-read-card">
@@ -5148,9 +5497,19 @@
           <p class="muted">${escapeHtml(prismHealth.healthImpact)}</p>
           <div class="health-action-grid">
             <div class="health-action-tile">
+              <span class="eyebrow">What changed</span>
+              <strong>${escapeHtml(prismHealth.momentumSinceLastTouch)}</strong>
+              <p class="muted">${escapeHtml(prismHealth.priorActionOutcome)}</p>
+            </div>
+            <div class="health-action-tile">
+              <span class="eyebrow">Why now</span>
+              <strong>${escapeHtml(primarySignal.title)}</strong>
+              <p class="muted">${escapeHtml(primarySignal.body)}</p>
+            </div>
+            <div class="health-action-tile">
               <span class="eyebrow">AIOM move</span>
               <strong>${escapeHtml(account.nextMove.session)}</strong>
-              <p class="muted">${escapeHtml(account.nextMove.sessionBody)}</p>
+              <p class="muted">${escapeHtml(clientTask.title ? `${account.nextMove.sessionBody} Client ask: ${clientTask.title}.` : account.nextMove.sessionBody)}</p>
             </div>
             <div class="health-action-tile">
               <span class="eyebrow">Use this</span>
@@ -5158,19 +5517,6 @@
               <p class="muted">${escapeHtml(recommendedAsset)}</p>
             </div>
           </div>
-        </div>
-        <div class="health-driver-list">
-          ${driverItems.map((item, index) => `
-            <div class="health-driver">
-              <span class="driver-rank">${index + 1}</span>
-              <div>
-                <span class="eyebrow">${escapeHtml(item.label)}</span>
-                <h4>${escapeHtml(item.title)}</h4>
-                <p class="muted">${escapeHtml(item.body)}</p>
-              </div>
-              <span class="pill ${escapeHtmlAttr(item.severity)}">${escapeHtml(item.severity)}</span>
-            </div>
-          `).join('')}
         </div>
       `;
 
@@ -5287,7 +5633,7 @@
       const model = {
         product: {
           name: 'Glean Adoption-OS',
-          purpose: 'Adoption OS Intelligence data layer for AIOM strategic action, best next step, recommended Glean resources, and Prism capture',
+          purpose: 'Adoption OS Intelligence data layer for AIOM strategic action, best next step, recommended Glean resources, and Account Memory updates',
           refreshMode: 'on-demand',
           dashboardMode: 'Glean-native artifact'
         },
@@ -5428,10 +5774,10 @@
           },
           prism: account.prism
         },
-        prism_memory_health_loop: {
+        account_memory_health_loop: {
           healthInput: prismHealth,
           sessionCapture: prismCapture,
-          copyIntoPrism: getPrismCopySummary(account, prismCapture)
+          accountMemoryUpdate: getPrismCopySummary(account, prismCapture)
         },
         signals: account.signals,
         recommendation: account.nextMove,
@@ -5471,11 +5817,12 @@
       const prismHealth = getPrismHealthContext(account);
       return [
         `Account: ${account.name}`,
+        `Account Memory purpose: durable context for the next Client Health read`,
         `Recommended action: ${account.nextMove.title}`,
         `Recommended next step: ${account.nextMove.session}`,
         `Recommended play from history: ${prismHealth.recommendedPlayFromHistory}`,
-        `Prism health signal: ${prismHealth.prismHealthSignal}`,
-        `Prism risk pattern: ${prismHealth.prismRiskPattern}`,
+        `Client Health signal: ${prismHealth.prismHealthSignal}`,
+        `Risk pattern: ${prismHealth.prismRiskPattern}`,
         `Prior action outcome: ${prismHealth.priorActionOutcome}`,
         `Repeated blocker: ${prismHealth.repeatedBlocker}`,
         `Momentum since last touch: ${prismHealth.momentumSinceLastTouch}`,
@@ -5493,46 +5840,36 @@
     function renderPrismWorkspace(account) {
       const capture = getPrismCapture(account.name);
       const prismHealth = getPrismHealthContext(account);
-      const sources = account.sources.slice(0, 3).map(source => `
-        <div class="source-card">
-          <span class="eyebrow">${escapeHtml(source.role)}</span>
-          <h4>${escapeHtml(source.name)}</h4>
-          <p>${escapeHtml(source.purpose)}</p>
-          <div class="meta-row"><span>${escapeHtml(source.type)}</span><span>${escapeHtml(source.role)}</span></div>
-        </div>
-      `).join('');
+      const evidence = getAccountEvidence(account);
+      const coverageEntries = getSourceCoverageEntries(account);
+      const availableCount = coverageEntries.filter(entry => entry.status === 'available').length;
+      const missingSources = getMissingSources(account);
+      const linkedEvidence = getClientHealthEvidence(account);
 
       ui.prismInlineContext.innerHTML = `
-        <p><strong>${escapeHtml(account.name)}</strong> · ${escapeHtml(account.business)}</p>
-        <div class="pill-row" style="margin-top:12px;">
-          <span class="tool-tag">Coverage: ${escapeHtml(account.prism.coverage)}</span>
-          <span class="tool-tag">Refreshed: ${escapeHtml(account.prism.refresh)}</span>
-          <span class="tool-tag">Signals: ${escapeHtml(account.prism.signals)}</span>
-          <span class="tool-tag">Health: ${escapeHtml(account.prism.health)}</span>
-        </div>
-        <div class="callout" style="margin-top:14px;">
-          <strong>What Prism says now:</strong> ${escapeHtml(prismHealth.prismHealthSignal)}<br>
-          <span>${escapeHtml(prismHealth.prismRiskPattern)}</span>
-        </div>
-        <div class="grid two" style="margin-top:14px;">
-          <div class="source-card">
-            <span class="eyebrow">Current account read</span>
-            <h4>${escapeHtml(account.nextMove.title)}</h4>
-            <p>${escapeHtml(account.nextMove.body)}</p>
-            <div class="meta-row"><span>Momentum</span><span>${escapeHtml(prismHealth.momentumSinceLastTouch)}</span></div>
+        <div class="health-evidence-summary">
+          <div class="health-evidence-stat">
+            <span class="eyebrow">Coverage</span>
+            <strong>${escapeHtml(account.prism.coverage)}</strong>
           </div>
-          <div class="source-card">
-            <span class="eyebrow">Best next play</span>
-            <h4>${escapeHtml(prismHealth.recommendedPlayFromHistory)}</h4>
-            <p>${escapeHtml(prismHealth.priorActionOutcome)}</p>
-            <div class="meta-row"><span>Repeated blocker</span><span>${escapeHtml(prismHealth.repeatedBlocker)}</span></div>
+          <div class="health-evidence-stat">
+            <span class="eyebrow">Freshness</span>
+            <strong>${escapeHtml(account.prism.refresh)}</strong>
+          </div>
+          <div class="health-evidence-stat">
+            <span class="eyebrow">Source readiness</span>
+            <strong>${escapeHtml(availableCount)} / ${escapeHtml(coverageEntries.length)} ready</strong>
+          </div>
+          <div class="health-evidence-stat">
+            <span class="eyebrow">Confidence</span>
+            <strong>${escapeHtml(evidence.confidence)}</strong>
           </div>
         </div>
-        <div class="callout" style="margin-top:14px;">
-          <strong>If Prism were live here, this panel should pull:</strong> coverage, refresh cadence, signal count, health state, health narrative, risk pattern, prior action outcome, repeated blocker, momentum since last touch, and recommended play from history.<br>
+        <div class="callout">
+          <strong>What to trust:</strong> ${escapeHtml(prismHealth.prismHealthSignal)}<br>
           <span>${escapeHtml(getConfidenceReason(account))}</span>
         </div>
-        <div class="source-grid" style="margin-top:14px;">${sources}</div>
+        <div class="meta-row"><span>Gaps to verify</span><span>${escapeHtml(missingSources.length ? missingSources.join(', ') : 'None flagged')}</span></div>
       `;
 
       ui.prismSummaryInput.value = capture.summary;
@@ -5548,20 +5885,31 @@
       ui.prismRecommendedFollowupInput.value = capture.recommendedFollowup;
       ui.prismCopySummary.value = getPrismCopySummary(account, capture);
       ui.prismCaptureStatus.textContent = capture.savedAt
-        ? `Session notes kept for ${account.name} · ${capture.savedAt}`
-        : 'Notes are held in memory while this artifact is open.';
+        ? `Account update kept for ${account.name} · ${capture.savedAt}`
+        : 'Account update is held while this artifact is open.';
 
       ui.prismInlineSignalList.innerHTML = '';
-      account.signals.slice(0, 4).forEach(signal => {
+      linkedEvidence.forEach(item => {
         const row = document.createElement('div');
-        row.className = `signal-card ${signal.severity}`;
+        const groupClass = normalizeEvidenceGroupClass(item.group);
+        const severity = item.severity || evidenceSourceTone(item.sourceState);
+        row.className = `evidence-card ${severity}`;
         row.innerHTML = `
-          <div class="split" style="margin-bottom:8px;">
-            <h4>${escapeHtml(signal.title)}</h4>
-            <span class="pill ${escapeHtmlAttr(signal.severity)}">${escapeHtml(signal.severity)}</span>
+          <span class="evidence-rail ${escapeHtmlAttr(groupClass)}"></span>
+          <div>
+            <span class="eyebrow">${escapeHtml(String(item.group || 'Account memory').replace(/_/g, ' '))}</span>
+            <h4>${escapeHtml(item.title)}</h4>
+            <p class="muted">${escapeHtml(item.body)}</p>
+            <div class="meta-row"><span>${escapeHtml(item.sourceSystem)}</span><span>${escapeHtml(item.freshness || 'Freshness pending')}</span></div>
           </div>
-          <p>${escapeHtml(signal.body)}</p>
-          <div class="meta-row"><span>Due</span><span>${escapeHtml(signal.due)}</span></div>
+          <div class="evidence-source">
+            <span class="pill ${escapeHtmlAttr(evidenceSourceTone(item.sourceState))}">${escapeHtml(item.sourceState)}</span>
+            <div>
+              <span class="eyebrow">Source</span>
+              <p class="muted">${escapeHtml(item.sourceTitle)}</p>
+            </div>
+            ${renderEvidenceSourceLink(item)}
+          </div>
         `;
         ui.prismInlineSignalList.appendChild(row);
       });
@@ -5584,7 +5932,7 @@
         savedAt: new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })
       };
       renderPrismWorkspace(account);
-      showToast(`Session notes kept for ${account.name}`);
+      showToast(`Account update kept for ${account.name}`);
     }
 
     function openPrismPanel() {
@@ -5673,6 +6021,7 @@
       renderTemplates();
       renderTools(account);
       renderClientHealth(account);
+      renderClientHealthNotification(account);
       renderRosterVerification();
       renderPortfolio();
       renderWidgetAudit();

@@ -78,9 +78,9 @@ async function main() {
 
     await frame.locator('[data-tab="clientHealth"]').click();
     await frame.waitForSelector('#clientHealth.active', { state: 'visible' });
-    assert(await frame.locator('#clientHealthUsageGrid .risk-card').count() > 0, 'Client Health did not render usage metrics');
+    assert(await frame.locator('#clientHealthUsageGrid .health-driver').count() >= 4, 'Client Health did not render health drivers');
     assert(await frame.locator('#clientHealthWorryList .health-read-card').count() > 0, 'Client Health did not render the health read');
-    assert(await frame.locator('#clientHealthWorryList .health-driver').count() >= 3, 'Client Health did not render health drivers');
+    assert(await frame.locator('#prismInlineSignalList .evidence-card').count() >= 3, 'Client Health did not render evidence signals');
 
     await frame.locator('[data-tab="tools"]').click();
     await frame.waitForSelector('#tools.active', { state: 'visible' });

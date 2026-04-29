@@ -34,8 +34,8 @@ The artifact registers an `Export as PDF` action only when `window.GleanBridge.p
    - Source coverage shows available, provisional, missing, and needs-verification states without implying live data.
    - Recommended Glean resource launches or degrades to copyable prompt behavior.
    - Prism health input renders as part of client health.
-   - Prism outcome capture includes action taken, action outcome, remaining blocker, owner/date commitments, what worked, what did not work, and recommended follow-up.
-   - Copy into Prism summary is recoverable if clipboard access is blocked.
+   - Account Memory update includes action taken, action outcome, remaining blocker, owner/date commitments, what worked, what did not work, and recommended follow-up.
+   - Account Memory summary is recoverable if clipboard access is blocked.
    - Tabs work.
    - Attention items can be marked done.
    - Export action appears in Glean, if supported by the runtime.

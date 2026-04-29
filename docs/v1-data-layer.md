@@ -14,9 +14,9 @@ It is not a generic account dashboard data model. It is an operating layer on to
 
 The V1 artifact should combine:
 
-- What was: historical patterns, prior AIOM motions, Prism memory, known playbooks, and useful outputs from existing agents or skills.
+- What was: historical patterns, prior AIOM motions, Account Memory, Prism-derived context, known playbooks, and useful outputs from existing agents or skills.
 - What is: current Adoption OS phase, client signals, source coverage, package reality, stakeholder context, usage, blockers, and active risks.
-- What could be: recommended strategic action, best next step, recommended tool or agent, recommended asset, expected outcome, and Prism capture prompt.
+- What could be: recommended strategic action, best next step, recommended tool or agent, recommended asset, expected outcome, and Account Memory update.
 
 ## V1 Decision Question
 
@@ -281,15 +281,20 @@ Fields:
 Behavior:
 
 - The AIOM-facing tab should be named `Client Health`, not `Prism`, because the user need is account condition and risk, not the internal source label.
-- Client Health should collapse the former Signals and Prism surfaces into one view: usage metrics, AIOM worry items, account-memory context, signal history, and capture output.
-- The Client Health read should synthesize risk into a decision panel: current read, AIOM move, recommended resource or asset, and the top drivers. It should not render every worry as an equal-priority card.
-- Prism should remain available as a health input and capture destination, but not as the primary visible navigation label.
-- The account view should explain what Prism already tells the AIOM about client health: health signal, risk pattern, prior action outcome, repeated blocker, momentum since last touch, recommended play from history, and expected health impact.
+- Client Health should collapse the former Signals and Prism surfaces into one view: one account read, usage metrics, AIOM worry items, four health drivers, expandable evidence, and outcome capture.
+- The Client Health read should synthesize risk into a decision panel: current read, what changed, why now, AIOM move, and recommended resource or asset. It should not render every worry as an equal-priority card.
+- Health drivers should default to a 2x2 scan: Assistant usage, Agent usage, blockers, and timing or commercial pressure.
+- The Client Health navigation item should show a small review notification when the selected account has high-priority health signals, critical issues, source gaps, or evidence items that need source verification.
+- Evidence should be compact by default and expandable into source freshness, source gaps, top signals, and signal history.
+- Every evidence item should carry a direct source affordance. If the live source URL is unavailable, the item must be visibly labeled as needing source verification rather than presented as fully grounded evidence.
+- Evidence items should include `group`, `title`, `body`, `sourceSystem`, `sourceTitle`, `sourceUrl`, `sourceState`, `severity`, and `freshness`.
+- Prism should remain available as a health input, but not as the primary visible navigation label or assumed writeback destination. Account Memory should be the visible capture destination until direct Prism writeback is confirmed.
+- The account view should explain what Prism or the upstream health payload tells the AIOM about client health: health signal, risk pattern, prior action outcome, repeated blocker, momentum since last touch, recommended play from history, source confidence, and expected health impact.
 - Outcome capture should stay session-local inside the artifact. No browser storage APIs, live network calls, iframes, external scripts, or external CSS are allowed.
 
-### 5A. Prism Memory + Health Loop
+### 5A. Account Memory + Health Loop
 
-What it serves: closes the loop between recommendation, action, outcome, and the next Prism-informed recommendation.
+What it serves: closes the loop between recommendation, action, outcome, and the next Client Health recommendation.
 
 Health input fields:
 
@@ -313,9 +318,9 @@ Outcome capture fields:
 
 Behavior:
 
-- The Prism workspace should preload the recommended action and health input so the AIOM understands why the account is healthy, stuck, risky, or improving.
+- The Client Health workspace should preload the recommended action and health input so the AIOM understands why the account is healthy, stuck, risky, or improving.
 - The AIOM should be able to capture whether the recommended action worked, what happened, what blocker remains, who owns the next commitment, what worked, what did not work, and the recommended follow-up.
-- The capture summary should clearly identify what should be copied or saved into Prism after the customer touch.
+- The capture summary should clearly identify what should be saved as Account Memory after the customer touch.
 - The capture summary should include the recommended action and the outcome loop so future recommendations can learn from what actually happened.
 
 ### 6. Strategic Action Layer
@@ -337,8 +342,8 @@ Fields:
 
 Behavior:
 
-- The Overview recommendation surface should use AIOM-native language: Strategic action, Best next step, Why this matters, Recommended Glean resource, and What to capture in Prism.
-- Strategic action, rationale, next step, owner, target audience, friction, recommended resource, recommended asset, and Prism capture prompt should be visible without opening the data model.
+- The Overview recommendation surface should use AIOM-native language: Strategic action, Best next step, Why this matters, Recommended Glean resource, and Account Memory update.
+- Strategic action, rationale, next step, owner, target audience, friction, recommended resource, recommended asset, and Account Memory update prompt should be visible without opening the data model.
 - Every strategic action must resolve to a recommended Glean resource before it renders.
 
 ### 7. Resource Catalog
@@ -444,7 +449,8 @@ These systems explain what happened, what was promised, and who is engaged.
 
 These systems make the artifact useful inside Glean.
 
-- Prism: derived account memory, historical patterns, account signals, prior actions, and capture loop.
+- Prism: derived account context, historical patterns, account signals, and prior actions.
+- Account Memory: AIOM-reviewed client context, outcome evidence, remaining blockers, owner/date commitments, what worked, what did not work, and recommended follow-up.
 - Glean Search: internal research across account context, Adoption OS resources, and supporting assets.
 - Glean Assistant: account question answering and assisted synthesis.
 - Glean Agents and Skills: action layer for transition briefs, adoption strategy, enablement planning, change briefs, prompt/workflow support, and EBR generation.

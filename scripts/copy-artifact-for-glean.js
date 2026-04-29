@@ -21,7 +21,7 @@ After rendering, I should be able to test:
 - Portfolio roster verification
 - Add missing client
 - Tools and recommended Glean resource cards
-- Prism health and capture workspace
+- Prism health and Account Memory workspace
 
 HTML:
 
