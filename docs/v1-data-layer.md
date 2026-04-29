@@ -228,8 +228,9 @@ What it serves: keeps the Overview usable for an AIOM who needs to decide what t
 Behavior:
 
 - The default Overview should operate as an AIOM command center.
-- The always-visible path should stay limited to the strategic action, recommendation evidence, account plan spine, and follow-up split.
+- The always-visible path should stay limited to one Account Read: current recommendation, risk/readiness/momentum visual cards, source-confidence summary, why-now bullets, owner/date expectation, and one `Run recommended motion` CTA.
 - More operating context must remain available progressively for phase lanes, workflows, package posture, training readiness, contacts, tasks, sources, and platform health.
+- Evidence details, source links, verification state, account plan spine, and follow-up ownership should be available through Client Health or collapsed `More operating context`, not as the default Overview scroll.
 - Supporting detail should not be removed; it should be tucked behind progressive disclosure unless it changes the immediate action.
 
 ### 4. Capacity And Commercial Context
@@ -352,12 +353,13 @@ What it serves: lets the AIOM execute the recommendation without leaving the Ado
 
 Behavior:
 
-- The launcher appears on Overview directly under the recommended move.
+- Overview shows one `Run recommended motion` CTA directly under the Account Read.
+- The four action buttons live in the Motion Workspace drawer/workbench opened from that CTA.
 - It adapts visible verbs and prompt context to the current Adoption OS phase.
 - It always includes four actions: analyze account, generate plan, draft follow-up, and save Account Memory.
 - In Glean, each action should send a guarded `glean-send-message` request with account, phase, evidence, source gaps, and desired output.
 - Outside Glean, each action must degrade to a copyable prompt.
-- The launcher should not render full skill outputs on Overview; deeper output belongs in a drawer, workbench, or returned Glean follow-up.
+- The launcher should not render full skill outputs on Overview; deeper output belongs in the Motion Workspace, a returned Glean follow-up, or Client Health evidence.
 
 ### 7. Resource Catalog
 

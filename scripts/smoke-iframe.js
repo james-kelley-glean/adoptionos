@@ -52,13 +52,22 @@ async function main() {
     await frame.waitForSelector('#strategicActionPanel', { state: 'visible' });
     const motionState = await frame.evaluate(() => ({
       title: document.querySelector('#phaseMotionTitle')?.textContent || '',
+      cta: document.querySelector('#openMotionWorkspaceBtn')?.textContent || '',
       actions: document.querySelectorAll('[data-motion-action]').length
     }));
-    assert(/Run this .* motion/.test(motionState.title), 'missing phase motion title');
-    assert(motionState.actions === 4, 'expected four phase motion actions');
-    await frame.waitForSelector('#overviewFollowupPanel', { state: 'visible' });
+    assert(motionState.title.length > 0, 'missing recommended motion title');
+    assert(motionState.cta === 'Run recommended motion', 'missing recommended motion CTA');
+    await frame.locator('#openMotionWorkspaceBtn').click();
+    await frame.waitForSelector('#motionWorkspaceOverlay.open', { state: 'visible' });
+    assert(await frame.locator('#motionWorkspaceOverlay [data-motion-action]').count() === 4, 'expected four phase motion actions in Motion Workspace');
+    await frame.locator('#closeMotionWorkspaceBtn').click();
+    await frame.waitForSelector('#motionWorkspaceOverlay.open', { state: 'hidden' });
+    assert(await frame.locator('#overviewFollowupPanel').isHidden(), 'Overview follow-up should be tucked behind operating context by default');
+    assert(await frame.locator('#accountEvidencePanel').isHidden(), 'Evidence should be tucked behind operating context by default');
     assert(await frame.locator('#phaseBackbonePanel').isHidden(), 'Phase backbone should be tucked behind operating context by default');
     await frame.locator('#overviewSecondaryDetails > summary').click();
+    await frame.waitForSelector('#accountEvidencePanel', { state: 'visible' });
+    await frame.waitForSelector('#overviewFollowupPanel', { state: 'visible' });
     await frame.waitForSelector('#phaseBackbonePanel', { state: 'visible' });
     assert(await frame.locator('.tab.active').textContent() === 'Overview', 'Overview tab should render first');
 
@@ -91,6 +100,10 @@ async function main() {
     await frame.locator('[data-tab="tools"]').click();
     await frame.waitForSelector('#tools.active', { state: 'visible' });
     assert(await frame.locator('#toolsGrid .tool-card').count() > 0, 'Tools tab did not render tool cards');
+
+    await frame.locator('[data-tab="fluency"]').click();
+    await frame.waitForSelector('#fluency.active', { state: 'visible' });
+    assert(await frame.locator('#fluencyHeroBadgeValue').textContent(), 'AI Fluency tab did not render');
 
     console.log('PASS iframe smoke test');
   } finally {

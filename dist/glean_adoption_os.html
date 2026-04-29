@@ -904,16 +904,92 @@
       color: var(--glean-black);
     }
 
+    .account-read-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
+      gap: 18px;
+      align-items: stretch;
+      margin-top: 14px;
+    }
+
+    .account-read-main, .account-read-side {
+      border: 1px solid rgba(199,199,171,0.35);
+      border-radius: 18px;
+      padding: 18px;
+      background: rgba(255,255,255,0.78);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .account-read-main h2 {
+      font-size: 32px;
+      margin-bottom: 8px;
+    }
+
+    .why-now-list {
+      margin: 10px 0 0 18px;
+      color: var(--text);
+      line-height: 1.55;
+      font-size: 14px;
+    }
+
+    .account-signal-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .account-signal-card {
+      min-height: 110px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      padding: 13px;
+      background: var(--glean-white);
+      box-shadow: none;
+    }
+
+    .account-signal-card.high { border-left: 4px solid var(--danger); background: rgba(255,241,241,0.72); }
+    .account-signal-card.medium { border-left: 4px solid var(--warning); background: rgba(255,248,239,0.78); }
+    .account-signal-card.low { border-left: 4px solid var(--glean-green-dark); background: rgba(245,255,242,0.82); }
+    .account-signal-card.available { border-left: 4px solid var(--glean-blue); background: rgba(244,244,255,0.82); }
+
+    .account-signal-value {
+      font-size: 20px;
+      line-height: 1.1;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .account-signal-body {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    .account-action-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .account-action-row .metric-card {
+      min-height: auto;
+      box-shadow: none;
+      border-radius: 14px;
+    }
+
     .motion-launcher {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
-      gap: 16px;
+      grid-template-columns: minmax(0, 1fr) auto auto;
+      gap: 12px;
       align-items: center;
       margin-top: 16px;
-      padding: 14px;
-      border: 1px solid var(--border);
+      padding: 14px 16px;
+      border: 1px solid rgba(52,60,237,0.16);
       border-radius: 16px;
-      background: rgba(255,255,255,0.72);
+      background: rgba(244,244,255,0.84);
     }
 
     .motion-action-grid {
@@ -926,6 +1002,38 @@
       min-height: 42px;
       justify-content: flex-start;
       text-align: left;
+    }
+
+    .motion-workspace-modal {
+      width: min(980px, 100%);
+    }
+
+    .motion-workspace-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 18px;
+      align-items: start;
+      margin-bottom: 18px;
+    }
+
+    .motion-support-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .motion-support-card {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 13px;
+      background: rgba(255,255,255,0.82);
+    }
+
+    .motion-support-card strong {
+      display: block;
+      color: var(--glean-blue);
+      margin-bottom: 6px;
     }
 
     .pill {
@@ -1676,6 +1784,7 @@
     @media screen and (max-width: 1180px) {
       .grid.metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); }
       .grid.two, .grid.three, .grid.four, .source-grid, .templates-grid, .tools-grid, .risk-grid, .audit-grid { grid-template-columns: 1fr; }
+      .account-read-grid, .account-signal-grid, .account-action-row, .motion-support-grid { grid-template-columns: 1fr; }
       .motion-launcher { grid-template-columns: 1fr; }
       #clientHealthUsageGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .health-evidence-summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -1697,6 +1806,7 @@
       .grid.metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       #clientHealthUsageGrid { grid-template-columns: 1fr; }
       .motion-launcher, .motion-action-grid { grid-template-columns: 1fr; }
+      .account-read-main h2 { font-size: 26px; }
       .health-action-grid, .health-driver, .health-driver-list, .health-evidence-summary { grid-template-columns: 1fr; }
       .evidence-card { grid-template-columns: 1fr; }
       .evidence-rail { width: 100%; height: 6px; }
@@ -1803,68 +1913,73 @@
 
       <section class="tab-panel active" id="overview">
         <section class="surface recommendation-card" id="strategicActionPanel">
-          <div class="section-kicker">Action stack</div>
-          <h2 id="strategicAction">What the AIOM should do now</h2>
-          <p id="strategicRationale" class="muted"></p>
-          <div class="callout">
-            <strong>Why now:</strong> <span id="nextMoveWhy"></span>
-          </div>
-          <p class="footer-note" id="confidenceReason"></p>
-          <div class="grid two" style="margin-top:16px;">
-            <div class="metric-card" style="min-height:auto;">
-              <div class="eyebrow">Do this now</div>
-              <div class="metric-value" style="font-size:22px;" id="bestNextStep"></div>
-              <div class="metric-sub" id="sessionBody"></div>
+          <div class="section-kicker">AIOM command center</div>
+          <div class="account-read-grid">
+            <div class="account-read-main">
+              <div class="section-kicker">Account Read</div>
+              <h2 id="strategicAction">What the AIOM should do now</h2>
+              <p id="strategicRationale" class="muted"></p>
+              <div class="account-signal-grid" id="overviewSignalGrid">
+                <div class="account-signal-card high">
+                  <span class="eyebrow">Risk</span>
+                  <div class="account-signal-value" id="overviewRiskValue">Risk state</div>
+                  <div class="account-signal-body" id="primaryFrictionType"></div>
+                </div>
+                <div class="account-signal-card medium">
+                  <span class="eyebrow">Readiness</span>
+                  <div class="account-signal-value" id="overviewReadinessValue">Readiness</div>
+                  <div class="account-signal-body" id="bestNextStep"></div>
+                </div>
+                <div class="account-signal-card low">
+                  <span class="eyebrow">Momentum</span>
+                  <div class="account-signal-value" id="overviewMomentumValue">Momentum</div>
+                  <div class="account-signal-body" id="overviewMomentumBody"></div>
+                </div>
+                <div class="account-signal-card available">
+                  <span class="eyebrow">Source confidence</span>
+                  <div class="account-signal-value" id="overviewSourceValue">Sources</div>
+                  <div class="account-signal-body" id="overviewSourceBody"></div>
+                </div>
+              </div>
+              <p class="footer-note" id="confidenceReason"></p>
             </div>
-            <div class="metric-card" style="min-height:auto;">
-              <div class="eyebrow">Use this</div>
-              <div class="metric-value" style="font-size:22px;" id="recommendedResourceTitle"></div>
-              <div class="metric-sub" id="recommendedResourceBody"></div>
-              <div class="button-row" id="recommendedResourceButtonRow" style="margin-top:10px;"></div>
-            </div>
-          </div>
-          <div class="grid two" style="margin-top:16px;">
-            <div class="metric-card" style="min-height:auto;">
-              <div class="eyebrow">Open first</div>
-              <div class="metric-value" style="font-size:18px;" id="recommendedDocTitle"></div>
-              <div class="metric-sub" id="recommendedDocBody"></div>
-              <div class="button-row" style="margin-top:10px;">
-                <a class="buttonlike" id="recommendedDocButton" href="#" target="_blank" rel="noopener">Open resource</a>
+            <div class="account-read-side">
+              <div class="section-kicker">Why now</div>
+              <ul class="why-now-list" id="nextMoveWhy"></ul>
+              <div class="account-action-row">
+                <div class="metric-card">
+                  <div class="eyebrow">Owner / date</div>
+                  <div class="metric-sub" id="decisionOwner"></div>
+                </div>
+                <div class="metric-card">
+                  <div class="eyebrow">Audience</div>
+                  <div class="metric-sub" id="targetFunction"></div>
+                </div>
+                <div class="metric-card">
+                  <div class="eyebrow">AI Fluency</div>
+                  <div class="metric-sub" id="overviewFluencySignal">Preview signal only</div>
+                </div>
               </div>
             </div>
-            <div class="metric-card" style="min-height:auto;">
-              <div class="eyebrow">Support this motion</div>
-              <div class="metric-value" style="font-size:18px;" id="recommendedAssetTitle"></div>
-              <div class="metric-sub" id="recommendedAssetBody"></div>
-              <div class="pill-row" id="assetTags" style="margin-top:10px;"></div>
-            </div>
-          </div>
-          <div class="grid three" style="margin-top:16px;">
-            <div class="metric-card" style="min-height:auto;">
-              <div class="eyebrow">Who needs to move</div>
-              <div class="metric-sub" id="decisionOwner"></div>
-            </div>
-            <div class="metric-card" style="min-height:auto;">
-              <div class="eyebrow">Who this is for</div>
-              <div class="metric-sub" id="targetFunction"></div>
-            </div>
-            <div class="metric-card" style="min-height:auto;">
-              <div class="eyebrow">What is blocking progress</div>
-              <div class="metric-sub" id="primaryFrictionType"></div>
-            </div>
-          </div>
-          <div class="callout" style="margin-top:16px;">
-            <strong>Update Account Memory:</strong> <span id="capturePrompt"></span>
           </div>
           <div class="motion-launcher" id="phaseMotionLauncher">
             <div>
-              <div class="eyebrow" id="phaseMotionKicker">Run this motion</div>
-              <h3 id="phaseMotionTitle">Run this motion</h3>
-              <p class="muted" id="phaseMotionContext"></p>
+              <div class="eyebrow" id="phaseMotionKicker">Recommended motion</div>
+              <h3 id="phaseMotionTitle">Run recommended motion</h3>
+              <p class="muted" id="phaseMotionContext">Open the motion workspace when you are ready to act.</p>
             </div>
-            <div class="motion-action-grid" id="phaseMotionActions"></div>
+            <button class="primary" id="openMotionWorkspaceBtn" type="button">Run recommended motion</button>
+            <button class="buttonlike" id="overviewClientHealthBtn" type="button">View evidence</button>
           </div>
         </section>
+
+        <details class="overview-secondary-details" id="overviewSecondaryDetails">
+          <summary class="surface overview-secondary-summary">
+            <div class="section-kicker">More operating context</div>
+            <h2>Open supporting detail</h2>
+            <p class="muted">Evidence, account plan, follow-up ownership, phase lanes, workflow posture, package reality, training readiness, contacts, task ownership, sources, and platform health stay available when the AIOM needs to go deeper.</p>
+          </summary>
+          <div class="overview-secondary-content">
 
         <section class="surface" id="accountEvidencePanel">
           <div class="split">
@@ -1996,14 +2111,6 @@
             </div>
           </div>
         </section>
-
-        <details class="overview-secondary-details" id="overviewSecondaryDetails">
-          <summary class="surface overview-secondary-summary">
-            <div class="section-kicker">More operating context</div>
-            <h2>Open supporting detail</h2>
-            <p class="muted">Phase lanes, workflow posture, package reality, training readiness, contacts, task ownership, sources, and platform health stay available when the AIOM needs to go deeper.</p>
-          </summary>
-          <div class="overview-secondary-content">
 
         <section class="surface" id="accountHealthOverlayPanel">
           <div class="split">
@@ -2930,6 +3037,61 @@
         <a class="primary" id="launchAssistantBtn" href="https://app.glean.com/chat" target="_blank" rel="noopener">Open in Glean Assistant</a>
         <button class="buttonlike" id="copyAssistantBtn" type="button">Copy prompt</button>
       </div>
+    </div>
+  </div>
+
+  <div class="overlay" id="motionWorkspaceOverlay" aria-hidden="true">
+    <div class="modal motion-workspace-modal">
+      <div class="motion-workspace-head">
+        <div>
+          <div class="section-kicker">Motion workspace</div>
+          <h2 id="motionWorkspaceTitle">Run recommended motion</h2>
+          <p class="muted" id="motionWorkspaceContext"></p>
+        </div>
+        <button class="buttonlike" id="closeMotionWorkspaceBtn" type="button">Close</button>
+      </div>
+
+      <section class="surface" style="margin-top:0;">
+        <div class="section-kicker">Recommended next step</div>
+        <h2 id="motionWorkspaceStepTitle">Next step</h2>
+        <p class="muted" id="sessionBody"></p>
+        <div class="motion-support-grid">
+          <div class="motion-support-card">
+            <span class="eyebrow">Use this</span>
+            <strong id="recommendedResourceTitle"></strong>
+            <p class="muted" id="recommendedResourceBody"></p>
+            <div class="button-row" id="recommendedResourceButtonRow" style="margin-top:10px;"></div>
+          </div>
+          <div class="motion-support-card">
+            <span class="eyebrow">Open first</span>
+            <strong id="recommendedDocTitle"></strong>
+            <p class="muted" id="recommendedDocBody"></p>
+            <div class="button-row" style="margin-top:10px;">
+              <a class="buttonlike" id="recommendedDocButton" href="#" target="_blank" rel="noopener">Open resource</a>
+            </div>
+          </div>
+          <div class="motion-support-card">
+            <span class="eyebrow">Support this motion</span>
+            <strong id="recommendedAssetTitle"></strong>
+            <p class="muted" id="recommendedAssetBody"></p>
+            <div class="pill-row" id="assetTags" style="margin-top:10px;"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="surface" style="margin-top:18px;">
+        <div class="split">
+          <div>
+            <div class="section-kicker" id="motionWorkspaceKicker">Run this motion</div>
+            <h2 id="motionWorkspaceActionTitle">Motion steps</h2>
+          </div>
+        </div>
+        <p class="muted" id="motionWorkspaceActionContext"></p>
+        <div class="motion-action-grid" id="phaseMotionActions" style="margin-top:14px;"></div>
+        <div class="callout" style="margin-top:16px;">
+          <strong>Save Account Memory:</strong> <span id="capturePrompt"></span>
+        </div>
+      </section>
     </div>
   </div>
 
@@ -4115,6 +4277,13 @@
       strategicRationale: document.getElementById('strategicRationale'),
       nextMoveWhy: document.getElementById('nextMoveWhy'),
       confidenceReason: document.getElementById('confidenceReason'),
+      overviewRiskValue: document.getElementById('overviewRiskValue'),
+      overviewReadinessValue: document.getElementById('overviewReadinessValue'),
+      overviewMomentumValue: document.getElementById('overviewMomentumValue'),
+      overviewMomentumBody: document.getElementById('overviewMomentumBody'),
+      overviewSourceValue: document.getElementById('overviewSourceValue'),
+      overviewSourceBody: document.getElementById('overviewSourceBody'),
+      overviewFluencySignal: document.getElementById('overviewFluencySignal'),
       bestNextStep: document.getElementById('bestNextStep'),
       sessionBody: document.getElementById('sessionBody'),
       recommendedResourceTitle: document.getElementById('recommendedResourceTitle'),
@@ -4181,6 +4350,13 @@
       jsonView: document.getElementById('jsonView'),
       refreshChip: document.getElementById('refreshChip'),
       toast: document.getElementById('toast'),
+      motionWorkspaceOverlay: document.getElementById('motionWorkspaceOverlay'),
+      motionWorkspaceTitle: document.getElementById('motionWorkspaceTitle'),
+      motionWorkspaceContext: document.getElementById('motionWorkspaceContext'),
+      motionWorkspaceStepTitle: document.getElementById('motionWorkspaceStepTitle'),
+      motionWorkspaceKicker: document.getElementById('motionWorkspaceKicker'),
+      motionWorkspaceActionTitle: document.getElementById('motionWorkspaceActionTitle'),
+      motionWorkspaceActionContext: document.getElementById('motionWorkspaceActionContext'),
       prismOverlay: document.getElementById('prismOverlay'),
       prismTitle: document.getElementById('prismTitle'),
       prismCoverage: document.getElementById('prismCoverage'),
@@ -5339,9 +5515,15 @@
     function renderPhaseMotionLauncher(account) {
       const motion = getPhaseMotionActions(account);
       const phaseLabel = phases[account.phase] || phases.prep;
-      ui.phaseMotionKicker.textContent = `Run this ${phaseLabel} motion`;
-      ui.phaseMotionTitle.textContent = motion.title;
-      ui.phaseMotionContext.textContent = motion.context;
+      ui.phaseMotionKicker.textContent = 'Recommended motion';
+      ui.phaseMotionTitle.textContent = account.nextMove.session;
+      ui.phaseMotionContext.textContent = 'Open the workbench to analyze the account, generate the plan, draft the follow-up, and save Account Memory without making Overview do the work.';
+      ui.motionWorkspaceTitle.textContent = account.nextMove.session;
+      ui.motionWorkspaceContext.textContent = `${phaseLabel} · ${motion.context}`;
+      ui.motionWorkspaceStepTitle.textContent = account.nextMove.session;
+      ui.motionWorkspaceKicker.textContent = `Run this ${phaseLabel} motion`;
+      ui.motionWorkspaceActionTitle.textContent = motion.title;
+      ui.motionWorkspaceActionContext.textContent = motion.context;
       ui.phaseMotionActions.innerHTML = motion.actions.map(action => `
         <button class="buttonlike motion-action-button" data-motion-action="${escapeHtmlAttr(action.type)}">
           ${escapeHtml(action.label)}
@@ -5349,19 +5531,45 @@
       `).join('');
     }
 
+    function setSignalCard(valueElement, value, body, tone) {
+      const card = valueElement.closest('.account-signal-card');
+      if (card) card.className = `account-signal-card ${tone}`;
+      valueElement.textContent = value;
+      const bodyElement = valueElement.parentElement.querySelector('.account-signal-body');
+      if (bodyElement) bodyElement.textContent = body;
+    }
+
     function renderNextMove(account) {
       const nextMove = account.nextMove;
       const recommendedResource = getRecommendedResource(account);
       const tool = recommendedResource.tool;
       const launchMeta = getLaunchModeMeta(tool, account);
+      const coverageEntries = getSourceCoverageEntries(account);
+      const availableCount = coverageEntries.filter(item => item.status === 'available').length;
+      const missingSources = getMissingSources(account);
+      const highSignals = account.signals.filter(signal => signal.severity === 'high').length;
+      const mediumSignals = account.signals.filter(signal => signal.severity === 'medium').length;
+      const primarySignal = account.signals[0];
+      const riskTone = highSignals ? 'high' : mediumSignals ? 'medium' : 'low';
+      const readinessTone = account.phase === 'prep' && highSignals ? 'medium' : 'available';
+      const momentumTone = account.assistant.health === 'Healthy' ? 'low' : account.assistant.health === 'Watch' ? 'medium' : 'high';
+      const sourceTone = missingSources.length ? 'medium' : 'available';
 
       ui.strategicAction.textContent = nextMove.title;
       ui.strategicRationale.textContent = nextMove.body;
-      ui.nextMoveWhy.textContent = nextMove.why;
-
-      const coverageEntries = getSourceCoverageEntries(account);
-      const availableCount = coverageEntries.filter(item => item.status === 'available').length;
+      ui.nextMoveWhy.innerHTML = [
+        nextMove.why,
+        primarySignal ? `${primarySignal.title}: ${primarySignal.body}` : 'No high-priority signal is currently changing the recommendation.',
+        missingSources.length
+          ? `Verify ${missingSources.slice(0, 2).join(', ')} before customer-facing commitment.`
+          : 'Source confidence is strong enough to act now.'
+      ].map(item => `<li>${escapeHtml(item)}</li>`).join('');
       ui.confidenceReason.textContent = getConfidenceReason(account);
+
+      setSignalCard(ui.overviewRiskValue, highSignals ? 'High' : mediumSignals ? 'Watch' : 'Low', `${account.openIssues} open issues · ${getPrimaryFrictionType(account)}`, riskTone);
+      setSignalCard(ui.overviewReadinessValue, account.phase === 'prep' ? 'Shapeable' : phases[account.phase], nextMove.session, readinessTone);
+      setSignalCard(ui.overviewMomentumValue, account.assistant.health, `${account.assistant.wau} Assistant WAU · ${account.assistant.trend}`, momentumTone);
+      setSignalCard(ui.overviewSourceValue, `${availableCount}/${coverageEntries.length}`, missingSources.length ? `${missingSources.length} gaps to verify` : 'Source set ready for this motion', sourceTone);
 
       ui.bestNextStep.textContent = nextMove.session;
       ui.sessionBody.textContent = nextMove.sessionBody;
@@ -5371,6 +5579,9 @@
       ui.decisionOwner.textContent = `${getDecisionOwner(account)} · ${nextMove.dueWindow}`;
       ui.targetFunction.textContent = getTargetFunction(account);
       ui.primaryFrictionType.textContent = getPrimaryFrictionType(account);
+      ui.overviewFluencySignal.textContent = account.phase === 'scale'
+        ? 'Use AI Fluency to shape reinforcement by function.'
+        : 'AI Fluency stays as a strategy signal, not a blocker for this move.';
       ui.capturePrompt.textContent = getCapturePrompt(account);
 
       ui.recommendedDocTitle.textContent = account.doc.title;
@@ -6107,6 +6318,24 @@
       ui.prismOverlay.setAttribute('aria-hidden', 'true');
     }
 
+    function openMotionWorkspace() {
+      const account = getAccount();
+      renderNextMove(account);
+      renderPhaseMotionLauncher(account);
+      ui.motionWorkspaceOverlay.classList.add('open');
+      ui.motionWorkspaceOverlay.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeMotionWorkspace() {
+      ui.motionWorkspaceOverlay.classList.remove('open');
+      ui.motionWorkspaceOverlay.setAttribute('aria-hidden', 'true');
+    }
+
+    function openClientHealthFromOverview() {
+      activateTab('clientHealth');
+      showToast('Opened Client Health evidence');
+    }
+
     function getActiveTabName() {
       const activePanel = document.querySelector('.tab-panel.active');
       return activePanel ? activePanel.id : 'overview';
@@ -6471,6 +6700,13 @@
     });
 
     document.getElementById('refreshBtn').addEventListener('click', refreshLocalState);
+    document.getElementById('openMotionWorkspaceBtn').addEventListener('click', openMotionWorkspace);
+    document.getElementById('closeMotionWorkspaceBtn').addEventListener('click', closeMotionWorkspace);
+    document.getElementById('overviewClientHealthBtn').addEventListener('click', openClientHealthFromOverview);
+
+    ui.motionWorkspaceOverlay.addEventListener('click', (event) => {
+      if (event.target === ui.motionWorkspaceOverlay) closeMotionWorkspace();
+    });
 
     ui.phaseMotionActions.addEventListener('click', (event) => {
       const button = event.target.closest('[data-motion-action]');
