@@ -30,6 +30,7 @@ Use `/Users/jameskelley/Documents/Adoption OS`.
 - Use `npm run glean:copy` to build the artifact and copy the Glean Assistant paste payload for Canvas preview/publish handoff.
 - Use `npm run agent:dev -- "<task>"` for optional OpenAI Agents SDK-assisted review or planning.
 - Use `npm run agent:slice -- <slice-id> <plan|review>` when you want the optional OpenAI orchestrator to plan or review a specific slice.
+- Use `npm run orchestrator:plan` to inspect the current slice plan before picking a write scope.
 - Use `npm run orchestrator:prompt -- <slice-id> <role>` when assigning or executing bounded agent work.
 - Keep changes inside the slice `writeScope` from `orchestration/slices.json` unless the controller explicitly expands scope.
 - Do not put generated artifact wrapper text, CDATA wrappers, or tool-call residue into source or dist files.
@@ -41,12 +42,13 @@ Use `/Users/jameskelley/Documents/Adoption OS`.
 
 1. Read this file first.
 2. Read `prompts/premises.md`, `docs/v1-data-layer.md`, and `docs/glean-artifact-runtime.md` when the task touches product premises, data contract, or Glean placement/runtime behavior.
-3. Check `orchestration/slices.json` for the relevant slice and write scope.
-4. Generate the role prompt with `npm run orchestrator:prompt -- <slice-id> <implementer|spec-reviewer|runtime-reviewer>`.
-5. Make the smallest change that satisfies the slice acceptance criteria.
-6. Run `npm run check`.
-7. If runtime-sensitive behavior changed, run `npm run smoke:iframe`.
-8. If source changed the generated artifact, confirm `npm run check:dist` passes before commit/push.
+3. Use `npm run orchestrator:plan` when you need the current slice order before selecting work.
+4. Check `orchestration/slices.json` for the relevant slice and write scope.
+5. Generate the role prompt with `npm run orchestrator:prompt -- <slice-id> <implementer|spec-reviewer|runtime-reviewer>`.
+6. Make the smallest change that satisfies the slice acceptance criteria.
+7. Run `npm run check`.
+8. If runtime-sensitive behavior changed, run `npm run smoke:iframe`.
+9. If source changed the generated artifact, confirm `npm run check:dist` passes before commit/push.
 
 ## Current Product Shape
 
