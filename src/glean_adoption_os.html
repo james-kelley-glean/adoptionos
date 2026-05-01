@@ -163,9 +163,27 @@
       backdrop-filter: none;
     }
 
-    .account-rail .primary {
-      padding: 8px 14px;
-      font-size: 13px;
+    .account-rail .refresh-icon-button {
+      width: 36px;
+      height: 36px;
+      min-width: 36px;
+      padding: 0;
+      border-radius: 50%;
+      display: inline-grid;
+      place-items: center;
+      background: var(--glean-blue);
+      color: var(--glean-white);
+      box-shadow: 0 8px 18px rgba(52,60,237,0.18);
+    }
+
+    .account-rail .refresh-icon-button svg {
+      width: 17px;
+      height: 17px;
+      stroke: currentColor;
+      stroke-width: 2.4;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
     }
 
     .hero-status-strip {
@@ -2557,7 +2575,12 @@
         <div class="account-rail-actions">
           <div class="chip" id="refreshChip">Last refreshed · Ready</div>
           <button class="account-rail-ask" id="askAssistantBtn" type="button">Ask Glean Assistant</button>
-          <button class="primary" id="refreshBtn">Refresh</button>
+          <button class="primary refresh-icon-button" id="refreshBtn" type="button" aria-label="Refresh account read" title="Refresh account read">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M21 12a9 9 0 1 1-2.64-6.36"></path>
+              <path d="M21 4v6h-6"></path>
+            </svg>
+          </button>
         </div>
       </div>
 
