@@ -456,7 +456,7 @@
       gap: 8px;
       align-items: center;
       padding: 10px 12px;
-      margin-top: -8px;
+      margin: 0 0 16px;
       background: rgba(255,255,255,0.42);
       border: 1px solid rgba(199,199,171,0.35);
       border-radius: 16px;
@@ -525,6 +525,211 @@
 
     .overview-secondary-content {
       margin-top: 18px;
+    }
+
+    .context-route-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .context-route-card {
+      min-height: 150px;
+      border: 1px solid rgba(199,199,171,0.45);
+      border-radius: 16px;
+      padding: 14px;
+      background: rgba(250,250,247,0.86);
+      text-align: left;
+      box-shadow: none;
+      display: grid;
+      align-content: space-between;
+      gap: 10px;
+    }
+
+    .context-route-card:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .context-route-card strong {
+      display: block;
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.25;
+      margin: 4px 0 6px;
+    }
+
+    .context-route-card span:last-child {
+      color: var(--glean-blue);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .task-workboard-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 16px;
+      align-items: start;
+      margin-bottom: 16px;
+    }
+
+    .task-scope-toggle {
+      display: inline-flex;
+      gap: 6px;
+      padding: 5px;
+      border: 1px solid rgba(199,199,171,0.42);
+      border-radius: 14px;
+      background: rgba(250,250,247,0.82);
+    }
+
+    .task-scope-toggle button {
+      padding: 8px 12px;
+      border-radius: 10px;
+      background: transparent;
+      color: var(--muted);
+      box-shadow: none;
+      font-size: 13px;
+    }
+
+    .task-scope-toggle button.active {
+      background: var(--glean-blue);
+      color: #fff;
+    }
+
+    .task-summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .task-summary-card {
+      border: 1px solid rgba(199,199,171,0.42);
+      border-radius: 14px;
+      padding: 14px;
+      background: rgba(250,250,247,0.86);
+      min-height: 94px;
+    }
+
+    .task-summary-card strong {
+      display: block;
+      font-size: 28px;
+      line-height: 1;
+      color: var(--glean-blue);
+      margin: 8px 0 4px;
+    }
+
+    .task-kanban {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+      align-items: start;
+    }
+
+    .task-column {
+      border: 1px solid rgba(199,199,171,0.38);
+      border-radius: 16px;
+      background: rgba(255,255,255,0.58);
+      padding: 12px;
+      min-height: 220px;
+    }
+
+    .task-column-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .task-column-head h3 {
+      font-size: 15px;
+      margin: 0;
+      color: var(--text);
+    }
+
+    .task-card {
+      border: 1px solid rgba(199,199,171,0.42);
+      border-radius: 14px;
+      background: rgba(250,250,247,0.92);
+      padding: 12px;
+      margin-bottom: 10px;
+      box-shadow: none;
+      display: grid;
+      gap: 8px;
+    }
+
+    .task-card.high { border-left: 4px solid var(--danger); }
+    .task-card.medium { border-left: 4px solid var(--warning); }
+    .task-card.low { border-left: 4px solid var(--glean-green-dark); }
+
+    .task-card h4 {
+      font-size: 15px;
+      line-height: 1.25;
+      margin: 0;
+    }
+
+    .task-card p {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.38;
+      margin: 0;
+    }
+
+    .task-chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .task-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border-radius: 999px;
+      padding: 5px 8px;
+      font-size: 11px;
+      font-weight: 800;
+      line-height: 1;
+      background: rgba(52,60,237,0.08);
+      color: var(--glean-blue);
+      border: 1px solid rgba(52,60,237,0.12);
+    }
+
+    .task-chip.waiting,
+    .task-chip.review {
+      background: rgba(255,248,239,0.9);
+      color: var(--warning);
+      border-color: rgba(190,82,0,0.14);
+    }
+
+    .task-chip.closed,
+    .task-chip.fresh {
+      background: rgba(245,255,242,0.92);
+      color: var(--glean-green-dark);
+      border-color: rgba(0,178,7,0.14);
+    }
+
+    .task-chip.risk {
+      background: rgba(255,241,241,0.92);
+      color: var(--danger);
+      border-color: rgba(192,36,36,0.14);
+    }
+
+    .task-card-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .task-card-actions .buttonlike,
+    .task-card-actions button {
+      font-size: 12px;
+      padding: 7px 9px;
+      border-radius: 10px;
     }
 
     .surface h2 {
@@ -676,6 +881,37 @@
     }
 
     .source-grid, .templates-grid, .tools-grid, .risk-grid, .audit-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+    .template-section {
+      margin-top: 18px;
+    }
+
+    .template-section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .template-card.source-needed {
+      border-style: dashed;
+      background: rgba(255,255,255,0.62);
+    }
+
+    .template-source-gaps {
+      margin-top: 16px;
+      border: 1px solid rgba(199,199,171,0.45);
+      border-radius: 16px;
+      padding: 14px;
+      background: rgba(255,255,255,0.68);
+    }
+
+    .template-source-gaps ul {
+      margin: 8px 0 0 18px;
+      color: var(--muted);
+      line-height: 1.55;
+    }
 
     #clientHealthUsageGrid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -925,6 +1161,332 @@
       margin-bottom: 8px;
     }
 
+    .overview-command-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(360px, 0.92fr);
+      gap: 18px;
+      align-items: stretch;
+      margin-top: 14px;
+    }
+
+    .overview-panel {
+      border: 1px solid rgba(199,199,171,0.35);
+      border-radius: 18px;
+      padding: 18px;
+      background: rgba(255,255,255,0.82);
+      box-shadow: var(--shadow-soft);
+      min-width: 0;
+    }
+
+    .overview-panel h2 {
+      font-size: 28px;
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
+
+    .overview-state-title {
+      color: var(--glean-blue);
+    }
+
+    .change-strip {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 8px;
+      margin: 14px 0 12px;
+    }
+
+    .change-tile {
+      min-height: 70px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 10px;
+      background: rgba(250,250,247,0.88);
+      display: grid;
+      align-content: space-between;
+      gap: 6px;
+    }
+
+    .change-tile.high { background: rgba(255,241,241,0.82); border-color: rgba(192,36,36,0.18); }
+    .change-tile.medium { background: rgba(255,248,239,0.86); border-color: rgba(190,82,0,0.16); }
+    .change-tile.low { background: rgba(245,255,242,0.86); border-color: rgba(0,178,7,0.16); }
+    .change-tile.available { background: rgba(244,244,255,0.86); border-color: rgba(52,60,237,0.16); }
+
+    .change-icon-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .change-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: rgba(255,255,255,0.8);
+      border: 1px solid rgba(0,0,0,0.08);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .change-label {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .activity-diagram {
+      display: grid;
+      gap: 8px;
+      margin-top: 8px;
+      max-height: 430px;
+      overflow: auto;
+      padding-right: 4px;
+    }
+
+    .activity-node {
+      display: grid;
+      grid-template-columns: 34px minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: center;
+      border: 1px solid rgba(199,199,171,0.35);
+      border-radius: 14px;
+      padding: 10px;
+      background: rgba(255,255,255,0.76);
+    }
+
+    .activity-node.is-new {
+      border-color: rgba(52,60,237,0.22);
+      background: rgba(244,244,255,0.8);
+    }
+
+    .activity-dot {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      font-size: 12px;
+      background: rgba(52,60,237,0.1);
+      color: var(--glean-blue);
+      border: 1px solid rgba(52,60,237,0.15);
+    }
+
+    .activity-node.high .activity-dot { background: rgba(255,241,241,0.95); color: var(--danger); border-color: rgba(192,36,36,0.18); }
+    .activity-node.medium .activity-dot { background: rgba(255,248,239,0.95); color: var(--warning); border-color: rgba(190,82,0,0.16); }
+    .activity-node.low .activity-dot { background: rgba(245,255,242,0.95); color: var(--glean-green-dark); border-color: rgba(0,178,7,0.16); }
+
+    .activity-copy strong {
+      display: block;
+      font-size: 14px;
+      line-height: 1.3;
+    }
+
+    .activity-copy span {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .activity-time {
+      color: var(--muted);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .priority-action-section {
+      margin-top: 18px;
+      border: 1px solid rgba(199,199,171,0.35);
+      border-radius: 18px;
+      padding: 14px;
+      background: rgba(255,255,255,0.82);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .priority-action-section h2 {
+      font-size: 24px;
+      line-height: 1.12;
+      margin-bottom: 4px;
+    }
+
+    .priority-action-section > .split {
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .priority-action-section #strategicRationale {
+      font-size: 14px;
+      line-height: 1.45;
+      max-width: 980px;
+    }
+
+    .priority-action-section .why-now-list {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin: 12px 0 0;
+      list-style: none;
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .priority-action-section .why-now-list li {
+      border: 1px solid rgba(199,199,171,0.35);
+      border-radius: 12px;
+      background: rgba(250,250,247,0.74);
+      padding: 9px 10px 9px 24px;
+      position: relative;
+    }
+
+    .priority-action-section .why-now-list li::before {
+      content: '';
+      position: absolute;
+      left: 10px;
+      top: 14px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--glean-blue);
+    }
+
+    .priority-action-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .overview-action-card {
+      position: relative;
+      min-height: auto;
+      border: 1px solid rgba(199,199,171,0.35);
+      border-radius: 16px;
+      padding: 12px;
+      background: rgba(250,250,247,0.88);
+      display: grid;
+      grid-template-columns: 88px minmax(0, 1fr) minmax(240px, auto);
+      gap: 12px;
+      align-items: center;
+    }
+
+    .overview-action-card.completed {
+      border-color: rgba(0,178,7,0.2);
+      background: rgba(245,255,242,0.72);
+    }
+
+    .overview-action-card h4 {
+      font-size: 16px;
+      line-height: 1.25;
+      margin-bottom: 4px;
+    }
+
+    .overview-action-card p {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .overview-action-meta {
+      display: grid;
+      gap: 8px;
+      align-content: start;
+    }
+
+    .overview-action-main {
+      min-width: 0;
+    }
+
+    .overview-action-why {
+      margin-top: 5px;
+    }
+
+    .overview-action-controls {
+      display: grid;
+      gap: 8px;
+      justify-items: end;
+      align-content: center;
+    }
+
+    .overview-action-card .task-toggle {
+      position: absolute;
+      top: 12px;
+      right: 14px;
+      width: auto;
+      min-width: 0;
+      justify-content: center;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: var(--glean-blue);
+      box-shadow: none;
+    }
+
+    .overview-action-card .task-toggle.completed {
+      background: transparent;
+      color: var(--glean-green-dark);
+      border: 0;
+    }
+
+    .overview-action-card .task-check {
+      width: 16px;
+      height: 16px;
+      font-size: 10px;
+    }
+
+    .action-resource-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    .action-resource-row .buttonlike {
+      font-size: 12px;
+      padding: 8px 10px;
+      border-radius: 10px;
+    }
+
+    .evidence-mini-bar {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .evidence-mini-item {
+      border: 1px solid rgba(199,199,171,0.35);
+      border-radius: 12px;
+      padding: 10px;
+      background: rgba(250,250,247,0.82);
+      min-height: 70px;
+    }
+
+    .evidence-mini-item strong {
+      display: block;
+      font-size: 17px;
+      margin-bottom: 4px;
+    }
+
+    .overview-secondary-summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 16px;
+    }
+
+    .overview-secondary-summary h2 {
+      font-size: 18px;
+      margin: 0;
+      color: var(--text);
+    }
+
     .why-now-list {
       margin: 10px 0 0 18px;
       color: var(--text);
@@ -934,18 +1496,29 @@
 
     .account-signal-grid {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 10px;
       margin-top: 16px;
     }
 
     .account-signal-card {
-      min-height: 110px;
+      position: relative;
+      min-height: 94px;
       border-radius: 14px;
       border: 1px solid var(--border);
-      padding: 13px;
+      padding: 13px 14px;
       background: var(--glean-white);
       box-shadow: none;
+      text-align: left;
+      cursor: pointer;
+      display: grid;
+      align-content: start;
+      gap: 4px;
+    }
+
+    .account-signal-card:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-soft);
     }
 
     .account-signal-card.high { border-left: 4px solid var(--danger); background: rgba(255,241,241,0.72); }
@@ -965,6 +1538,14 @@
       color: var(--muted);
       font-size: 13px;
       line-height: 1.35;
+    }
+
+    .account-signal-action {
+      justify-self: start;
+      margin-top: 4px;
+      color: var(--glean-blue);
+      font-size: 12px;
+      font-weight: 800;
     }
 
     .account-action-row {
@@ -1215,6 +1796,124 @@
       font-size: 12px;
       text-transform: uppercase;
       letter-spacing: 0.06em;
+    }
+
+    .global-review-summary-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .global-review-summary-card {
+      border: 1px solid rgba(199,199,171,0.45);
+      border-radius: 14px;
+      padding: 14px;
+      background: rgba(250,250,247,0.82);
+      min-height: 112px;
+    }
+
+    .global-review-summary-card strong {
+      display: block;
+      font-size: 30px;
+      color: var(--glean-blue);
+      line-height: 1;
+      margin: 8px 0;
+    }
+
+    .global-review-account-grid {
+      display: grid;
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .global-review-account-card {
+      border: 1px solid rgba(199,199,171,0.45);
+      border-radius: 18px;
+      padding: 16px;
+      background: rgba(255,255,255,0.82);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .global-review-card-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+
+    .global-review-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .global-review-lens-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin: 12px 0;
+    }
+
+    .global-review-lens {
+      border: 1px solid rgba(199,199,171,0.4);
+      border-radius: 14px;
+      padding: 11px;
+      background: rgba(250,250,247,0.8);
+    }
+
+    .global-review-lens strong {
+      display: block;
+      font-size: 17px;
+      margin: 4px 0;
+    }
+
+    .global-review-visual-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 14px;
+      align-items: stretch;
+    }
+
+    .trend-chart {
+      width: 100%;
+      min-height: 150px;
+      border: 1px solid rgba(199,199,171,0.35);
+      border-radius: 14px;
+      background: rgba(250,250,247,0.72);
+    }
+
+    .adoption-bar {
+      position: relative;
+      height: 16px;
+      border-radius: 999px;
+      background: rgba(199,199,171,0.35);
+      overflow: hidden;
+      margin: 10px 0 8px;
+    }
+
+    .adoption-bar-fill {
+      height: 100%;
+      border-radius: inherit;
+      background: var(--glean-blue);
+    }
+
+    .adoption-threshold {
+      position: absolute;
+      top: -4px;
+      bottom: -4px;
+      width: 2px;
+      background: var(--text);
+      opacity: 0.55;
+    }
+
+    .global-review-action-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 12px;
     }
 
     .score-badge {
@@ -1783,8 +2482,11 @@
 
     @media screen and (max-width: 1180px) {
       .grid.metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-      .grid.two, .grid.three, .grid.four, .source-grid, .templates-grid, .tools-grid, .risk-grid, .audit-grid { grid-template-columns: 1fr; }
-      .account-read-grid, .account-signal-grid, .account-action-row, .motion-support-grid { grid-template-columns: 1fr; }
+      .grid.two, .grid.three, .grid.four, .source-grid, .templates-grid, .tools-grid, .risk-grid, .audit-grid, .context-route-grid, .task-summary-grid, .task-kanban, .global-review-summary-grid, .global-review-lens-grid, .global-review-visual-grid { grid-template-columns: 1fr; }
+      .account-read-grid, .account-action-row, .motion-support-grid, .overview-command-grid, .priority-action-grid, .priority-action-section .why-now-list { grid-template-columns: 1fr; }
+      .overview-action-card { grid-template-columns: 1fr; align-items: stretch; }
+      .overview-action-controls, .action-resource-row { justify-items: stretch; justify-content: flex-start; }
+      .overview-action-card .task-toggle { width: auto; }
       .motion-launcher { grid-template-columns: 1fr; }
       #clientHealthUsageGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .health-evidence-summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -1805,7 +2507,7 @@
       .page { padding: 16px; }
       .grid.metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       #clientHealthUsageGrid { grid-template-columns: 1fr; }
-      .motion-launcher, .motion-action-grid { grid-template-columns: 1fr; }
+      .motion-launcher, .motion-action-grid, .account-signal-grid, .change-strip, .evidence-mini-bar { grid-template-columns: 1fr; }
       .account-read-main h2 { font-size: 26px; }
       .health-action-grid, .health-driver, .health-driver-list, .health-evidence-summary { grid-template-columns: 1fr; }
       .evidence-card { grid-template-columns: 1fr; }
@@ -1868,7 +2570,7 @@
         </div>
         <div class="hero-kpis" id="heroKpis">
           <div class="hero-kpi">
-            <span class="hero-kpi-label">Phase</span>
+            <span class="hero-kpi-label">Adoption target</span>
             <span class="hero-kpi-value" id="heroKpiPhase">—</span>
             <span class="hero-kpi-sub" id="heroKpiPhaseSub"></span>
           </div>
@@ -1878,90 +2580,117 @@
             <span class="hero-kpi-sub" id="heroKpiHealthSub"></span>
           </div>
           <div class="hero-kpi">
-            <span class="hero-kpi-label">Hours left in package</span>
+            <span class="hero-kpi-label">Next meeting</span>
             <span class="hero-kpi-value" id="heroKpiHours">—</span>
-            <span class="hero-kpi-sub" id="heroKpiHoursSub">Remaining service-package capacity</span>
+            <span class="hero-kpi-sub" id="heroKpiHoursSub">Calendar</span>
           </div>
-          <div class="hero-kpi hero-kpi--placeholder hero-kpi--preview">
-            <span class="hero-kpi-preview-tag">Preview</span>
-            <span class="hero-kpi-label">AI Fluency score</span>
+          <div class="hero-kpi">
+            <span class="hero-kpi-label">Renewal date</span>
             <span class="hero-kpi-value" id="heroKpiFluency">72%</span>
-            <span class="hero-kpi-sub" id="heroKpiFluencySub">Q2/Q3 placeholder · not live</span>
+            <span class="hero-kpi-sub" id="heroKpiFluencySub">Salesforce / renewals source</span>
           </div>
         </div>
       </header>
 
       <nav class="tabs">
         <button class="tab active" data-tab="overview">Overview</button>
-        <button class="tab" data-tab="templates">Templates</button>
-        <button class="tab" data-tab="tools">Tools</button>
         <button class="tab" data-tab="clientHealth">
           <span>Client Health</span>
           <span class="tab-alert-dot" id="clientHealthReviewDot" aria-label="Client Health needs review"></span>
         </button>
+        <button class="tab" data-tab="tasks">Tasks</button>
         <button class="tab" data-tab="fluency">AI Fluency</button>
+        <button class="tab" data-tab="contacts">Contacts</button>
+        <button class="tab" data-tab="phaseResources">Phase Resources</button>
       </nav>
-
-      <div class="phase-toolbar" aria-label="Adoption phase filter">
-        <span class="phase-toolbar-label">Adoption phase:</span>
-        <button class="phase-chip" data-phase="all">All phases</button>
-        <button class="phase-chip" data-phase="prep">Preparation</button>
-        <button class="phase-chip" data-phase="readiness">Readiness</button>
-        <button class="phase-chip" data-phase="stickiness">Stickiness</button>
-        <button class="phase-chip" data-phase="scale">Scale</button>
-      </div>
 
       <section class="tab-panel active" id="overview">
         <section class="surface recommendation-card" id="strategicActionPanel">
           <div class="section-kicker">AIOM command center</div>
-          <div class="account-read-grid">
-            <div class="account-read-main">
-              <div class="section-kicker">Account Read</div>
-              <h2 id="strategicAction">What the AIOM should do now</h2>
-              <p id="strategicRationale" class="muted"></p>
+          <div class="overview-command-grid">
+            <div class="overview-panel" id="overviewCurrentStatePanel">
+              <div class="split">
+                <div>
+                  <div class="section-kicker">Current State</div>
+                  <h2 class="overview-state-title" id="overviewCurrentStateTitle">Account health read</h2>
+                  <p id="overviewCurrentStateBody" class="muted"></p>
+                </div>
+                <div class="status blue"><i></i><span id="overviewPhaseState">Phase</span></div>
+              </div>
               <div class="account-signal-grid" id="overviewSignalGrid">
-                <div class="account-signal-card high">
+                <button class="account-signal-card high" data-overview-card-action="risk" type="button" aria-label="View Client Health evidence for risk">
                   <span class="eyebrow">Risk</span>
                   <div class="account-signal-value" id="overviewRiskValue">Risk state</div>
                   <div class="account-signal-body" id="primaryFrictionType"></div>
-                </div>
-                <div class="account-signal-card medium">
+                  <span class="account-signal-action">View evidence</span>
+                </button>
+                <button class="account-signal-card medium" data-overview-card-action="readiness" type="button" aria-label="Run the recommended readiness motion">
                   <span class="eyebrow">Readiness</span>
                   <div class="account-signal-value" id="overviewReadinessValue">Readiness</div>
                   <div class="account-signal-body" id="bestNextStep"></div>
-                </div>
-                <div class="account-signal-card low">
+                  <span class="account-signal-action">Run motion</span>
+                </button>
+                <button class="account-signal-card low" data-overview-card-action="momentum" type="button" aria-label="View Client Health usage and momentum">
                   <span class="eyebrow">Momentum</span>
                   <div class="account-signal-value" id="overviewMomentumValue">Momentum</div>
                   <div class="account-signal-body" id="overviewMomentumBody"></div>
-                </div>
-                <div class="account-signal-card available">
+                  <span class="account-signal-action">View usage</span>
+                </button>
+                <button class="account-signal-card available" data-overview-card-action="sources" type="button" aria-label="Verify Client Health sources">
                   <span class="eyebrow">Source confidence</span>
                   <div class="account-signal-value" id="overviewSourceValue">Sources</div>
                   <div class="account-signal-body" id="overviewSourceBody"></div>
+                  <span class="account-signal-action">Verify sources</span>
+                </button>
+              </div>
+              <div class="evidence-mini-bar" id="overviewEvidenceMiniBar">
+                <div class="evidence-mini-item">
+                  <span class="eyebrow">Source confidence</span>
+                  <strong id="overviewConfidenceValue">--</strong>
+                  <span class="muted" id="overviewConfidenceBody"></span>
+                </div>
+                <div class="evidence-mini-item">
+                  <span class="eyebrow">AI Fluency input</span>
+                  <strong id="overviewAiomMetricValue">--</strong>
+                  <span class="muted" id="overviewAiomMetricBody"></span>
+                </div>
+                <div class="evidence-mini-item">
+                  <span class="eyebrow">Next meeting</span>
+                  <strong id="overviewNextMeetingValue">--</strong>
+                  <span class="muted" id="overviewNextMeetingBody"></span>
+                </div>
+                <div class="evidence-mini-item">
+                  <span class="eyebrow">Renewal date</span>
+                  <strong id="overviewRenewalValue">--</strong>
+                  <span class="muted" id="overviewRenewalBody"></span>
                 </div>
               </div>
               <p class="footer-note" id="confidenceReason"></p>
             </div>
-            <div class="account-read-side">
-              <div class="section-kicker">Why now</div>
-              <ul class="why-now-list" id="nextMoveWhy"></ul>
-              <div class="account-action-row">
-                <div class="metric-card">
-                  <div class="eyebrow">Owner / date</div>
-                  <div class="metric-sub" id="decisionOwner"></div>
+            <div class="overview-panel" id="overviewRecentActionsPanel">
+              <div class="split">
+                <div>
+                  <div class="section-kicker">Last 10 actions taken</div>
+                  <h2>What changed since the last read</h2>
                 </div>
-                <div class="metric-card">
-                  <div class="eyebrow">Audience</div>
-                  <div class="metric-sub" id="targetFunction"></div>
-                </div>
-                <div class="metric-card">
-                  <div class="eyebrow">AI Fluency</div>
-                  <div class="metric-sub" id="overviewFluencySignal">Preview signal only</div>
-                </div>
+                <div class="status orange"><i></i><span id="overviewRecentActionStatus">Activity</span></div>
               </div>
+              <div class="change-strip" id="overviewChangeStrip"></div>
+              <div class="activity-diagram" id="overviewActivityTimeline"></div>
             </div>
           </div>
+          <section class="priority-action-section">
+            <div class="split">
+              <div>
+                <div class="section-kicker">Next three actions</div>
+                <h2 id="strategicAction">What the AIOM should do next</h2>
+                <p id="strategicRationale" class="muted"></p>
+              </div>
+              <div class="status blue"><i></i><span id="targetFunction">Audience</span></div>
+            </div>
+            <ul class="why-now-list" id="nextMoveWhy"></ul>
+            <div class="priority-action-grid" id="overviewPriorityActions"></div>
+          </section>
           <div class="motion-launcher" id="phaseMotionLauncher">
             <div>
               <div class="eyebrow" id="phaseMotionKicker">Recommended motion</div>
@@ -1975,13 +2704,53 @@
 
         <details class="overview-secondary-details" id="overviewSecondaryDetails">
           <summary class="surface overview-secondary-summary">
-            <div class="section-kicker">More operating context</div>
-            <h2>Open supporting detail</h2>
-            <p class="muted">Evidence, account plan, follow-up ownership, phase lanes, workflow posture, package reality, training readiness, contacts, task ownership, sources, and platform health stay available when the AIOM needs to go deeper.</p>
+            <div>
+              <div class="section-kicker">Account Context</div>
+              <h2>Reference-only account context</h2>
+              <p class="muted">Use this only when you need background before acting. Health, people, resources, and tasks live in their tabs.</p>
+            </div>
+            <span class="buttonlike" aria-hidden="true">Open context</span>
           </summary>
           <div class="overview-secondary-content">
 
-        <section class="surface" id="accountEvidencePanel">
+        <section class="surface account-details-guide">
+          <div class="split">
+            <div>
+              <div class="section-kicker">Account Context</div>
+              <h2>Only background that is not already a task, evidence read, contact map, or resource launcher</h2>
+              <p class="muted">The drawer keeps plan spine, phase lanes, package posture, workflows, and adoption footprint. Everything else routes to the place where an AIOM can actually use it.</p>
+            </div>
+            <div class="status blue"><i></i><span>Reference, not work queue</span></div>
+          </div>
+          <div class="context-route-grid">
+            <button class="context-route-card" type="button" data-context-route="health">
+              <span class="eyebrow">Need evidence?</span>
+              <strong>Client Health</strong>
+              <p class="muted">Source links, support tickets, verification, platform health, and Prism health.</p>
+              <span>Open Client Health</span>
+            </button>
+            <button class="context-route-card" type="button" data-context-route="contacts">
+              <span class="eyebrow">Need people?</span>
+              <strong>Contacts</strong>
+              <p class="muted">Stakeholders, owners, relationship context, and re-engagement signals.</p>
+              <span>Open Contacts</span>
+            </button>
+            <button class="context-route-card" type="button" data-context-route="resources">
+              <span class="eyebrow">Need an asset or agent?</span>
+              <strong>Phase Resources</strong>
+              <p class="muted">Templates, tools, agents, launchers, training assets, and standard packs.</p>
+              <span>Open Phase Resources</span>
+            </button>
+            <button class="context-route-card" type="button" data-context-route="tasks">
+              <span class="eyebrow">Need the work queue?</span>
+              <strong>Tasks</strong>
+              <p class="muted">Psychic-mined work, AIOM actions, client asks, waiting items, and completion state.</p>
+              <span>Open Tasks</span>
+            </button>
+          </div>
+        </section>
+
+        <section class="surface" id="accountEvidencePanel" hidden>
           <div class="split">
             <div>
               <div class="section-kicker">Evidence behind this recommendation</div>
@@ -2087,32 +2856,7 @@
           <p class="footer-note">Sample account plan data is acceptable for local shaping. Launch requires live accountSnapshot assembly upstream from Glean-accessible sources before this artifact is placed in production.</p>
         </section>
 
-        <section class="surface" id="overviewFollowupPanel">
-          <div class="split">
-            <div>
-              <div class="section-kicker">AIOM command center</div>
-              <h2>What needs follow-up</h2>
-            </div>
-            <div class="status orange"><i></i><span id="overviewFollowupStatus">Action split</span></div>
-          </div>
-          <p class="muted">A short handoff from the operating model: what Glean owns, what the client owes, and what is currently waiting.</p>
-          <div class="grid three" style="margin-top:16px;">
-            <div class="metric-card" style="min-height:auto;">
-              <div class="eyebrow">AIOM owns</div>
-              <div class="metric-sub" id="overviewAiomFollowup"></div>
-            </div>
-            <div class="metric-card" style="min-height:auto;">
-              <div class="eyebrow">Client owes</div>
-              <div class="metric-sub" id="overviewClientFollowup"></div>
-            </div>
-            <div class="metric-card" style="min-height:auto;">
-              <div class="eyebrow">Waiting on</div>
-              <div class="metric-sub" id="overviewWaitingFollowup"></div>
-            </div>
-          </div>
-        </section>
-
-        <section class="surface" id="accountHealthOverlayPanel">
+        <section class="surface" id="accountHealthOverlayPanel" hidden>
           <div class="split">
             <div>
               <div class="section-kicker">Account health overlay</div>
@@ -2228,7 +2972,7 @@
           <p class="footer-note">Each workflow should show whether it already exists, needs to be created, or needs redesign because AI is changing how the work should happen.</p>
         </section>
 
-        <div class="grid two" style="margin-top:18px;">
+        <div style="margin-top:18px;">
           <section class="surface" id="packagePosturePanel">
             <div class="split">
               <div>
@@ -2264,7 +3008,7 @@
             <p class="footer-note" id="packageScopeNote"></p>
           </section>
 
-          <section class="surface" id="standardPackPanel">
+          <section class="surface" id="standardPackPanel" hidden>
             <div class="split">
               <div>
                 <div class="section-kicker">Standard Agent/Skill pack</div>
@@ -2277,7 +3021,7 @@
           </section>
         </div>
 
-        <section class="surface" id="trainingReadinessPanel" style="margin-top:18px;">
+        <section class="surface" id="trainingReadinessPanel" style="margin-top:18px;" hidden>
           <div class="split">
             <div>
               <div class="section-kicker">Training readiness</div>
@@ -2305,31 +3049,7 @@
           <p class="footer-note" id="trainingReadinessNote"></p>
         </section>
 
-        <div class="grid three" style="margin-top:18px;">
-          <section class="surface" id="contactMapPanel">
-            <div class="split">
-              <div>
-                <div class="section-kicker">Who to contact</div>
-                <h2 id="contactMapSummary">Key people for the next motion</h2>
-              </div>
-              <div class="status blue"><i></i><span id="contactMapStatus">Stakeholder map</span></div>
-            </div>
-            <p class="muted">Contacts are ranked by their role in the recommended action, relationship signal, and whether they need re-engagement.</p>
-            <div class="list" id="contactMapList"></div>
-          </section>
-
-          <section class="surface" id="taskOwnershipPanel">
-            <div class="split">
-              <div>
-                <div class="section-kicker">Task ownership</div>
-                <h2 id="taskOwnershipSummary">What is ours vs. theirs</h2>
-              </div>
-              <div class="status orange"><i></i><span id="taskOwnershipStatus">Action split</span></div>
-            </div>
-            <p class="muted">The AIOM should leave this section knowing exactly what Glean owes, what the client owes, and what is blocked elsewhere.</p>
-            <div class="list" id="taskOwnershipList"></div>
-          </section>
-
+        <div style="margin-top:18px;">
           <section class="surface" id="seatDistributionPanel">
             <div class="split">
               <div>
@@ -2343,7 +3063,7 @@
           </section>
         </div>
 
-        <div class="grid two" style="margin-top:18px;">
+        <div class="grid two" style="margin-top:18px;" hidden>
           <section class="surface">
             <div class="split">
               <div>
@@ -2356,7 +3076,7 @@
           </section>
         </div>
 
-        <div class="grid two" style="margin-top:18px;">
+        <div class="grid two" style="margin-top:18px;" hidden>
           <section class="surface">
             <div class="split">
               <div>
@@ -2381,94 +3101,116 @@
           </section>
         </div>
 
-        <div class="grid two" style="margin-top:18px;">
-          <section class="surface">
-            <div class="split">
-              <div>
-                <div class="section-kicker">Signal intake coverage</div>
-                <h2 id="sourceTitle">Source registry</h2>
-              </div>
-              <div class="status blue"><i></i><span id="sourceCountLabel"></span></div>
-            </div>
-            <div class="source-grid" id="sourceGrid"></div>
-            <p class="footer-note" id="sourceNote"></p>
-          </section>
-
-          <section class="surface">
-            <div class="split">
-              <div>
-                <div class="section-kicker">AI health + knowledge</div>
-                <h2>Assistant, Agents, and Prism</h2>
-              </div>
-            </div>
-            <div class="risk-grid" id="platformHealthGrid"></div>
-            <div class="callout" id="prismHealthInputPanel" style="margin-top:14px;">
-              <strong>What Prism already tells us about client health:</strong>
-              <div class="grid two" style="margin-top:12px;">
-                <div>
-                  <span class="eyebrow">Health signal</span>
-                  <p id="prismHealthSignal"></p>
-                </div>
-                <div>
-                  <span class="eyebrow">Risk pattern</span>
-                  <p id="prismRiskPattern"></p>
-                </div>
-                <div>
-                  <span class="eyebrow">Prior action outcome</span>
-                  <p id="priorActionOutcome"></p>
-                </div>
-                <div>
-                  <span class="eyebrow">Repeated blocker</span>
-                  <p id="repeatedBlocker"></p>
-                </div>
-                <div>
-                  <span class="eyebrow">Momentum since last touch</span>
-                  <p id="momentumSinceLastTouch"></p>
-                </div>
-                <div>
-                  <span class="eyebrow">Play from history</span>
-                  <p id="recommendedPlayFromHistory"></p>
-                </div>
-              </div>
-              <p class="footer-note" id="healthImpact"></p>
-            </div>
-            <div class="button-row" style="margin-top:14px;">
-              <a class="buttonlike" id="openPrismBtn" href="https://app.glean.com/prism" target="_blank" rel="noopener">Open Prism</a>
-            </div>
-            <p class="footer-note">This keeps the AIOM operating surface focused while linking directly to live Prism in Glean. Account-specific Prism view links should only be added after the exact view URLs are verified.</p>
-          </section>
-        </div>
-
           </div>
         </details>
 
       </section>
 
-      <section class="tab-panel" id="templates">
+      <section class="tab-panel" id="tasks">
         <section class="surface">
-          <div class="split">
+          <div class="task-workboard-head">
             <div>
-              <div class="section-kicker">Ready-to-go resources</div>
-              <h2>Document library by adoption stage</h2>
+              <div class="section-kicker">AIOM task board</div>
+              <h2>What needs action, waiting, or closure</h2>
+              <p class="muted">This is the single task-management home for Adoption OS. Other pages can point here, but completion, dismissal, and task staging happen here.</p>
             </div>
-            <div class="status blue"><i></i><span id="templateCountLabel"></span></div>
+            <div class="task-scope-toggle" aria-label="Task board scope">
+              <button type="button" data-task-scope="current">Current client</button>
+              <button type="button" data-task-scope="portfolio">My portfolio</button>
+            </div>
           </div>
-          <div class="templates-grid" id="templatesGrid"></div>
-          <p class="footer-note">Templates stay phase-aware, but the recommendation engine picks the one doc you should open first.</p>
+          <div class="split">
+            <p class="footer-note" id="taskBoardScopeLabel">Current client task board</p>
+            <div class="status blue"><i></i><span id="taskBoardStatus">Tasks ready</span></div>
+          </div>
+          <div class="task-summary-grid" id="taskSummaryGrid"></div>
+          <div class="task-kanban" id="taskKanbanBoard"></div>
+          <p class="footer-note">Live launch target: populate this from Psychic / Tasks upstream, filtered by AIOM portfolio and selected client. The local artifact uses seeded task signals so the interaction can be tested inside the Canvas-safe prototype.</p>
         </section>
       </section>
 
-      <section class="tab-panel" id="tools">
+      <section class="tab-panel" id="contacts">
+        <section class="surface" id="contactMapPanel">
+          <div class="split">
+            <div>
+              <div class="section-kicker">Contacts</div>
+              <h2 id="contactMapSummary">Key people for the next motion</h2>
+            </div>
+            <div class="status blue"><i></i><span id="contactMapStatus">Stakeholder map</span></div>
+          </div>
+          <p class="muted">Contacts are ranked by their role in the recommended action, relationship signal, and whether they need re-engagement.</p>
+          <div class="list" id="contactMapList"></div>
+        </section>
+      </section>
+
+      <section class="tab-panel" id="phaseResources">
+        <div class="phase-toolbar" aria-label="Phase resources filter">
+          <span class="phase-toolbar-label">Phase resources:</span>
+          <button class="phase-chip" data-phase="all">All phases</button>
+          <button class="phase-chip" data-phase="prep">Preparation</button>
+          <button class="phase-chip" data-phase="readiness">Readiness</button>
+          <button class="phase-chip" data-phase="stickiness">Stickiness</button>
+          <button class="phase-chip" data-phase="scale">Scale</button>
+        </div>
         <section class="surface">
           <div class="split">
             <div>
-              <div class="section-kicker">Agents, skills, and launchers</div>
-              <h2>AIOM tool library</h2>
+              <div class="section-kicker">Phase resources</div>
+              <h2>Templates, tools, and agents for the current motion</h2>
+              <p class="muted">Use this when the recommended action needs a concrete asset. The phase filter keeps starter agent motions, templates, launchers, and source-catalog resources tied to the adoption motion instead of living as separate tool libraries.</p>
+            </div>
+            <div class="status blue"><i></i><span id="templateCountLabel"></span></div>
+          </div>
+          <div class="template-section">
+            <div class="template-section-head">
+              <div>
+                <div class="section-kicker">Starter agent motions</div>
+                <h3>Proven workflow patterns to start the engagement</h3>
+              </div>
+            </div>
+            <div class="templates-grid" id="starterAgentMotionsGrid"></div>
+            <p class="footer-note">These are common starting motions every org can benefit from. Live Auto Agents can later prioritize, generate, or refresh these motions from customer signals.</p>
+          </div>
+          <div class="template-section">
+            <div class="template-section-head">
+              <div>
+                <div class="section-kicker">Recommended template</div>
+                <h3>Open this first</h3>
+              </div>
+            </div>
+            <div class="templates-grid" id="templateRecommendedGrid"></div>
+          </div>
+          <div class="template-section">
+            <div class="template-section-head">
+              <div>
+                <div class="section-kicker">Supporting templates</div>
+                <h3>Use when the motion needs more structure</h3>
+              </div>
+            </div>
+            <div class="templates-grid" id="templateSupportingGrid"></div>
+          </div>
+          <details class="template-section">
+            <summary class="buttonlike" style="display:inline-flex; cursor:pointer;">More resources from Strategic Enablement</summary>
+            <div class="templates-grid" id="templateMoreGrid" style="margin-top:14px;"></div>
+            <div class="template-source-gaps">
+              <div class="section-kicker">Source links to verify</div>
+              <p class="muted">These source-catalog items are useful, but should not become primary templates until the direct resource link is confirmed.</p>
+              <ul id="templateSourceGapsList"></ul>
+            </div>
+          </details>
+          <p class="footer-note">Templates stay phase-aware, but the recommendation engine picks the one doc you should open first. Strategic Enablement source catalog items stay secondary until they have direct, usable links.</p>
+        </section>
+
+        <section class="surface">
+          <div class="split">
+            <div>
+              <div class="section-kicker">Phase launchers</div>
+              <h2>Agents and skills that support this phase</h2>
             </div>
             <div class="status green"><i></i><span id="toolCountLabel"></span></div>
           </div>
           <div class="tools-grid" id="toolsGrid"></div>
-          <p class="footer-note">Launch behavior is explicit, but the tools stay inside the familiar AIOM workflow rather than becoming a separate technical experience.</p>
+          <p class="footer-note">Launch behavior is explicit, but these tools now live with phase resources so the AIOM picks the asset and the action in one place.</p>
         </section>
       </section>
 
@@ -2494,7 +3236,23 @@
             </div>
             <p class="footer-note" id="rosterStatus"></p>
           </div>
-          <table class="portfolio-table">
+          <section class="surface" id="globalAdoptionReviewPanel" style="margin-top:18px;">
+            <div class="split">
+              <div>
+                <div class="section-kicker">Global Adoption Review</div>
+                <h2>Book-level adoption read</h2>
+                <p class="muted">Portfolio-level view inspired by the Global Adoption Review skill: fixed health buckets, recent momentum, account trend lines, and adoption bars. Click an account row when you need the account-level Adoption OS read.</p>
+              </div>
+              <div class="status blue"><i></i><span id="globalAdoptionReviewStatus">Portfolio review</span></div>
+            </div>
+            <div class="global-review-summary-grid" id="globalAdoptionSummaryGrid"></div>
+            <div class="callout" style="margin-top:16px;">
+              <strong>Reading method:</strong> <span id="globalAdoptionMethodology">Structural health uses the prior full-quarter posture; the last 30 days and last 2-4 weeks shape momentum and urgency.</span>
+            </div>
+            <div class="global-review-account-grid" id="globalAdoptionAccountGrid"></div>
+          </section>
+
+          <table class="portfolio-table" style="margin-top:18px;">
             <thead>
               <tr>
                 <th>Rank</th>
@@ -2610,6 +3368,65 @@
                   </div>
                 </div>
               </details>
+            </section>
+          </div>
+          <div class="grid two" style="margin-top:18px;">
+            <section class="surface">
+              <div class="split">
+                <div>
+                  <div class="section-kicker">Source registry</div>
+                  <h2 id="sourceTitle">Signal intake coverage</h2>
+                  <p class="muted">Use this to see which source categories are available, provisional, missing, or still need verification before trusting the health read.</p>
+                </div>
+                <div class="status blue"><i></i><span id="sourceCountLabel"></span></div>
+              </div>
+              <div class="source-grid" id="sourceGrid"></div>
+              <p class="footer-note" id="sourceNote"></p>
+            </section>
+
+            <section class="surface">
+              <div class="split">
+                <div>
+                  <div class="section-kicker">AI health + account memory</div>
+                  <h2>Assistant, Agents, and Prism</h2>
+                  <p class="muted">This keeps platform usage and derived account memory next to the Client Health read instead of hiding it in account context.</p>
+                </div>
+              </div>
+              <div class="risk-grid" id="platformHealthGrid"></div>
+              <div class="callout" id="prismHealthInputPanel" style="margin-top:14px;">
+                <strong>What Prism already tells us about client health:</strong>
+                <div class="grid two" style="margin-top:12px;">
+                  <div>
+                    <span class="eyebrow">Health signal</span>
+                    <p id="prismHealthSignal"></p>
+                  </div>
+                  <div>
+                    <span class="eyebrow">Risk pattern</span>
+                    <p id="prismRiskPattern"></p>
+                  </div>
+                  <div>
+                    <span class="eyebrow">Prior action outcome</span>
+                    <p id="priorActionOutcome"></p>
+                  </div>
+                  <div>
+                    <span class="eyebrow">Repeated blocker</span>
+                    <p id="repeatedBlocker"></p>
+                  </div>
+                  <div>
+                    <span class="eyebrow">Momentum since last touch</span>
+                    <p id="momentumSinceLastTouch"></p>
+                  </div>
+                  <div>
+                    <span class="eyebrow">Play from history</span>
+                    <p id="recommendedPlayFromHistory"></p>
+                  </div>
+                </div>
+                <p class="footer-note" id="healthImpact"></p>
+              </div>
+              <div class="button-row" style="margin-top:14px;">
+                <a class="buttonlike" id="openPrismBtn" href="https://app.glean.com/prism" target="_blank" rel="noopener">Open Prism</a>
+              </div>
+              <p class="footer-note">Account-specific Prism view links should only be added after the exact view URLs are verified.</p>
             </section>
           </div>
           <p class="footer-note">Canvas interactive content does not provide persistent browser storage, so Account Memory edits are session-only here. Durable updates should be saved to the account workspace or captured through a Glean Agent flow until a direct writeback path is confirmed.</p>
@@ -3274,18 +4091,41 @@
       }
     };
 
+    const strategicEnablementSourceUrl = 'https://docs.google.com/document/d/1E3ih4DoLp8WZqXtolnSjsY_Pj44AVhCLIbRwmB83Ugc/edit?tab=t.0';
+
     const templatesLibrary = [
-      { phase: 'prep', title: 'Success Planning Deck', type: 'Presentation', activity: 'Success planning', url: 'https://docs.google.com/presentation/d/1VqVluTgCPrnSNveUxoUOoFzBmzKFifqooCJn4oCrhpc/edit' },
-      { phase: 'prep', title: 'Kickoff questions guide', type: 'Guide', activity: 'Internal preparation', url: 'https://docs.google.com/document/d/1ENpn22mAktHHDjw5MSq1I3BJKbGGbJIvVypIDxxbTGk/edit?usp=sharing' },
-      { phase: 'readiness', title: 'Enablement Resource Package', type: 'Resource pack', activity: 'Support comms and intranet copy', url: 'https://docs.google.com/document/d/1m-_cm_cTaBqZBwqRegrDJ485DLbzPl8SvzLO6dkFLzo/edit?usp=sharing' },
-      { phase: 'readiness', title: 'Self-Serve Training / LMS Module Outline', type: 'Outline', activity: 'Async training and new-hire enablement', url: 'https://docs.google.com/document/d/1stVflmuGr75nGddPOBGb3zhn8cXlHDnacShghhFCO4w' },
-      { phase: 'readiness', title: 'Status Report Template', type: 'Template', activity: 'Client status update', url: 'https://docs.google.com/document/d/1SEsWnxEbRW-K9OiV7_38q7Whk4O8Wf5zGiSeXlTRdqM' },
-      { phase: 'stickiness', title: 'Next Steps in Maxing Out Adoption Deck', type: 'Presentation', activity: 'Next steps strategy', url: 'https://docs.google.com/presentation/d/1jNnlvXUFNoyjuxOpLt8kjsq2cJf2eekg4UXK0nUsJVc/edit?usp=sharing' },
-      { phase: 'stickiness', title: 'Business-Level Workshop Facilitation Guide', type: 'Guide', activity: 'Business workshops', url: 'https://docs.google.com/document/d/1MblgO5Ws7JMAKb9tNE6BpzWn8LgcoDSEfY8Rh8BAO48/edit?usp=sharing' },
-      { phase: 'stickiness', title: 'Power User Program Outline & Resources', type: 'Program guide', activity: 'Power users', url: 'https://docs.google.com/document/d/1bWfu9roTnLD5bQtTc41RrEwwvUdAUzXiKtocraYvcCE/edit?tab=t.0' },
-      { phase: 'stickiness', title: 'Incentive Ideation Resource Pack', type: 'Resource pack', activity: 'Behavior reinforcement planning', url: 'https://docs.google.com/document/d/1h3XjU7m5mhpgkwo2wE1d4fAoA45-KsvBeUrjvG003Vw' },
-      { phase: 'scale', title: 'Platform Governance Follow-Up Pack', type: 'Follow-up pack', activity: 'Platform governance', url: 'https://docs.google.com/document/d/1qvl8cfVcFltvVIhl0hA--KX7hmzlmI6MKzgiY-m44AQ' },
-      { phase: 'scale', title: 'Special Events Blueprint + Comms Bundle', type: 'Comms bundle', activity: 'Special events and activation', url: 'https://docs.google.com/document/d/1w3WTX40Itb3osP7gEE3IVNFw2pKXZFIh7B4ruESBso8' }
+      { phase: 'prep', tier: 'supporting', title: 'Success Planning Deck', type: 'Presentation', activity: 'Success planning', url: 'https://docs.google.com/presentation/d/1VqVluTgCPrnSNveUxoUOoFzBmzKFifqooCJn4oCrhpc/edit' },
+      { phase: 'prep', tier: 'supporting', title: 'Kickoff questions guide', type: 'Guide', activity: 'Internal preparation', url: 'https://docs.google.com/document/d/1ENpn22mAktHHDjw5MSq1I3BJKbGGbJIvVypIDxxbTGk/edit?usp=sharing' },
+      { phase: 'prep', tier: 'more', title: 'Adoption Strategy Presentation Deck', type: 'Presentation', activity: 'Strategic enablement workshop', url: strategicEnablementSourceUrl, sourceNeedsLink: true },
+      { phase: 'prep', tier: 'more', title: 'Agent Governance Presentation Deck', type: 'Presentation', activity: 'Governance workshop', url: strategicEnablementSourceUrl, sourceNeedsLink: true },
+      { phase: 'prep', tier: 'more', title: 'Agent Governance Worksheet', type: 'Worksheet', activity: 'Admin decision capture', url: strategicEnablementSourceUrl, sourceNeedsLink: true },
+      { phase: 'prep', tier: 'more', title: 'Post-Sales Kick-Off Deck', type: 'Presentation', activity: 'Client kickoff', url: strategicEnablementSourceUrl, sourceNeedsLink: true },
+      { phase: 'prep', tier: 'more', title: 'AIOM Estimated Hours Calculator', type: 'Calculator', activity: 'Enablement scoping', url: strategicEnablementSourceUrl, sourceNeedsLink: true },
+      { phase: 'prep', tier: 'more', title: 'Calendar Invite Text For Strategic Sessions', type: 'Copy block', activity: 'Workshop scheduling', url: strategicEnablementSourceUrl, sourceNeedsLink: true, note: 'Keep secondary until the invite copy is made less generic.' },
+      { phase: 'readiness', tier: 'supporting', title: 'Enablement Resource Package', type: 'Resource pack', activity: 'Support comms and intranet copy', url: 'https://docs.google.com/document/d/1m-_cm_cTaBqZBwqRegrDJ485DLbzPl8SvzLO6dkFLzo/edit?usp=sharing' },
+      { phase: 'readiness', tier: 'supporting', title: 'Self-Serve Training / LMS Module Outline', type: 'Outline', activity: 'Async training and new-hire enablement', url: 'https://docs.google.com/document/d/1stVflmuGr75nGddPOBGb3zhn8cXlHDnacShghhFCO4w' },
+      { phase: 'readiness', tier: 'supporting', title: 'Status Report Template', type: 'Template', activity: 'Client status update', url: 'https://docs.google.com/document/d/1SEsWnxEbRW-K9OiV7_38q7Whk4O8Wf5zGiSeXlTRdqM' },
+      { phase: 'readiness', tier: 'more', title: 'Comms Package', type: 'Comms pack', activity: 'Launch announcements and calendar invites', url: strategicEnablementSourceUrl, sourceNeedsLink: true },
+      { phase: 'readiness', tier: 'more', title: 'Intranet Copy', type: 'Copy block', activity: 'Client intranet launch support', url: strategicEnablementSourceUrl, sourceNeedsLink: true },
+      { phase: 'readiness', tier: 'more', title: 'Detailed FAQ', type: 'FAQ', activity: 'Common launch questions', url: strategicEnablementSourceUrl, sourceNeedsLink: true },
+      { phase: 'readiness', tier: 'more', title: '5 Common Concerns', type: 'Objection guide', activity: 'Skeptic response support', url: strategicEnablementSourceUrl, sourceNeedsLink: true },
+      { phase: 'readiness', tier: 'more', title: 'Prompts to Try in Glean Assistant', type: 'Prompt pack', activity: 'Department-specific practice', url: strategicEnablementSourceUrl, sourceNeedsLink: true },
+      { phase: 'readiness', tier: 'more', title: 'Prompting Workshop Deck', type: 'Presentation', activity: 'Prompting training', url: strategicEnablementSourceUrl, sourceNeedsLink: true },
+      { phase: 'readiness', tier: 'more', title: 'Agent Maps', type: 'Guide', activity: 'Self-serve agent building', url: strategicEnablementSourceUrl, sourceNeedsLink: true },
+      { phase: 'stickiness', tier: 'supporting', title: 'Next Steps in Maxing Out Adoption Deck', type: 'Presentation', activity: 'Next steps strategy', url: 'https://docs.google.com/presentation/d/1jNnlvXUFNoyjuxOpLt8kjsq2cJf2eekg4UXK0nUsJVc/edit?usp=sharing' },
+      { phase: 'stickiness', tier: 'supporting', title: 'Business-Level Workshop Facilitation Guide', type: 'Guide', activity: 'Business workshops', url: 'https://docs.google.com/document/d/1MblgO5Ws7JMAKb9tNE6BpzWn8LgcoDSEfY8Rh8BAO48/edit?usp=sharing' },
+      { phase: 'stickiness', tier: 'supporting', title: 'Power User Program Outline & Resources', type: 'Program guide', activity: 'Power users', url: 'https://docs.google.com/document/d/1bWfu9roTnLD5bQtTc41RrEwwvUdAUzXiKtocraYvcCE/edit?tab=t.0' },
+      { phase: 'stickiness', tier: 'supporting', title: 'Incentive Ideation Resource Pack', type: 'Resource pack', activity: 'Behavior reinforcement planning', url: 'https://docs.google.com/document/d/1h3XjU7m5mhpgkwo2wE1d4fAoA45-KsvBeUrjvG003Vw' },
+      { phase: 'stickiness', tier: 'more', title: 'Champion Check-Ins Facilitation Guide', type: 'Guide', activity: 'Champion motion', url: strategicEnablementSourceUrl, sourceNeedsLink: true },
+      { phase: 'stickiness', tier: 'more', title: 'Champion Selection Framework', type: 'Framework', activity: 'Champion identification', url: strategicEnablementSourceUrl, sourceNeedsLink: true },
+      { phase: 'stickiness', tier: 'more', title: 'Glean Champion Overview for Potential Champions', type: 'Overview', activity: 'Champion expectation setting', url: strategicEnablementSourceUrl, sourceNeedsLink: true },
+      { phase: 'stickiness', tier: 'more', title: 'Use Case Ideation Workshops Facilitation Guide', type: 'Guide', activity: 'Use-case ideation', url: strategicEnablementSourceUrl, sourceNeedsLink: true },
+      { phase: 'scale', tier: 'supporting', title: 'Platform Governance Follow-Up Pack', type: 'Follow-up pack', activity: 'Platform governance', url: 'https://docs.google.com/document/d/1qvl8cfVcFltvVIhl0hA--KX7hmzlmI6MKzgiY-m44AQ' },
+      { phase: 'scale', tier: 'supporting', title: 'Special Events Blueprint + Comms Bundle', type: 'Comms bundle', activity: 'Special events and activation', url: 'https://docs.google.com/document/d/1w3WTX40Itb3osP7gEE3IVNFw2pKXZFIh7B4ruESBso8' },
+      { phase: 'scale', tier: 'more', title: 'Glean Platform Governance Playbook', type: 'Playbook', activity: 'Governance operating model', url: strategicEnablementSourceUrl, sourceNeedsLink: true },
+      { phase: 'scale', tier: 'more', title: 'Glean Day Overview & Agenda', type: 'Agenda', activity: 'Special event planning', url: strategicEnablementSourceUrl, sourceNeedsLink: true },
+      { phase: 'scale', tier: 'more', title: 'Hackathon Evaluation Rubric', type: 'Rubric', activity: 'Agent hackathon scoring', url: 'https://docs.google.com/document/d/1vUUAfRK4VnfVQScI0YnrvsbtJaT1EZDQBdlptKW_jpI/edit?usp=sharing' },
+      { phase: 'scale', tier: 'more', title: 'Governance Playbook for Clients', type: 'Client playbook', activity: 'Client governance enablement', url: strategicEnablementSourceUrl, sourceNeedsLink: true }
     ];
 
     const toolsLibrary = [
@@ -3309,6 +4149,18 @@
       { title: 'EBR Generator', category: 'Executive reviews', job: 'Value Proof', resourceType: 'Skill', owner: 'Leigh Whittaker Coleman', status: 'Completed', value: 'Builds an EBR deck end-to-end so AIOMs can generate polished reviews much faster.', url: 'https://app.glean.com/library/1d5124153e8c4312a011138257888aec', prompt: 'Use my glean-ebr-generator skill. The customer is [Customer].', bestFor: 'EBRs, executive readouts, showcasing value', phases: ['stickiness', 'scale', 'readiness'] },
       { title: 'AIOM QBR Deck Creator', category: 'Customer insights & strategy', job: 'Value Proof', resourceType: 'Agent', owner: 'Gustav Bergman', status: 'Completed', value: 'Creates a QBR-style deck to package adoption evidence, recommendations, and executive narrative.', url: 'https://app.glean.com/chat/agents/df5259c63d9d4a09a41de1dee77472d5', bestFor: 'QBRs, executive proof, account reviews', phases: ['scale'] },
       { title: 'HackaComms', category: 'Customer communication & content', job: 'Communication', resourceType: 'Agent', owner: 'Leigh Whittaker Coleman', status: 'Completed', value: 'Packages hackathon or activation communications so program moments are easier to promote and sustain.', url: 'https://app.glean.com/chat/agents/894b6961595141c482e26f372ac37992', bestFor: 'Hackathons, activation campaigns, participant comms', phases: ['scale'] }
+    ];
+
+    const starterAgentMotions = [
+      { title: 'Account and meeting prep agent', phases: ['prep'], outcome: 'Summarize account context, open questions, stakeholder map, and the next customer-ready point of view.', firstStep: 'Validate source coverage and decision owner before the next planning touch.', toolTitle: 'AIOM Briefing Report' },
+      { title: 'Meeting follow-up and commitments agent', phases: ['prep', 'readiness', 'stickiness'], outcome: 'Turn meetings into decisions, blockers, owner/date commitments, and customer-ready follow-up.', firstStep: 'Run after the customer touch and save the commitment summary as Account Memory.', toolTitle: 'Meeting Summarizer + Follow Up' },
+      { title: 'Policy and knowledge Q&A agent', phases: ['readiness'], outcome: 'Give employees a safe first agent experience against common company policies, processes, and internal knowledge.', firstStep: 'Pick one high-volume question set and identify the admin or champion who owns the content.' },
+      { title: 'Launch comms and tip-drop agent', phases: ['readiness', 'stickiness'], outcome: 'Create role-aware nudges, admin updates, and prompt examples that keep Glean visible after launch.', firstStep: 'Select the audience and match the message to the launch or adoption blocker.', toolTitle: 'Glean Tip Drop Agent' },
+      { title: 'Workflow use-case recommender', phases: ['stickiness'], outcome: 'Find the highest-fit workflow or agent use case based on user jobs, adoption friction, and available champions.', firstStep: 'Validate the workflow with a champion before building anything.', toolTitle: 'Optimal Agent Use Case Recommender' },
+      { title: 'Prompt and workflow coach', phases: ['readiness', 'stickiness'], outcome: 'Help users convert vague prompts into repeatable work patterns that can become agents later.', firstStep: 'Start with one role-critical workflow and produce three reusable prompt patterns.', toolTitle: 'Prompt Crafter' },
+      { title: 'Support and blocker triage agent', phases: ['readiness', 'scale'], outcome: 'Route support friction into clear issue categories, owners, status, and customer-facing language.', firstStep: 'Use it when product friction or unresolved tickets are shaping the adoption motion.', toolTitle: 'Glean Q&A Bot' },
+      { title: 'Executive value proof agent', phases: ['stickiness', 'scale'], outcome: 'Package usage, workflow wins, agent examples, and business outcomes into executive-ready proof.', firstStep: 'Use when the account needs a value narrative before QBR, EBR, renewal, or expansion.', toolTitle: 'EBR Generator' },
+      { title: 'Governed agent-library motion', phases: ['scale'], outcome: 'Move proven agents from one-off experiments into a managed library with ownership, QA, and reuse.', firstStep: 'Audit the strongest agents, assign owners, and decide which should become standard patterns.', toolTitle: 'Audit My Agent' }
     ];
 
     const resourceCatalog = [
@@ -3380,7 +4232,90 @@
       const verifyCount = entries.filter(item => item.status === 'needs verification' || item.status === 'provisional').length;
       const missingSources = getMissingSources(account);
       const gapText = missingSources.length ? ` Missing or unverified: ${missingSources.join(', ')}.` : ' No required source categories are marked missing.';
-      return `${account.prism.coverage} Prism coverage, ${account.sourceCoverage} seeded source coverage, ${availableCount}/${entries.length} categories available, and ${verifyCount} needing verification.${gapText}`;
+      return `Source confidence means how grounded this read is in available account evidence: ${availableCount}/${entries.length} source categories available and ${verifyCount} needing verification.${gapText}`;
+    }
+
+    const accountOperatingTargets = {
+      'Amplify Education': {
+        adoptionGoalProgress: '52%',
+        adoptionGoalDetail: 'Wau / Signups from Monthly Accounts Review',
+        renewalDate: 'Mar 31, 2027',
+        renewalDetail: 'Monthly Accounts Review',
+        nextMeeting: 'Apr 30 · Glean Admin Training',
+        nextMeetingDetail: 'Calendar'
+      }
+    };
+
+    function getCombinedWau(account) {
+      return (account.assistant && account.assistant.wau ? account.assistant.wau : 0)
+        + (account.agents && account.agents.wau ? account.agents.wau : 0);
+    }
+
+    function getAccountOperatingTarget(account) {
+      const combinedWau = getCombinedWau(account);
+      return accountOperatingTargets[account.name] || {
+        adoptionGoalWau: Math.max(100, Math.ceil(combinedWau / 0.65)),
+        renewalDate: 'Renewal not found',
+        renewalDetail: 'Needs Salesforce / renewals source',
+        nextMeeting: 'No upcoming meeting',
+        nextMeetingDetail: 'Calendar'
+      };
+    }
+
+    function getAdoptionGoalProgress(account) {
+      const operatingTarget = getAccountOperatingTarget(account);
+      if (operatingTarget.adoptionGoalProgress) {
+        return {
+          label: operatingTarget.adoptionGoalProgress,
+          body: operatingTarget.adoptionGoalDetail || 'Adoption progress against goal'
+        };
+      }
+      const target = operatingTarget.adoptionGoalWau;
+      const current = getCombinedWau(account);
+      const percent = target ? Math.round((current / target) * 100) : 0;
+      return {
+        label: `${percent}%`,
+        body: `${current}/${target} WAU goal`
+      };
+    }
+
+    function getAiFluencyStrategyInput(account) {
+      const phase = account.phase || 'prep';
+      const phaseInputs = {
+        prep: {
+          label: 'Preview',
+          body: 'When live, fluency will tune stakeholder strategy, training depth, and starter-agent sequencing.'
+        },
+        readiness: {
+          label: 'Preview',
+          body: 'When live, fluency will tune launch enablement, confidence building, and first-agent guidance.'
+        },
+        stickiness: {
+          label: 'Preview',
+          body: 'When live, fluency will identify whether to push workflow depth, champion habits, or manager reinforcement.'
+        },
+        scale: {
+          label: 'Preview',
+          body: 'When live, fluency will tune governance, COE support, and which agent motions should scale.'
+        }
+      };
+      return phaseInputs[phase] || phaseInputs.prep;
+    }
+
+    function getNextMeetingContext(account) {
+      const target = getAccountOperatingTarget(account);
+      return {
+        title: target.nextMeeting || 'No upcoming meeting',
+        body: target.nextMeetingDetail || 'Calendar'
+      };
+    }
+
+    function getRenewalContext(account) {
+      const target = getAccountOperatingTarget(account);
+      return {
+        title: target.renewalDate || 'Renewal not found',
+        body: target.renewalDetail || 'Needs Salesforce / renewals source'
+      };
     }
 
     function getPrismHealthContext(account) {
@@ -4172,6 +5107,16 @@
       return {};
     }
 
+    function createInMemoryCompletedOverviewActionState() {
+      // Session-only by design for the Glean Canvas sandbox.
+      return {};
+    }
+
+    function createInMemoryTaskBoardState() {
+      // Session-only by design for the Glean Canvas sandbox.
+      return {};
+    }
+
     function getAttentionKey(accountName, signal) {
       return `${accountName}::${signal.type}::${signal.title}`;
     }
@@ -4186,10 +5131,27 @@
       else localState.completedAttention[key] = true;
     }
 
+    function getOverviewActionKey(accountName, action) {
+      return `${accountName}::overview::${action.id}`;
+    }
+
+    function isOverviewActionCompleted(accountName, action) {
+      return !!localState.completedOverviewActions[getOverviewActionKey(accountName, action)];
+    }
+
+    function toggleOverviewActionCompleted(accountName, action) {
+      const key = getOverviewActionKey(accountName, action);
+      if (localState.completedOverviewActions[key]) delete localState.completedOverviewActions[key];
+      else localState.completedOverviewActions[key] = true;
+    }
+
     const localState = {
       currentAccount: 'Amplify Education',
       activePhaseFilter: 'prep',
       completedAttention: createInMemoryCompletedAttentionState(),
+      completedOverviewActions: createInMemoryCompletedOverviewActionState(),
+      taskScope: 'current',
+      taskBoardOverrides: createInMemoryTaskBoardState(),
       rosterVerification: createRosterVerificationState(),
       prismCapture: {}
     };
@@ -4204,6 +5166,8 @@
       heroKpiHealthSub: document.getElementById('heroKpiHealthSub'),
       heroKpiHours: document.getElementById('heroKpiHours'),
       heroKpiHoursSub: document.getElementById('heroKpiHoursSub'),
+      heroKpiFluency: document.getElementById('heroKpiFluency'),
+      heroKpiFluencySub: document.getElementById('heroKpiFluencySub'),
       accountHealthOverlayTitle: document.getElementById('accountHealthOverlayTitle'),
       accountHealthOverlayStatus: document.getElementById('accountHealthOverlayStatus'),
       accountHealthOverlayBody: document.getElementById('accountHealthOverlayBody'),
@@ -4261,35 +5225,46 @@
       contactMapSummary: document.getElementById('contactMapSummary'),
       contactMapStatus: document.getElementById('contactMapStatus'),
       contactMapList: document.getElementById('contactMapList'),
-      taskOwnershipSummary: document.getElementById('taskOwnershipSummary'),
-      taskOwnershipStatus: document.getElementById('taskOwnershipStatus'),
-      taskOwnershipList: document.getElementById('taskOwnershipList'),
-      overviewFollowupStatus: document.getElementById('overviewFollowupStatus'),
-      overviewAiomFollowup: document.getElementById('overviewAiomFollowup'),
-      overviewClientFollowup: document.getElementById('overviewClientFollowup'),
-      overviewWaitingFollowup: document.getElementById('overviewWaitingFollowup'),
+      taskBoardScopeLabel: document.getElementById('taskBoardScopeLabel'),
+      taskBoardStatus: document.getElementById('taskBoardStatus'),
+      taskSummaryGrid: document.getElementById('taskSummaryGrid'),
+      taskKanbanBoard: document.getElementById('taskKanbanBoard'),
       seatDistributionSummary: document.getElementById('seatDistributionSummary'),
       seatDistributionStatus: document.getElementById('seatDistributionStatus'),
       seatDistributionList: document.getElementById('seatDistributionList'),
       attentionSummary: document.getElementById('attentionSummary'),
       attentionList: document.getElementById('attentionList'),
+      overviewCurrentStateTitle: document.getElementById('overviewCurrentStateTitle'),
+      overviewCurrentStateBody: document.getElementById('overviewCurrentStateBody'),
+      overviewPhaseState: document.getElementById('overviewPhaseState'),
+      overviewRecentActionStatus: document.getElementById('overviewRecentActionStatus'),
+      overviewChangeStrip: document.getElementById('overviewChangeStrip'),
+      overviewActivityTimeline: document.getElementById('overviewActivityTimeline'),
+      overviewPriorityActions: document.getElementById('overviewPriorityActions'),
       strategicAction: document.getElementById('strategicAction'),
       strategicRationale: document.getElementById('strategicRationale'),
+      overviewSignalGrid: document.getElementById('overviewSignalGrid'),
       nextMoveWhy: document.getElementById('nextMoveWhy'),
       confidenceReason: document.getElementById('confidenceReason'),
+      overviewConfidenceValue: document.getElementById('overviewConfidenceValue'),
+      overviewConfidenceBody: document.getElementById('overviewConfidenceBody'),
+      overviewAiomMetricValue: document.getElementById('overviewAiomMetricValue'),
+      overviewAiomMetricBody: document.getElementById('overviewAiomMetricBody'),
+      overviewNextMeetingValue: document.getElementById('overviewNextMeetingValue'),
+      overviewNextMeetingBody: document.getElementById('overviewNextMeetingBody'),
+      overviewRenewalValue: document.getElementById('overviewRenewalValue'),
+      overviewRenewalBody: document.getElementById('overviewRenewalBody'),
       overviewRiskValue: document.getElementById('overviewRiskValue'),
       overviewReadinessValue: document.getElementById('overviewReadinessValue'),
       overviewMomentumValue: document.getElementById('overviewMomentumValue'),
       overviewMomentumBody: document.getElementById('overviewMomentumBody'),
       overviewSourceValue: document.getElementById('overviewSourceValue'),
       overviewSourceBody: document.getElementById('overviewSourceBody'),
-      overviewFluencySignal: document.getElementById('overviewFluencySignal'),
       bestNextStep: document.getElementById('bestNextStep'),
       sessionBody: document.getElementById('sessionBody'),
       recommendedResourceTitle: document.getElementById('recommendedResourceTitle'),
       recommendedResourceBody: document.getElementById('recommendedResourceBody'),
       recommendedResourceButtonRow: document.getElementById('recommendedResourceButtonRow'),
-      decisionOwner: document.getElementById('decisionOwner'),
       targetFunction: document.getElementById('targetFunction'),
       primaryFrictionType: document.getElementById('primaryFrictionType'),
         phaseMotionLauncher: document.getElementById('phaseMotionLauncher'),
@@ -4325,7 +5300,11 @@
       sourceCountLabel: document.getElementById('sourceCountLabel'),
       sourceGrid: document.getElementById('sourceGrid'),
       sourceNote: document.getElementById('sourceNote'),
-      templatesGrid: document.getElementById('templatesGrid'),
+      starterAgentMotionsGrid: document.getElementById('starterAgentMotionsGrid'),
+      templateRecommendedGrid: document.getElementById('templateRecommendedGrid'),
+      templateSupportingGrid: document.getElementById('templateSupportingGrid'),
+      templateMoreGrid: document.getElementById('templateMoreGrid'),
+      templateSourceGapsList: document.getElementById('templateSourceGapsList'),
       templateCountLabel: document.getElementById('templateCountLabel'),
       toolsGrid: document.getElementById('toolsGrid'),
       toolCountLabel: document.getElementById('toolCountLabel'),
@@ -4337,6 +5316,9 @@
       rosterClientList: document.getElementById('rosterClientList'),
       rosterStatus: document.getElementById('rosterStatus'),
       missingClientInput: document.getElementById('missingClientInput'),
+      globalAdoptionReviewStatus: document.getElementById('globalAdoptionReviewStatus'),
+      globalAdoptionSummaryGrid: document.getElementById('globalAdoptionSummaryGrid'),
+      globalAdoptionAccountGrid: document.getElementById('globalAdoptionAccountGrid'),
       portfolioTableBody: document.getElementById('portfolioTableBody'),
       platformHealthGrid: document.getElementById('platformHealthGrid'),
       prismHealthSignal: document.getElementById('prismHealthSignal'),
@@ -4754,6 +5736,7 @@
       if (dueWindow) {
         chips.push({ tone: getDueWindowTone(dueWindow), text: `Action due ${String(dueWindow).toLowerCase()}` });
       }
+      chips.push({ tone: 'info', text: phases[account.phase] || 'Phase pending' });
       chips.push({ tone: getCoverageTone(coverage), text: getCoverageLabel(coverage) });
       if (openIssues > 0) {
         const issueTone = criticalIssues > 0 ? 'risk' : 'medium';
@@ -4768,10 +5751,15 @@
 
     function renderHeroKpis(account) {
       const phaseLabel = phases[account.phase] || 'Unknown phase';
-      const phaseShort = phaseLabel.split(',')[0].split('&')[0].trim();
-      const backbone = getPhaseBackbone(account);
-      ui.heroKpiPhase.textContent = phaseShort;
-      ui.heroKpiPhaseSub.textContent = backbone.currentMilestone || 'Phase milestone pending';
+      const adoptionGoal = getAdoptionGoalProgress(account);
+      ui.heroKpiPhase.textContent = adoptionGoal.label;
+      ui.heroKpiPhaseSub.textContent = adoptionGoal.body;
+      ui.heroKpiPhase.classList.remove('tone-medium', 'tone-risk', 'tone-pending', 'tone-healthy');
+      const adoptionPercent = parseInt(String(adoptionGoal.label).replace(/[^0-9]/g, ''), 10);
+      if (Number.isNaN(adoptionPercent)) ui.heroKpiPhase.classList.add('tone-pending');
+      else if (adoptionPercent < 60) ui.heroKpiPhase.classList.add('tone-risk');
+      else if (adoptionPercent < 80) ui.heroKpiPhase.classList.add('tone-medium');
+      else ui.heroKpiPhase.classList.add('tone-healthy');
 
       const health = getAccountHealthLabel(account);
       ui.heroKpiHealth.textContent = health.label;
@@ -4784,20 +5772,19 @@
       const assistantHealth = (account.assistant && account.assistant.health) || 'Pending';
       const agentsHealth = (account.agents && account.agents.health) || 'Pending';
       const adoption = account.engagement || 'Pending';
-      ui.heroKpiHealthSub.textContent = `${adoption} adoption · ${assistantHealth} Assistant · ${agentsHealth} Agents`;
+      ui.heroKpiHealthSub.textContent = `${adoption} adoption · ${assistantHealth} Assistant · ${agentsHealth} Agents · ${phaseLabel}`;
 
-      const hoursLabel = account.hoursRemainingLabel || '—';
-      ui.heroKpiHours.textContent = hoursLabel;
+      const nextMeeting = getNextMeetingContext(account);
+      ui.heroKpiHours.textContent = nextMeeting.title;
+      ui.heroKpiHoursSub.textContent = nextMeeting.body;
       ui.heroKpiHours.classList.remove('tone-medium', 'tone-risk', 'tone-pending', 'tone-healthy');
-      const hoursDigits = String(hoursLabel).replace(/[^0-9]/g, '');
-      const hoursNum = hoursDigits ? parseInt(hoursDigits, 10) : NaN;
-      if (Number.isNaN(hoursNum)) {
-        ui.heroKpiHours.classList.add('tone-pending');
-      } else if (hoursNum <= 10) {
-        ui.heroKpiHours.classList.add('tone-risk');
-      } else if (hoursNum <= 30) {
-        ui.heroKpiHours.classList.add('tone-medium');
-      }
+      if (nextMeeting.title === 'No upcoming meeting') ui.heroKpiHours.classList.add('tone-pending');
+
+      const renewal = getRenewalContext(account);
+      ui.heroKpiFluency.textContent = renewal.title;
+      ui.heroKpiFluencySub.textContent = renewal.body;
+      ui.heroKpiFluency.classList.remove('tone-medium', 'tone-risk', 'tone-pending', 'tone-healthy');
+      if (renewal.title === 'Renewal not found') ui.heroKpiFluency.classList.add('tone-pending');
     }
 
     function renderHero(account) {
@@ -5408,35 +6395,271 @@
       `).join('');
     }
 
-    function renderTaskOwnership(account) {
-      const tasks = getTaskOwnership(account);
-      ui.taskOwnershipSummary.textContent = `Task split for ${account.name}`;
-      ui.taskOwnershipStatus.textContent = `${tasks.length} lanes`;
-      ui.taskOwnershipList.innerHTML = tasks.map(task => `
-        <div class="list-item">
-          <div class="split" style="margin-bottom:8px;">
-            <span class="eyebrow">${escapeHtml(task.lane)}</span>
-            <span class="pill ${task.priority === 'urgent' || task.priority === 'high' ? 'high' : 'medium'}">${escapeHtml(task.priority)}</span>
-          </div>
-          <h4>${escapeHtml(task.title)}</h4>
-          <p>${escapeHtml(task.detail)}</p>
-          <div class="meta-row"><span>Due</span><span>${escapeHtml(task.due)}</span></div>
+    const taskBoardColumns = [
+      { id: 'found', label: 'Found for you', body: 'Psychic-mined or signal-derived work that still needs AIOM judgment.' },
+      { id: 'next', label: 'Do next', body: 'Accepted work the AIOM should act on now.' },
+      { id: 'waiting', label: 'Waiting', body: 'Client, internal, source, or blocker dependencies.' },
+      { id: 'done', label: 'Done / closed', body: 'Completed, dismissed, or no longer active.' }
+    ];
+
+    function getTaskBoardOverride(taskId) {
+      return localState.taskBoardOverrides[taskId] || {};
+    }
+
+    function setTaskBoardStatus(taskId, status) {
+      localState.taskBoardOverrides[taskId] = {
+        ...(localState.taskBoardOverrides[taskId] || {}),
+        status
+      };
+    }
+
+    function taskTone(priority) {
+      const value = String(priority || '').toLowerCase();
+      if (value === 'urgent' || value === 'high') return 'high';
+      if (value === 'low') return 'low';
+      return 'medium';
+    }
+
+    function taskTypeLabel(type) {
+      const labels = {
+        account_task_ours: 'Ours',
+        account_task_theirs: 'Client',
+        account_task_waiting: 'Waiting',
+        meeting_prep: 'Meeting prep',
+        risk_signal: 'Risk signal',
+        info_only: 'Info only'
+      };
+      return labels[type] || 'Task';
+    }
+
+    function taskTypeTone(type) {
+      if (type === 'risk_signal') return 'risk';
+      if (type === 'account_task_waiting' || type === 'account_task_theirs') return 'waiting';
+      return 'fresh';
+    }
+
+    function completionTone(completionCheck) {
+      const value = String(completionCheck || '').toLowerCase();
+      if (value.includes('closed') || value.includes('complete')) return 'closed';
+      if (value.includes('needs') || value.includes('pending')) return 'review';
+      return 'fresh';
+    }
+
+    function inferTaskFreshness(account, task, fallback) {
+      if (task.freshness) return task.freshness;
+      if (task.due === 'Overdue') return 'Overdue';
+      if (task.due) return task.due;
+      return fallback || account.prism.refresh || 'Freshness pending';
+    }
+
+    function inferCompletionCheck(task) {
+      if (task.status === 'done') return 'Closed in board';
+      if (task.completionCheck) return task.completionCheck;
+      if (task.source && task.source.url) return 'Open after source review';
+      if (task.status === 'waiting') return 'Waiting dependency still open';
+      if (String(task.confidence || '').toLowerCase() === 'pending') return 'Needs source check';
+      return 'No completion evidence found';
+    }
+
+    function getTaskSource(account, task, fallbackType) {
+      const signal = (account.signals || [])[0] || {};
+      if (task.sourceUrl || task.sourceTitle || task.url || task.title) {
+        return {
+          type: task.sourceType || fallbackType,
+          title: task.sourceTitle || task.title,
+          url: task.sourceUrl || task.url || ''
+        };
+      }
+      if (signal.sourceUrl) {
+        return {
+          type: signal.type ? signal.type.replace(/_/g, ' ') : fallbackType,
+          title: signal.title,
+          url: signal.sourceUrl
+        };
+      }
+      return {
+        type: fallbackType,
+        title: fallbackType === 'Psychic / Tasks' ? 'Seeded Psychic-style task signal' : 'Adoption OS seeded account signal',
+        url: ''
+      };
+    }
+
+    function buildTaskBoardItemsForAccount(account) {
+      const ownership = getTaskOwnership(account);
+      const primarySignal = (account.signals || [])[0] || {};
+      const recommendedResource = getRecommendedResource(account);
+      const baseItems = [
+        {
+          id: `${account.name}::found::${primarySignal.title || account.nextMove.title}`,
+          accountName: account.name,
+          status: 'found',
+          taskType: 'risk_signal',
+          priority: primarySignal.severity || 'medium',
+          title: primarySignal.title || account.nextMove.title,
+          body: primarySignal.body || 'Psychic should surface this as account work that needs AIOM judgment.',
+          why: 'Mined from current account signals and useful only if the AIOM decides to act.',
+          due: primarySignal.due || 'Current',
+          freshness: inferTaskFreshness(account, primarySignal, 'Current signal'),
+          completionCheck: account.sourceCoverage === 'pending' ? 'Needs source check' : 'No completion evidence found',
+          confidence: account.sourceCoverage === 'high' ? 'High' : account.sourceCoverage === 'pending' ? 'Pending' : 'Medium',
+          resource: recommendedResource.tool ? recommendedResource.tool.title : account.tool,
+          source: getTaskSource(account, primarySignal, 'Psychic / Tasks')
+        },
+        {
+          id: `${account.name}::next::${account.nextMove.session}`,
+          accountName: account.name,
+          status: 'next',
+          taskType: 'account_task_ours',
+          priority: account.criticalIssues ? 'urgent' : 'high',
+          title: account.nextMove.session,
+          body: account.nextMove.sessionBody,
+          why: account.nextMove.why,
+          due: account.nextMove.dueWindow,
+          freshness: inferTaskFreshness(account, account.nextMove, account.nextMove.dueWindow),
+          completionCheck: 'No completion evidence found',
+          confidence: getAccountEvidence(account).confidence,
+          resource: recommendedResource.tool ? recommendedResource.tool.title : account.doc.title,
+          source: getTaskSource(account, account.doc || {}, 'Recommended resource')
+        },
+        ...ownership.map(task => ({
+          id: `${account.name}::${task.lane}::${task.title}`,
+          accountName: account.name,
+          status: task.lane === 'AIOM' ? 'next' : 'waiting',
+          taskType: task.lane === 'Client' ? 'account_task_theirs' : task.lane === 'Waiting' ? 'account_task_waiting' : 'account_task_ours',
+          priority: task.priority,
+          title: task.title,
+          body: task.detail,
+          why: task.lane === 'Client'
+            ? 'Client-side dependency needs explicit owner/date clarity.'
+            : task.lane === 'Waiting'
+              ? 'This is the blocker most likely to make the account read stale.'
+              : 'AIOM-owned work belongs in the task board, not in Account Context.',
+          due: task.due,
+          freshness: inferTaskFreshness(account, task, task.due),
+          completionCheck: task.lane === 'Waiting' ? 'Waiting dependency still open' : 'No completion evidence found',
+          confidence: account.sourceCoverage === 'high' ? 'High' : 'Medium',
+          resource: task.lane === 'AIOM' ? account.doc.title : 'Owner/date follow-up',
+          source: getTaskSource(account, task, `${task.lane} ownership`)
+        }))
+      ];
+
+      return baseItems.map(item => {
+        const override = getTaskBoardOverride(item.id);
+        return {
+          ...item,
+          status: override.status || item.status,
+          completionCheck: inferCompletionCheck({
+            ...item,
+            status: override.status || item.status
+          })
+        };
+      });
+    }
+
+    function getTaskBoardAccounts() {
+      if (localState.taskScope === 'portfolio') {
+        const verified = getVerifiedPortfolioAccounts();
+        return verified.length ? verified : Object.values(accounts);
+      }
+      return [getAccount()];
+    }
+
+    function getTaskBoardItems() {
+      return getTaskBoardAccounts()
+        .flatMap(account => buildTaskBoardItemsForAccount(account))
+        .sort((a, b) => {
+          const priorityOrder = { urgent: 4, high: 3, medium: 2, low: 1 };
+          return (priorityOrder[String(b.priority).toLowerCase()] || 2) - (priorityOrder[String(a.priority).toLowerCase()] || 2);
+        });
+    }
+
+    function renderTaskSummary(items) {
+      const highCount = items.filter(item => taskTone(item.priority) === 'high' && item.status !== 'done').length;
+      const waitingCount = items.filter(item => item.status === 'waiting').length;
+      const foundCount = items.filter(item => item.status === 'found').length;
+      const reviewCount = items.filter(item => item.status !== 'done' && completionTone(item.completionCheck) === 'review').length;
+      const summaries = [
+        { label: 'High priority', value: highCount, body: 'Needs AIOM attention' },
+        { label: 'Found for you', value: foundCount, body: 'Needs review' },
+        { label: 'Waiting', value: waitingCount, body: 'Blocked or client-owned' },
+        { label: 'Check freshness', value: reviewCount, body: 'Needs source confirmation' }
+      ];
+      ui.taskSummaryGrid.innerHTML = summaries.map(item => `
+        <div class="task-summary-card">
+          <span class="eyebrow">${escapeHtml(item.label)}</span>
+          <strong>${escapeHtml(item.value)}</strong>
+          <span class="muted">${escapeHtml(item.body)}</span>
         </div>
       `).join('');
     }
 
-    function renderOverviewFollowup(account) {
-      const tasks = getTaskOwnership(account);
-      const getLane = (laneName, fallbackIndex) =>
-        tasks.find(task => task.lane.toLowerCase() === laneName) || tasks[fallbackIndex] || {};
-      const aiomTask = getLane('aiom', 0);
-      const clientTask = getLane('client', 1);
-      const waitingTask = getLane('waiting', 2);
+    function renderTaskCard(task) {
+      const sourceMarkup = task.source && task.source.url
+        ? `<a class="buttonlike" href="${escapeHtmlAttr(task.source.url)}" target="_blank" rel="noopener">Open source</a>`
+        : `<button class="buttonlike" type="button" data-task-open-health="${escapeHtmlAttr(task.accountName)}">View evidence</button>`;
+      const nextActionMarkup = task.status === 'done'
+        ? `<button class="buttonlike" type="button" data-task-status="${escapeHtmlAttr(task.id)}" data-next-status="next">Reopen</button>`
+        : `
+          <button class="buttonlike" type="button" data-task-open-motion="${escapeHtmlAttr(task.accountName)}">Run motion</button>
+          <button class="buttonlike" type="button" data-task-status="${escapeHtmlAttr(task.id)}" data-next-status="done">Mark done</button>
+          <button class="buttonlike" type="button" data-task-status="${escapeHtmlAttr(task.id)}" data-next-status="done">Dismiss</button>
+        `;
+      const focusMarkup = task.status === 'found'
+        ? `<button class="buttonlike" type="button" data-task-status="${escapeHtmlAttr(task.id)}" data-next-status="next">Move to Do next</button>`
+        : '';
+      return `
+        <article class="task-card ${escapeHtmlAttr(taskTone(task.priority))}">
+          <div class="split">
+            <span class="eyebrow">${escapeHtml(task.accountName)}</span>
+            <span class="pill ${escapeHtmlAttr(taskTone(task.priority))}">${escapeHtml(task.priority || 'medium')}</span>
+          </div>
+          <div class="task-chip-row" aria-label="Task classification">
+            <span class="task-chip ${escapeHtmlAttr(taskTypeTone(task.taskType))}">${escapeHtml(taskTypeLabel(task.taskType))}</span>
+            <span class="task-chip ${escapeHtmlAttr(task.freshness === 'Overdue' ? 'risk' : 'fresh')}">${escapeHtml(task.freshness || 'Freshness pending')}</span>
+            <span class="task-chip ${escapeHtmlAttr(completionTone(task.completionCheck))}">${escapeHtml(task.completionCheck || 'Completion check pending')}</span>
+          </div>
+          <h4>${escapeHtml(task.title)}</h4>
+          <p>${escapeHtml(task.body)}</p>
+          <div class="meta-row"><span>Due</span><span>${escapeHtml(task.due || 'This week')}</span></div>
+          <div class="meta-row"><span>Confidence</span><span>${escapeHtml(task.confidence || 'Medium')}</span></div>
+          <p class="footer-note"><strong>Why:</strong> ${escapeHtml(task.why)}</p>
+          <p class="footer-note"><strong>Resource:</strong> ${escapeHtml(task.resource || 'Recommended motion')}</p>
+          <p class="footer-note"><strong>Source:</strong> ${escapeHtml(task.source ? `${task.source.type}: ${task.source.title}` : 'Source pending')}</p>
+          <div class="task-card-actions">
+            ${focusMarkup}
+            ${nextActionMarkup}
+            ${sourceMarkup}
+          </div>
+        </article>
+      `;
+    }
 
-      ui.overviewFollowupStatus.textContent = `${tasks.length} lanes`;
-      ui.overviewAiomFollowup.textContent = `${aiomTask.title || 'Prepare next action'} - ${aiomTask.due || 'This week'}`;
-      ui.overviewClientFollowup.textContent = `${clientTask.title || 'Confirm owner commitments'} - ${clientTask.due || 'This week'}`;
-      ui.overviewWaitingFollowup.textContent = `${waitingTask.title || 'Monitor blocker'} - ${waitingTask.due || 'This week'}`;
+    function renderTasks() {
+      const items = getTaskBoardItems();
+      const activeItems = items.filter(item => item.status !== 'done');
+      document.querySelectorAll('[data-task-scope]').forEach(button => {
+        button.classList.toggle('active', button.dataset.taskScope === localState.taskScope);
+      });
+      ui.taskBoardScopeLabel.textContent = localState.taskScope === 'portfolio'
+        ? 'My Portfolio task board: all verified clients, with seeded fallback until the roster is confirmed.'
+        : `Current client task board: ${getAccount().name}.`;
+      ui.taskBoardStatus.textContent = `${activeItems.length} active · ${items.length} total`;
+      renderTaskSummary(items);
+      ui.taskKanbanBoard.innerHTML = taskBoardColumns.map(column => {
+        const columnItems = items.filter(item => item.status === column.id);
+        return `
+          <section class="task-column">
+            <div class="task-column-head">
+              <div>
+                <h3>${escapeHtml(column.label)}</h3>
+                <p class="footer-note">${escapeHtml(column.body)}</p>
+              </div>
+              <span class="pill ${column.id === 'waiting' ? 'medium' : column.id === 'done' ? 'low' : 'available'}">${columnItems.length}</span>
+            </div>
+            ${columnItems.length ? columnItems.map(renderTaskCard).join('') : '<p class="footer-note">No tasks in this lane.</p>'}
+          </section>
+        `;
+      }).join('');
     }
 
     function renderSeatDistribution(account) {
@@ -5539,6 +6762,235 @@
       if (bodyElement) bodyElement.textContent = body;
     }
 
+    function getActivityIcon(type) {
+      const map = {
+        meeting: 'M',
+        followup: 'F',
+        ticket: 'T',
+        plan: 'P',
+        memory: 'A',
+        resource: 'R',
+        training: 'L',
+        source: 'S',
+        usage: 'U',
+        release: 'C'
+      };
+      return map[type] || 'N';
+    }
+
+    function getOverviewChangeStrip(account) {
+      const coverageEntries = getSourceCoverageEntries(account);
+      const availableCount = coverageEntries.filter(item => item.status === 'available').length;
+      const missingSources = getMissingSources(account);
+      const prismHealth = getPrismHealthContext(account);
+      return [
+        {
+          icon: 'B',
+          value: account.criticalIssues ? `+${account.criticalIssues}` : '0',
+          label: 'critical blockers',
+          tone: account.criticalIssues ? 'high' : 'low'
+        },
+        {
+          icon: 'U',
+          value: account.assistant.trend || 'flat',
+          label: 'usage trend',
+          tone: account.assistant.health === 'Healthy' ? 'low' : account.assistant.health === 'Watch' ? 'medium' : 'high'
+        },
+        {
+          icon: 'S',
+          value: `${availableCount}/${coverageEntries.length}`,
+          label: 'sources ready',
+          tone: missingSources.length ? 'medium' : 'available'
+        },
+        {
+          icon: 'M',
+          value: prismHealth.priorActionOutcome ? 'yes' : 'none',
+          label: 'memory signal',
+          tone: prismHealth.priorActionOutcome ? 'available' : 'medium'
+        },
+        {
+          icon: 'T',
+          value: String(account.openIssues || 0),
+          label: 'open tickets',
+          tone: account.openIssues > 2 ? 'high' : account.openIssues ? 'medium' : 'low'
+        }
+      ];
+    }
+
+    function getOverviewActivityTimeline(account) {
+      const planEvolution = (account.accountPlan && account.accountPlan.planEvolution) || [];
+      const evidence = (account.clientHealthEvidence || []).slice(0, 3);
+      const signals = (account.signals || []).slice(0, 4);
+      const releases = (account.releases || []).slice(0, 1);
+      const prismHealth = getPrismHealthContext(account);
+      const rows = [
+        {
+          type: 'memory',
+          title: 'Account Memory refreshed',
+          body: prismHealth.momentumSinceLastTouch,
+          time: account.prism.refresh || 'Recent',
+          tone: 'available',
+          isNew: true
+        },
+        ...evidence.map(item => ({
+          type: item.group === 'customer_friction' ? 'ticket' : item.group === 'adoption_momentum' ? 'usage' : 'source',
+          title: item.title,
+          body: item.sourceSystem,
+          time: item.freshness,
+          tone: item.severity,
+          isNew: item.severity === 'high'
+        })),
+        ...signals.map(signal => ({
+          type: signal.type.includes('training') ? 'training' : signal.type.includes('release') ? 'release' : 'plan',
+          title: signal.title,
+          body: signal.type.replace(/_/g, ' '),
+          time: signal.due,
+          tone: signal.severity,
+          isNew: signal.severity === 'high'
+        })),
+        ...planEvolution.map(item => ({
+          type: 'plan',
+          title: item.whatChanged,
+          body: item.reason,
+          time: item.date,
+          tone: 'medium',
+          isNew: false
+        })),
+        ...releases.map(item => ({
+          type: 'release',
+          title: item.title,
+          body: item.asset,
+          time: item.date,
+          tone: 'medium',
+          isNew: false
+        })),
+        {
+          type: 'followup',
+          title: account.nextMove.session,
+          body: account.nextMove.sessionBody,
+          time: account.nextMove.dueWindow,
+          tone: account.criticalIssues ? 'high' : 'medium',
+          isNew: true
+        }
+      ];
+      return rows.slice(0, 10);
+    }
+
+    function getOverviewPriorityActions(account) {
+      const recommendedResource = getRecommendedResource(account);
+      const primarySignal = account.signals[0] || {};
+      const secondarySignal = account.signals[1] || primarySignal;
+      const tertiarySignal = account.signals[2] || secondarySignal;
+      const training = getTrainingReadiness(account);
+      return [
+        {
+          id: 'recommended-motion',
+          severity: primarySignal.severity || 'high',
+          title: account.nextMove.session,
+          body: account.nextMove.sessionBody,
+          why: account.nextMove.why,
+          due: account.nextMove.dueWindow,
+          resourceLabel: recommendedResource.tool ? recommendedResource.tool.title : account.tool,
+          resourceTool: recommendedResource.tool,
+          docLabel: account.doc.title,
+          docUrl: account.doc.url,
+          motion: true
+        },
+        {
+          id: 'resolve-primary-signal',
+          severity: secondarySignal.severity || 'medium',
+          title: secondarySignal.title || account.nextMove.title,
+          body: secondarySignal.body || account.nextMove.body,
+          why: 'This is the clearest signal affecting the account read.',
+          due: secondarySignal.due || 'This week',
+          resourceLabel: account.asset.title,
+          docLabel: account.doc.title,
+          docUrl: account.doc.url,
+          evidence: true
+        },
+        {
+          id: 'queue-supporting-resource',
+          severity: tertiarySignal.severity || 'medium',
+          title: tertiarySignal.title || training.summary,
+          body: tertiarySignal.body || training.reason,
+          why: 'Use the resource layer only when it supports the next client motion.',
+          due: tertiarySignal.due || account.nextMove.dueWindow,
+          resourceLabel: training.ctaLabel,
+          docLabel: training.ctaLabel,
+          docUrl: training.ctaUrl,
+          evidence: true
+        }
+      ];
+    }
+
+    function renderOverviewChangeStrip(account) {
+      ui.overviewChangeStrip.innerHTML = getOverviewChangeStrip(account).map(item => `
+        <div class="change-tile ${escapeHtmlAttr(item.tone)}">
+          <div class="change-icon-row">
+            <span class="change-icon">${escapeHtml(item.icon)}</span>
+            <strong>${escapeHtml(item.value)}</strong>
+          </div>
+          <span class="change-label">${escapeHtml(item.label)}</span>
+        </div>
+      `).join('');
+    }
+
+    function renderOverviewActivityTimeline(account) {
+      const actions = getOverviewActivityTimeline(account);
+      ui.overviewRecentActionStatus.textContent = `${actions.length} recent signals`;
+      ui.overviewActivityTimeline.innerHTML = actions.map(item => `
+        <div class="activity-node ${escapeHtmlAttr(item.tone)} ${item.isNew ? 'is-new' : ''}">
+          <span class="activity-dot">${escapeHtml(getActivityIcon(item.type))}</span>
+          <div class="activity-copy">
+            <strong>${escapeHtml(item.title)}</strong>
+            <span>${escapeHtml(item.body)}</span>
+          </div>
+          <span class="activity-time">${escapeHtml(item.time)}</span>
+        </div>
+      `).join('');
+    }
+
+    function renderOverviewPriorityActions(account) {
+      const actions = getOverviewPriorityActions(account);
+      ui.overviewPriorityActions.innerHTML = actions.map((action, index) => {
+        const resourceMarkup = action.resourceTool
+          ? makeLaunchMarkup(action.resourceTool, account, 'buttonlike')
+          : '';
+        const docMarkup = action.docUrl
+          ? `<a class="buttonlike" href="${escapeHtmlAttr(action.docUrl)}" target="_blank" rel="noopener">${escapeHtml(action.docLabel)}</a>`
+          : '';
+        const motionMarkup = action.motion
+          ? '<button class="buttonlike secondary" type="button" data-overview-open-motion="true">Run motion</button>'
+          : '';
+        const evidenceMarkup = action.evidence
+          ? '<button class="buttonlike secondary" type="button" data-overview-open-evidence="true">Why this action?</button>'
+          : '';
+        return `
+          <article class="overview-action-card">
+            <div class="overview-action-meta">
+              <span class="eyebrow">Action ${index + 1}</span>
+              <span class="pill ${escapeHtmlAttr(action.severity)}">${escapeHtml(action.severity)}</span>
+            </div>
+            <div class="overview-action-main">
+              <h4>${escapeHtml(action.title)}</h4>
+              <p>${escapeHtml(action.body)}</p>
+              <p class="overview-action-why"><strong>Why:</strong> ${escapeHtml(action.why)}</p>
+            </div>
+            <div class="overview-action-controls">
+              <div class="meta-row" style="width:100%;"><span>Due</span><span>${escapeHtml(action.due)}</span></div>
+              <div class="action-resource-row">
+                <button class="buttonlike secondary" type="button" data-overview-open-task="${escapeHtmlAttr(action.id)}">Open in Tasks</button>
+                ${motionMarkup}
+                ${resourceMarkup}
+                ${docMarkup}
+                ${evidenceMarkup}
+              </div>
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+
     function renderNextMove(account) {
       const nextMove = account.nextMove;
       const recommendedResource = getRecommendedResource(account);
@@ -5554,7 +7006,16 @@
       const readinessTone = account.phase === 'prep' && highSignals ? 'medium' : 'available';
       const momentumTone = account.assistant.health === 'Healthy' ? 'low' : account.assistant.health === 'Watch' ? 'medium' : 'high';
       const sourceTone = missingSources.length ? 'medium' : 'available';
+      const healthLabel = getAccountHealthLabel(account);
+      const phaseLabel = phases[account.phase] || phases.prep;
+      const evidence = getAccountEvidence(account);
+      const fluencyInput = getAiFluencyStrategyInput(account);
+      const nextMeeting = getNextMeetingContext(account);
+      const renewal = getRenewalContext(account);
 
+      ui.overviewCurrentStateTitle.textContent = `${account.name} is ${healthLabel.label.toLowerCase()} in ${phaseLabel}`;
+      ui.overviewCurrentStateBody.textContent = `${account.business} Current read combines usage, blockers, phase readiness, and AIOM-owned adoption motion.`;
+      ui.overviewPhaseState.textContent = phaseLabel;
       ui.strategicAction.textContent = nextMove.title;
       ui.strategicRationale.textContent = nextMove.body;
       ui.nextMoveWhy.innerHTML = [
@@ -5571,17 +7032,25 @@
       setSignalCard(ui.overviewMomentumValue, account.assistant.health, `${account.assistant.wau} Assistant WAU · ${account.assistant.trend}`, momentumTone);
       setSignalCard(ui.overviewSourceValue, `${availableCount}/${coverageEntries.length}`, missingSources.length ? `${missingSources.length} gaps to verify` : 'Source set ready for this motion', sourceTone);
 
+      ui.overviewConfidenceValue.textContent = evidence.confidence;
+      ui.overviewConfidenceBody.textContent = `${availableCount}/${coverageEntries.length} source categories`;
+      ui.overviewAiomMetricValue.textContent = fluencyInput.label;
+      ui.overviewAiomMetricBody.textContent = fluencyInput.body;
+      ui.overviewNextMeetingValue.textContent = nextMeeting.title;
+      ui.overviewNextMeetingBody.textContent = nextMeeting.body;
+      ui.overviewRenewalValue.textContent = renewal.title;
+      ui.overviewRenewalBody.textContent = renewal.body;
+      renderOverviewChangeStrip(account);
+      renderOverviewActivityTimeline(account);
+      renderOverviewPriorityActions(account);
+
       ui.bestNextStep.textContent = nextMove.session;
       ui.sessionBody.textContent = nextMove.sessionBody;
       ui.recommendedResourceTitle.textContent = tool.title;
       ui.recommendedResourceBody.textContent = `${recommendedResource.when} ${launchMeta.detail}`;
       ui.recommendedResourceButtonRow.innerHTML = `${makeLaunchMarkup(tool, account)}<span class="tool-tag">${escapeHtml(launchMeta.short)}</span>`;
-      ui.decisionOwner.textContent = `${getDecisionOwner(account)} · ${nextMove.dueWindow}`;
       ui.targetFunction.textContent = getTargetFunction(account);
       ui.primaryFrictionType.textContent = getPrimaryFrictionType(account);
-      ui.overviewFluencySignal.textContent = account.phase === 'scale'
-        ? 'Use AI Fluency to shape reinforcement by function.'
-        : 'AI Fluency stays as a strategy signal, not a blocker for this move.';
       ui.capturePrompt.textContent = getCapturePrompt(account);
 
       ui.recommendedDocTitle.textContent = account.doc.title;
@@ -5721,25 +7190,121 @@
       ui.sourceNote.textContent = `Seeded aggregation status only, not live data. Missing or verification-needed sources: ${missingSources.length ? missingSources.join(', ') : 'none'}.`;
     }
 
-    function renderTemplates() {
+    function getTemplateGroups() {
       const phase = localState.activePhaseFilter === 'all' ? null : localState.activePhaseFilter;
       const items = phase ? templatesLibrary.filter(t => t.phase === phase) : templatesLibrary;
+      const account = getAccount();
+      const recommended = items.filter(template => account.doc.title === template.title);
+      const supporting = items.filter(template => template.tier !== 'more' && account.doc.title !== template.title);
+      const more = items.filter(template => template.tier === 'more');
+      return {
+        items,
+        recommended: recommended.length ? recommended : supporting.slice(0, 1),
+        supporting: recommended.length ? supporting : supporting.slice(1),
+        more,
+        sourceGaps: more.filter(template => template.sourceNeedsLink)
+      };
+    }
+
+    function renderTemplateCard(template, recommended = false) {
+      const card = document.createElement('div');
+      card.className = `template-card ${template.sourceNeedsLink ? 'source-needed' : ''}`;
+      const buttonLabel = template.sourceNeedsLink ? 'Open source catalog' : 'Open resource';
+      const sourceNote = template.sourceNeedsLink
+        ? '<span class="tool-tag">Direct link needed</span>'
+        : '<span class="tool-tag">Ready</span>';
+      card.innerHTML = `
+        ${recommended ? '<span class="recommend-badge">Recommended</span>' : ''}
+        <span class="eyebrow">${escapeHtml(template.activity)}</span>
+        <h4>${escapeHtml(template.title)}</h4>
+        <p>${escapeHtml(template.note || template.type)}</p>
+        <div class="meta-row"><span>${escapeHtml(phases[template.phase])}</span><span>${escapeHtml(template.type)}</span></div>
+        <div class="pill-row" style="margin-top:10px;">${sourceNote}</div>
+        <div class="button-row"><a class="buttonlike" href="${escapeHtmlAttr(template.url)}" target="_blank" rel="noopener">${escapeHtml(buttonLabel)}</a></div>
+      `;
+      return card;
+    }
+
+    function renderTemplateEmptyState(container, message) {
+      container.innerHTML = `<div class="template-card"><p class="muted">${escapeHtml(message)}</p></div>`;
+    }
+
+    function starterMotionPhaseLabels(motion) {
+      return motion.phases.map(phase => phases[phase] || phase).join(', ');
+    }
+
+    function isStarterMotionRecommended(motion, account) {
+      const activePhase = localState.activePhaseFilter === 'all' ? account.phase : localState.activePhaseFilter;
+      return motion.phases.includes(activePhase);
+    }
+
+    function renderStarterAgentMotionCard(motion, account) {
+      const matchingTool = motion.toolTitle ? toolsLibrary.find(tool => tool.title === motion.toolTitle) : null;
+      const recommended = isStarterMotionRecommended(motion, account);
+      const card = document.createElement('div');
+      card.className = 'tool-card';
+      card.innerHTML = `
+        ${recommended ? '<span class="recommend-badge">Phase fit</span>' : ''}
+        <span class="eyebrow">Starter agent motion</span>
+        <h4>${escapeHtml(motion.title)}</h4>
+        <p>${escapeHtml(motion.outcome)}</p>
+        <div class="pill-row">
+          ${renderToolTag('Stage', starterMotionPhaseLabels(motion))}
+          ${renderToolTag('Auto Agents', 'Ready later')}
+        </div>
+        <p class="footer-note"><strong>First move:</strong> ${escapeHtml(motion.firstStep)}</p>
+        ${matchingTool ? `<div class="button-row">${makeLaunchMarkup(matchingTool, account)}</div>` : '<p class="footer-note">No dedicated launcher yet. Use this as the workflow pattern for the customer motion.</p>'}
+      `;
+      return card;
+    }
+
+    function renderStarterAgentMotions(account) {
+      const phase = localState.activePhaseFilter === 'all' ? null : localState.activePhaseFilter;
+      const filteredItems = phase
+        ? starterAgentMotions.filter(motion => motion.phases.includes(phase))
+        : starterAgentMotions;
+      const items = sortRecommendedFirst(filteredItems, motion => isStarterMotionRecommended(motion, account));
+      ui.starterAgentMotionsGrid.innerHTML = '';
+      items.forEach(motion => ui.starterAgentMotionsGrid.appendChild(renderStarterAgentMotionCard(motion, account)));
+      if (!items.length) renderTemplateEmptyState(ui.starterAgentMotionsGrid, 'No starter agent motions for this phase yet.');
+    }
+
+    function renderTemplates(account) {
+      const groups = getTemplateGroups();
+      const { items, recommended, supporting, more, sourceGaps } = groups;
       ui.templateCountLabel.textContent = `${items.length} templates and guides`;
-      ui.templatesGrid.innerHTML = '';
-      items.forEach((template, index) => {
-        const recommended = getAccount().doc.title === template.title;
-        const card = document.createElement('div');
-        card.className = 'template-card';
-        card.innerHTML = `
-          ${recommended ? '<span class="recommend-badge">Recommended</span>' : ''}
-          <span class="eyebrow">${escapeHtml(template.activity)}</span>
-          <h4>${escapeHtml(template.title)}</h4>
-          <p>${escapeHtml(template.type)}</p>
-          <div class="meta-row"><span>${escapeHtml(phases[template.phase])}</span><span>${escapeHtml(template.type)}</span></div>
-          <div class="button-row"><a class="buttonlike" href="${escapeHtmlAttr(template.url)}" target="_blank" rel="noopener">Open resource</a></div>
-        `;
-        ui.templatesGrid.appendChild(card);
+      renderStarterAgentMotions(account);
+      ui.templateRecommendedGrid.innerHTML = '';
+      ui.templateSupportingGrid.innerHTML = '';
+      ui.templateMoreGrid.innerHTML = '';
+      ui.templateSourceGapsList.innerHTML = '';
+
+      recommended.forEach(template => {
+        ui.templateRecommendedGrid.appendChild(renderTemplateCard(template, true));
       });
+
+      supporting.forEach(template => {
+        ui.templateSupportingGrid.appendChild(renderTemplateCard(template));
+      });
+
+      more.forEach(template => {
+        ui.templateMoreGrid.appendChild(renderTemplateCard(template));
+      });
+
+      if (!recommended.length) renderTemplateEmptyState(ui.templateRecommendedGrid, 'No recommended template for this phase yet.');
+      if (!supporting.length) renderTemplateEmptyState(ui.templateSupportingGrid, 'No supporting templates for this phase yet.');
+      if (!more.length) renderTemplateEmptyState(ui.templateMoreGrid, 'No additional source-catalog resources for this phase yet.');
+
+      sourceGaps.forEach(template => {
+        const item = document.createElement('li');
+        item.textContent = `${template.title} - ${template.type}`;
+        ui.templateSourceGapsList.appendChild(item);
+      });
+      if (!sourceGaps.length) {
+        const item = document.createElement('li');
+        item.textContent = 'No source-link gaps for this phase.';
+        ui.templateSourceGapsList.appendChild(item);
+      }
     }
 
     function renderToolTag(label, value) {
@@ -5757,9 +7322,14 @@
       ].join('');
     }
 
+    function sortRecommendedFirst(items, isRecommended) {
+      return [...items].sort((a, b) => Number(isRecommended(b)) - Number(isRecommended(a)));
+    }
+
     function renderTools(account) {
       const phase = localState.activePhaseFilter === 'all' ? null : localState.activePhaseFilter;
-      const items = phase ? toolsLibrary.filter(tool => tool.phases.includes(phase)) : toolsLibrary;
+      const filteredItems = phase ? toolsLibrary.filter(tool => tool.phases.includes(phase)) : toolsLibrary;
+      const items = sortRecommendedFirst(filteredItems, tool => account.tool === tool.title);
       ui.toolCountLabel.textContent = `${items.length} tools in view`;
       ui.toolsGrid.innerHTML = '';
       items.forEach(tool => {
@@ -5917,8 +7487,182 @@
       });
     }
 
+    const globalAdoptionBuckets = [
+      { key: 'recovering', label: 'Recovering', sub: 'Recent movement improving' },
+      { key: 'atRisk', label: 'At risk', sub: 'Urgent blocker or attention spike' },
+      { key: 'rebaseline', label: 'Rebaseline', sub: 'Source or mix interpretation needed' },
+      { key: 'onboarding', label: 'Onboarding', sub: 'Still building mature baseline' },
+      { key: 'declining', label: 'Declining', sub: 'Short-term trend weakening' }
+    ];
+
+    function parseTrendDelta(trend) {
+      const value = Number(String(trend || '').replace(/[^0-9.-]/g, ''));
+      return Number.isFinite(value) ? value : 0;
+    }
+
+    function getPortfolioSeatCount(account) {
+      return getSeatDistribution(account).reduce((sum, row) => sum + Number(row.seats || 0), 0) || Math.max(100, getCombinedWau(account) * 2);
+    }
+
+    function getGlobalReviewBucket(account) {
+      const delta = parseTrendDelta(account.assistant && account.assistant.trend);
+      if (account.assistant && account.assistant.health === 'Low') return 'declining';
+      if (delta <= -6) return 'declining';
+      if (account.attentionScore >= 85 || account.criticalIssues > 0) return 'atRisk';
+      if (account.sourceCoverage !== 'high' || (account.missingSources || []).length >= 2) return 'rebaseline';
+      if (account.phase === 'prep') return 'onboarding';
+      return delta > 0 ? 'recovering' : 'rebaseline';
+    }
+
+    function getGlobalReviewRow(account) {
+      const seats = getPortfolioSeatCount(account);
+      const wau = getCombinedWau(account);
+      const adoption = Math.min(100, Math.round((wau / Math.max(seats, 1)) * 100));
+      const delta = parseTrendDelta(account.assistant && account.assistant.trend);
+      const previousWau = Math.max(0, wau - delta);
+      const currentMau = Math.max(wau, Math.round(wau * 1.55));
+      const previousMau = Math.max(previousWau, Math.round(currentMau - (delta * 1.2)));
+      const threshold = 45;
+      const bucket = getGlobalReviewBucket(account);
+      const evidence = getAccountEvidence(account);
+      const coverageEntries = getSourceCoverageEntries(account);
+      const availableSources = coverageEntries.filter(source => source.status === 'available').length;
+      const missingSources = getMissingSources(account);
+      return {
+        account,
+        bucket,
+        bucketLabel: globalAdoptionBuckets.find(item => item.key === bucket).label,
+        statusTone: bucket === 'declining' || bucket === 'atRisk' ? 'high' : bucket === 'rebaseline' ? 'medium' : 'low',
+        headline: account.nextMove.title,
+        score: { value: account.attentionScore, why: account.attentionScore >= 85 ? 'High priority signal density' : 'Monitor with current motion' },
+        velocity: { value: account.assistant.trend || 'flat', why: delta > 0 ? 'Recent usage improving' : delta < 0 ? 'Recent usage softening' : 'Recent movement holding' },
+        coverage: { value: `${availableSources}/8`, why: missingSources.length ? `${missingSources.length} gaps to verify` : 'Source coverage ready' },
+        confidence: { value: evidence.confidence, why: evidence.sourceCompleteness },
+        stats: {
+          wau,
+          mau: currentMau,
+          seats,
+          signups: Math.max(wau, Math.round(seats * 0.62)),
+          adoption,
+          stickiness: Math.min(100, Math.round((wau / Math.max(currentMau, 1)) * 100)),
+          deltaWau: delta,
+          assistantWau: account.assistant.wau,
+          agentsWau: account.agents.wau
+        },
+        trend: { previousWau, wau, previousMau, currentMau, threshold: Math.round(seats * (threshold / 100)) },
+        blocker: account.signals[0] ? account.signals[0].title : 'No primary blocker captured',
+        nextMove: account.nextMove.session
+      };
+    }
+
+    function renderTrendChart(row) {
+      const values = [row.trend.previousWau, row.trend.wau, row.trend.previousMau, row.trend.currentMau, row.trend.threshold];
+      const max = Math.max(...values, 1);
+      const y = value => 128 - Math.round((value / max) * 88);
+      const wauPoints = `34,${y(row.trend.previousWau)} 160,${y(row.trend.wau)}`;
+      const mauPoints = `34,${y(row.trend.previousMau)} 160,${y(row.trend.currentMau)}`;
+      const thresholdY = y(row.trend.threshold);
+      return `
+        <svg class="trend-chart" viewBox="0 0 210 150" role="img" aria-label="Two-period trend chart">
+          <line x1="26" y1="${thresholdY}" x2="184" y2="${thresholdY}" stroke="#777767" stroke-dasharray="5 5" stroke-width="1.5" />
+          <polyline points="${wauPoints}" fill="none" stroke="#343CED" stroke-width="4" stroke-linecap="round" />
+          <polyline points="${mauPoints}" fill="none" stroke="#00B207" stroke-width="4" stroke-linecap="round" />
+          <circle cx="34" cy="${y(row.trend.previousWau)}" r="5" fill="#343CED" />
+          <circle cx="160" cy="${y(row.trend.wau)}" r="5" fill="#343CED" />
+          <circle cx="34" cy="${y(row.trend.previousMau)}" r="5" fill="#00B207" />
+          <circle cx="160" cy="${y(row.trend.currentMau)}" r="5" fill="#00B207" />
+          <text x="26" y="140" font-size="10" fill="#777767">Prev EOQ</text>
+          <text x="136" y="140" font-size="10" fill="#777767">Current</text>
+          <text x="18" y="${Math.max(12, thresholdY - 6)}" font-size="9" fill="#777767">threshold</text>
+        </svg>
+      `;
+    }
+
+    function renderAdoptionBar(row) {
+      const adoption = Math.min(100, Math.max(0, row.stats.adoption));
+      const threshold = 45;
+      return `
+        <div class="adoption-bar" aria-label="Adoption bar">
+          <div class="adoption-bar-fill" style="width:${adoption}%"></div>
+          <span class="adoption-threshold" style="left:${threshold}%"></span>
+        </div>
+        <div class="meta-row"><span>${adoption}% adoption</span><span>${threshold}% target</span></div>
+      `;
+    }
+
+    function renderGlobalAdoptionReview() {
+      const ranking = getVerifiedPortfolioAccounts();
+      ui.globalAdoptionSummaryGrid.innerHTML = '';
+      ui.globalAdoptionAccountGrid.innerHTML = '';
+      ui.globalAdoptionReviewStatus.textContent = ranking.length ? `${ranking.length} accounts reviewed` : 'Roster not confirmed';
+      if (!ranking.length) {
+        ui.globalAdoptionAccountGrid.innerHTML = '<div class="list-item"><p class="muted">Confirm the roster above to load the Global Adoption Review.</p></div>';
+        globalAdoptionBuckets.forEach(bucket => {
+          const card = document.createElement('div');
+          card.className = 'global-review-summary-card';
+          card.innerHTML = `<span class="eyebrow">${escapeHtml(bucket.label)}</span><strong>0</strong><p class="muted">${escapeHtml(bucket.sub)}</p>`;
+          ui.globalAdoptionSummaryGrid.appendChild(card);
+        });
+        return;
+      }
+
+      const rows = ranking.map(getGlobalReviewRow);
+      globalAdoptionBuckets.forEach(bucket => {
+        const count = rows.filter(row => row.bucket === bucket.key).length;
+        const card = document.createElement('div');
+        card.className = 'global-review-summary-card';
+        card.innerHTML = `<span class="eyebrow">${escapeHtml(bucket.label)}</span><strong>${count}</strong><p class="muted">${escapeHtml(bucket.sub)}</p>`;
+        ui.globalAdoptionSummaryGrid.appendChild(card);
+      });
+
+      rows.forEach(row => {
+        const card = document.createElement('article');
+        card.className = 'global-review-account-card';
+        card.innerHTML = `
+          <div class="global-review-card-head">
+            <div>
+              <h3>${escapeHtml(row.account.name)}</h3>
+              <div class="global-review-tags">
+                <span class="pill ${escapeHtmlAttr(row.statusTone)}">${escapeHtml(row.bucketLabel)}</span>
+                <span class="tool-tag">${escapeHtml(phases[row.account.phase])}</span>
+                <span class="tool-tag">${escapeHtml(row.account.hoursRemainingLabel)} hours left</span>
+              </div>
+            </div>
+            <button class="buttonlike" type="button" data-global-review-open="${escapeHtmlAttr(row.account.name)}">Open account read</button>
+          </div>
+          <p class="muted">${escapeHtml(row.headline)}</p>
+          <div class="global-review-lens-grid">
+            <div class="global-review-lens"><span class="eyebrow">Score</span><strong>${escapeHtml(row.score.value)}</strong><p class="muted">${escapeHtml(row.score.why)}</p></div>
+            <div class="global-review-lens"><span class="eyebrow">Velocity</span><strong>${escapeHtml(row.velocity.value)}</strong><p class="muted">${escapeHtml(row.velocity.why)}</p></div>
+            <div class="global-review-lens"><span class="eyebrow">Coverage</span><strong>${escapeHtml(row.coverage.value)}</strong><p class="muted">${escapeHtml(row.coverage.why)}</p></div>
+            <div class="global-review-lens"><span class="eyebrow">Confidence</span><strong>${escapeHtml(row.confidence.value)}</strong><p class="muted">${escapeHtml(row.confidence.why)}</p></div>
+          </div>
+          <div class="global-review-visual-grid">
+            <div>
+              ${renderTrendChart(row)}
+              ${renderAdoptionBar(row)}
+            </div>
+            <div class="detail-grid">
+              <div><span class="eyebrow">Current WAU</span><strong>${escapeHtml(row.stats.wau)}</strong></div>
+              <div><span class="eyebrow">Current MAU</span><strong>${escapeHtml(row.stats.mau)}</strong></div>
+              <div><span class="eyebrow">Seats</span><strong>${escapeHtml(row.stats.seats)}</strong></div>
+              <div><span class="eyebrow">Signups</span><strong>${escapeHtml(row.stats.signups)}</strong></div>
+              <div><span class="eyebrow">Stickiness</span><strong>${escapeHtml(row.stats.stickiness)}%</strong></div>
+              <div><span class="eyebrow">Assistant WAU</span><strong>${escapeHtml(row.stats.assistantWau)}</strong></div>
+            </div>
+          </div>
+          <div class="global-review-action-grid">
+            <div class="list-item"><h4>Primary blocker</h4><p class="muted">${escapeHtml(row.blocker)}</p></div>
+            <div class="list-item"><h4>Best next move</h4><p class="muted">${escapeHtml(row.nextMove)}</p></div>
+          </div>
+        `;
+        ui.globalAdoptionAccountGrid.appendChild(card);
+      });
+    }
+
     function renderPortfolio() {
       const ranking = getVerifiedPortfolioAccounts();
+      renderGlobalAdoptionReview();
       ui.portfolioTableBody.innerHTML = '';
       if (!ranking.length) {
         const tr = document.createElement('tr');
@@ -6014,6 +7758,7 @@
               { source: 'Glean Search', serves: 'Internal research across account context, Adoption OS resources, and supporting assets.' },
               { source: 'Glean Assistant', serves: 'Account question answering and assisted synthesis.' },
               { source: 'Glean Agents / Skills', serves: 'Action layer for transition briefs, adoption strategy, enablement planning, change briefs, prompt/workflow support, and EBR generation.' },
+              { source: 'Psychic / Tasks', serves: 'Mined and manually staged AIOM work, surfaced as a single task board rather than repeated task widgets.' },
               { source: 'Glean Artifacts', serves: 'In-product operating surface where AIOMs review, decide, act, and capture.' }
             ],
             future_enrichment: [
@@ -6098,7 +7843,13 @@
           package_posture: packagePosture,
           standard_pack: standardPack,
           key_contacts: keyContacts,
-          task_ownership: taskOwnership,
+          task_board: {
+            scope: localState.taskScope,
+            source: 'Seeded Psychic-style task board in local artifact; live launch should pass Psychic / Tasks payload upstream.',
+            columns: taskBoardColumns,
+            currentAccountTasks: buildTaskBoardItemsForAccount(account),
+            taskOwnershipSource: taskOwnership
+          },
           seat_distribution: seatDistribution,
           what_could_be: {
             decisionOwner: getDecisionOwner(account),
@@ -6336,6 +8087,114 @@
       showToast('Opened Client Health evidence');
     }
 
+    function handleOverviewSignalCard(event) {
+      const card = event.target.closest('[data-overview-card-action]');
+      if (!card) return;
+      const action = card.dataset.overviewCardAction;
+      if (action === 'readiness') {
+        openMotionWorkspace();
+        return;
+      }
+      activateTab('clientHealth');
+      const labels = {
+        risk: 'Opened Client Health evidence',
+        momentum: 'Opened Client Health usage',
+        sources: 'Opened Client Health source verification'
+      };
+      showToast(labels[action] || 'Opened Client Health');
+    }
+
+    function handleOverviewPriorityAction(event) {
+      const motionButton = event.target.closest('[data-overview-open-motion="true"]');
+      if (motionButton) {
+        openMotionWorkspace();
+        return;
+      }
+
+      const evidenceButton = event.target.closest('[data-overview-open-evidence="true"]');
+      if (evidenceButton) {
+        activateTab('clientHealth');
+        showToast('Opened evidence for this action');
+        return;
+      }
+
+      const taskButton = event.target.closest('[data-overview-open-task]');
+      if (!taskButton) return;
+      localState.taskScope = 'current';
+      renderTasks();
+      activateTab('tasks');
+      showToast('Opened this account in Tasks');
+    }
+
+    function handleAccountContextRoute(event) {
+      const route = event.target.closest('[data-context-route]');
+      if (!route) return;
+      const routeName = route.dataset.contextRoute;
+      if (routeName === 'motion') {
+        openMotionWorkspace();
+        return;
+      }
+      const targetTabs = {
+        health: 'clientHealth',
+        contacts: 'contacts',
+        resources: 'phaseResources',
+        tasks: 'tasks'
+      };
+      const tabName = targetTabs[routeName];
+      if (!tabName) return;
+      activateTab(tabName);
+      showToast(`Opened ${route.textContent.trim().replace(/\s+/g, ' ')}`);
+    }
+
+    function handleTaskBoardAction(event) {
+      const statusButton = event.target.closest('[data-task-status]');
+      if (statusButton) {
+        setTaskBoardStatus(statusButton.dataset.taskStatus, statusButton.dataset.nextStatus);
+        renderTasks();
+        showToast(statusButton.dataset.nextStatus === 'done' ? 'Task moved to Done / closed' : 'Task moved to Do next');
+        return;
+      }
+
+      const motionButton = event.target.closest('[data-task-open-motion]');
+      if (motionButton) {
+        const accountName = motionButton.dataset.taskOpenMotion;
+        if (accounts[accountName]) {
+          localState.currentAccount = accountName;
+          ui.clientSelect.value = accountName;
+          syncPhaseFilterToAccount(accounts[accountName]);
+          renderAll();
+        }
+        openMotionWorkspace();
+        return;
+      }
+
+      const healthButton = event.target.closest('[data-task-open-health]');
+      if (healthButton) {
+        const accountName = healthButton.dataset.taskOpenHealth;
+        if (accounts[accountName]) {
+          localState.currentAccount = accountName;
+          ui.clientSelect.value = accountName;
+          syncPhaseFilterToAccount(accounts[accountName]);
+          renderAll();
+        }
+        activateTab('clientHealth');
+        showToast('Opened Client Health evidence for task');
+      }
+    }
+
+    function handleGlobalReviewAction(event) {
+      const button = event.target.closest('[data-global-review-open]');
+      if (!button) return;
+      const accountName = button.dataset.globalReviewOpen;
+      if (!accounts[accountName]) return;
+      localState.currentAccount = accountName;
+      ui.clientSelect.value = accountName;
+      syncPhaseFilterToAccount(accounts[accountName]);
+      renderAll();
+      activateTab('overview');
+      showToast(`Opened ${accountName} account read`);
+    }
+
     function getActiveTabName() {
       const activePanel = document.querySelector('.tab-panel.active');
       return activePanel ? activePanel.id : 'overview';
@@ -6382,8 +8241,7 @@
       renderStandardPack(account);
       renderTrainingReadiness(account);
       renderKeyContacts(account);
-      renderTaskOwnership(account);
-      renderOverviewFollowup(account);
+      renderTasks();
       renderSeatDistribution(account);
       renderAttention(account);
       renderNextMove(account);
@@ -6392,7 +8250,7 @@
       renderRisk(account);
       renderSources(account);
       renderPlatformHealth(account);
-      renderTemplates();
+      renderTemplates(account);
       renderTools(account);
       renderClientHealth(account);
       renderClientHealthNotification(account);
@@ -6652,6 +8510,14 @@
       button.addEventListener('click', () => activateTab(button.dataset.tab));
     });
 
+    document.querySelectorAll('[data-task-scope]').forEach(button => {
+      button.addEventListener('click', () => {
+        localState.taskScope = button.dataset.taskScope;
+        renderTasks();
+        showToast(localState.taskScope === 'portfolio' ? 'Showing portfolio task board' : 'Showing current client task board');
+      });
+    });
+
     ui.clientSelect.addEventListener('change', (event) => {
       if (event.target.value === PORTFOLIO_SELECT_VALUE) {
         activateTab('portfolio');
@@ -6695,7 +8561,7 @@
         localState.activePhaseFilter = button.dataset.phase;
         document.querySelectorAll('.phase-chip').forEach(chip => chip.classList.toggle('active', chip.dataset.phase === button.dataset.phase));
         renderAll();
-        showToast(button.dataset.phase === 'all' ? 'Showing account phase guidance' : `Filtered overview to ${button.textContent}`);
+        showToast(button.dataset.phase === 'all' ? 'Showing all phase resources' : `Filtered phase resources to ${button.textContent}`);
       });
     });
 
@@ -6703,6 +8569,11 @@
     document.getElementById('openMotionWorkspaceBtn').addEventListener('click', openMotionWorkspace);
     document.getElementById('closeMotionWorkspaceBtn').addEventListener('click', closeMotionWorkspace);
     document.getElementById('overviewClientHealthBtn').addEventListener('click', openClientHealthFromOverview);
+    ui.overviewSignalGrid.addEventListener('click', handleOverviewSignalCard);
+    ui.overviewPriorityActions.addEventListener('click', handleOverviewPriorityAction);
+    document.getElementById('overviewSecondaryDetails').addEventListener('click', handleAccountContextRoute);
+    ui.taskKanbanBoard.addEventListener('click', handleTaskBoardAction);
+    ui.globalAdoptionAccountGrid.addEventListener('click', handleGlobalReviewAction);
 
     ui.motionWorkspaceOverlay.addEventListener('click', (event) => {
       if (event.target === ui.motionWorkspaceOverlay) closeMotionWorkspace();

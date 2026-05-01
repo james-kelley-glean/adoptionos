@@ -77,6 +77,36 @@ Behavior:
 - Only clients in `verifiedRoster` should appear in the portfolio table after confirmation.
 - A manually added client should remain visible with an `aggregationStatus` such as `Aggregating from Staffing Sheet / Salesforce` until fuller account intelligence is available.
 
+### 1B. Global Adoption Review
+
+What it serves: gives the AIOM a book-level adoption review before they drill into a single account.
+
+Fields:
+
+- portfolioSummaryBuckets
+- recoveringCount
+- atRiskCount
+- rebaselineCount
+- onboardingCount
+- decliningCount
+- accountTrendRows
+- trend.previousEoqWau
+- trend.currentWau
+- trend.previousEoqMau
+- trend.currentMau
+- adoptionPercent
+- adoptionThreshold
+- primaryBlocker
+- bestNextMove
+
+Behavior:
+
+- The Global Adoption Review belongs inside My Portfolio, not account Overview.
+- It should preserve the fixed bucket order from the AIOM Global Adoption Review skill: Recovering, At risk, Rebaseline, Onboarding, Declining.
+- Each account row should show a two-period trend line graph, an adoption bar, four operator lenses, primary blocker, and best next move.
+- Clicking an account should open the account-level Adoption OS Overview.
+- Account-level evidence, source links, contacts, and task execution should remain in Client Health, Contacts, and Motion Workspace.
+
 ### 2. Adoption OS State
 
 What it serves: where the client is in the journey and which phase-specific motion applies.
@@ -107,11 +137,13 @@ Behavior:
 
 - The Overview should lead with the Adoption OS phase backbone before generic risk, source, or weekly-priority detail.
 - The current phase should expose its objective, current milestone, open adoption activities, overdue adoption activities, and phase-relevant assets.
-- The phase toolbar should update the Overview guidance itself, not only Templates and Tools. If a selected phase is not the account's current phase, the artifact should show that phase's general AIOM guidance while clearly preserving the account's actual current phase.
+- The phase filter should live inside Phase Resources, not as a second global toolbar. If a selected phase is not the account's current phase, the artifact should show phase-relevant resources and general AIOM guidance while clearly preserving the account's actual current phase in Overview.
 - Each phase should explain what the AIOM needs to know, the decision lens, what good looks like, common blockers, how to use Prism, which skill-package inputs matter, and the next motion.
 - Weekly or Monday priority should summarize what needs attention this week; it should not replace the operating model.
 - A single client can have multiple functions in different phases at the same time. `functionPhaseStatus` should represent function, phase, and status so the AIOM can see where readiness, stickiness, or scale motions differ inside the same account.
-- Phase-aware templates, tools, and recommended assets should remain filtered by phase and connected to the current account motion.
+- Phase-aware templates, tools, agents, and recommended assets should live together under Phase Resources, remain filtered by phase, and stay connected to the current account motion.
+- Templates should stay curated against the Strategic Enablement source catalog inside Phase Resources: one recommended template, supporting templates, and a collapsed "more resources" layer.
+- Source-catalog rows without direct usable links should remain secondary as source-link gaps, not primary template cards.
 
 ### 2A. Account Plan Contract
 
@@ -227,10 +259,25 @@ What it serves: keeps the Overview usable for an AIOM who needs to decide what t
 
 Behavior:
 
-- The default Overview should operate as an AIOM command center.
-- The always-visible path should stay limited to one Account Read: current recommendation, risk/readiness/momentum visual cards, source-confidence summary, why-now bullets, owner/date expectation, and one `Run recommended motion` CTA.
-- More operating context must remain available progressively for phase lanes, workflows, package posture, training readiness, contacts, tasks, sources, and platform health.
-- Evidence details, source links, verification state, account plan spine, and follow-up ownership should be available through Client Health or collapsed `More operating context`, not as the default Overview scroll.
+- The Overview remains the AIOM command center, but its job is a daily account read rather than a full account dashboard.
+- The default Overview should operate as a daily AIOM account read, not an account data page.
+- The always-visible path should stay limited to Current State, Last 10 actions taken, the next three priority actions, a small source-confidence signal, and one `Run recommended motion` CTA.
+- The hero should lead with target attainment because AIOM accountability is measured against adoption outcomes. It should also show account health, next meeting, and renewal date as compact signals.
+- Current State should include risk, readiness, momentum, source confidence, and a small AI Fluency strategy input when fluency changes or will change the recommended motion.
+- Adoption-goal progress should show the account's current adoption metric as a percentage of the committed goal from the success plan, account plan, Monthly Accounts Review, or adoption dashboard. Until live data exists, seeded values must stay labeled as sample or not found.
+- Source confidence means how grounded the read is in available account evidence, not model certainty. It should show source categories available, source gaps, and verification needs.
+- Next meeting should come from Calendar, Gong, Zoom, or meeting-note context. If no upcoming meeting exists, show `No upcoming meeting`.
+- Renewal date should come from Salesforce or the renewals forecast source. If the value is unavailable, show a clear empty state such as `Renewal not found`.
+- Last 10 actions taken should be primarily visual: a short change strip plus an activity diagram that highlights what changed since the last read.
+- The next three actions should behave like high-signal task previews with clickable resources attached to each action. They should route to the Tasks tab for completion, dismissal, and task state.
+- Account details must remain available progressively as read-only reference context for plan spine, phase lanes, package posture, top workflows, and adoption footprint.
+- Contacts should live in the dedicated Contacts toolbar tab, not inside Overview or Account details.
+- Templates, tools, agents, starter agent motions, and skill launchers should be demoted from separate main navigation tabs into one Phase Resources tab because they are selected in the context of an adoption phase.
+- The main navigation should stay limited to durable AIOM surfaces: Overview, Client Health, Tasks, AI Fluency, Contacts, and Phase Resources.
+- Evidence details, source links, verification state, support signals, platform health, and Prism health should live in Client Health, not Account details.
+- Task management should live in Tasks, not Overview, Client Health, Account details, or Motion Workspace.
+- Motion Workspace executes the selected task or recommendation; it should not become a task board.
+- Account details should make its mode explicit: read for context, not a hidden work queue.
 - Supporting detail should not be removed; it should be tucked behind progressive disclosure unless it changes the immediate action.
 
 ### 4. Capacity And Commercial Context
@@ -343,8 +390,8 @@ Fields:
 
 Behavior:
 
-- The Overview recommendation surface should use AIOM-native language: Strategic action, Best next step, Why this matters, Recommended Glean resource, and Account Memory update.
-- Strategic action, rationale, next step, owner, target audience, friction, recommended resource, recommended asset, and Account Memory update prompt should be visible without opening the data model.
+- The Overview recommendation surface should use AIOM-native language: Current State, Last 10 actions taken, Next three actions, Recommended resource, and Account Memory update.
+- Strategic action, rationale, next step, target audience, friction, recommended resource, recommended asset, Account Memory update prompt, and owner path should be visible through the daily account read or one-click Motion Workspace, without opening the data model.
 - Every strategic action must resolve to a recommended Glean resource before it renders.
 
 ### 6A. Phase-Aware Run This Motion
@@ -353,13 +400,51 @@ What it serves: lets the AIOM execute the recommendation without leaving the Ado
 
 Behavior:
 
-- Overview shows one `Run recommended motion` CTA directly under the Account Read.
+- Overview shows one `Run recommended motion` CTA directly under the three priority actions.
 - The four action buttons live in the Motion Workspace drawer/workbench opened from that CTA.
 - It adapts visible verbs and prompt context to the current Adoption OS phase.
 - It always includes four actions: analyze account, generate plan, draft follow-up, and save Account Memory.
 - In Glean, each action should send a guarded `glean-send-message` request with account, phase, evidence, source gaps, and desired output.
 - Outside Glean, each action must degrade to a copyable prompt.
 - The launcher should not render full skill outputs on Overview; deeper output belongs in the Motion Workspace, a returned Glean follow-up, or Client Health evidence.
+
+### 6B. Tasks Workboard
+
+What it serves: gives AIOMs one place to understand and act on Psychic-mined work, AIOM-owned actions, client asks, waiting dependencies, and completed or dismissed tasks.
+
+Behavior:
+
+- Tasks is the single task-management home in Adoption OS.
+- Overview may show top task previews, but completion, dismissal, staging, and task-status changes must route to Tasks.
+- Client Health may mention related waiting tasks only when they explain risk or timing pressure.
+- Account details must not render task ownership lists.
+- Motion Workspace may execute a selected task, but the task queue and task state remain in Tasks.
+- The Tasks tab should support two scopes: `Current client` and `My portfolio`.
+- The first board structure is Kanban-style: `Found for you`, `Do next`, `Waiting`, and `Done / closed`.
+- Each task should include client, title, why it matters, due or freshness, priority, confidence, source, recommended resource, and action buttons.
+- Each task should also carry a lightweight triage classification so the AIOM can see whether it is Glean-owned work, client-owned work, a waiting dependency, meeting prep, or a risk signal.
+- Tasks should expose a completion-check state. In live Glean, this should come from Psychic / Tasks or upstream source review so stale already-completed work does not keep resurfacing. In the local artifact, this remains a clearly labeled seeded check.
+- Live launch should populate the board from Psychic / Tasks upstream. The Canvas artifact should receive a safe task payload rather than making direct network calls from the HTML.
+
+Fields:
+
+- adoptionOsTasks
+- id
+- accountName
+- title
+- status
+- taskType
+- priority
+- confidence
+- dueDate
+- freshness
+- completionCheck
+- sourceType
+- sourceTitle
+- sourceUrl
+- recommendedMotion
+- recommendedResource
+- lastUpdatedAt
 
 ### 7. Resource Catalog
 
@@ -469,6 +554,7 @@ These systems make the artifact useful inside Glean.
 - Glean Search: internal research across account context, Adoption OS resources, and supporting assets.
 - Glean Assistant: account question answering and assisted synthesis.
 - Glean Agents and Skills: action layer for transition briefs, adoption strategy, enablement planning, change briefs, prompt/workflow support, and EBR generation.
+- Psychic / Tasks: mined and manually staged AIOM work that should populate the Tasks workboard as a single action surface.
 - Glean Artifacts: the in-product operating surface where AIOMs review, decide, act, and capture.
 
 ### Future Enrichment
@@ -487,6 +573,14 @@ These systems make the artifact useful inside Glean.
 ## AI Fluency Placeholder
 
 AI Fluency is a Q2/Q3 enrichment layer and is not required for V1. When available, it should improve the historical and strategic action layers with function-level signals for confidence, usage quality, behavior change, leadership reinforcement, and capability growth.
+
+AI Fluency should not replace target attainment as the hero KPI. Target attainment tells the AIOM where the account stands against the adoption goal; AI Fluency tells the AIOM how to intervene once live.
+
+## Starter Agent Motions
+
+Starter agent and workflow recommendations belong in Phase Resources, not as a standalone top-level tab. They should be phase-aware, recommended-first, and modeled as common reusable motions that most organizations can benefit from early in an engagement. Overview should surface a starter agent motion only when it becomes one of the top three next actions. Tasks should carry the execution work, and Client Health should reference the motion only when it explains risk, momentum, or why adoption may stall.
+
+The starter catalog should remain flexible enough for upcoming Auto Agents product innovation: V1 can show the proven motion pattern, while live Glean can later prioritize, generate, or refresh the motion from account signals upstream.
 
 ## V1 Boundary
 

@@ -24,8 +24,12 @@ Use `/Users/jameskelley/Documents/Adoption OS`.
 
 - Edit `src/glean_adoption_os.html`; build to `dist/glean_adoption_os.html`.
 - Run `npm run check` before calling work complete.
+- Run `npm run smoke:iframe` when artifact behavior or runtime-sensitive UI changes need a Canvas-style iframe check.
 - Run `npm run check:dist` before committing or pushing changes that affect the artifact.
+- Use `npm run ci` when you want the same local gate as CI: check, iframe smoke test, and dist freshness.
+- Use `npm run glean:copy` to build the artifact and copy the Glean Assistant paste payload for Canvas preview/publish handoff.
 - Use `npm run agent:dev -- "<task>"` for optional OpenAI Agents SDK-assisted review or planning.
+- Use `npm run agent:slice -- <slice-id> <plan|review>` when you want the optional OpenAI orchestrator to plan or review a specific slice.
 - Use `npm run orchestrator:prompt -- <slice-id> <role>` when assigning or executing bounded agent work.
 - Keep changes inside the slice `writeScope` from `orchestration/slices.json` unless the controller explicitly expands scope.
 - Do not put generated artifact wrapper text, CDATA wrappers, or tool-call residue into source or dist files.
@@ -36,11 +40,13 @@ Use `/Users/jameskelley/Documents/Adoption OS`.
 ## Agent Workflow
 
 1. Read this file first.
-2. Check `orchestration/slices.json` for the relevant slice and write scope.
-3. Generate the role prompt with `npm run orchestrator:prompt -- <slice-id> <implementer|spec-reviewer|runtime-reviewer>`.
-4. Make the smallest change that satisfies the slice acceptance criteria.
-5. Run `npm run check`.
-6. If source changed the generated artifact, confirm `npm run check:dist` passes before commit/push.
+2. Read `prompts/premises.md`, `docs/v1-data-layer.md`, and `docs/glean-artifact-runtime.md` when the task touches product premises, data contract, or Glean placement/runtime behavior.
+3. Check `orchestration/slices.json` for the relevant slice and write scope.
+4. Generate the role prompt with `npm run orchestrator:prompt -- <slice-id> <implementer|spec-reviewer|runtime-reviewer>`.
+5. Make the smallest change that satisfies the slice acceptance criteria.
+6. Run `npm run check`.
+7. If runtime-sensitive behavior changed, run `npm run smoke:iframe`.
+8. If source changed the generated artifact, confirm `npm run check:dist` passes before commit/push.
 
 ## Current Product Shape
 
