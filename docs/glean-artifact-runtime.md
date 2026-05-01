@@ -16,7 +16,7 @@ The deployable artifact is `dist/glean_adoption_os.html`.
 
 ## Current GleanBridge Use
 
-The artifact registers an `Export as PDF` action only when `window.GleanBridge.postMessage` and `window.GleanBridge.onMessage` are available. Outside Glean, or in a host that exposes a partial bridge, that block is skipped.
+The artifact registers an `Export as PDF` action only when `window.GleanBridge.postMessage` and `window.GleanBridge.onMessage` are available. The Overview shows a single `Run recommended motion` CTA; the Motion Workspace opened by that CTA uses `window.GleanBridge.postMessage` for guarded `glean-send-message` handoff when available and falls back to a copyable prompt outside Glean. Outside Glean, or in a host that exposes a partial bridge, core page function should still work.
 
 ## Placement Back Into Glean
 
@@ -33,9 +33,13 @@ The artifact registers an `Export as PDF` action only when `window.GleanBridge.p
    - Adoption OS phase backbone shows phase objective, current milestone, open activities, overdue activities, phase assets, and function-level phase status.
    - Source coverage shows available, provisional, missing, and needs-verification states without implying live data.
    - Recommended Glean resource launches or degrades to copyable prompt behavior.
+   - `Run recommended motion` appears on Overview.
+   - Motion Workspace opens with Analyze account, Generate plan, Draft follow-up, and Save Account Memory.
+   - Motion Workspace labels change based on account phase.
+   - Motion buttons either send a guarded Glean message or degrade to copyable prompts outside Glean.
    - Prism health input renders as part of client health.
-   - Prism outcome capture includes action taken, action outcome, remaining blocker, owner/date commitments, what worked, what did not work, and recommended follow-up.
-   - Copy into Prism summary is recoverable if clipboard access is blocked.
+   - Account Memory update includes action taken, action outcome, remaining blocker, owner/date commitments, what worked, what did not work, and recommended follow-up.
+   - Account Memory summary is recoverable if clipboard access is blocked.
    - Tabs work.
    - Attention items can be marked done.
    - Export action appears in Glean, if supported by the runtime.
